@@ -69,8 +69,15 @@ try {
   assert.equal(response.status, 200);
   assert.match(await response.text(), /Fullbleed Commerce privacy/);
   response = await fetch(`${origin}/app/pdf?order=gid://shopify/Order/1`);
+  // Shopify rejects Node's bot user agent before its browser auth handshake.
+  assert.equal(response.status, 410);
+  response = await fetch(`${origin}/app/pdf?order=gid://shopify/Order/1`, { headers: {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36',
+  } });
   assert.match(response.headers.get('content-type'), /text\/html/);
-  assert.doesNotMatch(await response.text(), /%PDF-/);
+  const authPage = await response.text();
+  assert.match(authPage, /shopifycloud\/app-bridge\.js/);
+  assert.doesNotMatch(authPage, /%PDF-/);
   response = await fetch(`${origin}/webhooks/privacy`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
   assert.equal(response.status, 401);
   passed('public privacy page works and unauthenticated documents and webhooks are denied');
