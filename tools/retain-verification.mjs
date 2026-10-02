@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { unzipSync } from 'fflate';
 
 const json = path => JSON.parse(readFileSync(path, 'utf8').replace(/^\uFEFF/, ''));
 const hash = path => createHash('sha256').update(readFileSync(path)).digest('hex');
@@ -20,7 +21,21 @@ function wordpress(stem) {
   return { runtime: json(`output/wordpress/${stem}-runtime.json`), checks: record.checks, configuration: record.configuration };
 }
 const packages = json('dist/packages.json');
-assert.deepEqual(packages, json('output/wordpress/packaged-hpos-pro-packages.json'), 'The checked ZIPs must match the final packages.');
+const installedPackages = json('output/wordpress/packaged-hpos-pro-packages.json');
+const archiveChecks = [];
+for (const item of packages) {
+  const installed = installedPackages.find(candidate => candidate.filename === item.filename);
+  assert.ok(installed);
+  if (installed.sha256 !== item.sha256) {
+    const previous = `target/packaging-before/${item.filename}`;
+    assert.equal(hash(previous), installed.sha256);
+    const before = unzipSync(readFileSync(previous));
+    const after = unzipSync(readFileSync(`dist/${item.filename}`));
+    assert.deepEqual(Object.keys(after), Object.keys(before));
+    for (const name of Object.keys(before)) assert.deepEqual(after[name], before[name]);
+    archiveChecks.push({ filename: item.filename, originalInstalledSha256: installed.sha256, finalSha256: item.sha256, entries: Object.keys(after).length, everyEntryByteIdentical: true, change: 'Normalize DOS archive timestamps across timezones.' });
+  } else archiveChecks.push({ filename: item.filename, exactInstalledArchive: true });
+}
 for (const item of packages) assert.equal(hash(`dist/${item.filename}`), item.sha256);
 const app = json('output/shopify/verification.json');
 assert.ok(app.checks.every(check => check.passed));
@@ -33,7 +48,7 @@ for (const item of examples) assert.equal(hash(`output/examples/${item.stem}.pdf
 const record = {
   checkedAt: new Date().toISOString(), previewVersion: json('package.json').version,
   sourceLocks: { root: hash('package-lock.json'), shopify: hash('shopify/app/package-lock.json') },
-  packages, sharedTests: tap('output/node-tests.log'),
+  packages, archiveChecks, sharedTests: tap('output/node-tests.log'),
   wordpress: { legacyFree: wordpress('legacy-free'), packagedHposPro: wordpress('packaged-hpos-pro') },
   examples, textChecks: json('output/pdf-text-verification.json'),
   shopify: { app, requestHandlerTests: tap('output/shopify/webhooks.log'), installedStore: installed, graphQLValidation: json('output/shopify/validation/verification.json') },

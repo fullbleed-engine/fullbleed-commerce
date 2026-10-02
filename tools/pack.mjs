@@ -32,7 +32,9 @@ for (const name of ['fullbleed-commerce', 'fullbleed-commerce-pro']) {
     for (const file of ['pro/admin.js', 'pro/designs.js']) files[`${name}/source/${file.split('/').at(-1)}`] = new Uint8Array(await readFile(file));
     files[`${name}/source/README.txt`] = new TextEncoder().encode('Build admin.js with esbuild 0.28.2, bundled in IIFE format targeting es2022, with fflate 0.8.3. The base plugin exposes window.FullbleedCommerce. The compiled assets/admin.js is readable and includes the complete add-on code.');
   }
-  const archive = zipSync(files, { level: 9, mtime: new Date('2020-01-01T00:00:00Z') });
+  // ZIP stores local DOS date/time fields without a timezone. Construct those
+  // fields directly so identical sources produce identical archives in any TZ.
+  const archive = zipSync(files, { level: 9, mtime: new Date(2020, 0, 1, 0, 0, 0) });
   const filename = `${name}-${version}.zip`;
   await writeFile(`dist/${filename}`, archive);
   records.push({ filename, bytes: archive.length, sha256: createHash('sha256').update(archive).digest('hex'), files: Object.keys(files).length });

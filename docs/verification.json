@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-02T17:09:55.614Z",
+  "checkedAt": "2026-10-02T17:19:18.872Z",
   "previewVersion": "0.1.0-alpha.1",
   "sourceLocks": {
     "root": "72868de3c815199b0c59885afc1d7ebc143eadb9b8864d0ea8e10900d895ee26",
@@ -9,14 +9,32 @@
     {
       "filename": "fullbleed-commerce-0.1.0-alpha.1.zip",
       "bytes": 2472017,
-      "sha256": "088af037e7dea9a5ed2e9a474cdc3ef9c3209ed8a206dd42add4ba700179895e",
+      "sha256": "2dd0632bdb63c6c7471c1f7b2c6e7b0775192bc0c19a3abe9fdd41cf06bf9589",
       "files": 28
     },
     {
       "filename": "fullbleed-commerce-pro-0.1.0-alpha.1.zip",
       "bytes": 19665,
-      "sha256": "46ae2bbfe172a1de55d6a61ab349bf3fd38cd47723da27b4c545d28865196b05",
+      "sha256": "3ab3172bcb6b12f186ae1430df217ec28ebf0d8444c477d2378f50c92a9125ac",
       "files": 8
+    }
+  ],
+  "archiveChecks": [
+    {
+      "filename": "fullbleed-commerce-0.1.0-alpha.1.zip",
+      "originalInstalledSha256": "088af037e7dea9a5ed2e9a474cdc3ef9c3209ed8a206dd42add4ba700179895e",
+      "finalSha256": "2dd0632bdb63c6c7471c1f7b2c6e7b0775192bc0c19a3abe9fdd41cf06bf9589",
+      "entries": 28,
+      "everyEntryByteIdentical": true,
+      "change": "Normalize DOS archive timestamps across timezones."
+    },
+    {
+      "filename": "fullbleed-commerce-pro-0.1.0-alpha.1.zip",
+      "originalInstalledSha256": "46ae2bbfe172a1de55d6a61ab349bf3fd38cd47723da27b4c545d28865196b05",
+      "finalSha256": "3ab3172bcb6b12f186ae1430df217ec28ebf0d8444c477d2378f50c92a9125ac",
+      "entries": 8,
+      "everyEntryByteIdentical": true,
+      "change": "Normalize DOS archive timestamps across timezones."
     }
   ],
   "sharedTests": {

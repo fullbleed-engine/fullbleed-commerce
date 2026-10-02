@@ -24,6 +24,12 @@ The engine, fonts and compiled JavaScript served by the installed WordPress ZIPs
 matched the local packaged assets byte for byte. ZIP hashes are in
 `dist/SHA256SUMS.txt`; the retained summary is [verification.json](verification.json).
 
+ZIP timestamps were normalized after the Windows/Linux comparison found that
+every file was identical but archive date fields differed by timezone. The final
+Windows archives now match the Linux CI archives byte for byte. The retained
+record compares every entry against the originally installed and HTTP-tested
+ZIPs, retaining both sets of archive hashes.
+
 The HTTP checks exercised logged-in administrators and shop managers, denied
 anonymous users, editors and subscribers, rejected missing or invalid nonces,
 preserved store display amounts, and rejected refunded orders. The Shopify route
