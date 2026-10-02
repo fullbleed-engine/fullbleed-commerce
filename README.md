@@ -77,7 +77,9 @@ retry preparation, revoke one link, or pause all automation in the app.
 See the [Flow setup and reliability contract](shopify/FLOW.md).
 
 These are development integrations. Customer delivery, production hosting,
-privacy-request fulfillment and paid lifecycle validation remain launch gates.
+privacy operations and paid lifecycle validation remain launch gates. The
+[privacy request workflow](shopify/PRIVACY.md) now captures encrypted exports and
+tracks merchant handling independently of paid-plan access.
 
 ## Development
 

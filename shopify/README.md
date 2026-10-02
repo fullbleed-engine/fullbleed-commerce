@@ -47,7 +47,10 @@ references, keyed fingerprints, status and download counts for up to 30 days.
 Uninstall and shop-redaction webhooks delete that shop's records. Customer
 redaction clears affected order references and hashes, retaining an empty run
 tombstone until cleanup to prevent recreation by delayed retries. Customer
-data-request fulfillment is still a launch gate. The [development privacy page](app/app/routes/privacy.tsx)
+data requests capture encrypted metadata exports for authenticated merchant
+download, with deadlines and explicit completion independent of paid plans.
+Configure the stable privacy key and operational monitoring described in
+[the privacy workflow](PRIVACY.md). The [development privacy page](app/app/routes/privacy.tsx)
 describes this behavior.
 
 The renderer permits one active request per shop and two globally per process.
@@ -78,7 +81,8 @@ Before paid release, configure a private $0 test plan, a Partner API client and
 the app/plan identifiers.
 Exercise plan activation, cancellation, freezes and changes; complete protected
 customer data requirements and merchant staging checks; deploy with durable,
-encrypted session storage; fulfill customer data requests; finalize support/privacy/refund terms and App Store
+encrypted session storage; verify privacy monitoring, backup erasure and secure
+support delivery; finalize support/privacy/refund terms and App Store
 materials; then submit for review. No unverified data-protection answers should
 be submitted as completed controls.
 

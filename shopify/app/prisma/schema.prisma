@@ -88,3 +88,37 @@ model Session {
   refreshToken        String?
   refreshTokenExpires DateTime?
 }
+
+// Identifiers live in the encrypted export and keyed lookup hashes.
+// Completed/redacted requests retain a minimal delivery-deduplication receipt.
+model PrivacyRequest {
+  id           String                @id @default(uuid())
+  shop         String
+  requestId    String
+  customerKey  String?
+  emailKey     String?
+  snapshot     String?
+  keyId        String?
+  status       String                @default("ready")
+  receivedAt   DateTime              @default(now())
+  dueAt        DateTime
+  finishedAt   DateTime?
+  lastExportAt DateTime?
+  exports      Int                   @default(0)
+  orders       PrivacyRequestOrder[]
+
+  @@unique([shop, requestId])
+  @@index([shop, status, receivedAt])
+  @@index([shop, customerKey])
+  @@index([shop, emailKey])
+  @@index([finishedAt])
+}
+
+model PrivacyRequestOrder {
+  requestId String
+  orderId   String
+  request   PrivacyRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+
+  @@id([requestId, orderId])
+  @@index([orderId])
+}

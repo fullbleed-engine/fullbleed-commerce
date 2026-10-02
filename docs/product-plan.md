@@ -136,9 +136,14 @@ and refunds, reuses the saved template, streams private downloads and provides
 outage recovery without staff generation. It is a live summary, not an immutable
 issued invoice or a guest-access link.
 
-Fulfillment batches, automatic missing-attachment recovery, Shopify customer
-data-request fulfillment, production hosting and paid lifecycle tests remain
-planned. No customer email or paid plan was enabled. Workflow testing
+Shopify customer data requests now produce encrypted snapshots of retained
+metadata with a merchant export, response deadlines and explicit completion.
+Access does not require a paid plan. Redaction clears the export and affected
+automation references. See [the privacy workflow](../shopify/PRIVACY.md).
+
+Fulfillment batches, automatic missing-attachment recovery, privacy monitoring
+and secure support-delivery setup, production hosting and paid lifecycle tests
+remain planned. No customer email or paid plan was enabled. Workflow testing
 is confined to the synthetic development store. See [the evidence](verification.md)
 for the checks actually run.
 

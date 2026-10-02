@@ -11,7 +11,7 @@ const output = resolve(root, 'output/shopify');
 mkdirSync(output, { recursive: true });
 mkdirSync(resolve(root, 'target'), { recursive: true });
 const env = { ...process.env, DATABASE_URL: `file:${resolve(root, 'target/webhook-test.sqlite').replaceAll('\\', '/')}`, NODE_ENV: 'production',
-  SHOPIFY_API_KEY: 'synthetic-test-api-key', SHOPIFY_API_SECRET: 'synthetic-webhook-test-secret', SHOPIFY_APP_URL: 'https://fullbleed-test.invalid', SCOPES: 'read_orders', FULLBLEED_DEV_STORE: '', OPT_OUT_INSTRUMENTATION: 'true' };
+  SHOPIFY_API_KEY: 'synthetic-test-api-key', SHOPIFY_API_SECRET: 'synthetic-webhook-test-secret', FULLBLEED_PRIVACY_KEY: 'ab'.repeat(32), SHOPIFY_APP_URL: 'https://fullbleed-test.invalid', SCOPES: 'read_orders', FULLBLEED_DEV_STORE: '', OPT_OUT_INSTRUMENTATION: 'true' };
 // Execute only local, pinned tools. Never use the running development app's database or credentials.
 const generatedSchema = resolve(app, 'node_modules/.prisma/client/schema.prisma');
 // Prisma's generated copy inserts blank lines around model constraints.
@@ -28,6 +28,7 @@ const jobs = [
   ['build', 'node_modules/@react-router/dev/bin.js', 'build'],
   ['webhooks', '--test', '--test-reporter=tap', 'test/webhooks.test.mjs'],
   ['flow', '--test', '--test-reporter=tap', 'test/flow.test.mjs'],
+  ['privacy', '--test', '--test-reporter=tap', 'test/privacy.test.mjs'],
 ];
 const checks = clientCurrent ? [{ name: 'generated-client-matches-schema', exitCode: 0, passed: true }] : [];
 const initialChecks = checks.length;

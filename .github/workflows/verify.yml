@@ -58,12 +58,14 @@ jobs:
           docker run -d --name commerce-check -p 127.0.0.1:3000:3000 \
             -e SHOPIFY_API_KEY=synthetic-test-api-key \
             -e SHOPIFY_API_SECRET=synthetic-container-test-secret \
+            -e FULLBLEED_PRIVACY_KEY=abababababababababababababababababababababababababababababababab \
             -e SHOPIFY_APP_URL=http://localhost:3000 \
             -e SCOPES=read_orders fullbleed-commerce:check
           curl --fail --silent --show-error --max-time 10 --retry 12 --retry-delay 2 \
             --retry-all-errors --retry-max-time 45 --output /tmp/commerce-privacy.html \
             http://127.0.0.1:3000/privacy
           grep -q 'Fullbleed Commerce privacy' /tmp/commerce-privacy.html
+          docker exec commerce-check node scripts/privacy-status.mjs
       - name: Container logs
         if: always()
         run: docker logs commerce-check 2>/dev/null || true

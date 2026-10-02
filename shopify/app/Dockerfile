@@ -21,9 +21,12 @@ RUN npx --no-install prisma generate && npm run build \
 FROM base AS runtime
 ENV NODE_ENV=production PORT=3000 DATABASE_URL=file:/data/commerce.sqlite
 COPY --from=build /commerce/node_modules ./node_modules
+COPY --from=build /commerce/package.json ./package.json
 COPY --from=build /commerce/shopify/app/node_modules ./shopify/app/node_modules
 COPY --from=build /commerce/shopify/app/build ./shopify/app/build
 COPY --from=build /commerce/shopify/app/prisma ./shopify/app/prisma
+COPY --from=build /commerce/shopify/app/scripts ./shopify/app/scripts
+COPY --from=build /commerce/shopify/privacy.js ./shopify/privacy.js
 COPY --from=build /commerce/shopify/app/package.json ./shopify/app/package.json
 COPY LICENSE ./LICENSE
 COPY LICENSES ./LICENSES

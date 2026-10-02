@@ -210,7 +210,7 @@ test('customer redaction removes only matching store order references and invali
   const job = await readyJob();
   await service.setEnabled(other, true);
   await db.automationJob.create({ data: { ...parsed(), shop: other, runId: 'other-run', retryDeadline: new Date(time + 10000) } });
-  const response = await signedRequest('/webhooks/privacy', { orders_to_redact: [1], customer: { id: 1 } }, true, 'customers/redact');
+  const response = await signedRequest('/webhooks/privacy', { shop_domain: primary, shop_id: 1, orders_to_redact: [1], customer: { id: 1 } }, true, 'customers/redact');
   assert.equal(response.status, 204);
   assert.equal(await db.automationJob.count({ where: { shop: primary, orderId: 'gid://shopify/Order/1' } }), 0);
   assert.equal(await db.automationJob.count({ where: { shop: other } }), 1);

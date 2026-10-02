@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-02T22:24:02.482Z",
+  "checkedAt": "2026-10-02T23:11:51.461Z",
   "previewVersion": "0.1.0-alpha.1",
   "sourceLocks": {
     "root": "1a9f225f14867ca8a82402accfdce87f2c590f31b80a67a6014c4527bf3258b1",
@@ -44,7 +44,7 @@
   "sharedTests": {
     "passed": 36,
     "failed": 0,
-    "logSha256": "c88da1c0b43daf8ced1375af2c859a2f5ba901b33eb611c1f7bd09be9ee9fb1d"
+    "logSha256": "d4f8f18e5769e56ec52ae5952ddfe0b32c96002647496cb2ee2909d046869843"
   },
   "wordpress": {
     "legacyFree": {
@@ -682,7 +682,7 @@
     }
   },
   "templates": {
-    "checkedAt": "2026-10-02T21:39:29.188Z",
+    "checkedAt": "2026-10-02T23:09:59.864Z",
     "documents": [
       {
         "kind": "order-summary",
@@ -1523,7 +1523,7 @@
   ],
   "shopify": {
     "app": {
-      "checkedAt": "2026-10-02T21:11:20.416Z",
+      "checkedAt": "2026-10-02T23:10:30.335Z",
       "node": "v24.21.0",
       "checks": [
         {
@@ -1565,23 +1565,115 @@
           "name": "flow",
           "exitCode": 0,
           "passed": true
+        },
+        {
+          "name": "privacy",
+          "exitCode": 0,
+          "passed": true
         }
       ],
       "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
       "lockSha256": "1c0374462e3e1b6d476ad2ece2128c0e49258d318d854c585bba0ea5bae9013b",
-      "serverBuildSha256": "111e640e68eeee0c0e2ebca6cb6d4f03e188043e8f0c0672bda1a11082a1ba73",
+      "serverBuildSha256": "1933cc9de1b161ec0a0b93ecdf9c267e35d641fc40552bfd411adb4f2e8f0b2b",
       "browserTested": false,
       "liveBillingTested": false
     },
     "requestHandlerTests": {
       "passed": 4,
       "failed": 0,
-      "logSha256": "dc3fb40d27e2a31db18676557d6329b6401b9eb40d8c527e5541075aca7253f4"
+      "logSha256": "48410882768b5a71f92efc39202efcfe5eff552060b631ca77ec1c486bacfb7d"
     },
     "flowTests": {
       "passed": 8,
       "failed": 0,
-      "logSha256": "b60e1ac264a425e643d2e875426fed86e2803527937daf7de07f7a7d1ce1238d"
+      "logSha256": "cb203ec485fc0543ad4ce9e94045f76a15bbf0613cea32c401889dcaa7be37ee"
+    },
+    "privacyTests": {
+      "passed": 15,
+      "failed": 0,
+      "logSha256": "87361d5ed1925482c9ebd6a7a599b0e11931409a12369fa7bd350b7a994a6bec"
+    },
+    "privacyBrowser": {
+      "checkedAt": "2026-10-02T23:11:37Z",
+      "browser": "154.0.8037.93",
+      "syntheticOnly": true,
+      "shopifyAdminShellStubbed": true,
+      "realSdkAuthentication": true,
+      "productionBuildSha256": "1933cc9de1b161ec0a0b93ecdf9c267e35d641fc40552bfd411adb4f2e8f0b2b",
+      "checks": [
+        {
+          "name": "authenticated merchant page with no paid-plan or Admin API call",
+          "passed": true
+        },
+        {
+          "name": "overdue request calls for action",
+          "passed": true
+        },
+        {
+          "name": "no customer identifiers in list",
+          "passed": true
+        },
+        {
+          "name": "browser download preserves large IDs",
+          "passed": true
+        },
+        {
+          "name": "download contains captured metadata",
+          "passed": true
+        },
+        {
+          "name": "download does not auto-complete customer response",
+          "passed": true
+        },
+        {
+          "name": "explicit completion clears download UI",
+          "passed": true
+        },
+        {
+          "name": "merchant receipt appears",
+          "passed": true
+        },
+        {
+          "name": "completed export returns gone",
+          "passed": true
+        },
+        {
+          "name": "mobile page fits viewport",
+          "passed": true
+        },
+        {
+          "name": "signed erasure webhook accepted",
+          "passed": true
+        },
+        {
+          "name": "erasure reflected in merchant UI",
+          "passed": true
+        },
+        {
+          "name": "no browser runtime errors",
+          "passed": true
+        }
+      ],
+      "evidence": [
+        {
+          "file": "output/browser/shopify-privacy-desktop.png",
+          "sha256": "39b4a3e482ee82ad4d0e80842c530fec8624b4c3136c727986e34ae68821c78f"
+        },
+        {
+          "file": "output/browser/shopify-privacy-mobile.png",
+          "sha256": "d981ef242723740032c3d774366ad0c34b1291125873bfba2e98e0df15fe8aec"
+        },
+        {
+          "file": "output/browser/shopify-privacy-export.json",
+          "sha256": "81d495ec26a108c2f70fed07e0c83bfba6bc0cc73630c8355ec030e4d2915e4c"
+        }
+      ]
+    },
+    "privacyUiToolkit": {
+      "success": false,
+      "version": "v1.1",
+      "evidenceSha256": "3c0df7f3a477f07be6bb9cc110a534ababd9a775d963e23abf13fffb02c751d7",
+      "limitation": "Remote validator cannot resolve its own preact/jsx-runtime and JSX types, including a minimal component. Installed types, production build and browser checks provide separate evidence."
     },
     "flowBrowser": {
       "checkedAt": "2026-10-02T21:07:51.641331+00:00",

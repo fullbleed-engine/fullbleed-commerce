@@ -5,7 +5,7 @@ Shopify Flow. Each uses the merchant's saved brand and template. It returns a
 private browser download link, expiry time, job ID and SHA-256 of the verified
 PDF. It does not email a customer, print a document or change order state.
 
-This is a development preview. Hosting, customer data-request fulfillment, paid
+This is a development preview. Hosting, privacy operations, paid
 lifecycle testing and marketplace review remain launch work.
 
 ## Merchant workflow
@@ -69,7 +69,9 @@ History older than 30 days is removed at app startup and hourly while the proces
 runs. Outages delay cleanup. Uninstall/shop redaction deletes the store's settings
 and jobs. Customer redaction removes affected order references and hashes and
 keeps an empty action-run tombstone until cleanup, preventing delayed retries from
-recreating the document. Customer data-request export is not yet implemented.
+recreating the document. Customer data requests capture retained metadata for
+authenticated merchant export; see [Privacy requests](PRIVACY.md) for retention,
+erasure and the remaining production operations requirements.
 
 ## Operations and verification
 

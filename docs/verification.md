@@ -13,7 +13,8 @@ was synthetic. No merchant store was changed and no customer PDF was retained.
 | WordPress/WooCommerce, installed base and Pro ZIPs with HPOS | 46 HTTP checks passed; HPOS enabled in runtime | `output/wordpress/packaged-hpos-pro-verification.json`, `packaged-hpos-pro-runtime.json` |
 | Six designed sample PDFs | Each one page, zero reported missing glyphs | `output/examples/verification.json` and matching PDFs/PNGs |
 | Sixty-item long order summary and packing slip | Eight pages each; every SKU retained; text bounds inside pages | `output/pdf-text-verification.json`, `output/layout/` |
-| Shopify application migrations, route types, TypeScript, lint, production build and request-handler tests | All checks passed; four application and eight Flow tests passed | `output/shopify/verification.json`, `output/shopify/webhooks.log`, `output/shopify/flow.log` |
+| Shopify application migrations, route types, TypeScript, lint, production build and request-handler tests | All checks passed; four application, eight Flow and 15 privacy tests passed | `output/shopify/verification.json`, `output/shopify/webhooks.log`, `output/shopify/flow.log`, `output/shopify/privacy.log` |
+| Privacy requests in real Chrome with synthetic Shopify sessions | 13 browser checks: encrypted snapshot download, exact large IDs, explicit completion, erasure, overdue notice and 390px layout | `output/browser/shopify-privacy-verification.json`, JSON download and screenshots |
 | Shopify Flow extensions | CLI validates both native actions and output schemas | `output/shopify/flow-config-validation.json` |
 | Actual Shopify Flow execution and browser downloads | 19 retained checks; both actions and the downstream step completed; downloaded PDFs match returned SHA-256 values; revoke and pause return HTTP 410 | `output/browser/shopify-flow-verification.json`, matching PDFs/PNGs |
 | Visual and source template editing in real Chrome 154 | Free editor saves, previews, reloads and resets; Pro also downloads a two-PDF ZIP and fits a 390px viewport | `output/browser/*-verification.json`, PDFs and screenshots |
@@ -63,6 +64,22 @@ merchant isolation, and renders the Documents component to catch disabled-button
 regressions in Polaris custom elements. React and React DOM are pinned to 19.3.0;
 Polaris script/types are pinned to the 1.1 track. These checks use an isolated synthetic SQLite
 database, not the installed development app's database.
+
+Privacy request tests exercise signed raw JSON, including numeric IDs beyond
+JavaScript's safe integer range, durable deduplication, captured metadata,
+authenticated tenant-scoped exports without billing or new Admin API reads,
+email-only and order-reference erasure, completion, key mismatch, ciphertext
+swaps, terminal retention, pagination and batched SQL parameters. Uninstall
+removes the export associations; late requests fail without recreating them.
+An aggregate-only operator command reports pending/near-due/overdue requests
+and mismatched keys. The [privacy runbook](../shopify/PRIVACY.md) describes the
+remaining deployment and response responsibilities.
+
+The privacy browser fixture uses the production build and official SDK JWT
+verification with synthetic sessions. Only the external Shopify admin/App Bridge
+shell is replaced; Polaris components, React hydration, forms and downloads run
+in Chrome. This is separate from the earlier installed-store editor/Flow checks,
+and does not verify live privacy subscriptions or delivery to a store owner.
 
 Flow tests exercise the production request handler and official HMAC validation,
 including authenticated tenant/subscription checks before order reads. They cover
@@ -166,7 +183,8 @@ with synthetic customer and administrator accounts; no existing browser is used.
   The Partner organization, registered app, development store, installation and
   access to the synthetic order are verified. Billing configuration and
   production deployment are not complete.
-- Shopify customer data-request fulfillment, automatic new-order trigger testing,
+- Shopify privacy monitoring, backup erasure and secure support-delivery setup,
+  automatic new-order trigger testing,
   and a real configured delivery destination remain required. Native Flow actions
   have been tested through manual replay on the synthetic store. Public
   distribution is selected; that is not App Store approval or publication.

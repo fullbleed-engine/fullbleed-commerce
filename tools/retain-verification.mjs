@@ -36,6 +36,11 @@ for (const item of packages) {
 for (const item of packages) assert.equal(hash(`dist/${item.filename}`), item.sha256);
 const app = json('output/shopify/verification.json');
 assert.ok(app.checks.every(check => check.passed));
+const privacyBrowser = json('output/browser/shopify-privacy-verification.json');
+assert.ok(privacyBrowser.checks.length >= 13 && privacyBrowser.checks.every(check => check.passed));
+assert.equal(privacyBrowser.productionBuildSha256, app.serverBuildSha256, 'Privacy browser must exercise the verified production build.');
+for (const item of privacyBrowser.evidence) assert.equal(hash(item.file), item.sha256);
+const privacyUiValidation = json('output/shopify/privacy-ui-minimal-validation.json');
 const installed = json('output/shopify/installed-store/verification.json');
 assert.equal(installed.passed, true, 'Keep failed live checks separate from a completed verification record.');
 assert.ok(installed.documents.length === 6 && installed.documents.every(item => item.missingGlyphs === 0));
@@ -61,7 +66,7 @@ const record = {
   wordpress: { legacyFree: wordpress('legacy-free'), packagedHposPro: wordpress('packaged-hpos-pro'), finalAssets },
   browser, templates, automation, customerPortal,
   examples, textChecks: json('output/pdf-text-verification.json'),
-  shopify: { app, requestHandlerTests: tap('output/shopify/webhooks.log'), flowTests: tap('output/shopify/flow.log'), flowBrowser, flowConfiguration: json('output/shopify/flow-config-validation.json'), installedStore: installed, graphQLValidation: json('output/shopify/validation/verification.json') },
+  shopify: { app, requestHandlerTests: tap('output/shopify/webhooks.log'), flowTests: tap('output/shopify/flow.log'), privacyTests: tap('output/shopify/privacy.log'), privacyBrowser, privacyUiToolkit: { success: privacyUiValidation.success, version: privacyUiValidation.resolvedVersion, evidenceSha256: hash('output/shopify/privacy-ui-minimal-validation.json'), limitation: 'Remote validator cannot resolve its own preact/jsx-runtime and JSX types, including a minimal component. Installed types, production build and browser checks provide separate evidence.' }, flowBrowser, flowConfiguration: json('output/shopify/flow-config-validation.json'), installedStore: installed, graphQLValidation: json('output/shopify/validation/verification.json') },
   dependencyAudit: { root: json('output/npm-audit.json').metadata.vulnerabilities, shopify: json('output/shopify/npm-audit.json').metadata.vulnerabilities },
   visualInspection: { exampleOrderDesigns: ['studio', 'contrast', 'quiet'], longPackingSlipPage: 8, customTemplates: ['order-summary', 'packing-slip'], wordpressEditor: ['desktop', '390px viewport'], customerPortal: ['saved-template-pdf', 'orders', 'order-details', '390px viewport'], liveShopify: ['studio-order-summary', 'contrast-order-summary', 'quiet-packing-slip'] },
   limits: { realBrowserTested: true, wordpressBrowserTested: true, shopifyBrowserTested: true, liveBillingTested: false, productionDeployed: false, marketplaceApproved: false, isoConformanceClaimed: false },

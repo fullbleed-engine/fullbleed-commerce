@@ -23,6 +23,7 @@ export default function App() {
         <a href="/app/settings">Brand settings</a>
         <a href="/app/templates">Template studio</a>
         <a href="/app/automations">Automations</a>
+        <a href="/app/privacy">Privacy requests</a>
       </NavMenu>
       <Outlet />
     </AppProvider>
