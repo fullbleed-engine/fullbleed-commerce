@@ -1,0 +1,6 @@
+query FullbleedTestStore {
+  shop { id myshopifyDomain currencyCode plan { partnerDevelopment } }
+  draftOrders(first: 5, query: "tag:fullbleed-commerce-synthetic") {
+    nodes { id status }
+  }
+}

@@ -1,0 +1,18 @@
+# Synthetic fixture only. Run only after verifying the named development store.
+# No email, phone, customer account, payment gateway or inventory item is supplied.
+mutation FullbleedSyntheticDraft {
+  draftOrderCreate(input: {
+    note: "Fullbleed Commerce synthetic development fixture. No payment or fulfillment."
+    tags: ["fullbleed-commerce-synthetic"]
+    lineItems: [
+      { title: "Linen table runner — synthetic sample", sku: "FB-TEST-LINEN", quantity: 2, originalUnitPriceWithCurrency: { amount: "34.00", currencyCode: USD }, requiresShipping: true, taxable: false }
+      { title: "Everyday notebook — synthetic sample", sku: "FB-TEST-NOTEBOOK", quantity: 1, originalUnitPriceWithCurrency: { amount: "18.50", currencyCode: USD }, requiresShipping: true, taxable: false }
+    ]
+    shippingAddress: { firstName: "Alex", lastName: "Example", address1: "123 Example Street", city: "Austin", provinceCode: "TX", countryCode: US, zip: "78701" }
+    billingAddress: { firstName: "Alex", lastName: "Example", address1: "123 Example Street", city: "Austin", provinceCode: "TX", countryCode: US, zip: "78701" }
+    shippingLine: { title: "Synthetic standard shipping", priceWithCurrency: { amount: "8.00", currencyCode: USD } }
+  }) {
+    draftOrder { id name }
+    userErrors { field message }
+  }
+}

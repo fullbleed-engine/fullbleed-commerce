@@ -1,0 +1,11 @@
+{
+  "currency": "USD",
+  "authorized_total": 50,
+  "spent": 0,
+  "charges": [],
+  "proposed_allocation": {
+    "shopify_registration_if_required": 19,
+    "remaining_reserve": 31
+  },
+  "rule": "This is a total launch cap, not monthly authorization. Any charge taking cumulative launch spending above $50 requires explicit user approval. No paid hosting or registration has been purchased."
+}

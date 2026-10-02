@@ -1,0 +1,60 @@
+name: Verify preview
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPT_OUT_INSTRUMENTATION: 'true'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.21.0
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            shopify/app/package-lock.json
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - run: npm test
+      - run: npm run examples
+      - run: npm run pack
+      - run: npm ci --ignore-scripts
+        working-directory: shopify/app
+      - run: node tools/check-shopify.mjs
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        if: always()
+        with:
+          name: preview-verification
+          path: |
+            dist/
+            output/examples/
+            output/shopify/*.json
+            output/shopify/*.log
+          retention-days: 14
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - run: docker build -f shopify/app/Dockerfile -t fullbleed-commerce:check .
+      - name: Check production startup without merchant credentials
+        run: |
+          docker run -d --name commerce-check -p 127.0.0.1:3000:3000 \
+            -e SHOPIFY_API_KEY=synthetic-test-api-key \
+            -e SHOPIFY_API_SECRET=synthetic-container-test-secret \
+            -e SHOPIFY_APP_URL=http://localhost:3000 \
+            -e SCOPES=read_orders fullbleed-commerce:check
+          curl --fail --retry 12 --retry-delay 2 --retry-connrefused http://127.0.0.1:3000/privacy
+      - name: Container logs
+        if: always()
+        run: docker logs commerce-check 2>/dev/null || true

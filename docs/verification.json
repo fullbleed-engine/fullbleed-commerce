@@ -1,0 +1,687 @@
+{
+  "checkedAt": "2026-10-02T17:09:55.614Z",
+  "previewVersion": "0.1.0-alpha.1",
+  "sourceLocks": {
+    "root": "72868de3c815199b0c59885afc1d7ebc143eadb9b8864d0ea8e10900d895ee26",
+    "shopify": "555c911bd29bc10a8a3c6dd3f60f22d111db7168b315e91bb6cddcb2cdbbf7e4"
+  },
+  "packages": [
+    {
+      "filename": "fullbleed-commerce-0.1.0-alpha.1.zip",
+      "bytes": 2472017,
+      "sha256": "088af037e7dea9a5ed2e9a474cdc3ef9c3209ed8a206dd42add4ba700179895e",
+      "files": 28
+    },
+    {
+      "filename": "fullbleed-commerce-pro-0.1.0-alpha.1.zip",
+      "bytes": 19665,
+      "sha256": "46ae2bbfe172a1de55d6a61ab349bf3fd38cd47723da27b4c545d28865196b05",
+      "files": 8
+    }
+  ],
+  "sharedTests": {
+    "passed": 24,
+    "failed": 0,
+    "logSha256": "940cef5b20498098c63776948988cbcbece75d2078ed009612266d58a12a7bb5"
+  },
+  "wordpress": {
+    "legacyFree": {
+      "runtime": {
+        "wordpress": "7.1.2",
+        "woocommerce": "11.1.2",
+        "php": "8.3.33",
+        "hpos": false
+      },
+      "checks": [
+        {
+          "name": "admin login",
+          "passed": true
+        },
+        {
+          "name": "admin nonce",
+          "passed": true
+        },
+        {
+          "name": "admin page loads",
+          "passed": true
+        },
+        {
+          "name": "no PHP warnings in admin page",
+          "passed": true
+        },
+        {
+          "name": "configured assets served by merchant origin",
+          "passed": true
+        },
+        {
+          "name": "page nonce matches session",
+          "passed": true
+        },
+        {
+          "name": "authorized order read",
+          "passed": true
+        },
+        {
+          "name": "order responses cannot be cached",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce money preserved",
+          "passed": true
+        },
+        {
+          "name": "customer address returned to authorized staff",
+          "passed": true
+        },
+        {
+          "name": "anonymous order access denied",
+          "passed": true
+        },
+        {
+          "name": "missing nonce denied",
+          "passed": true
+        },
+        {
+          "name": "invalid nonce denied",
+          "passed": true
+        },
+        {
+          "name": "refunded order explicitly rejected",
+          "passed": true
+        },
+        {
+          "name": "fb-editor login",
+          "passed": true
+        },
+        {
+          "name": "fb-editor nonce",
+          "passed": true
+        },
+        {
+          "name": "editor order permission",
+          "passed": true
+        },
+        {
+          "name": "fb-subscriber login",
+          "passed": true
+        },
+        {
+          "name": "fb-subscriber nonce",
+          "passed": true
+        },
+        {
+          "name": "subscriber order permission",
+          "passed": true
+        },
+        {
+          "name": "fb-shop_manager login",
+          "passed": true
+        },
+        {
+          "name": "fb-shop_manager nonce",
+          "passed": true
+        },
+        {
+          "name": "shop_manager order permission",
+          "passed": true
+        },
+        {
+          "name": "bundled asset engine.wasm",
+          "passed": true
+        },
+        {
+          "name": "bundled asset worker.js",
+          "passed": true
+        },
+        {
+          "name": "bundled asset admin.js",
+          "passed": true
+        },
+        {
+          "name": "bundled asset fonts/Inter-Variable.ttf",
+          "passed": true
+        }
+      ],
+      "configuration": {
+        "maxBatch": 1,
+        "designs": [
+          "studio"
+        ]
+      }
+    },
+    "packagedHposPro": {
+      "runtime": {
+        "wordpress": "7.1.2",
+        "woocommerce": "11.1.2",
+        "php": "8.3.33",
+        "hpos": true
+      },
+      "checks": [
+        {
+          "name": "admin login",
+          "passed": true
+        },
+        {
+          "name": "admin nonce",
+          "passed": true
+        },
+        {
+          "name": "admin page loads",
+          "passed": true
+        },
+        {
+          "name": "no PHP warnings in admin page",
+          "passed": true
+        },
+        {
+          "name": "configured assets served by merchant origin",
+          "passed": true
+        },
+        {
+          "name": "page nonce matches session",
+          "passed": true
+        },
+        {
+          "name": "authorized order read",
+          "passed": true
+        },
+        {
+          "name": "order responses cannot be cached",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce money preserved",
+          "passed": true
+        },
+        {
+          "name": "customer address returned to authorized staff",
+          "passed": true
+        },
+        {
+          "name": "anonymous order access denied",
+          "passed": true
+        },
+        {
+          "name": "missing nonce denied",
+          "passed": true
+        },
+        {
+          "name": "invalid nonce denied",
+          "passed": true
+        },
+        {
+          "name": "refunded order explicitly rejected",
+          "passed": true
+        },
+        {
+          "name": "fb-editor login",
+          "passed": true
+        },
+        {
+          "name": "fb-editor nonce",
+          "passed": true
+        },
+        {
+          "name": "editor order permission",
+          "passed": true
+        },
+        {
+          "name": "fb-subscriber login",
+          "passed": true
+        },
+        {
+          "name": "fb-subscriber nonce",
+          "passed": true
+        },
+        {
+          "name": "subscriber order permission",
+          "passed": true
+        },
+        {
+          "name": "fb-shop_manager login",
+          "passed": true
+        },
+        {
+          "name": "fb-shop_manager nonce",
+          "passed": true
+        },
+        {
+          "name": "shop_manager order permission",
+          "passed": true
+        },
+        {
+          "name": "bundled asset engine.wasm",
+          "passed": true
+        },
+        {
+          "name": "bundled asset worker.js",
+          "passed": true
+        },
+        {
+          "name": "bundled asset admin.js",
+          "passed": true
+        },
+        {
+          "name": "bundled asset fonts/Inter-Variable.ttf",
+          "passed": true
+        }
+      ],
+      "configuration": {
+        "maxBatch": 25,
+        "designs": [
+          "studio",
+          "contrast",
+          "quiet"
+        ]
+      }
+    }
+  },
+  "examples": [
+    {
+      "stem": "studio-order-summary",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.5",
+      "sha256": "71b50b0bc5d89bd58a94b41f3a88b306422c96d08cec9de57edd6703405cc2df"
+    },
+    {
+      "stem": "studio-packing-slip",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.5",
+      "sha256": "8836ae03b8863ebb04706a0e36a4123c4d00dc5fcb84b36358d753c57ea30a0c"
+    },
+    {
+      "stem": "contrast-order-summary",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.5",
+      "sha256": "a956e4e98298efce78c76aed27489bdfef41c3bfbd915230b5dde9b4ab6f26ab"
+    },
+    {
+      "stem": "contrast-packing-slip",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.5",
+      "sha256": "bbf6b8232486c0be9c93c9251fa39a513be722e86c1cdb861ccb33ba72d3462d"
+    },
+    {
+      "stem": "quiet-order-summary",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.5",
+      "sha256": "9ac311b176bd220d9a49d9e6d1ab00a7499a8cc285f43a5c5a1381887127104b"
+    },
+    {
+      "stem": "quiet-packing-slip",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.5",
+      "sha256": "aa92c753512cc16b2065f2ee599fc198cbe9973683bcb5f03598bd9e0845e9cf"
+    }
+  ],
+  "textChecks": [
+    {
+      "file": "output\\examples\\contrast-order-summary.pdf",
+      "pages": 1,
+      "expected_text_present": true,
+      "text_within_page": true
+    },
+    {
+      "file": "output\\examples\\contrast-packing-slip.pdf",
+      "pages": 1,
+      "expected_text_present": true,
+      "text_within_page": true
+    },
+    {
+      "file": "output\\examples\\quiet-order-summary.pdf",
+      "pages": 1,
+      "expected_text_present": true,
+      "text_within_page": true
+    },
+    {
+      "file": "output\\examples\\quiet-packing-slip.pdf",
+      "pages": 1,
+      "expected_text_present": true,
+      "text_within_page": true
+    },
+    {
+      "file": "output\\examples\\studio-order-summary.pdf",
+      "pages": 1,
+      "expected_text_present": true,
+      "text_within_page": true
+    },
+    {
+      "file": "output\\examples\\studio-packing-slip.pdf",
+      "pages": 1,
+      "expected_text_present": true,
+      "text_within_page": true
+    },
+    {
+      "file": "output\\layout\\order-summary.pdf",
+      "pages": 8,
+      "expected_text_present": true,
+      "text_within_page": true
+    },
+    {
+      "file": "output\\layout\\packing-slip.pdf",
+      "pages": 8,
+      "expected_text_present": true,
+      "text_within_page": true
+    }
+  ],
+  "shopify": {
+    "app": {
+      "checkedAt": "2026-10-02T17:08:48.282Z",
+      "node": "v24.21.0",
+      "checks": [
+        {
+          "name": "generated-client-matches-schema",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "migrations",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "route-types",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "typecheck",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "lint",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "build",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "webhooks",
+          "exitCode": 0,
+          "passed": true
+        }
+      ],
+      "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
+      "lockSha256": "555c911bd29bc10a8a3c6dd3f60f22d111db7168b315e91bb6cddcb2cdbbf7e4",
+      "serverBuildSha256": "177f8f1620c35475351d16a38e3706ff110c8b0a1e18606dfa5e2d444aeea35b",
+      "browserTested": false,
+      "liveBillingTested": false
+    },
+    "requestHandlerTests": {
+      "passed": 2,
+      "failed": 0,
+      "logSha256": "26d542063784492ed5c3bec5279458952db4423c61159e5a067efe6e33e98c35"
+    },
+    "installedStore": {
+      "checkedAt": "2026-10-02T17:08:10.146Z",
+      "store": "fullbleed-commerce-test.myshopify.com",
+      "developmentStoreVerified": true,
+      "source": "Shopify Admin API using installed app offline session",
+      "documents": [
+        {
+          "stem": "studio-order-summary",
+          "pages": 1,
+          "engineVersion": "2.5.5",
+          "missingGlyphs": 0,
+          "sha256": "be8cf3e10cacecf1b257a6814e2bf2bab7d39c20a0c2deef5b32086bfcd8aa7d"
+        },
+        {
+          "stem": "studio-packing-slip",
+          "pages": 1,
+          "engineVersion": "2.5.5",
+          "missingGlyphs": 0,
+          "sha256": "f94f0d21b0a843f16b424a0c4eaf61bcd072359a4b4b120fb7d70ea7fce6c5ad"
+        },
+        {
+          "stem": "contrast-order-summary",
+          "pages": 1,
+          "engineVersion": "2.5.5",
+          "missingGlyphs": 0,
+          "sha256": "8daa3fc6c54d91200826cb25a91baf43a633a24e5902dba62e36ee642e93cc8a"
+        },
+        {
+          "stem": "contrast-packing-slip",
+          "pages": 1,
+          "engineVersion": "2.5.5",
+          "missingGlyphs": 0,
+          "sha256": "32624885fa5c4da571eb283f60ecd8dcf0e259359305e8115e6266700cd012d9"
+        },
+        {
+          "stem": "quiet-order-summary",
+          "pages": 1,
+          "engineVersion": "2.5.5",
+          "missingGlyphs": 0,
+          "sha256": "9e7bc8babd8a2ee2a71d230c89c9a5e65c547a53b87db5087fb9e122164dca03"
+        },
+        {
+          "stem": "quiet-packing-slip",
+          "pages": 1,
+          "engineVersion": "2.5.5",
+          "missingGlyphs": 0,
+          "sha256": "bc2f8905bf165c159f39cf70b3009c9a2013e90a7a19625b6360aea3089b83e5"
+        }
+      ],
+      "billingTested": false,
+      "browserTested": false,
+      "passed": true,
+      "scope": "read_orders",
+      "timeZone": "America/New_York",
+      "ordersAvailable": 1,
+      "unsupportedOrdersSkipped": 0
+    },
+    "graphQLValidation": [
+      {
+        "name": "order",
+        "api": "admin",
+        "exitCode": 0,
+        "result": {
+          "success": true,
+          "responses": [
+            {
+              "result": "success",
+              "resultDetail": "Successfully validated GraphQL query against schema.\nRequired scopes: read_orders, read_marketplace_orders, read_quick_sale",
+              "artifactId": "order",
+              "artifactRevision": 2
+            }
+          ],
+          "resolvedVersion": "2026-10"
+        }
+      },
+      {
+        "name": "shop",
+        "api": "admin",
+        "exitCode": 0,
+        "result": {
+          "success": true,
+          "responses": [
+            {
+              "result": "success",
+              "resultDetail": "Successfully validated GraphQL query against schema.",
+              "artifactId": "shop",
+              "artifactRevision": 2
+            }
+          ],
+          "resolvedVersion": "2026-10"
+        }
+      },
+      {
+        "name": "recent-orders",
+        "api": "admin",
+        "exitCode": 0,
+        "result": {
+          "success": true,
+          "responses": [
+            {
+              "result": "success",
+              "resultDetail": "Successfully validated GraphQL query against schema.\nRequired scopes: read_orders, read_marketplace_orders, read_quick_sale",
+              "artifactId": "recent-orders",
+              "artifactRevision": 2
+            }
+          ],
+          "resolvedVersion": "2026-10"
+        }
+      },
+      {
+        "name": "subscription",
+        "api": "partner",
+        "exitCode": 0,
+        "result": {
+          "success": true,
+          "responses": [
+            {
+              "result": "success",
+              "resultDetail": "Successfully validated GraphQL query against schema.",
+              "artifactId": "subscription",
+              "artifactRevision": 2
+            }
+          ],
+          "resolvedVersion": "2026-07"
+        }
+      },
+      {
+        "name": "installed-0",
+        "api": "admin",
+        "exitCode": 0,
+        "result": {
+          "success": true,
+          "responses": [
+            {
+              "result": "success",
+              "resultDetail": "Successfully validated GraphQL query against schema.",
+              "artifactId": "installed-0",
+              "artifactRevision": 2
+            }
+          ],
+          "resolvedVersion": "2026-10"
+        }
+      },
+      {
+        "name": "installed-1",
+        "api": "admin",
+        "exitCode": 0,
+        "result": {
+          "success": true,
+          "responses": [
+            {
+              "result": "success",
+              "resultDetail": "Successfully validated GraphQL query against schema.\nRequired scopes: read_orders, read_marketplace_orders, read_quick_sale",
+              "artifactId": "installed-1",
+              "artifactRevision": 2
+            }
+          ],
+          "resolvedVersion": "2026-10"
+        }
+      },
+      {
+        "name": "shopify-test-store",
+        "api": "admin",
+        "exitCode": 0,
+        "result": {
+          "success": true,
+          "responses": [
+            {
+              "result": "success",
+              "resultDetail": "Successfully validated GraphQL query against schema.\nRequired scopes: read_draft_orders, read_quick_sale",
+              "artifactId": "shopify-test-store",
+              "artifactRevision": 2
+            }
+          ],
+          "resolvedVersion": "2026-10"
+        }
+      },
+      {
+        "name": "shopify-create-draft",
+        "api": "admin",
+        "exitCode": 0,
+        "result": {
+          "success": true,
+          "responses": [
+            {
+              "result": "success",
+              "resultDetail": "Successfully validated GraphQL mutation against schema.\nRequired scopes: write_draft_orders, write_quick_sale, read_draft_orders, read_quick_sale",
+              "artifactId": "shopify-create-draft",
+              "artifactRevision": 2
+            }
+          ],
+          "resolvedVersion": "2026-10"
+        }
+      },
+      {
+        "name": "shopify-complete-draft",
+        "api": "admin",
+        "exitCode": 0,
+        "result": {
+          "success": true,
+          "responses": [
+            {
+              "result": "inform",
+              "resultDetail": "Successfully validated GraphQL mutation against schema. Note: Field \"Mutation.draftOrderComplete\" argument \"paymentPending\" is deprecated. Create a draft with payment terms rather than marking the draft as pending.\nRequired scopes: write_draft_orders, read_draft_orders, read_quick_sale",
+              "artifactId": "shopify-complete-draft",
+              "artifactRevision": 2
+            }
+          ],
+          "resolvedVersion": "2026-10"
+        }
+      }
+    ]
+  },
+  "dependencyAudit": {
+    "root": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "shopify": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    }
+  },
+  "visualInspection": {
+    "exampleOrderDesigns": [
+      "studio",
+      "contrast",
+      "quiet"
+    ],
+    "longPackingSlipPage": 8,
+    "liveShopify": [
+      "studio-order-summary",
+      "contrast-order-summary",
+      "quiet-packing-slip"
+    ]
+  },
+  "limits": {
+    "realBrowserTested": false,
+    "liveBillingTested": false,
+    "productionDeployed": false,
+    "marketplaceApproved": false,
+    "isoConformanceClaimed": false
+  },
+  "budget": {
+    "currency": "USD",
+    "authorized_total": 50,
+    "spent": 0,
+    "charges": [],
+    "proposed_allocation": {
+      "shopify_registration_if_required": 19,
+      "remaining_reserve": 31
+    },
+    "rule": "This is a total launch cap, not monthly authorization. Any charge taking cumulative launch spending above $50 requires explicit user approval. No paid hosting or registration has been purchased."
+  }
+}

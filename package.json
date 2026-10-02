@@ -1,0 +1,29 @@
+{
+  "name": "@fullbleed/commerce",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.18.0"
+  },
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "test": "node --test test/*.test.mjs",
+    "examples": "node tools/render-examples.mjs",
+    "pack": "node tools/pack.mjs",
+    "dev:wordpress": "node tools/wordpress.mjs"
+  },
+  "dependencies": {
+    "@bjorn3/browser_wasi_shim": "0.4.2",
+    "fflate": "0.8.3",
+    "fullbleed": "https://github.com/fullbleed-engine/fullbleed-node/releases/download/v0.1.1/fullbleed-0.1.1.tgz"
+  },
+  "overrides": {
+    "qs": "6.16.0"
+  },
+  "devDependencies": {
+    "@wp-playground/cli": "3.1.56",
+    "esbuild": "0.28.2",
+    "jsdom": "30.1.1"
+  }
+}

@@ -1,0 +1,18 @@
+Fullbleed Commerce contains components under separate licenses.
+
+src/documents.js, src/node.js, src/browser-worker.js, shopify/*.js, test/, and
+tools/ are MIT licensed. See LICENSES/MIT-Fullbleed.txt.
+
+src/admin.js, pro/, wordpress/, and the Fullbleed application additions under
+shopify/app/ are GPL-2.0-or-later licensed. See
+LICENSES/GPL-2.0.txt. Commercial distribution, updates, and support do not limit
+the rights granted by these licenses.
+
+The Shopify application incorporates the official React Router template under
+its MIT license, preserved in shopify/app/LICENSE.md. The combined app uses the
+GPL-compatible document designs in pro/; the template notice does not relicense
+those designs or the Fullbleed application additions.
+
+The unchanged Fullbleed engine and Node package are MIT licensed. Bundled fonts
+are SIL OFL 1.1. The WASI shim is distributed under its MIT option. fflate is MIT.
+The compiled packages include their respective notices and font license texts.

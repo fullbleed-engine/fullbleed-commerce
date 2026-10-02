@@ -1,0 +1,21 @@
+{
+  "schema": "fullbleed.commerce-order.v1",
+  "number": "CF-1042",
+  "date": "Oct 2, 2026",
+  "status": "Processing",
+  "currency": "USD",
+  "seller": { "name": "Cedar & Form", "lines": ["18 Maker Lane", "Portland, OR 97205", "United States"] },
+  "customer": { "name": "Alex Morgan", "lines": ["42 Example Street", "Chicago, IL 60601", "United States"] },
+  "shipping": { "name": "Alex Morgan", "lines": ["42 Example Street", "Chicago, IL 60601", "United States"] },
+  "items": [
+    { "name": "Everyday linen throw / Moss", "sku": "LIN-MOSS", "quantity": "2", "total": "$160.00" },
+    { "name": "Stoneware serving bowl / Chalk", "sku": "BWL-CHALK", "quantity": "1", "total": "$110.00" }
+  ],
+  "totals": [
+    { "label": "Subtotal", "amount": "$270.00" },
+    { "label": "Discount", "amount": "-$20.00" },
+    { "label": "Shipping", "amount": "$12.00" },
+    { "label": "Tax", "amount": "$20.96" },
+    { "label": "Total", "amount": "$282.96", "emphasis": true }
+  ]
+}

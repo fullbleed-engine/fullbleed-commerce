@@ -1,0 +1,15 @@
+node_modules/
+output/
+target/
+dist/
+wordpress/fullbleed-commerce/assets/generated/
+wordpress/fullbleed-commerce-pro/assets/admin.js
+.env
+.env.*
+!.env.example
+.shopify/
+.react-router/
+shopify/app/build/
+shopify/app/prisma/*.sqlite*
+shopify/app/prisma/*.db*
+*.log

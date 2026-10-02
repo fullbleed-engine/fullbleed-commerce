@@ -1,0 +1,7 @@
+# Completes the synthetic draft as unpaid. Does not charge a card or send an invoice.
+mutation FullbleedCompleteSyntheticDraft($id: ID!) {
+  draftOrderComplete(id: $id, paymentPending: true) {
+    draftOrder { id status }
+    userErrors { field message }
+  }
+}
