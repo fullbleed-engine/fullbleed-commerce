@@ -14,7 +14,10 @@ const env = { ...process.env, DATABASE_URL: `file:${resolve(root, 'target/webhoo
   SHOPIFY_API_KEY: 'synthetic-test-api-key', SHOPIFY_API_SECRET: 'synthetic-webhook-test-secret', SHOPIFY_APP_URL: 'https://fullbleed-test.invalid', SCOPES: 'read_orders', FULLBLEED_DEV_STORE: '', OPT_OUT_INSTRUMENTATION: 'true' };
 // Execute only local, pinned tools. Never use the running development app's database or credentials.
 const generatedSchema = resolve(app, 'node_modules/.prisma/client/schema.prisma');
-const normalize = value => value.replaceAll('\r\n', '\n').trim();
+// Prisma's generated copy inserts blank lines around model constraints.
+// Compare nonblank lines so harmless formatting cannot regenerate a DLL that
+// the running Windows development app has loaded.
+const normalize = value => value.replaceAll('\r\n', '\n').split('\n').map(line => line.trim()).filter(Boolean).join('\n');
 const clientCurrent = existsSync(generatedSchema) && normalize(readFileSync(generatedSchema, 'utf8')) === normalize(readFileSync(resolve(app, 'prisma/schema.prisma'), 'utf8'));
 const jobs = [
   ...clientCurrent ? [] : [['schema', 'node_modules/prisma/build/index.js', 'generate']],

@@ -28,6 +28,7 @@ jobs:
       - run: npm test
       - run: npm run examples
       - run: npm run pack
+      - run: node tools/check-automation.mjs --hpos
       - run: npm ci --ignore-scripts
         working-directory: shopify/app
       - run: node tools/check-shopify.mjs
@@ -39,6 +40,7 @@ jobs:
             dist/
             output/examples/
             output/templates/
+            output/automation/
             output/shopify/*.json
             output/shopify/*.log
           retention-days: 14

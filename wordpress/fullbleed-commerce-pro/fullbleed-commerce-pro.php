@@ -16,6 +16,8 @@ namespace Fullbleed\CommercePro;
 
 defined( 'ABSPATH' ) || exit;
 
+require_once __DIR__ . '/automation.php';
+
 add_action( 'admin_enqueue_scripts', function ( $hook ) {
     if ( 'woocommerce_page_fullbleed-commerce' === $hook ) {
         wp_enqueue_script( 'fullbleed-commerce-pro', plugins_url( 'assets/admin.js', __FILE__ ), array( 'fullbleed-commerce' ), '0.1.0-alpha.1', true );

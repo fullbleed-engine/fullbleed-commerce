@@ -8,14 +8,17 @@ was synthetic. No merchant store was changed and no customer PDF was retained.
 
 | Surface | Result | Retained evidence |
 | --- | --- | --- |
-| Node renderer, Shopify adapter/access/forms, browser-worker runtime, admin workflows | 32 tests passed | `output/node-tests.log` |
+| Node renderer, Shopify adapter/access/forms, browser-worker runtime, admin workflows | 36 tests passed | `output/node-tests.log` |
 | WordPress/WooCommerce, free plugin with legacy storage | 46 HTTP checks passed; HPOS disabled in runtime | `output/wordpress/legacy-free-verification.json`, `legacy-free-runtime.json` |
 | WordPress/WooCommerce, installed base and Pro ZIPs with HPOS | 46 HTTP checks passed; HPOS enabled in runtime | `output/wordpress/packaged-hpos-pro-verification.json`, `packaged-hpos-pro-runtime.json` |
 | Six designed sample PDFs | Each one page, zero reported missing glyphs | `output/examples/verification.json` and matching PDFs/PNGs |
 | Sixty-item long order summary and packing slip | Eight pages each; every SKU retained; text bounds inside pages | `output/pdf-text-verification.json`, `output/layout/` |
 | Shopify application migrations, route types, TypeScript, lint, production build and request-handler tests | All checks passed; four application tests passed | `output/shopify/verification.json`, `output/shopify/webhooks.log` |
 | Visual and source template editing in real Chrome 154 | Free editor saves, previews, reloads and resets; Pro also downloads a two-PDF ZIP and fits a 390px viewport | `output/browser/*-verification.json`, PDFs and screenshots |
+| Shopify real-browser editing and downloads | Summary/packing-slip downloads, visual edit, HTML/CSS save, actual preview, persisted template and reset passed | `output/browser/shopify-verification.json` |
 | Custom template rendering | Summary and packing slip: one page, zero missing glyphs, deterministic output; embedded PNG verified | `output/templates/verification.json` |
+| Pro automation with HPOS and legacy WooCommerce | 27 checks in each; actual queued-email handler and captured PHPMailer MIME contain the exact rendered PDF; no email sent | `output/automation/woocommerce-*.json`, PDFs and MIME |
+| Automation settings over HTTP | 9 permission, nonce, opt-in, secret handling and disconnect checks passed | `output/automation/settings-http.json` |
 | Dependency audits | Zero reported vulnerabilities in both dependency trees at check time | `output/npm-audit.json`, `output/shopify/npm-audit.json` |
 | Shopify installation and test fixture | Installed offline `read_orders` session; verified development-store identity; synthetic draft completed unpaid | `output/shopify/installed-store/verification.json`, `output/shopify/test-store-after.json` |
 | Live Shopify API to Fullbleed renderer | All six document/design variants rendered; one page each, zero missing glyphs | `output/shopify/installed-store/verification.json` and matching PDFs/PNGs |
@@ -27,10 +30,10 @@ matched the local packaged assets byte for byte. ZIP hashes are in
 `dist/SHA256SUMS.txt`; the retained summary is [verification.json](verification.json).
 
 ZIP timestamps use fixed local DOS fields so packaging is independent of timezone.
-The packaged test stores were installed and activated through Playground. After
-mobile editor refinements, frontend assets were refreshed from the final ZIPs;
-unchanged PHP was checked before that refresh. All twelve final served-asset
-comparisons passed. The retained record identifies the initial and final hashes.
+The final base and Pro ZIPs were freshly installed and activated together on the
+HPOS store through Playground. The earlier free legacy installation received only
+frontend asset refreshes. All twelve final served-asset comparisons passed.
+The retained record identifies the exact newly installed archive hashes.
 
 The HTTP checks exercised logged-in administrators and shop managers, denied
 anonymous users, editors and subscribers, rejected missing or invalid nonces,
@@ -63,6 +66,15 @@ rerendered and the final eighth page inspected. PDF text extraction checks suppo
 these fixtures; they are not a general proof of non-overlap, accessibility or ISO
 conformance.
 
+Automation tests substitute only the renderer HTTPS transport with a WordPress
+test filter; they use actual Fullbleed output for that exact order. A separate
+Node test exercises the standalone HTTP service with authentication. Production
+TLS/proxy configuration and real mail delivery are not verified. Windows
+Playground does not expose Unix mode bits; the Linux job checks private temporary
+file permissions. Automatic retry of a missing attachment and third-party mail
+queues remain release work. See [automation setup](../automation/README.md) and
+the [product plan](product-plan.md).
+
 ## Reproduce
 
 Use Node.js 24.18+ and Python with `requests` and `pymupdf` for the HTTP and PDF
@@ -91,9 +103,10 @@ retain its runtime record because later runs may use different versions.
 
 - Real-browser desktop and mobile workflow checks, including downloads, worker
   execution, previews, accessibility and different hosting security policies.
-  WooCommerce has passed real Chrome checks. Shopify browser testing is awaiting
-  login in the available Playwright browser; the earlier regular Chrome session
-  is separate. Safari and other hosting security policies remain untested.
+  WooCommerce and Shopify have passed real Chrome checks. Shopify saves use a
+  resource route so fetch receives JSON/PDF rather than document HTML, and the
+  editor dependencies are prebundled before navigation. Safari and other hosting
+  security policies remain untested.
 - Representative merchant staging orders, variations, long addresses and supported
   character sets. This preview rejects missing glyphs and refunds; it does not
   implement fiscal invoices or recalculate taxes.

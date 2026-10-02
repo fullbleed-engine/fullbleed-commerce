@@ -57,9 +57,9 @@ produce fiscal invoices.
 - Protected-customer-data selection saved and verified through the real API.
   The installed app rendered all six variants from the tagged synthetic order,
   each one page with zero reported missing glyphs. Three resulting layouts were
-  visually inspected. This backend check does not prove the browser download
-  flow. The current machine record is in [verification.json](../docs/verification.json).
-- Real-browser workflow testing and live subscription lifecycle tests remain.
+  visually inspected. Real Chrome checks also passed for the visible Create PDF action, visual and
+  HTML/CSS editing, template save/reload/reset, summary and packing-slip downloads. The current machine record is in [verification.json](../docs/verification.json).
+- Live subscription lifecycle tests, Safari and production merchant staging remain.
   The Shopify UI toolkit validator failed in its own JSX/type environment;
   the actual application typecheck and build pass.
 
@@ -71,7 +71,7 @@ encrypted session storage; finalize support/privacy/refund terms and App Store
 materials; then submit for review. No unverified data-protection answers should
 be submitted as completed controls.
 
-The proposed starting price is $9/month, subject to cost and merchant validation.
+The proposed starting price is $12/month, subject to cost and merchant validation.
 The total launch allowance is $50 and spending remains $0. The $19 App Store
 registration fee may be used within that cap if required; it has not been paid.
 

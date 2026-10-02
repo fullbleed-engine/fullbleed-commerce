@@ -56,6 +56,9 @@ export default defineConfig({
     assetsInlineLimit: 0,
   },
   optimizeDeps: {
-    include: ["@shopify/app-bridge-react"],
+    // The editor is imported lazily from shared sources outside this app root.
+    // Prebundle its dependencies before the first navigation so Vite does not
+    // invalidate the active embedded app's dependency URLs mid-session.
+    include: ["@shopify/app-bridge-react", "grapesjs", "htmlparser2", "css-tree"],
   },
 }) satisfies UserConfig;

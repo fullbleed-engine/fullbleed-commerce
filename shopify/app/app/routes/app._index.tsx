@@ -58,7 +58,7 @@ export default function Documents() {
     }
   }
   return <s-page heading="Fullbleed documents">
-    <s-link slot="secondary-actions" href="/app/templates">Customize templates</s-link>
+    <s-button slot="secondary-actions" href="/app/templates">Customize templates</s-button>
     {development && <s-banner tone="info">Development-store preview. No subscription is charged in this environment.</s-banner>}
     <s-section heading="A better finish for every order">
       <s-paragraph>Create a considered order summary or a practical packing slip using your store branding.</s-paragraph>

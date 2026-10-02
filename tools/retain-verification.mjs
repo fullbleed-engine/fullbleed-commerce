@@ -52,21 +52,24 @@ assert.ok(installed.documents.length === 6 && installed.documents.every(item => 
 for (const item of installed.documents) assert.equal(hash(`output/shopify/installed-store/${item.stem}.pdf`), item.sha256);
 const examples = json('output/examples/verification.json');
 for (const item of examples) assert.equal(hash(`output/examples/${item.stem}.pdf`), item.sha256);
-const browser = { wordpressFree: json('output/browser/wordpress-free-verification.json'), wordpressPro: json('output/browser/wordpress-pro-verification.json') };
+const browser = { wordpressFree: json('output/browser/wordpress-free-verification.json'), wordpressPro: json('output/browser/wordpress-pro-verification.json'), shopify: json('output/browser/shopify-verification.json') };
 assert.ok(Object.values(browser).every(result => result.checks.every(check => check.passed)));
 const templates = json('output/templates/verification.json');
 for (const item of templates.documents) assert.equal(hash(`output/templates/${item.kind}.pdf`), item.sha256);
+const automation = { hpos: json('output/automation/woocommerce-hpos.json'), legacy: json('output/automation/woocommerce-legacy.json'), settingsHttp: json('output/automation/settings-http.json') };
+assert.ok(Object.values(automation).every(result => result.checks.every(check => check.passed)));
+for (const [name, result] of [['woocommerce-hpos', automation.hpos], ['woocommerce-legacy', automation.legacy]]) assert.equal(hash(`output/automation/${name}.pdf`), result.pdfSha256);
 const record = {
   checkedAt: new Date().toISOString(), previewVersion: json('package.json').version,
   sourceLocks: { root: hash('package-lock.json'), shopify: hash('shopify/app/package-lock.json') },
   packages, archiveChecks, sharedTests: tap('output/node-tests.log'),
   wordpress: { legacyFree: wordpress('legacy-free'), packagedHposPro: wordpress('packaged-hpos-pro'), finalAssets },
-  browser, templates,
+  browser, templates, automation,
   examples, textChecks: json('output/pdf-text-verification.json'),
   shopify: { app, requestHandlerTests: tap('output/shopify/webhooks.log'), installedStore: installed, graphQLValidation: json('output/shopify/validation/verification.json') },
   dependencyAudit: { root: json('output/npm-audit.json').metadata.vulnerabilities, shopify: json('output/shopify/npm-audit.json').metadata.vulnerabilities },
   visualInspection: { exampleOrderDesigns: ['studio', 'contrast', 'quiet'], longPackingSlipPage: 8, customTemplates: ['order-summary', 'packing-slip'], wordpressEditor: ['desktop', '390px viewport'], liveShopify: ['studio-order-summary', 'contrast-order-summary', 'quiet-packing-slip'] },
-  limits: { realBrowserTested: false, wordpressBrowserTested: true, shopifyBrowserTested: false, liveBillingTested: false, productionDeployed: false, marketplaceApproved: false, isoConformanceClaimed: false },
+  limits: { realBrowserTested: true, wordpressBrowserTested: true, shopifyBrowserTested: true, liveBillingTested: false, productionDeployed: false, marketplaceApproved: false, isoConformanceClaimed: false },
   budget: json('docs/launch-budget.json'),
 };
 writeFileSync('docs/verification.json', JSON.stringify(record, null, 2) + '\n');

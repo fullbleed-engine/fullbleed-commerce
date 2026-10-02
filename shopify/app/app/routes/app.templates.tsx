@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 import { useEffect, useRef, useState } from 'react';
-import type { ActionFunctionArgs, HeadersFunction, LoaderFunctionArgs } from 'react-router';
+import type { HeadersFunction, LoaderFunctionArgs } from 'react-router';
 import { useLoaderData, useBlocker } from 'react-router';
 import { boundary } from '@shopify/shopify-app-react-router/server';
 import db from '../db.server';
-import { brandForShop, commerceAccess, documentOptions, withRenderLimit } from '../commerce.server';
-import { createTemplateStore, readTemplateRequest } from '../../../templates.js';
+import { brandForShop, commerceAccess, documentOptions } from '../commerce.server';
+import { createTemplateStore } from '../../../templates.js';
 import { starterTemplate } from '../../../../src/documents.js';
-import { renderOrder } from '../../../../src/node.js';
-import { fetchShopifyOrder } from '../../../adapter.js';
 import { ordersQuery } from './app._index';
 import 'grapesjs/dist/css/grapes.min.css';
 import '../../../../src/template-editor.css';
@@ -27,23 +25,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return { templates, orders: result.data.orders.nodes as { id: string; name: string }[] };
 }
 
-export async function action({ request }: ActionFunctionArgs) {
-  const { admin, session, shop } = await commerceAccess(request);
-  try {
-    const input = await readTemplateRequest(request);
-    if (input.intent !== 'preview') return Response.json(await store.save(session.shop, input.kind, input.template, input.revision), { headers: noStore });
-    if (typeof input.order !== 'string' || !/^gid:\/\/shopify\/Order\/[1-9]\d*$/.test(input.order)) return new Response('Select an order for the preview.', { status: 400, headers: noStore });
-    return await withRenderLimit(session.shop, async () => {
-      const brand = await brandForShop(session.shop, shop.name);
-      const order = await fetchShopifyOrder(admin, input.order, { name: brand.sellerName, lines: brand.sellerLines.split(/\r?\n/).filter(Boolean) }, { timeZone: shop.ianaTimezone });
-      const result = await renderOrder(order, { ...documentOptions(brand), kind: input.kind, template: input.template, signal: request.signal });
-      return new Response(new Uint8Array(result.pdf), { headers: { ...noStore, 'Content-Type': 'application/pdf' } });
-    });
-  } catch (error) {
-    if (error instanceof Response) { for (const [key, value] of Object.entries(noStore)) error.headers.set(key, value); return error; }
-    return new Response(error instanceof TypeError ? error.message : 'The template request could not be completed. Check your order and retry.', { status: error instanceof TypeError ? 422 : 502, headers: noStore });
-  }
-}
 
 export default function Templates() {
   const { templates, orders } = useLoaderData<typeof loader>();
@@ -67,8 +48,10 @@ export default function Templates() {
     let instance: { destroy: () => void; hasUnsavedChanges: () => boolean } | undefined;
     const controller = new AbortController();
     async function send(input: Record<string, unknown>) {
-      const response = await fetch('/app/templates', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kind, ...input }), cache: 'no-store', signal: controller.signal });
+      const response = await fetch('/app/template', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kind, ...input }), cache: 'no-store', signal: controller.signal });
       if (!response.ok) throw new Error(response.headers.get('Content-Type')?.includes('text/plain') ? (await response.text()).slice(0, 400) : 'Reload the app to check your session and permissions.');
+      const expectedType = input.intent === 'preview' ? 'application/pdf' : 'application/json';
+      if (!response.headers.get('Content-Type')?.startsWith(expectedType)) throw new Error('Reload the app to check your session before saving or previewing.');
       return response;
     }
     import('../../../../src/template-editor.js').then(({ mountTemplateEditor }) => {
@@ -85,7 +68,7 @@ export default function Templates() {
     return () => { cancelled = true; controller.abort(); instance?.destroy(); activeEditor.current = undefined; };
   }, [kind]);
   return <s-page heading="Template studio" inlineSize="large">
-    <s-link slot="secondary-actions" href="/app">Back to documents</s-link>
+    <s-button slot="secondary-actions" href="/app">Back to documents</s-button>
     <s-section heading="Make it unmistakably yours">
       <s-paragraph>Compose visually or paste your HTML and CSS. Save a separate template for each document type. Preview with an order before saving.</s-paragraph>
       <s-grid gridTemplateColumns="1fr 1fr" gap="base">

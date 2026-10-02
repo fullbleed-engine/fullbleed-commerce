@@ -8,8 +8,8 @@ Fullbleed engine. **Developer preview; paid sales and marketplace listings are n
 | Package | What is implemented | Distribution direction |
 | --- | --- | --- |
 | Fullbleed Commerce for WooCommerce | Order summaries and packing slips, visual and HTML/CSS template editor, embedded logos, PDF previews, Studio design, local browser generation | Free entry plugin; no account, quota, watermark, or telemetry |
-| Fullbleed Commerce Pro | Contrast and Quiet designs, up to 25 selected orders exported as a ZIP, failures stop the whole batch | Separate paid download, updates, and support; proposed $49/year for one store |
-| Fullbleed Commerce for Shopify | Registered development app with order selection, visual and HTML/CSS template editor, PDF previews, three designs, authenticated downloads, subscription checks and privacy webhooks | App subscription; proposed $9/month starting tier, subject to operating-cost and merchant validation |
+| Fullbleed Commerce Pro | Contrast and Quiet designs, up to 25 orders as a ZIP, opt-in automatic email attachments through an optional server renderer | Separate paid download, updates and support; proposed $79/year for one store, hosting separate |
+| Fullbleed Commerce for Shopify | Registered development app with order selection, visual and HTML/CSS template editor, PDF previews, three designs, authenticated downloads, subscription checks and privacy webhooks | App subscription; proposed $12/month starting tier, subject to operating-cost and merchant validation |
 
 Prices are hypotheses, not live offers. No checkout, subscription, purchase, or
 marketplace registration is active. The engine remains available independently
@@ -57,6 +57,8 @@ control their own paper and print CSS. The visual canvas is a layout aid; the
 Fullbleed PDF preview is the check for final typography and pagination.
 See [the template guide](docs/templates.md) for fields, loops and supported input.
 
+![Fullbleed visual template editor with draggable blocks, print layout and typography controls](docs/previews/template-studio.png)
+
 ## Development
 
 The development toolchain requires Node.js 24.18+ because of WordPress Playground.
@@ -97,8 +99,11 @@ Chrome/Safari test or Shopify approval.
 This preview produces order summaries, not fiscal invoices. It preserves store
 display amounts and does not calculate tax, create invoice numbers, or reconcile
 refunds. Refunded orders are rejected. Shopify edited orders are also rejected.
-There are no automatic email attachments, automatic license updates, checkout,
-multilingual font selection, or production-hosting setup yet.
+Pro includes an opt-in development integration for automatic attachments to
+existing WooCommerce emails through an optional server renderer. See the
+[automation setup and limits](automation/README.md). Automatic missing-attachment
+retries, license updates, checkout, multilingual font selection and production
+hosting remain unimplemented.
 
 Limits: 250 items/order, 30 PDF pages, 30 seconds per render, 25 orders and 50 MiB
 of PDF bytes per Pro batch. Unsupported characters fail rather than silently
@@ -111,6 +116,11 @@ The proposed paid value is merchant workflow, original document design, updates,
 and support. The first launch leads with WooCommerce; Shopify reuses the same
 document layer. Product care cards, gift inserts, and form-to-PDF integrations are
 later options after the first merchants show demand.
+
+The [production product plan](docs/product-plan.md) now makes native automation
+the paid product's central value: WooCommerce email and order workflows, Shopify
+Flow, customer downloads, fulfillment batches and visible failure recovery. It
+distinguishes development milestones from the requirements for a paid launch.
 
 The launch budget is **$50 total**, with **$0 spent**. The proposed $19 Shopify
 registration fee is within that cap; no recurring hosting has been purchased.
