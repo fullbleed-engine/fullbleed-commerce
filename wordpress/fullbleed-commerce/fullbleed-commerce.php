@@ -44,6 +44,7 @@ function assets( $hook ) {
         return;
     }
     wp_enqueue_style( 'fullbleed-commerce', plugins_url( 'assets/admin.css', __FILE__ ), array(), VERSION );
+    wp_enqueue_style( 'fullbleed-template-editor', plugins_url( 'assets/generated/editor.css', __FILE__ ), array(), VERSION );
     wp_enqueue_script( 'fullbleed-commerce', plugins_url( 'assets/generated/admin.js', __FILE__ ), array(), VERSION, true );
 }
 
@@ -54,6 +55,59 @@ function routes() {
         'permission_callback' => __NAMESPACE__ . '\can_read_order',
         'args'                => array( 'id' => array( 'type' => 'integer', 'minimum' => 1, 'required' => true ) ),
     ) );
+    register_rest_route( 'fullbleed-commerce/v1', '/templates/(?P<kind>order-summary|packing-slip)', array(
+        array( 'methods' => \WP_REST_Server::READABLE, 'callback' => __NAMESPACE__ . '\get_template', 'permission_callback' => function () { return current_user_can( 'edit_shop_orders' ); } ),
+        array( 'methods' => \WP_REST_Server::CREATABLE, 'callback' => __NAMESPACE__ . '\save_template', 'permission_callback' => function () { return current_user_can( 'manage_woocommerce' ); } ),
+    ) );
+}
+
+function template_response( $value ) {
+    $response = new \WP_REST_Response( $value );
+    $response->header( 'Cache-Control', 'no-store, private, max-age=0' );
+    $response->header( 'X-Content-Type-Options', 'nosniff' );
+    return $response;
+}
+
+function get_template( $request ) {
+    $saved = get_option( 'fullbleed_template_' . $request['kind'], null );
+    return template_response( array( 'template' => $saved['template'] ?? null, 'revision' => $saved['revision'] ?? '' ) );
+}
+
+function save_template( $request ) {
+    if ( strlen( $request->get_body() ) > 786432 ) {
+        return new \WP_Error( 'fullbleed_template_size', 'Keep the template request under 768 KB.', array( 'status' => 413 ) );
+    }
+    if ( ! $request->is_json_content_type() ) {
+        return new \WP_Error( 'fullbleed_template_type', 'Send the template as JSON.', array( 'status' => 415 ) );
+    }
+    $input = $request->get_json_params();
+    $key = 'fullbleed_template_' . $request['kind'];
+    // Store templates as private, non-autoloaded data. They are never interpolated
+    // into an admin page. The shared JS validator parses them before either the
+    // editor or renderer sees HTML; customer fields remain escaped at expansion.
+    if ( ! is_array( $input ) || ! isset( $input['revision'] ) || ! is_string( $input['revision'] ) ) {
+        return new \WP_Error( 'fullbleed_template_invalid', 'Reload the template and try again.', array( 'status' => 400 ) );
+    }
+    $saved = get_option( $key, null );
+    if ( ( $saved['revision'] ?? '' ) !== $input['revision'] ) {
+        return new \WP_Error( 'fullbleed_template_conflict', 'Someone changed this template. Reload before saving your changes.', array( 'status' => 409 ) );
+    }
+    $template = $input['template'] ?? null;
+    if ( null !== $template && ( ! is_array( $template ) || ( $template['schema'] ?? '' ) !== 'fullbleed.commerce-template.v1' || ! isset( $template['html'], $template['css'] ) || ! is_string( $template['html'] ) || ! is_string( $template['css'] ) || ! strlen( trim( $template['html'] ) ) || strlen( $template['html'] ) + strlen( $template['css'] ) > 350000 || strlen( $template['css'] ) > 65000 ) ) {
+        return new \WP_Error( 'fullbleed_template_invalid', 'Choose a Fullbleed template under 350 KB, with CSS under 65 KB.', array( 'status' => 422 ) );
+    }
+    $value = array( 'template' => null === $template ? null : array_intersect_key( $template, array_flip( array( 'schema', 'html', 'css' ) ) ), 'revision' => wp_generate_uuid4() );
+    // Conditional database update prevents two editor tabs silently overwriting
+    // each other, including when the original template did not yet exist.
+    global $wpdb;
+    if ( null === $saved ) {
+        $written = add_option( $key, $value, '', false );
+    } else {
+        $written = $wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->options} SET option_value = %s WHERE option_name = %s AND option_value = %s", maybe_serialize( $value ), $key, maybe_serialize( $saved ) ) );
+        wp_cache_delete( $key, 'options' );
+    }
+    if ( ! $written ) return new \WP_Error( 'fullbleed_template_conflict', 'The template changed in another tab. Reload before saving.', array( 'status' => 409 ) );
+    return template_response( $value );
 }
 
 function can_read_order( $request ) {
@@ -147,6 +201,8 @@ function admin_page() {
         'assets' => plugins_url( 'assets/generated/', __FILE__ ),
         'maxBatch' => min( 25, max( 1, (int) apply_filters( 'fullbleed_commerce_batch_limit', 1 ) ) ),
         'themes' => $themes,
+        'templatesEndpoint' => rest_url( 'fullbleed-commerce/v1/templates' ),
+        'canCustomize' => current_user_can( 'manage_woocommerce' ),
     );
     // Query values select orders only. Every order is authorized again by the REST API.
     $ids = isset( $_GET['order_ids'] ) ? preg_replace( '/[^0-9,]/', '', sanitize_text_field( wp_unslash( $_GET['order_ids'] ) ) ) : '';
@@ -168,6 +224,9 @@ function admin_page() {
             <p class="fb-status" data-status role="status" aria-live="polite"><?php esc_html_e( 'Ready when you are.', 'fullbleed-commerce' ); ?></p>
             <a class="button" data-preview hidden><?php esc_html_e( 'Download PDF', 'fullbleed-commerce' ); ?></a>
         </form><aside class="fb-card fb-note"><div class="fb-swatch"></div><h2><?php esc_html_e( 'Your store. Your documents.', 'fullbleed-commerce' ); ?></h2><p><?php esc_html_e( 'Order information travels only between your store and this browser. No Fullbleed account or hosted rendering service is needed.', 'fullbleed-commerce' ); ?></p><ul><li><?php esc_html_e( 'Store prices and totals are preserved.', 'fullbleed-commerce' ); ?></li><li><?php esc_html_e( 'Packing slips leave out prices.', 'fullbleed-commerce' ); ?></li><li><?php esc_html_e( 'PDFs use bundled fonts and vector type.', 'fullbleed-commerce' ); ?></li></ul><p class="description"><?php esc_html_e( 'Preview release: order summaries are not fiscal invoices. Refunds and automatic email attachments are not supported yet.', 'fullbleed-commerce' ); ?></p></aside></div>
+        <?php if ( $config['canCustomize'] ) : ?>
+        <section class="fb-template-section"><h2><?php esc_html_e( 'Make it unmistakably yours.', 'fullbleed-commerce' ); ?></h2><p><?php esc_html_e( 'Move blocks, edit text and typography, or paste your own HTML and CSS. Save separate templates for summaries and packing slips.', 'fullbleed-commerce' ); ?></p><button type="button" class="button" data-edit-template><?php esc_html_e( 'Customize selected document', 'fullbleed-commerce' ); ?></button><p data-template-status role="status"></p><div data-template-editor></div></section>
+        <?php endif; ?>
     </div>
     <?php
 }

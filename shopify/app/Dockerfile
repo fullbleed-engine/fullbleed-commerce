@@ -14,6 +14,7 @@ COPY src ./src
 COPY pro ./pro
 COPY shopify ./shopify
 WORKDIR /commerce/shopify/app
+RUN mkdir -p public/fonts && cp /commerce/node_modules/fullbleed/assets/fonts/* public/fonts/
 RUN npx --no-install prisma generate && npm run build \
     && npm prune --omit=dev --ignore-scripts
 

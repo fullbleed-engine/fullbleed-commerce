@@ -13,6 +13,8 @@ Designed order summaries and packing slips, generated in the merchant's browser 
 
 Create an order summary or packing slip directly from WooCommerce Orders. Choose A4 or US Letter, an accent color, and a closing note. The bundled Fullbleed WebAssembly engine creates a downloadable PDF with embedded fonts.
 
+Customize layouts with the included visual editor or paste your own static HTML and CSS. Insert order fields and repeating item rows, upload an embedded PNG/JPEG logo, and preview a real PDF before saving. Each document type has its own template. Import/export JSON backups or reset to the built-in design. Saved templates are private store options; order data and PDFs are not saved.
+
 No external account, quota, watermark, telemetry, or cloud renderer. The plugin serves its own JavaScript, WebAssembly and fonts from your WordPress site. Order information is read through an authenticated, permission-checked WordPress endpoint and rendered in the authorized user's browser. The plugin does not store generated PDFs.
 
 This is a preview for evaluation on staging stores. Order summaries are not fiscal invoices. Refunded orders and automatic email attachments are not supported. Browser document limits are 250 line items, 30 pages, and 30 seconds per render. Non-Latin text can require additional fonts not exposed by this preview; a missing-glyph error prevents delivery of incomplete PDFs.

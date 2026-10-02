@@ -79,8 +79,10 @@ test('Pro exports a ZIP containing complete PDFs and its own design code', async
     assert.deepEqual(Object.keys(files), ['1042-order-summary-CF-1042.pdf', '1043-order-summary-CF-1042.pdf']);
     for (const bytes of Object.values(files)) assert.equal(Buffer.from(bytes).subarray(0, 5).toString(), '%PDF-');
     assert.ok(!base.includes('zipSync'));
-    assert.ok(!base.includes('contrast'));
-    assert.ok(!base.includes('quiet'));
+    // CSS parsers legitimately contain names such as the contrast() function.
+    // Check the actual add-on source boundary, not English words in dependencies.
+    assert.ok(!base.includes('// pro/designs.js'));
+    assert.ok(!base.includes('// pro/admin.js'));
   } finally { app.close(); }
 });
 

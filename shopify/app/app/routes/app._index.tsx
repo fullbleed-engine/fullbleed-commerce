@@ -58,7 +58,7 @@ export default function Documents() {
     }
   }
   return <s-page heading="Fullbleed documents">
-    <s-link slot="secondary-actions" href="/app/settings">Brand settings</s-link>
+    <s-link slot="secondary-actions" href="/app/templates">Customize templates</s-link>
     {development && <s-banner tone="info">Development-store preview. No subscription is charged in this environment.</s-banner>}
     <s-section heading="A better finish for every order">
       <s-paragraph>Create a considered order summary or a practical packing slip using your store branding.</s-paragraph>
@@ -78,6 +78,8 @@ export default function Documents() {
     </s-section>
     <s-section slot="aside" heading="Designed to travel with the parcel">
       <s-paragraph>Three original designs, embedded typography, A4 or US Letter, and your closing note.</s-paragraph>
+      <s-link href="/app/templates">Open the visual and HTML/CSS editor</s-link>
+      <s-link href="/app/settings">Brand settings</s-link>
       <s-paragraph>Order summaries are not fiscal invoices. This preview does not support edited or refunded orders, more than 250 items, or unsupported characters.</s-paragraph>
       <s-paragraph>Customer data is used only to generate your download. Fullbleed does not retain the order or PDF.</s-paragraph>
       <s-link href="/privacy" target="_blank">Privacy and support</s-link>

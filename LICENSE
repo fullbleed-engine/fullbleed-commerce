@@ -1,9 +1,10 @@
 Fullbleed Commerce contains components under separate licenses.
 
-src/documents.js, src/node.js, src/browser-worker.js, shopify/*.js, test/, and
+src/documents.js, src/templates.js, src/node.js, src/browser-worker.js, shopify/*.js, test/, and
 tools/ are MIT licensed. See LICENSES/MIT-Fullbleed.txt.
 
-src/admin.js, pro/, wordpress/, and the Fullbleed application additions under
+src/admin.js, src/template-editor.js, src/template-editor.css, src/editor-entry.js,
+pro/, wordpress/, and the Fullbleed application additions under
 shopify/app/ are GPL-2.0-or-later licensed. See
 LICENSES/GPL-2.0.txt. Commercial distribution, updates, and support do not limit
 the rights granted by these licenses.
@@ -16,3 +17,5 @@ those designs or the Fullbleed application additions.
 The unchanged Fullbleed engine and Node package are MIT licensed. Bundled fonts
 are SIL OFL 1.1. The WASI shim is distributed under its MIT option. fflate is MIT.
 The compiled packages include their respective notices and font license texts.
+GrapesJS is BSD-3-Clause; the HTML/CSS parser dependencies use their respective
+permissive licenses, retained in EDITOR-THIRD-PARTY-NOTICES.txt.

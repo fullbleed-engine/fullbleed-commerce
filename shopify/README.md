@@ -8,7 +8,10 @@ listing. No subscription is being sold or charged.
 
 The app provides recent-order selection, order-summary and packing-slip PDFs,
 Studio/Contrast/Quiet designs, seller branding, A4/Letter, accent color and a
-closing note. It uses the published Fullbleed Node package with no core changes.
+closing note. Template studio adds visual block editing, HTML/CSS, embedded logos,
+order-field insertion, save/reset/import/export and real PDF previews. Saved
+templates are scoped to the authenticated shop and document type. It uses the
+published Fullbleed Node package with no core changes.
 See [app/README.md](app/README.md) to run it.
 
 ## Access and data flow
@@ -32,7 +35,7 @@ configured test-store domain, and Shopify's `partnerDevelopment=true` response.
 
 PDFs are generated in memory and returned with `Cache-Control: no-store`.
 Orders and PDFs are not stored. SQLite stores authorization sessions and
-merchant-entered brand settings. HMAC-authenticated uninstall and shop-redaction
+merchant-entered brand settings and document templates. HMAC-authenticated uninstall and shop-redaction
 webhooks delete that shop's records; customer privacy webhooks are acknowledged
 without retaining their payloads. The [development privacy page](app/app/routes/privacy.tsx)
 describes this behavior.

@@ -1,46 +1,41 @@
 {
-  "checkedAt": "2026-10-02T17:19:18.872Z",
+  "checkedAt": "2026-10-02T18:34:42.785Z",
   "previewVersion": "0.1.0-alpha.1",
   "sourceLocks": {
-    "root": "72868de3c815199b0c59885afc1d7ebc143eadb9b8864d0ea8e10900d895ee26",
-    "shopify": "555c911bd29bc10a8a3c6dd3f60f22d111db7168b315e91bb6cddcb2cdbbf7e4"
+    "root": "1a9f225f14867ca8a82402accfdce87f2c590f31b80a67a6014c4527bf3258b1",
+    "shopify": "1c0374462e3e1b6d476ad2ece2128c0e49258d318d854c585bba0ea5bae9013b"
   },
   "packages": [
     {
       "filename": "fullbleed-commerce-0.1.0-alpha.1.zip",
-      "bytes": 2472017,
-      "sha256": "2dd0632bdb63c6c7471c1f7b2c6e7b0775192bc0c19a3abe9fdd41cf06bf9589",
-      "files": 28
+      "bytes": 3174201,
+      "sha256": "8490a2f6cdc3ee8728aafe7d8b705d31c767023126c23a351b417b0a720204bb",
+      "files": 35
     },
     {
       "filename": "fullbleed-commerce-pro-0.1.0-alpha.1.zip",
-      "bytes": 19665,
-      "sha256": "3ab3172bcb6b12f186ae1430df217ec28ebf0d8444c477d2378f50c92a9125ac",
+      "bytes": 19667,
+      "sha256": "5784512e030f280c13c463b2e7d2c80dda8c8b76efa1e7987557cc86518c226f",
       "files": 8
     }
   ],
   "archiveChecks": [
     {
       "filename": "fullbleed-commerce-0.1.0-alpha.1.zip",
-      "originalInstalledSha256": "088af037e7dea9a5ed2e9a474cdc3ef9c3209ed8a206dd42add4ba700179895e",
-      "finalSha256": "2dd0632bdb63c6c7471c1f7b2c6e7b0775192bc0c19a3abe9fdd41cf06bf9589",
-      "entries": 28,
-      "everyEntryByteIdentical": true,
-      "change": "Normalize DOS archive timestamps across timezones."
+      "initialInstalledSha256": "b9ecbfee29ab1596eb23a96c28915713536a5e9270b8ed1b2c60ad6da53c9712",
+      "finalSha256": "8490a2f6cdc3ee8728aafe7d8b705d31c767023126c23a351b417b0a720204bb",
+      "installation": "initial ZIP install; frontend assets refreshed from final archive",
+      "finalAssetsVerifiedOverHttp": true
     },
     {
       "filename": "fullbleed-commerce-pro-0.1.0-alpha.1.zip",
-      "originalInstalledSha256": "46ae2bbfe172a1de55d6a61ab349bf3fd38cd47723da27b4c545d28865196b05",
-      "finalSha256": "3ab3172bcb6b12f186ae1430df217ec28ebf0d8444c477d2378f50c92a9125ac",
-      "entries": 8,
-      "everyEntryByteIdentical": true,
-      "change": "Normalize DOS archive timestamps across timezones."
+      "exactInstalledArchive": true
     }
   ],
   "sharedTests": {
-    "passed": 24,
+    "passed": 32,
     "failed": 0,
-    "logSha256": "940cef5b20498098c63776948988cbcbece75d2078ed009612266d58a12a7bb5"
+    "logSha256": "1b1fb02499453a3a37bc120c31962bbc450c8d7d5bc6e27e362518c082e56d2b"
   },
   "wordpress": {
     "legacyFree": {
@@ -144,6 +139,74 @@
           "passed": true
         },
         {
+          "name": "authorized template read and cache control",
+          "passed": true
+        },
+        {
+          "name": "authorized template save preserves HTML and CSS",
+          "passed": true
+        },
+        {
+          "name": "stale template overwrite rejected",
+          "passed": true
+        },
+        {
+          "name": "anonymous template access denied",
+          "passed": true
+        },
+        {
+          "name": "template write without nonce denied",
+          "passed": true
+        },
+        {
+          "name": "fb-editor login",
+          "passed": true
+        },
+        {
+          "name": "fb-editor nonce",
+          "passed": true
+        },
+        {
+          "name": "editor template permission",
+          "passed": true
+        },
+        {
+          "name": "fb-subscriber login",
+          "passed": true
+        },
+        {
+          "name": "fb-subscriber nonce",
+          "passed": true
+        },
+        {
+          "name": "subscriber template permission",
+          "passed": true
+        },
+        {
+          "name": "fb-shop_manager login",
+          "passed": true
+        },
+        {
+          "name": "fb-shop_manager nonce",
+          "passed": true
+        },
+        {
+          "name": "shop_manager template permission",
+          "passed": true
+        },
+        {
+          "name": "invalid template schema rejected",
+          "passed": true
+        },
+        {
+          "name": "oversized template rejected",
+          "passed": true
+        },
+        {
+          "name": "template reset restores built-in design",
+          "passed": true
+        },
+        {
           "name": "bundled asset engine.wasm",
           "passed": true
         },
@@ -153,6 +216,14 @@
         },
         {
           "name": "bundled asset admin.js",
+          "passed": true
+        },
+        {
+          "name": "bundled asset editor.js",
+          "passed": true
+        },
+        {
+          "name": "bundled asset editor.css",
           "passed": true
         },
         {
@@ -268,6 +339,74 @@
           "passed": true
         },
         {
+          "name": "authorized template read and cache control",
+          "passed": true
+        },
+        {
+          "name": "authorized template save preserves HTML and CSS",
+          "passed": true
+        },
+        {
+          "name": "stale template overwrite rejected",
+          "passed": true
+        },
+        {
+          "name": "anonymous template access denied",
+          "passed": true
+        },
+        {
+          "name": "template write without nonce denied",
+          "passed": true
+        },
+        {
+          "name": "fb-editor login",
+          "passed": true
+        },
+        {
+          "name": "fb-editor nonce",
+          "passed": true
+        },
+        {
+          "name": "editor template permission",
+          "passed": true
+        },
+        {
+          "name": "fb-subscriber login",
+          "passed": true
+        },
+        {
+          "name": "fb-subscriber nonce",
+          "passed": true
+        },
+        {
+          "name": "subscriber template permission",
+          "passed": true
+        },
+        {
+          "name": "fb-shop_manager login",
+          "passed": true
+        },
+        {
+          "name": "fb-shop_manager nonce",
+          "passed": true
+        },
+        {
+          "name": "shop_manager template permission",
+          "passed": true
+        },
+        {
+          "name": "invalid template schema rejected",
+          "passed": true
+        },
+        {
+          "name": "oversized template rejected",
+          "passed": true
+        },
+        {
+          "name": "template reset restores built-in design",
+          "passed": true
+        },
+        {
           "name": "bundled asset engine.wasm",
           "passed": true
         },
@@ -277,6 +416,14 @@
         },
         {
           "name": "bundled asset admin.js",
+          "passed": true
+        },
+        {
+          "name": "bundled asset editor.js",
+          "passed": true
+        },
+        {
+          "name": "bundled asset editor.css",
           "passed": true
         },
         {
@@ -292,7 +439,194 @@
           "quiet"
         ]
       }
+    },
+    "finalAssets": [
+      {
+        "port": 9476,
+        "checks": [
+          {
+            "asset": "admin.js",
+            "passed": true,
+            "sha256": "6e4cd85739c60c66ab7447d1a649cf6a2bde177dbe5a43b2a74120f095bdc01f"
+          },
+          {
+            "asset": "editor.js",
+            "passed": true,
+            "sha256": "01336d924fd4c8c8b30edf4d456a2a0ee0615e782bbf3e371add092ebc4af218"
+          },
+          {
+            "asset": "editor.css",
+            "passed": true,
+            "sha256": "5f74864064d4e4f11e9dab9f26ddf896fd93d3f72be33c7ce732c56941561415"
+          },
+          {
+            "asset": "worker.js",
+            "passed": true,
+            "sha256": "73a3f65c8262bb13a2ad1e2cf35f7e77a1cb25fe9f84450a04785cf3f472ae33"
+          },
+          {
+            "asset": "engine.wasm",
+            "passed": true,
+            "sha256": "60f06871dcd0109f919581f21ba5dac716c2c160094f380d5dba58ec96f0d5ee"
+          },
+          {
+            "asset": "build.json",
+            "passed": true,
+            "sha256": "6dc25291f0b3123a1ff81614113cadca3766be039da2a77f3a6860ee2da032f3"
+          }
+        ]
+      },
+      {
+        "port": 9477,
+        "checks": [
+          {
+            "asset": "admin.js",
+            "passed": true,
+            "sha256": "6e4cd85739c60c66ab7447d1a649cf6a2bde177dbe5a43b2a74120f095bdc01f"
+          },
+          {
+            "asset": "editor.js",
+            "passed": true,
+            "sha256": "01336d924fd4c8c8b30edf4d456a2a0ee0615e782bbf3e371add092ebc4af218"
+          },
+          {
+            "asset": "editor.css",
+            "passed": true,
+            "sha256": "5f74864064d4e4f11e9dab9f26ddf896fd93d3f72be33c7ce732c56941561415"
+          },
+          {
+            "asset": "worker.js",
+            "passed": true,
+            "sha256": "73a3f65c8262bb13a2ad1e2cf35f7e77a1cb25fe9f84450a04785cf3f472ae33"
+          },
+          {
+            "asset": "engine.wasm",
+            "passed": true,
+            "sha256": "60f06871dcd0109f919581f21ba5dac716c2c160094f380d5dba58ec96f0d5ee"
+          },
+          {
+            "asset": "build.json",
+            "passed": true,
+            "sha256": "6dc25291f0b3123a1ff81614113cadca3766be039da2a77f3a6860ee2da032f3"
+          }
+        ]
+      }
+    ]
+  },
+  "browser": {
+    "wordpressFree": {
+      "checkedAt": "2026-10-02T18:26:51.188690+00:00",
+      "browser": "154.0.8037.93",
+      "store": "http://127.0.0.1:9477",
+      "pro": false,
+      "checks": [
+        {
+          "name": "real browser worker produces a complete PDF download",
+          "passed": true
+        },
+        {
+          "name": "visual editor renders its order fields",
+          "passed": true
+        },
+        {
+          "name": "visual text editing reaches exported HTML",
+          "passed": true
+        },
+        {
+          "name": "custom HTML and CSS save through authenticated editor",
+          "passed": true
+        },
+        {
+          "name": "PDF preview contains visual edits and order data",
+          "passed": true
+        },
+        {
+          "name": "saved template survives reload and applies to ordinary downloads",
+          "passed": true
+        },
+        {
+          "name": "reset restores the built-in design",
+          "passed": true
+        },
+        {
+          "name": "no browser JavaScript errors",
+          "passed": true
+        }
+      ],
+      "pdfSha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+      "pageErrors": []
+    },
+    "wordpressPro": {
+      "checkedAt": "2026-10-02T18:30:45.499920+00:00",
+      "browser": "154.0.8037.93",
+      "store": "http://127.0.0.1:9476",
+      "pro": true,
+      "checks": [
+        {
+          "name": "real browser worker produces a complete PDF download",
+          "passed": true
+        },
+        {
+          "name": "visual editor renders its order fields",
+          "passed": true
+        },
+        {
+          "name": "visual text editing reaches exported HTML",
+          "passed": true
+        },
+        {
+          "name": "custom HTML and CSS save through authenticated editor",
+          "passed": true
+        },
+        {
+          "name": "PDF preview contains visual edits and order data",
+          "passed": true
+        },
+        {
+          "name": "saved template survives reload and applies to ordinary downloads",
+          "passed": true
+        },
+        {
+          "name": "Pro browser download is a complete two-PDF ZIP",
+          "passed": true
+        },
+        {
+          "name": "reset restores the built-in design",
+          "passed": true
+        },
+        {
+          "name": "mobile editor fits the viewport",
+          "passed": true
+        },
+        {
+          "name": "no browser JavaScript errors",
+          "passed": true
+        }
+      ],
+      "pdfSha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+      "pageErrors": []
     }
+  },
+  "templates": {
+    "checkedAt": "2026-10-02T18:30:21.673Z",
+    "documents": [
+      {
+        "kind": "order-summary",
+        "pages": 1,
+        "missingGlyphs": 0,
+        "engineVersion": "2.5.5",
+        "deterministic": true,
+        "sha256": "5357f17bbeab83d63d36eb828ba0ff90828c6eb66c1f7ff4ee9fb1aad304d444"
+      },
+      {
+        "kind": "packing-slip",
+        "pages": 1,
+        "missingGlyphs": 0,
+        "engineVersion": "2.5.5",
+        "deterministic": true,
+        "sha256": "7fa9a0748bcc07bd1d662d5c521e19406ad62a43ba57ecabbd9af88e59078188"
+      }
+    ]
   },
   "examples": [
     {
@@ -390,11 +724,11 @@
   ],
   "shopify": {
     "app": {
-      "checkedAt": "2026-10-02T17:08:48.282Z",
+      "checkedAt": "2026-10-02T18:32:07.574Z",
       "node": "v24.21.0",
       "checks": [
         {
-          "name": "generated-client-matches-schema",
+          "name": "schema",
           "exitCode": 0,
           "passed": true
         },
@@ -430,15 +764,15 @@
         }
       ],
       "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
-      "lockSha256": "555c911bd29bc10a8a3c6dd3f60f22d111db7168b315e91bb6cddcb2cdbbf7e4",
-      "serverBuildSha256": "177f8f1620c35475351d16a38e3706ff110c8b0a1e18606dfa5e2d444aeea35b",
+      "lockSha256": "1c0374462e3e1b6d476ad2ece2128c0e49258d318d854c585bba0ea5bae9013b",
+      "serverBuildSha256": "afbd31303aba07ee0049010b3bb6308beeb686b1a7171e73634060f1b3bcb3ef",
       "browserTested": false,
       "liveBillingTested": false
     },
     "requestHandlerTests": {
-      "passed": 2,
+      "passed": 4,
       "failed": 0,
-      "logSha256": "26d542063784492ed5c3bec5279458952db4423c61159e5a067efe6e33e98c35"
+      "logSha256": "513ba6f5cd40a379f9d9beae1978809ce99b63e18e4b3dc30508c1ec9ad27b0f"
     },
     "installedStore": {
       "checkedAt": "2026-10-02T17:08:10.146Z",
@@ -678,6 +1012,14 @@
       "quiet"
     ],
     "longPackingSlipPage": 8,
+    "customTemplates": [
+      "order-summary",
+      "packing-slip"
+    ],
+    "wordpressEditor": [
+      "desktop",
+      "390px viewport"
+    ],
     "liveShopify": [
       "studio-order-summary",
       "contrast-order-summary",
@@ -686,6 +1028,8 @@
   },
   "limits": {
     "realBrowserTested": false,
+    "wordpressBrowserTested": true,
+    "shopifyBrowserTested": false,
     "liveBillingTested": false,
     "productionDeployed": false,
     "marketplaceApproved": false,

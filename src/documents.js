@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import { renderTemplate, TEMPLATE_SCHEMA, validateTemplate } from './templates.js';
 const LIMITS = { text: 1600, items: 250, lines: 8 };
 export const kinds = ['order-summary', 'packing-slip'];
 
@@ -79,5 +80,21 @@ th { padding:10pt 9pt; color:#fff; background:${palette.head}; font-size:8pt; fo
 .footer { margin-top:28pt; break-inside:avoid; } .footer-rule { width:34pt; height:4pt; background:${accent}; margin-bottom:12pt; } .footer p { margin:0 0 5pt; font-size:10pt; } .footer-reference { font-size:8pt; color:${palette.muted}; }
 ${palette.extraCss || ''}`;
   const slug = order.number.replace(/[^a-zA-Z0-9_-]/g, '-').replace(/^-+|-+$/g, '').slice(0, 70) || 'order';
-  return { html, css, filename: `${kind}-${slug}.pdf`, title, orderNumber: order.number };
+  const content = options.template ? renderTemplate(options.template, order, { kind, footer, title }) : { html, css };
+  return { ...content, filename: `${kind}-${slug}.pdf`, title, orderNumber: order.number };
+}
+
+// Templates contain fields, never a copy of an actual customer's order.
+export function starterTemplate(options = {}) {
+  const kind = options.kind || 'order-summary';
+  const pack = kind === 'packing-slip';
+  const marker = { schema: 'fullbleed.commerce-order.v1', number: 'Example', date: '', status: '', currency: 'USD', seller: { name: '', lines: [] }, customer: { name: '', lines: [] }, shipping: { name: '', lines: [] }, items: [{ name: '', sku: '', quantity: '1', total: '' }], totals: [] };
+  const { css } = buildDocument(marker, { ...options, template: undefined });
+  const recipient = pack ? 'shipping' : 'customer';
+  const html = `<div class="masthead"><div class="brand">{{seller.name}}</div><div class="tag">${pack ? '' : '{{order.currency}} / '}{{order.date}}</div></div>
+<div class="hero"><div class="eyebrow">${pack ? 'ORDER CONTENTS' : 'YOUR ORDER, IN DETAIL'}</div><h1>{{document.title}}</h1><div class="order-number">{{order.number}} <span class="status">{{order.status}}</span></div></div>
+<div class="addresses"><div class="address"><div class="eyebrow">${pack ? 'SEND TO' : 'PREPARED FOR'}</div><strong>{{${recipient}.name}}</strong><div class="address-lines">{{${recipient}.address}}</div></div><div class="address"><div class="eyebrow">FROM</div><strong>{{seller.name}}</strong><div class="address-lines">{{seller.address}}</div></div></div>
+<table class="items"><thead><tr><th class="description">${pack ? 'Item to pack' : 'Description'}</th><th class="quantity">Qty</th><th class="amount">${pack ? 'Packed' : 'Line subtotal'}</th></tr></thead><tbody><tr data-fb-repeat="items"><td><div class="item-name">{{item.name}}</div><div class="sku">{{item.sku}}</div></td><td class="quantity">{{item.quantity}}</td><td class="amount">${pack ? '<span class="check-box"></span>' : '{{item.total}}'}</td></tr></tbody></table>
+${pack ? '<div class="packing-note"><div class="eyebrow">PACKED WITH CARE</div><p>Check each item before sealing the parcel.</p><p>Packed by __________________ &nbsp; Date __________________</p><div class="packing-closing">{{document.footer}}<br><span class="footer-reference">{{seller.name}} / {{order.number}}</span></div></div>' : '<div class="totals"><div class="total-row" data-fb-repeat="totals"><span>{{total.label}}</span><strong>{{total.amount}}</strong></div></div><div class="footer"><div class="footer-rule"></div><p>{{document.footer}}</p><div class="footer-reference">{{seller.name}} / {{order.number}}</div></div>'}`;
+  return validateTemplate({ schema: TEMPLATE_SCHEMA, html, css: css + '\n.address-lines { white-space: pre-line; }' }, kind);
 }

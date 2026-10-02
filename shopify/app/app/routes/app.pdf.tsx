@@ -4,6 +4,8 @@ import { boundary } from '@shopify/shopify-app-react-router/server';
 import { commerceAccess, brandForShop, documentOptions, withRenderLimit } from '../commerce.server';
 import { fetchShopifyOrder } from '../../../adapter.js';
 import { renderOrder } from '../../../../src/node.js';
+import { createTemplateStore } from '../../../templates.js';
+import db from '../db.server';
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const { admin, session, shop } = await commerceAccess(request);
@@ -15,7 +17,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
     try {
       const brand = await brandForShop(session.shop, shop.name);
       const order = await fetchShopifyOrder(admin, orderId, { name: brand.sellerName, lines: brand.sellerLines.split(/\r?\n/).filter(Boolean) }, { timeZone: shop.ianaTimezone });
-      const result = await renderOrder(order, { ...documentOptions(brand), kind, signal: request.signal });
+      const { template } = await createTemplateStore(db).get(session.shop, kind);
+      const result = await renderOrder(order, { ...documentOptions(brand), kind, template, signal: request.signal });
       return new Response(new Uint8Array(result.pdf), { headers: {
         'Content-Type': 'application/pdf', 'Content-Disposition': `attachment; filename="${result.filename}"`,
         'Cache-Control': 'no-store, private, max-age=0', 'X-Content-Type-Options': 'nosniff',

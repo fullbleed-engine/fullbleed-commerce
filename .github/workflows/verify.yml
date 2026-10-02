@@ -38,6 +38,7 @@ jobs:
           path: |
             dist/
             output/examples/
+            output/templates/
             output/shopify/*.json
             output/shopify/*.log
           retention-days: 14

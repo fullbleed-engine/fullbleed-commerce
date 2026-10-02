@@ -7,9 +7,9 @@ Fullbleed engine. **Developer preview; paid sales and marketplace listings are n
 
 | Package | What is implemented | Distribution direction |
 | --- | --- | --- |
-| Fullbleed Commerce for WooCommerce | Individual order summaries and packing slips, Studio design, A4/Letter, accent color, closing note, local browser PDF generation | Free entry plugin; no account, quota, watermark, or telemetry |
+| Fullbleed Commerce for WooCommerce | Order summaries and packing slips, visual and HTML/CSS template editor, embedded logos, PDF previews, Studio design, local browser generation | Free entry plugin; no account, quota, watermark, or telemetry |
 | Fullbleed Commerce Pro | Contrast and Quiet designs, up to 25 selected orders exported as a ZIP, failures stop the whole batch | Separate paid download, updates, and support; proposed $49/year for one store |
-| Fullbleed Commerce for Shopify | Registered development app with order selection, six document/design combinations, merchant branding, authenticated downloads, subscription checks and privacy webhooks | App subscription; proposed $9/month starting tier, subject to operating-cost and merchant validation |
+| Fullbleed Commerce for Shopify | Registered development app with order selection, visual and HTML/CSS template editor, PDF previews, three designs, authenticated downloads, subscription checks and privacy webhooks | App subscription; proposed $9/month starting tier, subject to operating-cost and merchant validation |
 
 Prices are hypotheses, not live offers. No checkout, subscription, purchase, or
 marketplace registration is active. The engine remains available independently
@@ -39,6 +39,23 @@ JavaScript, fonts, and the WebAssembly engine are served by the merchant's own
 WordPress site. Authorized staff read an order over WordPress's authenticated REST
 API; rendering occurs in a dedicated worker in that browser. This plugin sends no
 customer data to Fullbleed and stores no generated documents.
+
+## Customize templates
+
+In WooCommerce, choose a document type and select **Customize selected document**.
+In Shopify, open **Template studio**. Each document type has its own saved template.
+
+Use the visual editor to move blocks, edit text, insert fields, and style type,
+spacing, colors and borders. Switch to **HTML / CSS** to paste static markup or
+print styles. Upload an embedded PNG/JPEG logo, preview a PDF using an authorized
+order, then save. Export/import JSON backups, load a starter, or restore the
+built-in design. The free WooCommerce plugin includes this editor.
+
+Order fields such as `{{order.number}}` are escaped text. Repeated item and totals
+blocks expand for each order; prices are copied from the platform. Templates
+control their own paper and print CSS. The visual canvas is a layout aid; the
+Fullbleed PDF preview is the check for final typography and pagination.
+See [the template guide](docs/templates.md) for fields, loops and supported input.
 
 ## Development
 

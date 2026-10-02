@@ -14,7 +14,7 @@ if (api) {
     api.clearPreview();
     try {
       if (ids.length > 25 || ids.some(id => !/^[1-9]\d{0,12}$/.test(id))) throw new Error('Enter up to 25 valid numeric order IDs.');
-      const options = api.getOptions();
+    const options = await api.getDocumentOptions();
       const files = {};
       let totalBytes = 0;
       for (let i = 0; i < ids.length; i++) {

@@ -22,7 +22,7 @@ node tools/check-shopify.mjs
 The app check uses synthetic credentials and a separate
 `target/webhook-test.sqlite` database. It generates Prisma's client, applies
 migrations, checks types/lint, builds the app and runs signed-webhook and
-unauthenticated-request tests. It never uses the installed store's session.
+unauthenticated-request, template-isolation and concurrent-save tests. It never uses the installed store's session.
 No Shopify account is needed for these checks.
 
 For the maintainer's connected preview, copy `.env.example` to `.env`, keeping
@@ -80,3 +80,12 @@ passing it does not verify a hosting provider or live billing.
 the Node server. Set the production application URL and authentication redirect
 URLs before publishing a production version. Keep the current tunnel available
 for the maintainer's preview until then.
+
+## Template studio
+
+The Templates navigation opens a shared visual and HTML/CSS editor. Template
+previews use authorized orders and the real PDF renderer. Shared frontend source
+and bundled dependencies are explicitly allowed by the development Vite server;
+private environment files and session databases are not added to that allowlist.
+The editor uses local fonts copied by the root build or container build. See the
+[template guide](../../docs/templates.md) for fields, saved revisions and limits.

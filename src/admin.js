@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-import { buildDocument } from './documents.js';
+import { buildDocument, starterTemplate } from './documents.js';
+import { validateTemplate } from './templates.js';
 
 const root = document.querySelector('#fullbleed-commerce');
 const config = JSON.parse(root.dataset.config);
@@ -60,6 +61,52 @@ function getOptions() {
   return { kind: form.elements.kind.value, design: theme.design, paper: form.elements.paper.value, accent: form.elements.accent.value, footer: form.elements.footer.value };
 }
 
+async function templateRequest(kind, input) {
+  if (!config.templatesEndpoint) return { template: null, revision: '' };
+  const response = await fetch(`${config.templatesEndpoint}/${kind}`, { method: input ? 'POST' : 'GET', credentials: 'same-origin', cache: 'no-store', headers: { 'X-WP-Nonce': config.nonce, ...(input ? { 'Content-Type': 'application/json' } : {}) }, ...(input ? { body: JSON.stringify(input) } : {}) });
+  const body = await response.json();
+  if (!response.ok) throw new Error(body.message || 'The template could not be loaded.');
+  return { ...body, template: body.template ? validateTemplate(body.template, kind) : null };
+}
+
+async function getDocumentOptions() {
+  const options = getOptions();
+  const { template } = await templateRequest(options.kind);
+  return { ...options, template };
+}
+
+let editorInstance;
+let editorScript;
+root.querySelector('[data-edit-template]')?.addEventListener('click', async event => {
+  const button = event.currentTarget;
+  const editorStatus = root.querySelector('[data-template-status]');
+  if (editorInstance?.hasUnsavedChanges() && !window.confirm('Discard the unsaved template edits and open the selected document?')) return;
+  button.disabled = true;
+  try {
+    const options = getOptions();
+    const saved = await templateRequest(options.kind);
+    let revision = saved.revision;
+    if (!window.FullbleedTemplateEditor) {
+      editorScript ||= new Promise((resolve, reject) => { const script = document.createElement('script'); script.src = `${config.assets}editor.js`; script.onload = resolve; script.onerror = () => { editorScript = undefined; reject(new Error('The template editor could not load. Please retry.')); }; document.head.append(script); });
+      await editorScript;
+    }
+    editorInstance?.destroy();
+    editorInstance = window.FullbleedTemplateEditor.mount(root.querySelector('[data-template-editor]'), {
+      kind: options.kind, initial: saved.template, defaults: starterTemplate(options), fontBase: `${config.assets}fonts/`,
+      onSave: async template => { const result = await templateRequest(options.kind, { template, revision }); revision = result.revision; clearPreview(); },
+      onReset: async () => { const result = await templateRequest(options.kind, { template: null, revision }); revision = result.revision; clearPreview(); },
+      onPreview: async template => {
+        const id = String(form.elements.order_ids.value).trim().split(',')[0];
+        const order = await loadOrder(id);
+        const result = await render(buildDocument(order, { ...options, template }));
+        return new Blob([result.pdf], { type: 'application/pdf' });
+      },
+    });
+    editorStatus.textContent = `Editing ${options.kind === 'packing-slip' ? 'packing slip' : 'order summary'}. Preview uses the first order ID above.`;
+  } catch (error) { editorStatus.textContent = error.message; }
+  finally { button.disabled = false; }
+});
+
 form.addEventListener('submit', async event => {
   if (event.defaultPrevented) return;
   event.preventDefault();
@@ -67,7 +114,7 @@ form.addEventListener('submit', async event => {
   clearPreview();
   try {
     report('Loading your order…');
-    const options = getOptions();
+    const options = await getDocumentOptions();
     const order = await loadOrder(String(form.elements.order_ids.value).trim());
     const document = buildDocument(order, options);
     report('Rendering your PDF…');
@@ -85,4 +132,4 @@ form.addEventListener('submit', async event => {
 });
 
 // Extension point for separate workflow add-ons. The base includes no paid-only code.
-window.FullbleedCommerce = { root, form, config, loadOrder, getOptions, buildDocument, render, report, download, clearPreview };
+window.FullbleedCommerce = { root, form, config, loadOrder, getOptions, getDocumentOptions, buildDocument, render, report, download, clearPreview };

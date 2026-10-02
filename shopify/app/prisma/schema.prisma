@@ -23,6 +23,14 @@ model Brand {
   design      String @default("studio")
 }
 
+model DocumentTemplate {
+  shop     String
+  kind     String
+  content  String?
+  revision String
+  @@id([shop, kind])
+}
+
 model Session {
   id                  String    @id
   shop                String
