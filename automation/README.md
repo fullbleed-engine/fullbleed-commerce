@@ -70,6 +70,36 @@ credentials. A production managed service will require credential rotation and
 revocation. Third-party mail queues that read attachment paths in a later request
 need separate compatibility work; do not advertise support without testing.
 
+## WooCommerce customer downloads
+
+After testing the renderer connection, enable **Show Order summary PDF in My
+Account** in Fullbleed automation. It is independent of the email attachment
+selections and starts disabled, including on upgrades. Buyers can find the action
+on the Orders list and on the current WooCommerce order-details template.
+Themes overriding those templates must preserve WooCommerce's account actions.
+
+Only a signed-in account that owns the order can download it. Processing and
+completed orders are eligible; guest, pending, on-hold, cancelled, failed and
+fully or partially refunded orders are excluded. A nonce protects the request,
+and ownership and eligibility are checked independently on every download and
+again after rendering. Staff privileges do not grant access through this
+customer endpoint; staff continue using Fullbleed documents.
+
+Each request uses the current order fields and saved order-summary template.
+This is a fresh summary, not an archived invoice. Nothing is added to public
+uploads or WooCommerce's downloadable-product files. The verified PDF stays in
+request memory and is returned as a private, non-cacheable attachment. No email
+is sent and no order status, amount or fulfillment is changed.
+
+WooCommerce's native rate limiter applies a 30-second per-customer cooldown.
+It reduces repeated clicks; it is not an atomic usage/billing quota or a complete
+abuse-control service. The renderer's site-wide capacity limits still apply.
+Errors offer a return to the customer's account without revealing renderer
+responses or credentials. Failed preparation also appears on the merchant's
+order screen. Customers can retry after recovery; the previous failure indicator
+clears after a successful response. Disabling the setting or disconnecting the
+renderer rejects future requests, including previously copied links.
+
 ## Verification and remaining work
 
 `node --test test/renderer.test.mjs` runs real deterministic rendering plus
@@ -80,7 +110,22 @@ Omit `--hpos` to exercise legacy order storage. The test substitutes the HTTPS
 transport with a WordPress test filter using actual Fullbleed output for the
 exact serialized order. This is not proof of production networking or delivery.
 
+`node tools/check-customer-downloads.mjs --hpos` tests real customer logins,
+My Account pages and the download endpoint, including ownership, nonce replay,
+statuses, partial refunds, outage recovery and changes during rendering. Omit
+`--hpos` for legacy storage. `--packages` installs and verifies every entry from
+the built ZIPs. Add `--serve` to retain the synthetic loopback store, then run
+`python tools/check-customer-browser.py` for actual Chrome customer downloads,
+mobile layout, merchant opt-in and the packaged staff WebAssembly worker.
+The HTTPS transport is substituted with a test filter using real Fullbleed PDFs;
+production TLS and an independently hosted renderer are separate launch gates.
+
+Integration references: [WooCommerce account actions](https://github.com/woocommerce/woocommerce/blob/trunk/plugins/woocommerce/includes/wc-account-functions.php),
+[order-details template](https://github.com/woocommerce/woocommerce/blob/trunk/plugins/woocommerce/templates/order/order-details.php),
+[native rate limiter](https://github.com/woocommerce/woocommerce/blob/trunk/plugins/woocommerce/includes/class-wc-rate-limiter.php),
+and [WordPress nonce security](https://developer.wordpress.org/apis/security/nonces/).
+
 The [product plan](../docs/product-plan.md) defines the larger paid product:
-Shopify Flow, persistent jobs, customer downloads, fulfillment batches,
-delivery recovery, merchant staging, hosting and billing. Those items have
-separate release gates; this renderer and attachment hook do not satisfy them all.
+Shopify Flow and customer downloads are implemented in development. Fulfillment
+batches, delivery recovery, merchant staging, hosting and billing retain separate
+release gates; these integrations do not satisfy them all.

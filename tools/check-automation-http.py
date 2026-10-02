@@ -31,6 +31,13 @@ saved = admin.post(post_url, data=config, timeout=30)
 check('authorized connection settings save', saved.ok and 'Automation settings saved' in saved.text)
 check('secret is not returned to the browser', config['renderer_token'] not in saved.text)
 check('automatic attachments remain opt-in after connection setup', not re.search(r'name="(?:summary|packing)_emails\[\]"[^>]*checked', saved.text))
+check('customer downloads remain separately opt-in after connection setup', not re.search(r'name="customer_downloads"[^>]*checked', saved.text))
+portal = admin.post(post_url, data={**config, 'customer_downloads': '1'}, timeout=30)
+check('administrator can enable customer downloads without enabling emails', portal.ok and bool(re.search(r'name="customer_downloads"[^>]*checked', portal.text)) and not re.search(r'name="(?:summary|packing)_emails\[\]"[^>]*checked', portal.text))
+without_consent = {**config, 'customer_downloads': '1'}
+without_consent.pop('consent')
+withdrawn = admin.post(post_url, data=without_consent, timeout=30)
+check('withdrawing processing consent disables customer downloads', withdrawn.ok and not re.search(r'name="customer_downloads"[^>]*checked', withdrawn.text))
 invalid = admin.post(post_url, data={**config, 'renderer_url': 'http://renderer.example.test'}, timeout=30)
 check('unencrypted renderer endpoints are rejected', 'Use the HTTPS origin' in invalid.text)
 nonce = re.search(r'name="_wpnonce" value="([a-zA-Z0-9]+)"', saved.text)[1]

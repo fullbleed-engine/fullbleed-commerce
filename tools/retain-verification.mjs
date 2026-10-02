@@ -3,7 +3,6 @@
 import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { unzipSync } from 'fflate';
 
 const json = path => { const bytes = readFileSync(path); return JSON.parse(bytes.toString(bytes[0] === 0xff && bytes[1] === 0xfe ? 'utf16le' : 'utf8').replace(/^\uFEFF/, '')); };
 const hash = path => createHash('sha256').update(readFileSync(path)).digest('hex');
@@ -21,27 +20,18 @@ function wordpress(stem) {
   return { runtime: json(`output/wordpress/${stem}-runtime.json`), checks: record.checks, configuration: record.configuration };
 }
 const packages = json('dist/packages.json');
-const installedPackages = json('output/wordpress/packaged-hpos-pro-packages.json');
-const refreshed = json('output/wordpress/final-hpos-assets.json');
 const finalAssets = json('output/wordpress/final-asset-verification.json');
 assert.ok(finalAssets.length === 2 && finalAssets.every(site => site.checks.every(check => check.passed)));
+const customerPortal = { hpos: json('output/automation/customer-hpos.json'), legacy: json('output/automation/customer-legacy.json'), browser: json('output/browser/wordpress-customer-verification.json') };
+assert.ok(Object.values(customerPortal).every(result => result.checks.length > 10 && result.checks.every(check => check.passed)));
+for (const storage of ['hpos', 'legacy']) assert.equal(hash(`output/automation/customer-${storage}.pdf`), customerPortal[storage].pdfSha256);
+assert.equal(hash('output/browser/wordpress-customer-summary.pdf'), customerPortal.browser.pdfSha256);
+assert.equal(hash('output/browser/wordpress-customer-staff-preview.pdf'), customerPortal.browser.pdfSha256);
+for (const item of customerPortal.browser.evidence) assert.equal(hash(item.file), item.sha256);
 const archiveChecks = [];
 for (const item of packages) {
-  const installed = installedPackages.find(candidate => candidate.filename === item.filename);
-  assert.ok(installed);
-  if (installed.sha256 !== item.sha256) {
-    if (refreshed.packages.some(candidate => candidate.archive === item.filename && candidate.sha256 === item.sha256)) {
-      archiveChecks.push({ filename: item.filename, initialInstalledSha256: installed.sha256, finalSha256: item.sha256, installation: refreshed.method, finalAssetsVerifiedOverHttp: true });
-      continue;
-    }
-    const previous = `target/packaging-before/${item.filename}`;
-    assert.equal(hash(previous), installed.sha256);
-    const before = unzipSync(readFileSync(previous));
-    const after = unzipSync(readFileSync(`dist/${item.filename}`));
-    assert.deepEqual(Object.keys(after), Object.keys(before));
-    for (const name of Object.keys(before)) assert.deepEqual(after[name], before[name]);
-    archiveChecks.push({ filename: item.filename, originalInstalledSha256: installed.sha256, finalSha256: item.sha256, entries: Object.keys(after).length, everyEntryByteIdentical: true, change: 'Normalize DOS archive timestamps across timezones.' });
-  } else archiveChecks.push({ filename: item.filename, exactInstalledArchive: true });
+  for (const record of Object.values(customerPortal)) assert.equal(record.packages.find(candidate => candidate.filename === item.filename)?.sha256, item.sha256, 'Portal and browser checks must use the final archives.');
+  archiveChecks.push({ filename: item.filename, exactInstalledArchive: true, everyInstalledEntryVerified: true, installations: ['customer-hpos', 'customer-legacy'], browserChecked: true });
 }
 for (const item of packages) assert.equal(hash(`dist/${item.filename}`), item.sha256);
 const app = json('output/shopify/verification.json');
@@ -69,11 +59,11 @@ const record = {
   sourceLocks: { root: hash('package-lock.json'), shopify: hash('shopify/app/package-lock.json') },
   packages, archiveChecks, sharedTests: tap('output/node-tests.log'),
   wordpress: { legacyFree: wordpress('legacy-free'), packagedHposPro: wordpress('packaged-hpos-pro'), finalAssets },
-  browser, templates, automation,
+  browser, templates, automation, customerPortal,
   examples, textChecks: json('output/pdf-text-verification.json'),
   shopify: { app, requestHandlerTests: tap('output/shopify/webhooks.log'), flowTests: tap('output/shopify/flow.log'), flowBrowser, flowConfiguration: json('output/shopify/flow-config-validation.json'), installedStore: installed, graphQLValidation: json('output/shopify/validation/verification.json') },
   dependencyAudit: { root: json('output/npm-audit.json').metadata.vulnerabilities, shopify: json('output/shopify/npm-audit.json').metadata.vulnerabilities },
-  visualInspection: { exampleOrderDesigns: ['studio', 'contrast', 'quiet'], longPackingSlipPage: 8, customTemplates: ['order-summary', 'packing-slip'], wordpressEditor: ['desktop', '390px viewport'], liveShopify: ['studio-order-summary', 'contrast-order-summary', 'quiet-packing-slip'] },
+  visualInspection: { exampleOrderDesigns: ['studio', 'contrast', 'quiet'], longPackingSlipPage: 8, customTemplates: ['order-summary', 'packing-slip'], wordpressEditor: ['desktop', '390px viewport'], customerPortal: ['saved-template-pdf', 'orders', 'order-details', '390px viewport'], liveShopify: ['studio-order-summary', 'contrast-order-summary', 'quiet-packing-slip'] },
   limits: { realBrowserTested: true, wordpressBrowserTested: true, shopifyBrowserTested: true, liveBillingTested: false, productionDeployed: false, marketplaceApproved: false, isoConformanceClaimed: false },
   budget: json('docs/launch-budget.json'),
 };

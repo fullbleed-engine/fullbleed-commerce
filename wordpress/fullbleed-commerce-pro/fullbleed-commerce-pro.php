@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Fullbleed Commerce Pro
- * Description: Additional document designs and batch order exports for Fullbleed Commerce.
+ * Description: Automated order documents, customer downloads, additional designs and batch exports for Fullbleed Commerce.
  * Version: 0.1.0-alpha.1
  * Author: Fullbleed
  * Requires at least: 6.5
@@ -17,6 +17,7 @@ namespace Fullbleed\CommercePro;
 defined( 'ABSPATH' ) || exit;
 
 require_once __DIR__ . '/automation.php';
+require_once __DIR__ . '/customer-downloads.php';
 
 add_action( 'admin_enqueue_scripts', function ( $hook ) {
     if ( 'woocommerce_page_fullbleed-commerce' === $hook ) {

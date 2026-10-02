@@ -8,7 +8,7 @@ Fullbleed engine. **Developer preview; paid sales and marketplace listings are n
 | Package | What is implemented | Distribution direction |
 | --- | --- | --- |
 | Fullbleed Commerce for WooCommerce | Order summaries and packing slips, visual and HTML/CSS template editor, embedded logos, PDF previews, Studio design, local browser generation | Free entry plugin; no account, quota, watermark, or telemetry |
-| Fullbleed Commerce Pro | Contrast and Quiet designs, up to 25 orders as a ZIP, opt-in automatic email attachments through an optional server renderer | Separate paid download, updates and support; proposed $79/year for one store, hosting separate |
+| Fullbleed Commerce Pro | Contrast and Quiet designs, up to 25 orders as a ZIP, automatic email attachments and customer account downloads through an optional server renderer | Separate paid download, updates and support; proposed $79/year for one store, hosting separate |
 | Fullbleed Commerce for Shopify | Visual and HTML/CSS template editor, three designs, native Flow actions, expiring document links, persistent activity/retry/revoke controls, authenticated previews and subscription checks | App subscription; proposed $12/month starting tier, subject to operating-cost and merchant validation |
 
 Prices are hypotheses, not live offers. Checkout, paid subscriptions and marketplace
@@ -62,8 +62,11 @@ See [the template guide](docs/templates.md) for fields, loops and supported inpu
 ## Automate documents
 
 WooCommerce Pro can attach the saved order-summary design to selected existing
-transactional emails through an optional server renderer. Failed rendering leaves
-the original email functional and records a merchant-visible error. See the
+transactional emails through an optional server renderer. It can also add an
+**Order summary PDF** action to My Account so buyers retrieve their own eligible
+orders without staff assistance. Both features start disabled and reuse the saved
+template. Failed rendering preserves the original email or account page and
+records a merchant-visible error. See the
 [WooCommerce automation guide](automation/README.md).
 
 Shopify adds **Create order summary link** and **Create packing slip link** to
@@ -116,8 +119,8 @@ Chrome/Safari test or Shopify approval.
 This preview produces order summaries, not fiscal invoices. It preserves store
 display amounts and does not calculate tax, create invoice numbers, or reconcile
 refunds. Refunded orders are rejected. Shopify edited orders are also rejected.
-Pro includes an opt-in development integration for automatic attachments to
-existing WooCommerce emails through an optional server renderer. See the
+Pro includes opt-in development integrations for existing WooCommerce email
+attachments and customer account downloads through an optional server renderer. See the
 [automation setup and limits](automation/README.md). Automatic missing-attachment
 retries, license updates, checkout, multilingual font selection and production
 hosting remain unimplemented.

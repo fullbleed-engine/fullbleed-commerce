@@ -130,9 +130,15 @@ and merchant pause/retry/revoke controls. The synthetic development store has
 executed both actions. The ledger records preparation and download responses;
 it does not claim email delivery. See [the Flow contract](../shopify/FLOW.md).
 
-Customer portal downloads, fulfillment batches, automatic missing-attachment
-recovery, customer data-request fulfillment, production hosting and paid lifecycle
-tests remain planned. No customer email or paid plan was enabled. Workflow testing
+WooCommerce Pro now includes an opt-in customer portal action for current order
+summaries. It checks the signed-in owner's access, processing/completed status
+and refunds, reuses the saved template, streams private downloads and provides
+outage recovery without staff generation. It is a live summary, not an immutable
+issued invoice or a guest-access link.
+
+Fulfillment batches, automatic missing-attachment recovery, Shopify customer
+data-request fulfillment, production hosting and paid lifecycle tests remain
+planned. No customer email or paid plan was enabled. Workflow testing
 is confined to the synthetic development store. See [the evidence](verification.md)
 for the checks actually run.
 

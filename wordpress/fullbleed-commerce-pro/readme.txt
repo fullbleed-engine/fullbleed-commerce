@@ -17,6 +17,8 @@ Optional automation attaches PDFs to selected existing WooCommerce transactional
 
 Generated attachments are written to private temporary files outside the web root and removed after the mail request. A rendering failure leaves the original email intact and records an error on the order for manual recovery. No extra customer emails or order-status changes are made. No hosted renderer subscription is sold in this preview. See https://github.com/fullbleed-engine/fullbleed-commerce/tree/main/automation for setup, processing details and limitations.
 
+Customer self-service is a separate opt-in in Fullbleed automation. Signed-in buyers can download an Order summary PDF from My Account for their own processing or completed orders. Guest, cancelled and refunded orders are excluded. The connected renderer uses the current order and saved summary template. PDFs are returned privately without public uploads or an archive. A 30-second customer cooldown reduces repeated requests; a renderer outage provides a retry message and a safe merchant-visible failure status. This does not create fiscal invoices or add a guest-access email link.
+
 The plugin is GPL-compatible. Purchasing distribution, updates and support does not restrict rights granted by the GPL. No automatic disabling on subscription expiry is implemented.
 
 Requires the separate Fullbleed Commerce base plugin and WooCommerce. This package is not intended for submission to the free WordPress.org plugin directory.

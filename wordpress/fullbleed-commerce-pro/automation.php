@@ -7,7 +7,7 @@ const OPTION = 'fullbleed_automation';
 const MAX_PDF = 8388608;
 
 function settings() {
-    return wp_parse_args( get_option( OPTION, array() ), array( 'url' => '', 'site' => '', 'token' => '', 'consent' => false, 'summary_emails' => array(), 'packing_emails' => array() ) );
+    return wp_parse_args( get_option( OPTION, array() ), array( 'url' => '', 'site' => '', 'token' => '', 'consent' => false, 'summary_emails' => array(), 'packing_emails' => array(), 'customer_downloads' => false ) );
 }
 
 function email_choices() {
@@ -51,6 +51,7 @@ function save() {
         $consent = isset( $_POST['consent'] );
         $config = array( 'url' => rtrim( $url, '/' ), 'site' => $site, 'token' => '' === $token ? $config['token'] : $token, 'consent' => $consent );
         foreach ( array( 'summary_emails', 'packing_emails' ) as $key ) $config[ $key ] = $consent && is_array( $_POST[ $key ] ?? null ) ? array_values( array_intersect( $emails, array_map( 'sanitize_text_field', wp_unslash( $_POST[ $key ] ) ) ) ) : array();
+        $config['customer_downloads'] = $consent && isset( $_POST['customer_downloads'] );
         update_option( OPTION, $config, false );
     }
     wp_safe_redirect( admin_url( 'admin.php?page=fullbleed-automation&saved=1' ) ); exit;
@@ -60,8 +61,8 @@ function render_document( $order, $kind ) {
     $config = settings();
     if ( ! connected( $config ) ) return new \WP_Error( 'not_connected', 'Connect a renderer and allow order processing first.' );
     if ( ! is_a( $order, '\WC_Order' ) || ! in_array( $kind, array( 'order-summary', 'packing-slip' ), true ) || ! function_exists( '\Fullbleed\Commerce\get_order' ) ) return new \WP_Error( 'invalid_order', 'Choose a supported order and document.' );
-    // Internal caller already obtained this order from WooCommerce's email or
-    // authenticated admin context. Serialization uses the same Woo CRUD path.
+    // Internal callers must authorize the order first: platform email, staff
+    // permission or verified customer ownership. The public REST route stays staff-only.
     $request = new \WP_REST_Request(); $request['id'] = $order->get_id();
     $data = \Fullbleed\Commerce\get_order( $request );
     if ( is_wp_error( $data ) ) return $data;
@@ -150,7 +151,7 @@ function page() {
     if ( ! current_user_can( 'manage_woocommerce' ) ) return;
     $config = settings();
     ?>
-    <div class="wrap"><h1>Fullbleed automation</h1><p>Attach your branded documents to the transactional emails WooCommerce already sends.</p>
+    <div class="wrap"><h1>Fullbleed automation</h1><p>Attach your branded documents to the transactional emails WooCommerce already sends, and let customers download their order summaries from My Account.</p>
     <p>Automation requires a connected server renderer. It receives the order's document fields and template over HTTPS and returns a PDF. The free browser workflow works independently. Only enable a renderer you operate or trust.</p>
     <?php if ( isset( $_GET['saved'] ) ) : ?><div class="notice notice-success"><p>Automation settings saved.</p></div><?php endif; ?>
     <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
@@ -161,9 +162,11 @@ function page() {
     <tr><th>Order processing</th><td><label><input type="checkbox" name="consent" value="1" <?php checked( $config['consent'] ); ?>> Allow order document fields and templates to be sent to this renderer.</label></td></tr>
     <?php foreach ( array( 'summary_emails' => 'Order summary attachments', 'packing_emails' => 'Packing slip attachments' ) as $key => $label ) : ?>
     <tr><th><?php echo esc_html( $label ); ?></th><td><?php foreach ( email_choices() as $value => $name ) : ?><label style="display:block;margin-bottom:8px"><input type="checkbox" name="<?php echo esc_attr( $key ); ?>[]" value="<?php echo esc_attr( $value ); ?>" <?php checked( in_array( $value, $config[ $key ], true ) ); ?>> <?php echo esc_html( $name ); ?></label><?php endforeach; ?></td></tr>
-    <?php endforeach; ?></table>
+    <?php endforeach; ?>
+    <tr><th>Customer downloads</th><td><label><input type="checkbox" name="customer_downloads" value="1" <?php checked( $config['customer_downloads'] ); ?>> Show Order summary PDF in My Account.</label><p class="description">Signed-in buyers can download their own processing or completed orders. Guest orders, cancellations and refunds are excluded. Downloads use the current order details and saved summary template; they are not archived invoices.</p></td></tr></table>
     <p>Start with no email types selected. Save the connection, test a PDF below, then enable the desired attachments. Enabling attachments uses WooCommerce's background transactional-email queue, so your scheduled jobs must be running. A rendering failure leaves the original order email intact and records an error on the order. This feature does not send additional emails or change order status.</p>
-    <?php submit_button( 'Save automation settings' ); ?><button class="button" name="disconnect" value="1">Disconnect and stop attachments</button></form>
+    <p>Customer downloads are a separate opt-in. PDFs are generated when requested and are never placed in public uploads. Disabling customer downloads or disconnecting the renderer stops future requests.</p>
+    <?php submit_button( 'Save automation settings' ); ?><button class="button" name="disconnect" value="1">Disconnect renderer</button></form>
     <hr><h2>Test with an order</h2><p>Download a PDF through the connected renderer. This test sends no email and changes no order status.</p>
     <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="fullbleed_automation_test"><?php wp_nonce_field( 'fullbleed_automation_test' ); ?><label>Order ID <input type="number" name="order_id" min="1" required></label> <?php submit_button( 'Test PDF connection', 'secondary', 'submit', false ); ?></form>
     <p>Use a private PHP temporary directory outside the web root. Standard WooCommerce mail is supported; third-party mail queues that defer reading attachment files need separate staging verification. Attachment preparation does not confirm delivery.</p>

@@ -29,6 +29,8 @@ jobs:
       - run: npm run examples
       - run: npm run pack
       - run: node tools/check-automation.mjs --hpos
+      - run: node tools/check-customer-downloads.mjs --hpos --packages
+      - run: node tools/check-customer-downloads.mjs --packages
       - run: npm ci --ignore-scripts
         working-directory: shopify/app
       - run: node tools/check-shopify.mjs
