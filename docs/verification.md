@@ -100,8 +100,12 @@ retain its runtime record because later runs may use different versions.
   `preact/jsx-runtime` and JSX types after three attempts, including a minimal
   component. The app's installed Polaris types pass TypeScript and production
   build checks; this does not substitute for real-browser QA.
-- The Docker recipe is prepared for a root-context build and CI startup check.
-  The local Docker daemon was unavailable; consult the repository's CI result
-  before treating container startup as verified.
+
+The [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37039939445)
+passed the integration suite, clean dependency installation, plugin packaging,
+Shopify application checks, Docker build, database migrations and HTTP startup
+check. The retained [CI record](ci-verification.json) identifies the checked source
+commit and compares the Linux archives with the Windows artifacts. No production
+merchant credentials were supplied to CI.
 
 Spending remains recorded separately in [launch-budget.json](launch-budget.json).

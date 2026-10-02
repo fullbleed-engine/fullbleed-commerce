@@ -1,0 +1,36 @@
+{
+  "status": "completed",
+  "conclusion": "success",
+  "headSha": "0cb9bab1029a9c507a75fa5f0bfa957dca83f48b",
+  "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37039939445",
+  "createdAt": "2026-10-02T17:19:35Z",
+  "updatedAt": "2026-10-02T17:20:35Z",
+  "jobs": [
+    {
+      "name": "integration",
+      "conclusion": "success",
+      "startedAt": "2026-10-02T17:19:37Z",
+      "completedAt": "2026-10-02T17:20:24Z",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37039939445/job/110947296488"
+    },
+    {
+      "name": "container",
+      "conclusion": "success",
+      "startedAt": "2026-10-02T17:19:38Z",
+      "completedAt": "2026-10-02T17:20:34Z",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37039939445/job/110947296591"
+    }
+  ],
+  "archives": [
+    {
+      "filename": "fullbleed-commerce-0.1.0-alpha.1.zip",
+      "sha256": "2dd0632bdb63c6c7471c1f7b2c6e7b0775192bc0c19a3abe9fdd41cf06bf9589",
+      "windowsLinuxByteIdentical": true
+    },
+    {
+      "filename": "fullbleed-commerce-pro-0.1.0-alpha.1.zip",
+      "sha256": "3ab3172bcb6b12f186ae1430df217ec28ebf0d8444c477d2378f50c92a9125ac",
+      "windowsLinuxByteIdentical": true
+    }
+  ]
+}
