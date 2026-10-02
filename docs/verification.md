@@ -20,7 +20,9 @@ was synthetic. No merchant store was changed and no customer PDF was retained.
 | Shopify real-browser editing and downloads | Summary/packing-slip downloads, visual edit, HTML/CSS save, actual preview, persisted template and reset passed | `output/browser/shopify-verification.json` |
 | Custom template rendering | Summary and packing slip: one page, zero missing glyphs, deterministic output; embedded PNG verified | `output/templates/verification.json` |
 | Pro automation with HPOS and legacy WooCommerce | 27 checks in each; actual queued-email handler and captured PHPMailer MIME contain the exact rendered PDF; no email sent | `output/automation/woocommerce-*.json`, PDFs and MIME |
-| Automation settings over HTTP | 9 permission, nonce, opt-in, secret handling and disconnect checks passed | `output/automation/settings-http.json` |
+| Customer account downloads from freshly installed ZIPs | 35 checks in each of HPOS and legacy storage; real login, account pages, ownership, nonces, statuses/refunds, private downloads, cooldown and outage recovery | `output/automation/customer-*.json` and matching PDFs |
+| Customer portal in real Chrome 154 | 12 checks: desktop/mobile account actions, native PDF download, merchant enable/disable and staff browser-worker parity | `output/browser/wordpress-customer-verification.json`, PDF and screenshots |
+| Automation settings over HTTP | 12 permission, nonce, separate customer opt-in, consent withdrawal, secret handling and disconnect checks passed | `output/automation/settings-http.json` |
 | Dependency audits | Zero reported vulnerabilities in both dependency trees at check time | `output/npm-audit.json`, `output/shopify/npm-audit.json` |
 | Shopify installation and test fixture | Installed offline `read_orders` session; verified development-store identity; synthetic draft completed unpaid | `output/shopify/installed-store/verification.json`, `output/shopify/test-store-after.json` |
 | Live Shopify API to Fullbleed renderer | All six document/design variants rendered; one page each, zero missing glyphs | `output/shopify/installed-store/verification.json` and matching PDFs/PNGs |
@@ -36,6 +38,12 @@ The final base and Pro ZIPs were freshly installed and activated together on the
 HPOS store through Playground. The earlier free legacy installation received only
 frontend asset refreshes. All twelve final served-asset comparisons passed.
 The retained record identifies the exact newly installed archive hashes.
+
+For the customer-download milestone, both ZIPs were freshly installed on separate
+HPOS and legacy stores. Every installed entry was compared with its archive bytes.
+The free ZIP is unchanged; the Pro ZIP adds the customer portal. Customer and
+staff browser downloads have the same SHA-256 as the Node renderer's saved-template
+fixture. The one-page PDF and desktop/mobile account layouts were visually inspected.
 
 The HTTP checks exercised logged-in administrators and shop managers, denied
 anonymous users, editors and subscribers, rejected missing or invalid nonces,
@@ -95,6 +103,18 @@ file permissions. Automatic retry of a missing attachment and third-party mail
 queues remain release work. See [automation setup](../automation/README.md) and
 the [product plan](product-plan.md).
 
+Customer download tests use actual WordPress sessions and HTTP responses, with
+only the renderer HTTPS response substituted. A valid nonce for someone else's,
+guest, missing or refunded order still fails ownership/eligibility checks.
+Denials never call the renderer. Errors do not reveal remote response bodies or
+credentials. In-request reassignment, cancellation and disconnect during the
+renderer call prevent PDF bytes from being returned; a later successful retry
+clears the merchant's failure indicator. These tests use the default WooCommerce
+cache configuration. Persistent cache plugins and concurrent changes across
+separate PHP workers need staging verification before a paid production claim.
+Guest-access links, fiscal invoices and an immutable document archive are not
+implemented. Account downloads are current summaries using the current template.
+
 ## Reproduce
 
 Use Node.js 24.18+ and Python with `requests` and `pymupdf` for the HTTP and PDF
@@ -110,6 +130,8 @@ python tools/check-pdf-text.py
 npm run pack
 node tools/check-automation.mjs --hpos
 node tools/check-automation.mjs
+node tools/check-customer-downloads.mjs --hpos --packages
+node tools/check-customer-downloads.mjs --packages
 npm --prefix shopify/app ci --ignore-scripts
 node tools/check-shopify.mjs
 node tools/wordpress.mjs --pro --hpos --packages
@@ -120,6 +142,12 @@ in a second terminal. Stop that store before starting the free legacy variant,
 `node tools/wordpress.mjs`. Both use loopback port 9475 and synthetic credentials.
 WordPress Playground currently downloads its latest WordPress and WooCommerce;
 retain its runtime record because later runs may use different versions.
+
+For the customer portal's browser check, run
+`node tools/check-customer-downloads.mjs --hpos --packages --serve` and leave that
+synthetic store running on port 9482. In a second terminal run
+`python tools/check-customer-browser.py`. It opens its own headless Chrome context
+with synthetic customer and administrator accounts; no existing browser is used.
 
 ## Release work still required
 
@@ -147,13 +175,14 @@ retain its runtime record because later runs may use different versions.
   component. The app's installed Polaris types pass TypeScript and production
   build checks; this does not substitute for real-browser QA.
 
-The final [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37065625268)
+The final [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37070837376)
 passed clean dependency installation, all 36 shared tests, plugin packaging,
-28 WooCommerce automation checks, four Shopify application tests, eight Flow tests, Docker build,
+28 WooCommerce email automation checks, 35 customer-download checks in each
+order-storage mode, four Shopify application tests, eight Flow tests, Docker build,
 database migrations and HTTP startup. Linux also verified restrictive attachment
 file permissions. Both plugin archives are byte-identical to the Windows packages
-installed for browser checks, and the Flow fixture PDF is identical across both
-operating systems. The retained [CI record](ci-verification.json)
+installed for browser checks. Both customer-summary PDFs and the Flow fixture
+PDF are identical across both operating systems. The retained [CI record](ci-verification.json)
 identifies the checked source commit, archive hashes and individual automation
 results. No production merchant credentials were supplied to CI.
 

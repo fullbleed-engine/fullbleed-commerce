@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-02T21:13:37.032Z",
+  "checkedAt": "2026-10-02T22:24:02.482Z",
   "previewVersion": "0.1.0-alpha.1",
   "sourceLocks": {
     "root": "1a9f225f14867ca8a82402accfdce87f2c590f31b80a67a6014c4527bf3258b1",
@@ -14,25 +14,37 @@
     },
     {
       "filename": "fullbleed-commerce-pro-0.1.0-alpha.1.zip",
-      "bytes": 25261,
-      "sha256": "368e224a2f09b438aba9a1d447c07cb173a3af853e18044dc624abf7c98fa1a1",
-      "files": 9
+      "bytes": 28280,
+      "sha256": "441cbc9fa94c318b84e9d7be0346a1f700cd69d0436645f864b9431a2ff274c9",
+      "files": 10
     }
   ],
   "archiveChecks": [
     {
       "filename": "fullbleed-commerce-0.1.0-alpha.1.zip",
-      "exactInstalledArchive": true
+      "exactInstalledArchive": true,
+      "everyInstalledEntryVerified": true,
+      "installations": [
+        "customer-hpos",
+        "customer-legacy"
+      ],
+      "browserChecked": true
     },
     {
       "filename": "fullbleed-commerce-pro-0.1.0-alpha.1.zip",
-      "exactInstalledArchive": true
+      "exactInstalledArchive": true,
+      "everyInstalledEntryVerified": true,
+      "installations": [
+        "customer-hpos",
+        "customer-legacy"
+      ],
+      "browserChecked": true
     }
   ],
   "sharedTests": {
     "passed": 36,
     "failed": 0,
-    "logSha256": "9b6c315ead10f6d59e6428f5f325686642175ff4c6b450c35aa57526b7db61ae"
+    "logSha256": "c88da1c0b43daf8ced1375af2c859a2f5ba901b33eb611c1f7bd09be9ee9fb1d"
   },
   "wordpress": {
     "legacyFree": {
@@ -670,7 +682,7 @@
     }
   },
   "templates": {
-    "checkedAt": "2026-10-02T20:48:57.250Z",
+    "checkedAt": "2026-10-02T21:39:29.188Z",
     "documents": [
       {
         "kind": "order-summary",
@@ -692,7 +704,7 @@
   },
   "automation": {
     "hpos": {
-      "checkedAt": "2026-10-02T19:30:50.616Z",
+      "checkedAt": "2026-10-02T21:47:17.437Z",
       "wordpress": "7.1.2",
       "woocommerce": "11.1.2",
       "php": "8.3.33",
@@ -809,8 +821,7 @@
       "hpos": true,
       "unixPermissionsChecked": false,
       "pdfSha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
-      "transport": "Real WooCommerce hooks and PHPMailer MIME with outbound mail captured. HTTPS response supplied through the WordPress HTTP test filter using actual Fullbleed output from this exact order. No production network or delivery claim.",
-      "mimeSha256": "bd737640ea6fcbbc8cf0d3bcdf2ee1575ec0251c02172d9e7b4b288279c03574"
+      "transport": "Real WooCommerce hooks and PHPMailer MIME with outbound mail captured. HTTPS response supplied through the WordPress HTTP test filter using actual Fullbleed output from this exact order. No production network or delivery claim."
     },
     "legacy": {
       "checkedAt": "2026-10-02T19:30:50.538Z",
@@ -934,7 +945,7 @@
       "mimeSha256": "56118969d1386dff2a3d0ceec286fb3bda33a1afe221e4bdb06f0426e348b8f0"
     },
     "settingsHttp": {
-      "store": "http://127.0.0.1:9481",
+      "store": "http://127.0.0.1:9482",
       "checks": [
         {
           "name": "automation page loads without PHP warnings",
@@ -965,12 +976,453 @@
           "passed": true
         },
         {
+          "name": "customer downloads remain separately opt-in after connection setup",
+          "passed": true
+        },
+        {
+          "name": "administrator can enable customer downloads without enabling emails",
+          "passed": true
+        },
+        {
+          "name": "withdrawing processing consent disables customer downloads",
+          "passed": true
+        },
+        {
           "name": "unencrypted renderer endpoints are rejected",
           "passed": true
         },
         {
           "name": "disconnect clears the saved connection",
           "passed": true
+        }
+      ]
+    }
+  },
+  "customerPortal": {
+    "hpos": {
+      "checkedAt": "2026-10-02T22:15:52.300Z",
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.33",
+      "hpos": true,
+      "ordersUrl": "http://127.0.0.1:9482/my-account/orders/",
+      "viewUrl": "http://127.0.0.1:9482/my-account/view-order/12/",
+      "guest": 16,
+      "partial": 17,
+      "packages": [
+        {
+          "filename": "fullbleed-commerce-0.1.0-alpha.1.zip",
+          "bytes": 3174196,
+          "sha256": "8d33cd5139dca6eb61ca11a18a78e4b5f9df270880009e4f36e305c52bfe39a7",
+          "files": 35
+        },
+        {
+          "filename": "fullbleed-commerce-pro-0.1.0-alpha.1.zip",
+          "bytes": 28280,
+          "sha256": "441cbc9fa94c318b84e9d7be0346a1f700cd69d0436645f864b9431a2ff274c9",
+          "files": 10
+        }
+      ],
+      "checks": [
+        {
+          "name": "every installed plugin entry matches the final ZIP",
+          "passed": true
+        },
+        {
+          "name": "customer downloads start disabled",
+          "passed": true
+        },
+        {
+          "name": "My Account lists one PDF action for the eligible owned order",
+          "passed": true
+        },
+        {
+          "name": "order details also expose one native PDF action",
+          "passed": true
+        },
+        {
+          "name": "account page does not expose renderer credentials or endpoints",
+          "passed": true
+        },
+        {
+          "name": "anonymous replay of an owner link is forbidden",
+          "passed": true
+        },
+        {
+          "name": "another customer cannot reuse the owner nonce",
+          "passed": true
+        },
+        {
+          "name": "another customer order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "guest order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "refunded order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "partially refunded order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "missing order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "staff capabilities do not bypass customer ownership",
+          "passed": true
+        },
+        {
+          "name": "missing or malformed nonce is rejected",
+          "passed": true
+        },
+        {
+          "name": "negative, overflowing and array order IDs fail closed",
+          "passed": true
+        },
+        {
+          "name": "unsupported request method is rejected",
+          "passed": true
+        },
+        {
+          "name": "ineligible status changes hide the action and revoke old links",
+          "passed": true
+        },
+        {
+          "name": "completed orders remain eligible",
+          "passed": true
+        },
+        {
+          "name": "all denied requests avoid the renderer",
+          "passed": true
+        },
+        {
+          "name": "owner HTTP download equals actual Fullbleed PDF bytes",
+          "passed": true
+        },
+        {
+          "name": "PDF response is private and cannot be cached or sniffed",
+          "passed": true
+        },
+        {
+          "name": "PDF has a useful filename, correct type and complete length",
+          "passed": true
+        },
+        {
+          "name": "customer PDF uses the exact saved merchant template and Woo order data",
+          "passed": true
+        },
+        {
+          "name": "repeat clicks receive a retry delay without another render",
+          "passed": true
+        },
+        {
+          "name": "offline renderer produces a private recoverable error with no remote details",
+          "passed": true
+        },
+        {
+          "name": "remote-error renderer produces a private recoverable error with no remote details",
+          "passed": true
+        },
+        {
+          "name": "corrupt renderer produces a private recoverable error with no remote details",
+          "passed": true
+        },
+        {
+          "name": "renderer failure records a safe merchant recovery status",
+          "passed": true
+        },
+        {
+          "name": "reassign during rendering prevents PDF bytes from leaving WordPress",
+          "passed": true
+        },
+        {
+          "name": "cancel during rendering prevents PDF bytes from leaving WordPress",
+          "passed": true
+        },
+        {
+          "name": "disconnect during rendering prevents PDF bytes from leaving WordPress",
+          "passed": true
+        },
+        {
+          "name": "disabled portal, withdrawn processing consent or missing credentials revoke old links",
+          "passed": true
+        },
+        {
+          "name": "a later customer retry succeeds after renderer recovery",
+          "passed": true
+        },
+        {
+          "name": "successful recovery clears the failed merchant status",
+          "passed": true
+        },
+        {
+          "name": "download leaves order totals, addresses and status intact",
+          "passed": true
+        }
+      ],
+      "pdfSha256": "5df220bc2320582a6a5aacf460429392e022a73bafdde1f19dd9ad452eac1637",
+      "transport": "Real WordPress login, WooCommerce My Account pages and admin-post HTTP. Renderer HTTPS response substituted by a test-only WordPress filter using actual Fullbleed bytes for the exact order and saved template. No email, payment or production service."
+    },
+    "legacy": {
+      "checkedAt": "2026-10-02T22:15:51.353Z",
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.33",
+      "hpos": false,
+      "ordersUrl": "http://127.0.0.1:9483/my-account/orders/",
+      "viewUrl": "http://127.0.0.1:9483/my-account/view-order/12/",
+      "guest": 16,
+      "partial": 17,
+      "packages": [
+        {
+          "filename": "fullbleed-commerce-0.1.0-alpha.1.zip",
+          "bytes": 3174196,
+          "sha256": "8d33cd5139dca6eb61ca11a18a78e4b5f9df270880009e4f36e305c52bfe39a7",
+          "files": 35
+        },
+        {
+          "filename": "fullbleed-commerce-pro-0.1.0-alpha.1.zip",
+          "bytes": 28280,
+          "sha256": "441cbc9fa94c318b84e9d7be0346a1f700cd69d0436645f864b9431a2ff274c9",
+          "files": 10
+        }
+      ],
+      "checks": [
+        {
+          "name": "every installed plugin entry matches the final ZIP",
+          "passed": true
+        },
+        {
+          "name": "customer downloads start disabled",
+          "passed": true
+        },
+        {
+          "name": "My Account lists one PDF action for the eligible owned order",
+          "passed": true
+        },
+        {
+          "name": "order details also expose one native PDF action",
+          "passed": true
+        },
+        {
+          "name": "account page does not expose renderer credentials or endpoints",
+          "passed": true
+        },
+        {
+          "name": "anonymous replay of an owner link is forbidden",
+          "passed": true
+        },
+        {
+          "name": "another customer cannot reuse the owner nonce",
+          "passed": true
+        },
+        {
+          "name": "another customer order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "guest order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "refunded order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "partially refunded order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "missing order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "staff capabilities do not bypass customer ownership",
+          "passed": true
+        },
+        {
+          "name": "missing or malformed nonce is rejected",
+          "passed": true
+        },
+        {
+          "name": "negative, overflowing and array order IDs fail closed",
+          "passed": true
+        },
+        {
+          "name": "unsupported request method is rejected",
+          "passed": true
+        },
+        {
+          "name": "ineligible status changes hide the action and revoke old links",
+          "passed": true
+        },
+        {
+          "name": "completed orders remain eligible",
+          "passed": true
+        },
+        {
+          "name": "all denied requests avoid the renderer",
+          "passed": true
+        },
+        {
+          "name": "owner HTTP download equals actual Fullbleed PDF bytes",
+          "passed": true
+        },
+        {
+          "name": "PDF response is private and cannot be cached or sniffed",
+          "passed": true
+        },
+        {
+          "name": "PDF has a useful filename, correct type and complete length",
+          "passed": true
+        },
+        {
+          "name": "customer PDF uses the exact saved merchant template and Woo order data",
+          "passed": true
+        },
+        {
+          "name": "repeat clicks receive a retry delay without another render",
+          "passed": true
+        },
+        {
+          "name": "offline renderer produces a private recoverable error with no remote details",
+          "passed": true
+        },
+        {
+          "name": "remote-error renderer produces a private recoverable error with no remote details",
+          "passed": true
+        },
+        {
+          "name": "corrupt renderer produces a private recoverable error with no remote details",
+          "passed": true
+        },
+        {
+          "name": "renderer failure records a safe merchant recovery status",
+          "passed": true
+        },
+        {
+          "name": "reassign during rendering prevents PDF bytes from leaving WordPress",
+          "passed": true
+        },
+        {
+          "name": "cancel during rendering prevents PDF bytes from leaving WordPress",
+          "passed": true
+        },
+        {
+          "name": "disconnect during rendering prevents PDF bytes from leaving WordPress",
+          "passed": true
+        },
+        {
+          "name": "disabled portal, withdrawn processing consent or missing credentials revoke old links",
+          "passed": true
+        },
+        {
+          "name": "a later customer retry succeeds after renderer recovery",
+          "passed": true
+        },
+        {
+          "name": "successful recovery clears the failed merchant status",
+          "passed": true
+        },
+        {
+          "name": "download leaves order totals, addresses and status intact",
+          "passed": true
+        }
+      ],
+      "pdfSha256": "5df220bc2320582a6a5aacf460429392e022a73bafdde1f19dd9ad452eac1637",
+      "transport": "Real WordPress login, WooCommerce My Account pages and admin-post HTTP. Renderer HTTPS response substituted by a test-only WordPress filter using actual Fullbleed bytes for the exact order and saved template. No email, payment or production service."
+    },
+    "browser": {
+      "checkedAt": "2026-10-02T22:20:31.244672+00:00",
+      "browser": "154.0.8037.93",
+      "store": "http://127.0.0.1:9482",
+      "checks": [
+        {
+          "name": "buyer finds one PDF action on the actual account orders page",
+          "passed": true
+        },
+        {
+          "name": "native browser download has the promised filename and exact renderer bytes",
+          "passed": true
+        },
+        {
+          "name": "download contains saved brand styling and platform totals",
+          "passed": true
+        },
+        {
+          "name": "download leaves the account page usable",
+          "passed": true
+        },
+        {
+          "name": "buyer can also find the PDF on order details",
+          "passed": true
+        },
+        {
+          "name": "account PDF action remains visible within a mobile viewport",
+          "passed": true
+        },
+        {
+          "name": "merchant sees the enabled customer-download setting without the access token",
+          "passed": true
+        },
+        {
+          "name": "merchant can remove customer downloads without disabling email configuration",
+          "passed": true
+        },
+        {
+          "name": "previously issued account link fails immediately after disabling",
+          "passed": true
+        },
+        {
+          "name": "re-enabling restores the customer action",
+          "passed": true
+        },
+        {
+          "name": "packaged staff browser worker matches the customer server-rendered PDF",
+          "passed": true
+        },
+        {
+          "name": "customer and merchant pages have no JavaScript errors",
+          "passed": true
+        }
+      ],
+      "packages": [
+        {
+          "filename": "fullbleed-commerce-0.1.0-alpha.1.zip",
+          "bytes": 3174196,
+          "sha256": "8d33cd5139dca6eb61ca11a18a78e4b5f9df270880009e4f36e305c52bfe39a7",
+          "files": 35
+        },
+        {
+          "filename": "fullbleed-commerce-pro-0.1.0-alpha.1.zip",
+          "bytes": 28280,
+          "sha256": "441cbc9fa94c318b84e9d7be0346a1f700cd69d0436645f864b9431a2ff274c9",
+          "files": 10
+        }
+      ],
+      "pdfSha256": "5df220bc2320582a6a5aacf460429392e022a73bafdde1f19dd9ad452eac1637",
+      "pageErrors": [],
+      "evidence": [
+        {
+          "file": "output/browser/wordpress-customer-orders.png",
+          "sha256": "547ca6f6426cdb45a0debeccc50f22413f409fb10d28688d090fac54ddef09bd"
+        },
+        {
+          "file": "output/browser/wordpress-customer-details.png",
+          "sha256": "cae11bc5207f7fcbe96cc95e76cb38599d586b9cb9cd5efd46dcf672d91a5cb4"
+        },
+        {
+          "file": "output/browser/wordpress-customer-mobile.png",
+          "sha256": "962836322c9da1d37adacde678aa79fbf177d94232e2a767f09b514cda35a4bd"
+        },
+        {
+          "file": "output/browser/wordpress-customer-settings.png",
+          "sha256": "f49040f1de6d9c7f33634dd273d9ff40b0e916a04c743aaff4b4ee4355b20101"
         }
       ]
     }
@@ -1528,6 +1980,12 @@
     ],
     "wordpressEditor": [
       "desktop",
+      "390px viewport"
+    ],
+    "customerPortal": [
+      "saved-template-pdf",
+      "orders",
+      "order-details",
       "390px viewport"
     ],
     "liveShopify": [
