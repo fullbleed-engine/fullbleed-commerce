@@ -1,36 +1,166 @@
 {
   "status": "completed",
   "conclusion": "success",
-  "headSha": "0cb9bab1029a9c507a75fa5f0bfa957dca83f48b",
-  "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37039939445",
-  "createdAt": "2026-10-02T17:19:35Z",
-  "updatedAt": "2026-10-02T17:20:35Z",
+  "headSha": "92e187759cd0f33c1f282348ce1267b30728b4e3",
+  "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37055058614",
+  "createdAt": "2026-10-02T19:35:01Z",
+  "updatedAt": "2026-10-02T19:37:07Z",
   "jobs": [
-    {
-      "name": "integration",
-      "conclusion": "success",
-      "startedAt": "2026-10-02T17:19:37Z",
-      "completedAt": "2026-10-02T17:20:24Z",
-      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37039939445/job/110947296488"
-    },
     {
       "name": "container",
       "conclusion": "success",
-      "startedAt": "2026-10-02T17:19:38Z",
-      "completedAt": "2026-10-02T17:20:34Z",
-      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37039939445/job/110947296591"
+      "startedAt": "2026-10-02T19:35:04Z",
+      "completedAt": "2026-10-02T19:35:48Z",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37055058614/job/110997603954"
+    },
+    {
+      "name": "integration",
+      "conclusion": "success",
+      "startedAt": "2026-10-02T19:35:40Z",
+      "completedAt": "2026-10-02T19:37:06Z",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37055058614/job/110997604369"
     }
   ],
+  "artifact": "preview-verification",
   "archives": [
     {
       "filename": "fullbleed-commerce-0.1.0-alpha.1.zip",
-      "sha256": "2dd0632bdb63c6c7471c1f7b2c6e7b0775192bc0c19a3abe9fdd41cf06bf9589",
+      "bytes": 3174196,
+      "sha256": "8d33cd5139dca6eb61ca11a18a78e4b5f9df270880009e4f36e305c52bfe39a7",
+      "files": 35,
       "windowsLinuxByteIdentical": true
     },
     {
       "filename": "fullbleed-commerce-pro-0.1.0-alpha.1.zip",
-      "sha256": "3ab3172bcb6b12f186ae1430df217ec28ebf0d8444c477d2378f50c92a9125ac",
+      "bytes": 25261,
+      "sha256": "368e224a2f09b438aba9a1d447c07cb173a3af853e18044dc624abf7c98fa1a1",
+      "files": 9,
       "windowsLinuxByteIdentical": true
     }
-  ]
+  ],
+  "woocommerceAutomationLinux": {
+    "checkedAt": "2026-10-02T19:36:36.755Z",
+    "wordpress": "7.1.2",
+    "woocommerce": "11.1.2",
+    "php": "8.3.33",
+    "checks": [
+      {
+        "name": "attachments remain unchanged before opt-in",
+        "passed": true
+      },
+      {
+        "name": "unselected emails cause no rendering",
+        "passed": true
+      },
+      {
+        "name": "renderer request uses server-only credentials and disables redirects",
+        "passed": true
+      },
+      {
+        "name": "automation serializes the authorized WooCommerce order",
+        "passed": true
+      },
+      {
+        "name": "existing transactional email gets one PDF with a useful filename",
+        "passed": true
+      },
+      {
+        "name": "attachment is outside the web root",
+        "passed": true
+      },
+      {
+        "name": "attachment matches actual renderer bytes",
+        "passed": true
+      },
+      {
+        "name": "attachment uses private permissions",
+        "passed": true
+      },
+      {
+        "name": "enabled attachments request WooCommerce background emails",
+        "passed": true
+      },
+      {
+        "name": "wp_mail accepts the prepared attachment",
+        "passed": true
+      },
+      {
+        "name": "captured MIME names the PDF attachment",
+        "passed": true
+      },
+      {
+        "name": "renderer request uses server-only credentials and disables redirects",
+        "passed": true
+      },
+      {
+        "name": "automation serializes the authorized WooCommerce order",
+        "passed": true
+      },
+      {
+        "name": "WooCommerce queued-email handler renders the attachment",
+        "passed": true
+      },
+      {
+        "name": "real WooCommerce email MIME contains the branded PDF",
+        "passed": true
+      },
+      {
+        "name": "renderer request uses server-only credentials and disables redirects",
+        "passed": true
+      },
+      {
+        "name": "automation serializes the authorized WooCommerce order",
+        "passed": true
+      },
+      {
+        "name": "renderer outage preserves all existing email attachments",
+        "passed": true
+      },
+      {
+        "name": "renderer outage records a safe recoverable status",
+        "passed": true
+      },
+      {
+        "name": "renderer request uses server-only credentials and disables redirects",
+        "passed": true
+      },
+      {
+        "name": "automation serializes the authorized WooCommerce order",
+        "passed": true
+      },
+      {
+        "name": "truncated or mismatched PDF never reaches an email",
+        "passed": true
+      },
+      {
+        "name": "refunded orders never call the renderer",
+        "passed": true
+      },
+      {
+        "name": "renderer credentials are absent from admin HTML",
+        "passed": true
+      },
+      {
+        "name": "automation does not alter order state",
+        "passed": true
+      },
+      {
+        "name": "private attachments are deleted after the mail request",
+        "passed": true
+      },
+      {
+        "name": "next request wires order transitions to the WooCommerce email queue",
+        "passed": true
+      },
+      {
+        "name": "captured WooCommerce email contains exact complete renderer PDF bytes",
+        "passed": true
+      }
+    ],
+    "hpos": true,
+    "unixPermissionsChecked": true,
+    "pdfSha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+    "transport": "Real WooCommerce hooks and PHPMailer MIME with outbound mail captured. HTTPS response supplied through the WordPress HTTP test filter using actual Fullbleed output from this exact order. No production network or delivery claim.",
+    "recordSha256": "23e659642b9978dfa61ba7628baac04486983f4029d11f1b121624fad3e69bb4"
+  }
 }

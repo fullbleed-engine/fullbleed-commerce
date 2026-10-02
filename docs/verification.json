@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-02T18:34:42.785Z",
+  "checkedAt": "2026-10-02T19:35:17.865Z",
   "previewVersion": "0.1.0-alpha.1",
   "sourceLocks": {
     "root": "1a9f225f14867ca8a82402accfdce87f2c590f31b80a67a6014c4527bf3258b1",
@@ -8,24 +8,21 @@
   "packages": [
     {
       "filename": "fullbleed-commerce-0.1.0-alpha.1.zip",
-      "bytes": 3174201,
-      "sha256": "8490a2f6cdc3ee8728aafe7d8b705d31c767023126c23a351b417b0a720204bb",
+      "bytes": 3174196,
+      "sha256": "8d33cd5139dca6eb61ca11a18a78e4b5f9df270880009e4f36e305c52bfe39a7",
       "files": 35
     },
     {
       "filename": "fullbleed-commerce-pro-0.1.0-alpha.1.zip",
-      "bytes": 19667,
-      "sha256": "5784512e030f280c13c463b2e7d2c80dda8c8b76efa1e7987557cc86518c226f",
-      "files": 8
+      "bytes": 25261,
+      "sha256": "368e224a2f09b438aba9a1d447c07cb173a3af853e18044dc624abf7c98fa1a1",
+      "files": 9
     }
   ],
   "archiveChecks": [
     {
       "filename": "fullbleed-commerce-0.1.0-alpha.1.zip",
-      "initialInstalledSha256": "b9ecbfee29ab1596eb23a96c28915713536a5e9270b8ed1b2c60ad6da53c9712",
-      "finalSha256": "8490a2f6cdc3ee8728aafe7d8b705d31c767023126c23a351b417b0a720204bb",
-      "installation": "initial ZIP install; frontend assets refreshed from final archive",
-      "finalAssetsVerifiedOverHttp": true
+      "exactInstalledArchive": true
     },
     {
       "filename": "fullbleed-commerce-pro-0.1.0-alpha.1.zip",
@@ -33,9 +30,9 @@
     }
   ],
   "sharedTests": {
-    "passed": 32,
+    "passed": 36,
     "failed": 0,
-    "logSha256": "1b1fb02499453a3a37bc120c31962bbc450c8d7d5bc6e27e362518c082e56d2b"
+    "logSha256": "2e72feada3fd8ef5eb06f563b7c87499bb27a82e212064fc77a91a5f2bd9cbc0"
   },
   "wordpress": {
     "legacyFree": {
@@ -442,7 +439,7 @@
     },
     "finalAssets": [
       {
-        "port": 9476,
+        "port": 9481,
         "checks": [
           {
             "asset": "admin.js",
@@ -557,9 +554,9 @@
       "pageErrors": []
     },
     "wordpressPro": {
-      "checkedAt": "2026-10-02T18:30:45.499920+00:00",
+      "checkedAt": "2026-10-02T19:34:05.354544+00:00",
       "browser": "154.0.8037.93",
-      "store": "http://127.0.0.1:9476",
+      "store": "http://127.0.0.1:9481",
       "pro": true,
       "checks": [
         {
@@ -568,6 +565,10 @@
         },
         {
           "name": "visual editor renders its order fields",
+          "passed": true
+        },
+        {
+          "name": "dragging a block into the canvas adds real editable content",
           "passed": true
         },
         {
@@ -605,10 +606,71 @@
       ],
       "pdfSha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
       "pageErrors": []
+    },
+    "shopify": {
+      "checkedAt": "2026-10-02T18:58:30.592255+00:00",
+      "browser": "Chrome 154.0.8037.93",
+      "store": "fullbleed-commerce-test.myshopify.com",
+      "syntheticOnly": true,
+      "checks": [
+        {
+          "name": "default browser PDF contents",
+          "passed": true,
+          "sha256": "03320aaefbec8a35ba2a60a281f71eaaec172aa75485948d16f8e1d82929a945"
+        },
+        {
+          "name": "custom browser PDF contents",
+          "passed": true,
+          "sha256": "48baf5d97b0bebefdcf3c9d5983d15786c2d7d2cc4a3c372ab584881ed651d2a"
+        },
+        {
+          "name": "saved browser PDF contents",
+          "passed": true,
+          "sha256": "48baf5d97b0bebefdcf3c9d5983d15786c2d7d2cc4a3c372ab584881ed651d2a"
+        },
+        {
+          "name": "packing-slip browser PDF contents",
+          "passed": true,
+          "sha256": "ff6cf083f8558e7a8541c80d72dc78f8692a5731e0e92e5d2d4e051824aac116"
+        },
+        {
+          "name": "Create PDF visible on actual app screen",
+          "passed": true
+        },
+        {
+          "name": "Visual edit reaches HTML source",
+          "passed": true
+        },
+        {
+          "name": "HTML/CSS save returns JSON",
+          "passed": true
+        },
+        {
+          "name": "Custom PDF preview opens",
+          "passed": true
+        },
+        {
+          "name": "Saved template survives reload and applies to ordinary download",
+          "passed": true
+        },
+        {
+          "name": "Reset restores built-in design",
+          "passed": true
+        }
+      ],
+      "fixes": [
+        "React custom-element boolean attributes",
+        "Vite lazy-editor dependency prebundling",
+        "Separate template resource route for JSON/PDF responses"
+      ],
+      "limitations": [
+        "No live billing or merchant-store test",
+        "Development reload produced Vite dependency errors before repair"
+      ]
     }
   },
   "templates": {
-    "checkedAt": "2026-10-02T18:30:21.673Z",
+    "checkedAt": "2026-10-02T19:30:15.451Z",
     "documents": [
       {
         "kind": "order-summary",
@@ -627,6 +689,291 @@
         "sha256": "7fa9a0748bcc07bd1d662d5c521e19406ad62a43ba57ecabbd9af88e59078188"
       }
     ]
+  },
+  "automation": {
+    "hpos": {
+      "checkedAt": "2026-10-02T19:30:50.616Z",
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.33",
+      "checks": [
+        {
+          "name": "attachments remain unchanged before opt-in",
+          "passed": true
+        },
+        {
+          "name": "unselected emails cause no rendering",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "existing transactional email gets one PDF with a useful filename",
+          "passed": true
+        },
+        {
+          "name": "attachment is outside the web root",
+          "passed": true
+        },
+        {
+          "name": "attachment matches actual renderer bytes",
+          "passed": true
+        },
+        {
+          "name": "enabled attachments request WooCommerce background emails",
+          "passed": true
+        },
+        {
+          "name": "wp_mail accepts the prepared attachment",
+          "passed": true
+        },
+        {
+          "name": "captured MIME names the PDF attachment",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce queued-email handler renders the attachment",
+          "passed": true
+        },
+        {
+          "name": "real WooCommerce email MIME contains the branded PDF",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "renderer outage preserves all existing email attachments",
+          "passed": true
+        },
+        {
+          "name": "renderer outage records a safe recoverable status",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "truncated or mismatched PDF never reaches an email",
+          "passed": true
+        },
+        {
+          "name": "refunded orders never call the renderer",
+          "passed": true
+        },
+        {
+          "name": "renderer credentials are absent from admin HTML",
+          "passed": true
+        },
+        {
+          "name": "automation does not alter order state",
+          "passed": true
+        },
+        {
+          "name": "private attachments are deleted after the mail request",
+          "passed": true
+        },
+        {
+          "name": "next request wires order transitions to the WooCommerce email queue",
+          "passed": true
+        },
+        {
+          "name": "captured WooCommerce email contains exact complete renderer PDF bytes",
+          "passed": true
+        }
+      ],
+      "hpos": true,
+      "unixPermissionsChecked": false,
+      "pdfSha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+      "transport": "Real WooCommerce hooks and PHPMailer MIME with outbound mail captured. HTTPS response supplied through the WordPress HTTP test filter using actual Fullbleed output from this exact order. No production network or delivery claim.",
+      "mimeSha256": "bd737640ea6fcbbc8cf0d3bcdf2ee1575ec0251c02172d9e7b4b288279c03574"
+    },
+    "legacy": {
+      "checkedAt": "2026-10-02T19:30:50.538Z",
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.33",
+      "checks": [
+        {
+          "name": "attachments remain unchanged before opt-in",
+          "passed": true
+        },
+        {
+          "name": "unselected emails cause no rendering",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "existing transactional email gets one PDF with a useful filename",
+          "passed": true
+        },
+        {
+          "name": "attachment is outside the web root",
+          "passed": true
+        },
+        {
+          "name": "attachment matches actual renderer bytes",
+          "passed": true
+        },
+        {
+          "name": "enabled attachments request WooCommerce background emails",
+          "passed": true
+        },
+        {
+          "name": "wp_mail accepts the prepared attachment",
+          "passed": true
+        },
+        {
+          "name": "captured MIME names the PDF attachment",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce queued-email handler renders the attachment",
+          "passed": true
+        },
+        {
+          "name": "real WooCommerce email MIME contains the branded PDF",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "renderer outage preserves all existing email attachments",
+          "passed": true
+        },
+        {
+          "name": "renderer outage records a safe recoverable status",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "truncated or mismatched PDF never reaches an email",
+          "passed": true
+        },
+        {
+          "name": "refunded orders never call the renderer",
+          "passed": true
+        },
+        {
+          "name": "renderer credentials are absent from admin HTML",
+          "passed": true
+        },
+        {
+          "name": "automation does not alter order state",
+          "passed": true
+        },
+        {
+          "name": "private attachments are deleted after the mail request",
+          "passed": true
+        },
+        {
+          "name": "next request wires order transitions to the WooCommerce email queue",
+          "passed": true
+        },
+        {
+          "name": "captured WooCommerce email contains exact complete renderer PDF bytes",
+          "passed": true
+        }
+      ],
+      "hpos": false,
+      "unixPermissionsChecked": false,
+      "pdfSha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+      "transport": "Real WooCommerce hooks and PHPMailer MIME with outbound mail captured. HTTPS response supplied through the WordPress HTTP test filter using actual Fullbleed output from this exact order. No production network or delivery claim.",
+      "mimeSha256": "56118969d1386dff2a3d0ceec286fb3bda33a1afe221e4bdb06f0426e348b8f0"
+    },
+    "settingsHttp": {
+      "store": "http://127.0.0.1:9481",
+      "checks": [
+        {
+          "name": "automation page loads without PHP warnings",
+          "passed": true
+        },
+        {
+          "name": "missing nonce cannot change automation",
+          "passed": true
+        },
+        {
+          "name": "editor cannot view automation settings",
+          "passed": true
+        },
+        {
+          "name": "editor cannot save automation even with an administrator nonce",
+          "passed": true
+        },
+        {
+          "name": "authorized connection settings save",
+          "passed": true
+        },
+        {
+          "name": "secret is not returned to the browser",
+          "passed": true
+        },
+        {
+          "name": "automatic attachments remain opt-in after connection setup",
+          "passed": true
+        },
+        {
+          "name": "unencrypted renderer endpoints are rejected",
+          "passed": true
+        },
+        {
+          "name": "disconnect clears the saved connection",
+          "passed": true
+        }
+      ]
+    }
   },
   "examples": [
     {
@@ -724,11 +1071,11 @@
   ],
   "shopify": {
     "app": {
-      "checkedAt": "2026-10-02T18:32:07.574Z",
+      "checkedAt": "2026-10-02T19:19:59.374Z",
       "node": "v24.21.0",
       "checks": [
         {
-          "name": "schema",
+          "name": "generated-client-matches-schema",
           "exitCode": 0,
           "passed": true
         },
@@ -765,14 +1112,14 @@
       ],
       "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
       "lockSha256": "1c0374462e3e1b6d476ad2ece2128c0e49258d318d854c585bba0ea5bae9013b",
-      "serverBuildSha256": "afbd31303aba07ee0049010b3bb6308beeb686b1a7171e73634060f1b3bcb3ef",
+      "serverBuildSha256": "fa7794085bec91d9c5c509005b1ea90e2cee8c393f4f49c4c194b1ff4857a048",
       "browserTested": false,
       "liveBillingTested": false
     },
     "requestHandlerTests": {
       "passed": 4,
       "failed": 0,
-      "logSha256": "513ba6f5cd40a379f9d9beae1978809ce99b63e18e4b3dc30508c1ec9ad27b0f"
+      "logSha256": "d84785fd4da43170890dcf03a7498bd204cedbfda868e86db34c90c61ad76df6"
     },
     "installedStore": {
       "checkedAt": "2026-10-02T17:08:10.146Z",
@@ -1027,9 +1374,9 @@
     ]
   },
   "limits": {
-    "realBrowserTested": false,
+    "realBrowserTested": true,
     "wordpressBrowserTested": true,
-    "shopifyBrowserTested": false,
+    "shopifyBrowserTested": true,
     "liveBillingTested": false,
     "productionDeployed": false,
     "marketplaceApproved": false,

@@ -116,6 +116,20 @@ Automation foundation alone is a development milestone, not a production-ready
 release. Do not relabel the current alpha as production because its happy path
 works. Production deployment and billing remain separate launch gates.
 
+## Current implementation status
+
+The editor foundation is complete in the development preview: both platforms
+passed real Chrome editing and download checks. The first automation slice is
+also implemented: an optional authenticated renderer and opt-in WooCommerce Pro
+attachments through the platform's transactional-email queue, with captured-mail
+verification and admin recovery guidance. It is not a managed paid service.
+
+The next implementation milestone is the Shopify Flow action and persistent
+job/delivery ledger. Customer portal downloads, fulfillment batches, automatic
+missing-attachment recovery, production hosting and paid lifecycle tests remain
+planned. No external automation, customer email or paid plan was enabled by the
+development work. See [the evidence](verification.md) for the checks actually run.
+
 ## Hard cases that must be designed before paid launch
 
 - Split and partial fulfillments must print the items in that shipment, not the

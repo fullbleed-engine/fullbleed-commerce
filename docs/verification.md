@@ -88,6 +88,8 @@ npm run examples
 node tools/check-layout.mjs
 python tools/check-pdf-text.py
 npm run pack
+node tools/check-automation.mjs --hpos
+node tools/check-automation.mjs
 npm --prefix shopify/app ci --ignore-scripts
 node tools/check-shopify.mjs
 node tools/wordpress.mjs --pro --hpos --packages
@@ -121,11 +123,13 @@ retain its runtime record because later runs may use different versions.
   component. The app's installed Polaris types pass TypeScript and production
   build checks; this does not substitute for real-browser QA.
 
-The earlier [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37039939445)
-passed the pre-editor integration suite, clean dependency installation, plugin packaging,
-Shopify application checks, Docker build, database migrations and HTTP startup
-check. The retained [CI record](ci-verification.json) identifies the checked source
-commit and compares the Linux archives with the Windows artifacts. No production
-merchant credentials were supplied to CI.
+The final [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37055058614)
+passed clean dependency installation, all 36 shared tests, plugin packaging,
+28 WooCommerce automation checks, Shopify application checks, Docker build,
+database migrations and HTTP startup. Linux also verified restrictive attachment
+file permissions. Both plugin archives are byte-identical to the Windows packages
+installed for browser checks. The retained [CI record](ci-verification.json)
+identifies the checked source commit, archive hashes and individual automation
+results. No production merchant credentials were supplied to CI.
 
 Spending remains recorded separately in [launch-budget.json](launch-budget.json).
