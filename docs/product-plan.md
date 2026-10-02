@@ -27,6 +27,31 @@ Free customization helps adoption; charge for automation, delivery, operational
 reliability and support. Code licenses do not change. The paid WordPress add-on
 remains GPL-compatible and Fullbleed core remains MIT.
 
+## First paid release
+
+Keep the first offer specific enough to finish and support:
+
+- **WooCommerce Pro:** branded order summaries attached to selected existing
+  processing/completed emails, customer My Account downloads, saved visual and
+  HTML/CSS templates, private rendering, visible failures, updates and support.
+  Rendering outages preserve order mail; recovery uses an explicit merchant
+  resend. Automatic recovery must not risk duplicate customer emails.
+- **Shopify Commerce:** saved templates and native Flow actions returning
+  expiring summary/packing-slip links, with persistent activity, bounded retries,
+  pause and revocation. Validate a real order trigger and a merchant-selected
+  downstream destination before advertising automatic customer delivery.
+
+The remaining v1 gates are production hosting and monitoring, measured render
+cost/capacity, installation and upgrade checks, paid lifecycle/purchase and
+update delivery, privacy response/backup operations, support terms, and any
+required marketplace review. Pilot the complete workflows with consenting
+merchants before widening distribution.
+
+Fulfillment-location batches, status-triggered warehouse jobs, direct email
+sending, automatic missing-attachment recovery and an immutable invoice ledger
+are later roadmap work. They are not prerequisites for selling the narrower
+v1 promise above. Manual generation remains available for previews and recovery.
+
 ## Native workflows
 
 | Trigger | Merchant configuration | Result | Recovery |

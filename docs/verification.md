@@ -193,11 +193,12 @@ with synthetic customer and administrator accounts; no existing browser is used.
   component. The app's installed Polaris types pass TypeScript and production
   build checks; this does not substitute for real-browser QA.
 
-The final [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37070837376)
+The final [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37076537502)
 passed clean dependency installation, all 36 shared tests, plugin packaging,
 28 WooCommerce email automation checks, 35 customer-download checks in each
-order-storage mode, four Shopify application tests, eight Flow tests, Docker build,
-database migrations and HTTP startup. Linux also verified restrictive attachment
+order-storage mode, four Shopify application tests, eight Flow tests, 15 privacy
+tests, Docker build, database migrations, HTTP startup and the aggregate privacy
+monitor command. Linux also verified restrictive attachment
 file permissions. Both plugin archives are byte-identical to the Windows packages
 installed for browser checks. Both customer-summary PDFs and the Flow fixture
 PDF are identical across both operating systems. The retained [CI record](ci-verification.json)
