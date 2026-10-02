@@ -13,6 +13,7 @@ order-field insertion, save/reset/import/export and real PDF previews. Saved
 templates are scoped to the authenticated shop and document type. It uses the
 published Fullbleed Node package with no core changes.
 See [app/README.md](app/README.md) to run it.
+See [deployment and operation](DEPLOYMENT.md) for the persistent staging host.
 
 Native **Create order summary link** and **Create packing slip link** Flow actions
 use those saved templates automatically. The app retains a persistent job ledger,

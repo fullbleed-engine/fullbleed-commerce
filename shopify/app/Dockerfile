@@ -19,6 +19,8 @@ RUN npx --no-install prisma generate && npm run build \
     && npm prune --omit=dev --ignore-scripts
 
 FROM base AS runtime
+RUN apt-get update && apt-get install -y --no-install-recommends gosu tini \
+    && rm -rf /var/lib/apt/lists/*
 ENV NODE_ENV=production PORT=3000 DATABASE_URL=file:/data/commerce.sqlite
 COPY --from=build /commerce/node_modules ./node_modules
 COPY --from=build /commerce/package.json ./package.json
@@ -31,8 +33,10 @@ COPY --from=build /commerce/shopify/app/package.json ./shopify/app/package.json
 COPY LICENSE ./LICENSE
 COPY LICENSES ./LICENSES
 COPY shopify/app/LICENSE.md ./shopify/app/LICENSE.md
-RUN mkdir /data && chown node:node /data
+COPY --chmod=755 shopify/app/scripts/container-start.sh /usr/local/bin/fullbleed-commerce
+RUN mkdir /data && chown node:node /data && chmod 700 /data
 WORKDIR /commerce/shopify/app
 USER node
 EXPOSE 3000
-CMD ["sh", "-c", "./node_modules/.bin/prisma migrate deploy && exec ./node_modules/.bin/react-router-serve ./build/server/index.js"]
+ENTRYPOINT ["/usr/bin/tini", "-g", "--", "/usr/local/bin/fullbleed-commerce"]
+CMD ["serve"]
