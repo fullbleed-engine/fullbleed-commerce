@@ -27,8 +27,8 @@ test('Shopify uses exact presentment values, including fractional and large amou
   order.currentTotalPriceSet.presentmentMoney.currencyCode = 'CAD';
   assert.throws(() => fromShopifyOrder(order, seller), /inconsistent/);
 });
-test('incomplete, edited and refunded orders fail instead of producing misleading documents', () => {
-  for (const mutate of [o => o.lineItems.pageInfo.hasNextPage = true, o => o.edited = true, o => o.totalRefundedSet = price('1.00')]) {
+test('incomplete, edited, cancelled and refunded orders fail instead of producing misleading documents', () => {
+  for (const mutate of [o => o.lineItems.pageInfo.hasNextPage = true, o => o.edited = true, o => o.cancelledAt = '2026-10-02T15:00:00Z', o => o.totalRefundedSet = price('1.00')]) {
     const order = structuredClone(fixture); mutate(order);
     assert.throws(() => fromShopifyOrder(order, seller));
   }

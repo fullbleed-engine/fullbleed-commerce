@@ -1,0 +1,21 @@
+[[extensions]]
+name = "Create order summary link"
+handle = "create-order-summary-link"
+type = "flow_action"
+uid = "1f681531-3a54-9c95-3312-f977deb0e475a3e80bcf"
+description = "Prepare a branded order summary and return a private link for the next workflow step."
+runtime_url = "/api/flow/documents"
+schema = "./schema.graphql"
+return_type_ref = "DocumentLink"
+
+[settings]
+  [[settings.fields]]
+  type = "order_reference"
+  required = true
+
+  [[settings.fields]]
+  type = "number_integer"
+  key = "expires_in_hours"
+  name = "Link lifetime in hours"
+  description = "Use 1 to 72 hours, or 0 for the default 24 hours. Order or template changes invalidate the link."
+  required = false

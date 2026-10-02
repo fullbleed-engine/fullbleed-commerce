@@ -1,0 +1,11 @@
+"A private PDF link for an unchanged order and template. Share only with the intended recipient."
+type DocumentLink {
+  "Document job identifier."
+  id: ID!
+  "Private browser download link. Its fragment is required to authorize the PDF."
+  downloadUrl: String!
+  "Link expiry in ISO 8601 UTC format."
+  expiresAt: String!
+  "SHA-256 of the verified PDF."
+  sha256: String!
+}

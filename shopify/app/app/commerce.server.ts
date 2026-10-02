@@ -19,17 +19,28 @@ const checkSubscription = createSubscriptionCheck({
 
 export const withRenderLimit = createRenderLimit();
 
-export async function commerceAccess(request: Request) {
-  const context = await authenticate.admin(request);
-  const response = await context.admin.graphql(shopQuery);
+export async function verifyCommerceShop(admin: Awaited<ReturnType<typeof authenticate.flow>>['admin'], domain: string, signal?: AbortSignal) {
+  const response = await admin.graphql(shopQuery, { signal });
   const result = await response.json();
   const shop = result.data?.shop;
-  if (!shop || shop.myshopifyDomain !== context.session.shop) throw new Response('Could not verify the store.', { status: 503 });
-  const development = developmentAccess({ nodeEnv: process.env.NODE_ENV, allowedStore: process.env.FULLBLEED_DEV_STORE, shop: context.session.shop, partnerDevelopment: shop.plan.partnerDevelopment });
-  if (!development && !await checkSubscription({ shopId: shop.id, shop: context.session.shop, signal: request.signal })) {
+  if (!shop || shop.myshopifyDomain !== domain) throw new Response('Could not verify the store.', { status: 503 });
+  const development = developmentAccess({ nodeEnv: process.env.NODE_ENV, allowedStore: process.env.FULLBLEED_DEV_STORE, shop: domain, partnerDevelopment: shop.plan.partnerDevelopment });
+  if (!development && !await checkSubscription({ shopId: shop.id, shop: domain, signal })) {
+    throw new Response('An active Fullbleed plan is required.', { status: 402 });
+  }
+  return { shop, development };
+}
+
+export async function commerceAccess(request: Request) {
+  const context = await authenticate.admin(request);
+  let access;
+  try { access = await verifyCommerceShop(context.admin, context.session.shop, request.signal); }
+  catch (error) {
+    if (!(error instanceof Response) || error.status !== 402) throw error;
     if (!process.env.SHOPIFY_APP_HANDLE) throw new Response('Plan selection is not configured. Contact support.', { status: 503 });
     throw context.redirect(pricingUrl(context.session.shop, process.env.SHOPIFY_APP_HANDLE), { target: '_top' });
   }
+  const { shop, development } = access;
   return { ...context, shop, development };
 }
 

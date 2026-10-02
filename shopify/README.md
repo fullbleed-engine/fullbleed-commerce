@@ -14,10 +14,17 @@ templates are scoped to the authenticated shop and document type. It uses the
 published Fullbleed Node package with no core changes.
 See [app/README.md](app/README.md) to run it.
 
+Native **Create order summary link** and **Create packing slip link** Flow actions
+use those saved templates automatically. The app retains a persistent job ledger,
+recovers expired preparation leases, retries transient failures and returns
+expiring private links. Merchants can inspect activity, retry, revoke or pause.
+See [Flow setup and reliability](FLOW.md) for the data and delivery contract.
+
 ## Access and data flow
 
 `authenticate.admin(request)` from Shopify's official framework authenticates
-every app request. The tenant comes from that session, and the shop identity is
+merchant requests; `authenticate.flow(request)` verifies Flow actions. The tenant
+comes from the installed session, and the shop identity is
 confirmed by the Admin API. Order IDs are GraphQL variables. No URL parameter
 grants an entitlement or chooses another tenant.
 
@@ -35,14 +42,17 @@ configured test-store domain, and Shopify's `partnerDevelopment=true` response.
 
 PDFs are generated in memory and returned with `Cache-Control: no-store`.
 Orders and PDFs are not stored. SQLite stores authorization sessions and
-merchant-entered brand settings and document templates. HMAC-authenticated uninstall and shop-redaction
-webhooks delete that shop's records; customer privacy webhooks are acknowledged
-without retaining their payloads. The [development privacy page](app/app/routes/privacy.tsx)
+merchant-entered brand settings and document templates, plus automation job
+references, keyed fingerprints, status and download counts for up to 30 days.
+Uninstall and shop-redaction webhooks delete that shop's records. Customer
+redaction clears affected order references and hashes, retaining an empty run
+tombstone until cleanup to prevent recreation by delayed retries. Customer
+data-request fulfillment is still a launch gate. The [development privacy page](app/app/routes/privacy.tsx)
 describes this behavior.
 
 The renderer permits one active request per shop and two globally per process.
 Settings bodies are limited to 8 KiB while streaming. The preview rejects
-refunded, edited, truncated and inconsistent-currency orders, and uses exact
+cancelled, refunded, edited, truncated and inconsistent-currency orders, and uses exact
 presentment amounts and the merchant's timezone. It does not calculate taxes or
 produce fiscal invoices.
 
@@ -63,11 +73,12 @@ produce fiscal invoices.
   The Shopify UI toolkit validator failed in its own JSX/type environment;
   the actual application typecheck and build pass.
 
-Before paid release, configure public distribution and the minimum customer-data
-fields, a private $0 test plan, a Partner API client and the app/plan identifiers.
+Public distribution has been selected; the app is not listed or approved.
+Before paid release, configure a private $0 test plan, a Partner API client and
+the app/plan identifiers.
 Exercise plan activation, cancellation, freezes and changes; complete protected
 customer data requirements and merchant staging checks; deploy with durable,
-encrypted session storage; finalize support/privacy/refund terms and App Store
+encrypted session storage; fulfill customer data requests; finalize support/privacy/refund terms and App Store
 materials; then submit for review. No unverified data-protection answers should
 be submitted as completed controls.
 

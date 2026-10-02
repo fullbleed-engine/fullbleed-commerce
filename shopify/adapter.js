@@ -4,7 +4,7 @@ import { validateOrder } from '../src/documents.js';
 export const orderQuery = `#graphql
 query FullbleedOrder($id: ID!) {
   order(id: $id) {
-    id name createdAt displayFinancialStatus presentmentCurrencyCode edited taxesIncluded
+    id name createdAt cancelledAt displayFinancialStatus presentmentCurrencyCode edited taxesIncluded
     billingAddress { name company address1 address2 city province zip country }
     shippingAddress { name company address1 address2 city province zip country }
     currentSubtotalPriceSet { presentmentMoney { amount currencyCode } }
@@ -39,6 +39,7 @@ function address(value, fallback) {
 
 export function fromShopifyOrder(order, seller, { timeZone = 'UTC' } = {}) {
   if (!order) throw new TypeError('Order not found.');
+  if (order.cancelledAt) throw new TypeError('Cancelled orders are not supported.');
   if (order.lineItems?.pageInfo?.hasNextPage !== false) throw new TypeError('Fetch a complete order before rendering; this preview supports at most 250 items.');
   if (order.edited !== false) throw new TypeError('Edited orders are not supported in this preview.');
   if (!/^0(?:\.0+)?$/.test(order.totalRefundedSet?.presentmentMoney?.amount || '')) throw new TypeError('Refunded orders require a credit-note workflow.');
@@ -66,7 +67,7 @@ export function fromShopifyOrder(order, seller, { timeZone = 'UTC' } = {}) {
 
 export async function fetchShopifyOrder(admin, id, seller, options = {}) {
   if (!/^gid:\/\/shopify\/Order\/[1-9]\d*$/.test(id)) throw new TypeError('A Shopify order GID is required.');
-  const response = await admin.graphql(orderQuery, { variables: { id } });
+  const response = await admin.graphql(orderQuery, { variables: { id }, ...(options.signal ? { signal: options.signal } : {}) });
   if (!response.ok) throw new Error('Shopify could not return the order.');
   const result = await response.json();
   if (result.errors?.length) throw new Error('Shopify denied or could not complete the order query. Check the app scopes and protected customer data access.');

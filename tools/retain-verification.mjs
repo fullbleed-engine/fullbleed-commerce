@@ -10,8 +10,8 @@ const hash = path => createHash('sha256').update(readFileSync(path)).digest('hex
 function tap(path) {
   const bytes = readFileSync(path);
   const text = bytes.toString(bytes[0] === 0xff && bytes[1] === 0xfe ? 'utf16le' : 'utf8');
-  const passed = Number(text.match(/^# pass (\d+)/m)?.[1]);
-  const failed = Number(text.match(/^# fail (\d+)/m)?.[1]);
+  const passed = Number(text.match(/^(?:#|ℹ) pass (\d+)/m)?.[1]);
+  const failed = Number(text.match(/^(?:#|ℹ) fail (\d+)/m)?.[1]);
   assert.ok(passed > 0 && failed === 0, `Tests must pass: ${path}`);
   return { passed, failed, logSha256: hash(path) };
 }
@@ -54,6 +54,11 @@ const examples = json('output/examples/verification.json');
 for (const item of examples) assert.equal(hash(`output/examples/${item.stem}.pdf`), item.sha256);
 const browser = { wordpressFree: json('output/browser/wordpress-free-verification.json'), wordpressPro: json('output/browser/wordpress-pro-verification.json'), shopify: json('output/browser/shopify-verification.json') };
 assert.ok(Object.values(browser).every(result => result.checks.every(check => check.passed)));
+const flowBrowser = json('output/browser/shopify-flow-verification.json');
+assert.ok(flowBrowser.checks.every(check => check.passed));
+for (const item of flowBrowser.documents) assert.equal(hash(`output/browser/shopify-flow-${item.kind}.pdf`), item.sha256);
+for (const item of flowBrowser.evidence) assert.equal(hash(item.file), item.sha256);
+assert.ok(json('output/shopify/flow-config-validation.json').valid);
 const templates = json('output/templates/verification.json');
 for (const item of templates.documents) assert.equal(hash(`output/templates/${item.kind}.pdf`), item.sha256);
 const automation = { hpos: json('output/automation/woocommerce-hpos.json'), legacy: json('output/automation/woocommerce-legacy.json'), settingsHttp: json('output/automation/settings-http.json') };
@@ -66,7 +71,7 @@ const record = {
   wordpress: { legacyFree: wordpress('legacy-free'), packagedHposPro: wordpress('packaged-hpos-pro'), finalAssets },
   browser, templates, automation,
   examples, textChecks: json('output/pdf-text-verification.json'),
-  shopify: { app, requestHandlerTests: tap('output/shopify/webhooks.log'), installedStore: installed, graphQLValidation: json('output/shopify/validation/verification.json') },
+  shopify: { app, requestHandlerTests: tap('output/shopify/webhooks.log'), flowTests: tap('output/shopify/flow.log'), flowBrowser, flowConfiguration: json('output/shopify/flow-config-validation.json'), installedStore: installed, graphQLValidation: json('output/shopify/validation/verification.json') },
   dependencyAudit: { root: json('output/npm-audit.json').metadata.vulnerabilities, shopify: json('output/shopify/npm-audit.json').metadata.vulnerabilities },
   visualInspection: { exampleOrderDesigns: ['studio', 'contrast', 'quiet'], longPackingSlipPage: 8, customTemplates: ['order-summary', 'packing-slip'], wordpressEditor: ['desktop', '390px viewport'], liveShopify: ['studio-order-summary', 'contrast-order-summary', 'quiet-packing-slip'] },
   limits: { realBrowserTested: true, wordpressBrowserTested: true, shopifyBrowserTested: true, liveBillingTested: false, productionDeployed: false, marketplaceApproved: false, isoConformanceClaimed: false },

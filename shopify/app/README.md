@@ -22,7 +22,10 @@ node tools/check-shopify.mjs
 The app check uses synthetic credentials and a separate
 `target/webhook-test.sqlite` database. It generates Prisma's client, applies
 migrations, checks types/lint, builds the app and runs signed-webhook and
-unauthenticated-request, template-isolation and concurrent-save tests. It never uses the installed store's session.
+unauthenticated-request, template-isolation and concurrent-save tests. It also
+checks Flow signatures, persistent deduplication, lease recovery, bounded retries,
+link expiry/revocation, privacy cleanup and actual PDF downloads. It never uses
+the installed store's session.
 No Shopify account is needed for these checks.
 
 For the maintainer's connected preview, copy `.env.example` to `.env`, keeping
@@ -80,6 +83,19 @@ passing it does not verify a hosting provider or live billing.
 the Node server. Set the production application URL and authentication redirect
 URLs before publishing a production version. Keep the current tunnel available
 for the maintainer's preview until then.
+
+## Flow automation
+
+The two Flow actions use the saved templates and the installed offline session.
+Enable them in the app's **Automations** screen before testing. The development
+preview requires public distribution, or a Plus development store for a custom
+app. Run `shopify app dev` and select the actions marked Draft in Shopify Flow.
+The [Flow guide](../FLOW.md) describes outputs, private links, retries and cleanup.
+
+Flow redeliveries recover persisted jobs after a process restart. Keep a durable
+database and a persistent Node process; do not deploy the asynchronous preparation
+handler as a request-scoped serverless function. Rotating the app secret also
+invalidates existing document links.
 
 ## Template studio
 

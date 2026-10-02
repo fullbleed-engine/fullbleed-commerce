@@ -28,7 +28,45 @@ model DocumentTemplate {
   kind     String
   content  String?
   revision String
+
   @@id([shop, kind])
+}
+
+model AutomationSettings {
+  shop      String          @id
+  enabled   Boolean         @default(false)
+  updatedAt DateTime        @updatedAt
+  jobs      AutomationJob[]
+}
+
+model AutomationJob {
+  id               String             @id @default(uuid())
+  shop             String
+  settings         AutomationSettings @relation(fields: [shop], references: [shop], onDelete: Cascade)
+  runId            String
+  handle           String
+  orderId          String
+  kind             String
+  requestHash      String
+  ttlHours         Int
+  retryDeadline    DateTime
+  status           String             @default("pending")
+  attempts         Int                @default(0)
+  leaseId          String?
+  leaseUntil       DateTime?
+  nextAttemptAt    DateTime?
+  fingerprint      String?
+  templateRevision String?
+  pdfSha256        String?
+  expiresAt        DateTime?
+  lastError        String?
+  downloads        Int                @default(0)
+  lastDownloadedAt DateTime?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  @@unique([shop, runId])
+  @@index([shop, createdAt])
 }
 
 model Session {

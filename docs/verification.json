@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-02T19:35:17.865Z",
+  "checkedAt": "2026-10-02T21:13:37.032Z",
   "previewVersion": "0.1.0-alpha.1",
   "sourceLocks": {
     "root": "1a9f225f14867ca8a82402accfdce87f2c590f31b80a67a6014c4527bf3258b1",
@@ -32,7 +32,7 @@
   "sharedTests": {
     "passed": 36,
     "failed": 0,
-    "logSha256": "2e72feada3fd8ef5eb06f563b7c87499bb27a82e212064fc77a91a5f2bd9cbc0"
+    "logSha256": "9b6c315ead10f6d59e6428f5f325686642175ff4c6b450c35aa57526b7db61ae"
   },
   "wordpress": {
     "legacyFree": {
@@ -670,7 +670,7 @@
     }
   },
   "templates": {
-    "checkedAt": "2026-10-02T19:30:15.451Z",
+    "checkedAt": "2026-10-02T20:48:57.250Z",
     "documents": [
       {
         "kind": "order-summary",
@@ -1071,7 +1071,7 @@
   ],
   "shopify": {
     "app": {
-      "checkedAt": "2026-10-02T19:19:59.374Z",
+      "checkedAt": "2026-10-02T21:11:20.416Z",
       "node": "v24.21.0",
       "checks": [
         {
@@ -1108,18 +1108,181 @@
           "name": "webhooks",
           "exitCode": 0,
           "passed": true
+        },
+        {
+          "name": "flow",
+          "exitCode": 0,
+          "passed": true
         }
       ],
       "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
       "lockSha256": "1c0374462e3e1b6d476ad2ece2128c0e49258d318d854c585bba0ea5bae9013b",
-      "serverBuildSha256": "fa7794085bec91d9c5c509005b1ea90e2cee8c393f4f49c4c194b1ff4857a048",
+      "serverBuildSha256": "111e640e68eeee0c0e2ebca6cb6d4f03e188043e8f0c0672bda1a11082a1ba73",
       "browserTested": false,
       "liveBillingTested": false
     },
     "requestHandlerTests": {
       "passed": 4,
       "failed": 0,
-      "logSha256": "d84785fd4da43170890dcf03a7498bd204cedbfda868e86db34c90c61ad76df6"
+      "logSha256": "dc3fb40d27e2a31db18676557d6329b6401b9eb40d8c527e5541075aca7253f4"
+    },
+    "flowTests": {
+      "passed": 8,
+      "failed": 0,
+      "logSha256": "b60e1ac264a425e643d2e875426fed86e2803527937daf7de07f7a7d1ce1238d"
+    },
+    "flowBrowser": {
+      "checkedAt": "2026-10-02T21:07:51.641331+00:00",
+      "browser": "Chrome 154 via Playwright",
+      "syntheticOnly": true,
+      "store": "fullbleed-commerce-test.myshopify.com",
+      "workflow": "Fullbleed ? synthetic document automation check",
+      "workflowRunId": "01M3Z6P4EGS5JQJ4VRSDHPDPWT:01a0fe46-037a-7441-a300-878f89fc9a50:v2",
+      "trigger": "Order created, manually replayed on synthetic unpaid #1001",
+      "checks": [
+        {
+          "name": "order-summary: browser download matches Flow output SHA-256",
+          "passed": true
+        },
+        {
+          "name": "order-summary: complete synthetic order text",
+          "passed": true
+        },
+        {
+          "name": "order-summary: one page",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: browser download matches Flow output SHA-256",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: complete synthetic order text",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: one page",
+          "passed": true
+        },
+        {
+          "name": "packing slip omits prices",
+          "passed": true
+        },
+        {
+          "name": "automation left paused",
+          "passed": true
+        },
+        {
+          "name": "all synthetic links revoked",
+          "passed": true
+        },
+        {
+          "name": "one preparation per actual action run",
+          "passed": true
+        },
+        {
+          "name": "revoked downloads did not increment response counts",
+          "passed": true
+        },
+        {
+          "name": "both draft actions selectable in real Shopify Flow",
+          "passed": true,
+          "method": "Observed with authenticated Playwright browser; no customer email or fulfillment action."
+        },
+        {
+          "name": "Flow reports three completed steps, including downstream Liquid output",
+          "passed": true,
+          "method": "Observed with authenticated Playwright browser; no customer email or fulfillment action."
+        },
+        {
+          "name": "returned links and hashes consumed by downstream Flow step",
+          "passed": true,
+          "method": "Observed with authenticated Playwright browser; no customer email or fulfillment action."
+        },
+        {
+          "name": "both link fragments removed from browser location",
+          "passed": true,
+          "method": "Observed with authenticated Playwright browser; no customer email or fulfillment action."
+        },
+        {
+          "name": "single-link revocation returns HTTP 410 in browser",
+          "passed": true,
+          "method": "Observed with authenticated Playwright browser; no customer email or fulfillment action."
+        },
+        {
+          "name": "pause revokes other links and returns HTTP 410 in browser",
+          "passed": true,
+          "method": "Observed with authenticated Playwright browser; no customer email or fulfillment action."
+        },
+        {
+          "name": "390px download page fits viewport",
+          "passed": true,
+          "method": "Observed with authenticated Playwright browser; no customer email or fulfillment action."
+        },
+        {
+          "name": "synthetic workflow turned off after verification",
+          "passed": true,
+          "method": "Observed with authenticated Playwright browser; no customer email or fulfillment action."
+        }
+      ],
+      "documents": [
+        {
+          "kind": "order-summary",
+          "pages": 1,
+          "sha256": "03320aaefbec8a35ba2a60a281f71eaaec172aa75485948d16f8e1d82929a945",
+          "bytes": 136156
+        },
+        {
+          "kind": "packing-slip",
+          "pages": 1,
+          "sha256": "ff6cf083f8558e7a8541c80d72dc78f8692a5731e0e92e5d2d4e051824aac116",
+          "bytes": 136572
+        }
+      ],
+      "visualInspection": [
+        "order-summary",
+        "packing-slip",
+        "download desktop",
+        "download 390px viewport"
+      ],
+      "evidence": [
+        {
+          "file": "output/browser/shopify-flow-completed.png",
+          "sha256": "287713d776ddac5691269e07a785d7c5f31257594f378e44024791b466de8c73"
+        },
+        {
+          "file": "output/browser/shopify-flow-download.png",
+          "sha256": "53e42af3c59d742a5ea082efcfb005122dc25c3c5e65ba6e00c74b18f7f417ea"
+        },
+        {
+          "file": "output/browser/shopify-flow-download-mobile.png",
+          "sha256": "d778c65421001a898ff3f1ed862d274012ccf040f5585e5c5a2b1c32ebf75f93"
+        },
+        {
+          "file": "output/browser/shopify-automations-ready.png",
+          "sha256": "0eb34befd87c0e8b83080b3322fe07d1016b11fddc611355e714310e016ac2ef"
+        },
+        {
+          "file": "output/browser/shopify-automations-paused.png",
+          "sha256": "2fe35b55dd6ad830b054046517691e42db74c3fbf38d74effa53b3ed1bff2bae"
+        }
+      ],
+      "limits": {
+        "automaticNewOrderTriggerTested": false,
+        "customerDeliveryTested": false,
+        "productionHostingTested": false,
+        "liveBillingTested": false
+      },
+      "cleanup": {
+        "workflowActive": false,
+        "appAutomationEnabled": false,
+        "allTestLinksRevoked": true
+      },
+      "secretsRetained": false
+    },
+    "flowConfiguration": {
+      "valid": true,
+      "issues": []
     },
     "installedStore": {
       "checkedAt": "2026-10-02T17:08:10.146Z",

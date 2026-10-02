@@ -27,6 +27,7 @@ const jobs = [
   ['lint', 'node_modules/eslint/bin/eslint.js', '--ignore-path', '.gitignore', '--cache', '--cache-location', './node_modules/.cache/eslint', '.'],
   ['build', 'node_modules/@react-router/dev/bin.js', 'build'],
   ['webhooks', '--test', '--test-reporter=tap', 'test/webhooks.test.mjs'],
+  ['flow', '--test', '--test-reporter=tap', 'test/flow.test.mjs'],
 ];
 const checks = clientCurrent ? [{ name: 'generated-client-matches-schema', exitCode: 0, passed: true }] : [];
 const initialChecks = checks.length;

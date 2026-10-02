@@ -124,11 +124,17 @@ also implemented: an optional authenticated renderer and opt-in WooCommerce Pro
 attachments through the platform's transactional-email queue, with captured-mail
 verification and admin recovery guidance. It is not a managed paid service.
 
-The next implementation milestone is the Shopify Flow action and persistent
-job/delivery ledger. Customer portal downloads, fulfillment batches, automatic
-missing-attachment recovery, production hosting and paid lifecycle tests remain
-planned. No external automation, customer email or paid plan was enabled by the
-development work. See [the evidence](verification.md) for the checks actually run.
+Shopify Flow now has order-summary and packing-slip actions backed by a persistent
+job ledger, signed request verification, bounded retries, expiring private links,
+and merchant pause/retry/revoke controls. The synthetic development store has
+executed both actions. The ledger records preparation and download responses;
+it does not claim email delivery. See [the Flow contract](../shopify/FLOW.md).
+
+Customer portal downloads, fulfillment batches, automatic missing-attachment
+recovery, customer data-request fulfillment, production hosting and paid lifecycle
+tests remain planned. No customer email or paid plan was enabled. Workflow testing
+is confined to the synthetic development store. See [the evidence](verification.md)
+for the checks actually run.
 
 ## Hard cases that must be designed before paid launch
 

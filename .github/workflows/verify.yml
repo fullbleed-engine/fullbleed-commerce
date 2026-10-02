@@ -43,6 +43,7 @@ jobs:
             output/automation/
             output/shopify/*.json
             output/shopify/*.log
+            output/shopify/flow/
           retention-days: 14
   container:
     runs-on: ubuntu-latest

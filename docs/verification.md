@@ -13,7 +13,9 @@ was synthetic. No merchant store was changed and no customer PDF was retained.
 | WordPress/WooCommerce, installed base and Pro ZIPs with HPOS | 46 HTTP checks passed; HPOS enabled in runtime | `output/wordpress/packaged-hpos-pro-verification.json`, `packaged-hpos-pro-runtime.json` |
 | Six designed sample PDFs | Each one page, zero reported missing glyphs | `output/examples/verification.json` and matching PDFs/PNGs |
 | Sixty-item long order summary and packing slip | Eight pages each; every SKU retained; text bounds inside pages | `output/pdf-text-verification.json`, `output/layout/` |
-| Shopify application migrations, route types, TypeScript, lint, production build and request-handler tests | All checks passed; four application tests passed | `output/shopify/verification.json`, `output/shopify/webhooks.log` |
+| Shopify application migrations, route types, TypeScript, lint, production build and request-handler tests | All checks passed; four application and eight Flow tests passed | `output/shopify/verification.json`, `output/shopify/webhooks.log`, `output/shopify/flow.log` |
+| Shopify Flow extensions | CLI validates both native actions and output schemas | `output/shopify/flow-config-validation.json` |
+| Actual Shopify Flow execution and browser downloads | 19 retained checks; both actions and the downstream step completed; downloaded PDFs match returned SHA-256 values; revoke and pause return HTTP 410 | `output/browser/shopify-flow-verification.json`, matching PDFs/PNGs |
 | Visual and source template editing in real Chrome 154 | Free editor saves, previews, reloads and resets; Pro also downloads a two-PDF ZIP and fits a 390px viewport | `output/browser/*-verification.json`, PDFs and screenshots |
 | Shopify real-browser editing and downloads | Summary/packing-slip downloads, visual edit, HTML/CSS save, actual preview, persisted template and reset passed | `output/browser/shopify-verification.json` |
 | Custom template rendering | Summary and packing slip: one page, zero missing glyphs, deterministic output; embedded PNG verified | `output/templates/verification.json` |
@@ -53,6 +55,24 @@ merchant isolation, and renders the Documents component to catch disabled-button
 regressions in Polaris custom elements. React and React DOM are pinned to 19.3.0;
 Polaris script/types are pinned to the 1.1 track. These checks use an isolated synthetic SQLite
 database, not the installed development app's database.
+
+Flow tests exercise the production request handler and official HMAC validation,
+including authenticated tenant/subscription checks before order reads. They cover
+durable action-run deduplication, competing database clients, expired leases,
+transient backoff, manual retry, altered inputs, forged/expired/revoked links,
+pause/uninstall during rendering, customer redaction and 30-day cleanup. The
+network boundary is synthetic; PDF rendering and database operations are real.
+
+Separately, the installed development app completed a real Shopify Flow workflow
+on synthetic unpaid order #1001. Both document actions returned values consumed
+by a following Liquid step, which logged only identifiers, PDF hashes, expiry
+times and hashes of private URLs. Chrome downloaded both returned links; the
+bytes matched Flow's SHA-256 values. Both one-page PDFs and the desktop/390px
+download pages were visually inspected. Individual revocation and pause blocked
+subsequent downloads without incrementing their counters. The workflow and app
+automation were left disabled, and all test links revoked. This used Shopify's
+manual replay of the Order created trigger, not a newly placed order or actual
+customer email. The [Flow contract](../shopify/FLOW.md) documents that boundary.
 
 The worker tests execute the actual bundled WebAssembly engine in a Node VM with
 browser APIs supplied by the test harness, and compare its PDF with Node output.
@@ -118,6 +138,10 @@ retain its runtime record because later runs may use different versions.
   The Partner organization, registered app, development store, installation and
   access to the synthetic order are verified. Billing configuration and
   production deployment are not complete.
+- Shopify customer data-request fulfillment, automatic new-order trigger testing,
+  and a real configured delivery destination remain required. Native Flow actions
+  have been tested through manual replay on the synthetic store. Public
+  distribution is selected; that is not App Store approval or publication.
 - The Shopify toolkit's Polaris validator could not resolve its own
   `preact/jsx-runtime` and JSX types after three attempts, including a minimal
   component. The app's installed Polaris types pass TypeScript and production

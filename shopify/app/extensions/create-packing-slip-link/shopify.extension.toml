@@ -1,0 +1,21 @@
+[[extensions]]
+name = "Create packing slip link"
+handle = "create-packing-slip-link"
+type = "flow_action"
+uid = "971c6718-0537-81b7-5872-4b000a2dc86f4d273881"
+description = "Prepare a branded packing slip without prices and return a private link for the next workflow step."
+runtime_url = "/api/flow/documents"
+schema = "./schema.graphql"
+return_type_ref = "DocumentLink"
+
+[settings]
+  [[settings.fields]]
+  type = "order_reference"
+  required = true
+
+  [[settings.fields]]
+  type = "number_integer"
+  key = "expires_in_hours"
+  name = "Link lifetime in hours"
+  description = "Use 1 to 72 hours, or 0 for the default 24 hours. Order or template changes invalidate the link."
+  required = false

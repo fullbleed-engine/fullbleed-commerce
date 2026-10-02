@@ -9,10 +9,10 @@ Fullbleed engine. **Developer preview; paid sales and marketplace listings are n
 | --- | --- | --- |
 | Fullbleed Commerce for WooCommerce | Order summaries and packing slips, visual and HTML/CSS template editor, embedded logos, PDF previews, Studio design, local browser generation | Free entry plugin; no account, quota, watermark, or telemetry |
 | Fullbleed Commerce Pro | Contrast and Quiet designs, up to 25 orders as a ZIP, opt-in automatic email attachments through an optional server renderer | Separate paid download, updates and support; proposed $79/year for one store, hosting separate |
-| Fullbleed Commerce for Shopify | Registered development app with order selection, visual and HTML/CSS template editor, PDF previews, three designs, authenticated downloads, subscription checks and privacy webhooks | App subscription; proposed $12/month starting tier, subject to operating-cost and merchant validation |
+| Fullbleed Commerce for Shopify | Visual and HTML/CSS template editor, three designs, native Flow actions, expiring document links, persistent activity/retry/revoke controls, authenticated previews and subscription checks | App subscription; proposed $12/month starting tier, subject to operating-cost and merchant validation |
 
-Prices are hypotheses, not live offers. No checkout, subscription, purchase, or
-marketplace registration is active. The engine remains available independently
+Prices are hypotheses, not live offers. Checkout, paid subscriptions and marketplace
+listings are not live. The engine remains available independently
 under MIT; WordPress plugin code is GPL-compatible. See [LICENSE](LICENSE).
 
 | Studio | Contrast | Quiet |
@@ -58,6 +58,23 @@ Fullbleed PDF preview is the check for final typography and pagination.
 See [the template guide](docs/templates.md) for fields, loops and supported input.
 
 ![Fullbleed visual template editor with draggable blocks, print layout and typography controls](docs/previews/template-studio.png)
+
+## Automate documents
+
+WooCommerce Pro can attach the saved order-summary design to selected existing
+transactional emails through an optional server renderer. Failed rendering leaves
+the original email functional and records a merchant-visible error. See the
+[WooCommerce automation guide](automation/README.md).
+
+Shopify adds **Create order summary link** and **Create packing slip link** to
+Flow. Enable automation, connect an order trigger, and use the returned private
+link in your next workflow step. Jobs survive restarts, duplicate events reuse
+the same job, and transient failures have bounded retries. Review activity,
+retry preparation, revoke one link, or pause all automation in the app.
+See the [Flow setup and reliability contract](shopify/FLOW.md).
+
+These are development integrations. Customer delivery, production hosting,
+privacy-request fulfillment and paid lifecycle validation remain launch gates.
 
 ## Development
 
