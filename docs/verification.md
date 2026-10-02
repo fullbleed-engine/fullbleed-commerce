@@ -147,12 +147,13 @@ retain its runtime record because later runs may use different versions.
   component. The app's installed Polaris types pass TypeScript and production
   build checks; this does not substitute for real-browser QA.
 
-The final [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37055058614)
+The final [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37065625268)
 passed clean dependency installation, all 36 shared tests, plugin packaging,
-28 WooCommerce automation checks, Shopify application checks, Docker build,
+28 WooCommerce automation checks, four Shopify application tests, eight Flow tests, Docker build,
 database migrations and HTTP startup. Linux also verified restrictive attachment
 file permissions. Both plugin archives are byte-identical to the Windows packages
-installed for browser checks. The retained [CI record](ci-verification.json)
+installed for browser checks, and the Flow fixture PDF is identical across both
+operating systems. The retained [CI record](ci-verification.json)
 identifies the checked source commit, archive hashes and individual automation
 results. No production merchant credentials were supplied to CI.
 

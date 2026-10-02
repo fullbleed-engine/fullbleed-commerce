@@ -1,24 +1,24 @@
 {
   "status": "completed",
   "conclusion": "success",
-  "headSha": "92e187759cd0f33c1f282348ce1267b30728b4e3",
-  "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37055058614",
-  "createdAt": "2026-10-02T19:35:01Z",
-  "updatedAt": "2026-10-02T19:37:07Z",
+  "headSha": "647f18caefed289567f5faed86c60459eebe9467",
+  "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37065625268",
+  "createdAt": "2026-10-02T21:14:21Z",
+  "updatedAt": "2026-10-02T21:15:55Z",
   "jobs": [
-    {
-      "name": "container",
-      "conclusion": "success",
-      "startedAt": "2026-10-02T19:35:04Z",
-      "completedAt": "2026-10-02T19:35:48Z",
-      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37055058614/job/110997603954"
-    },
     {
       "name": "integration",
       "conclusion": "success",
-      "startedAt": "2026-10-02T19:35:40Z",
-      "completedAt": "2026-10-02T19:37:06Z",
-      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37055058614/job/110997604369"
+      "startedAt": "2026-10-02T21:14:24Z",
+      "completedAt": "2026-10-02T21:15:54Z",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37065625268/job/111032600345"
+    },
+    {
+      "name": "container",
+      "conclusion": "success",
+      "startedAt": "2026-10-02T21:14:24Z",
+      "completedAt": "2026-10-02T21:15:19Z",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37065625268/job/111032600573"
     }
   ],
   "artifact": "preview-verification",
@@ -39,7 +39,7 @@
     }
   ],
   "woocommerceAutomationLinux": {
-    "checkedAt": "2026-10-02T19:36:36.755Z",
+    "checkedAt": "2026-10-02T21:15:22.095Z",
     "wordpress": "7.1.2",
     "woocommerce": "11.1.2",
     "php": "8.3.33",
@@ -160,7 +160,73 @@
     "hpos": true,
     "unixPermissionsChecked": true,
     "pdfSha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
-    "transport": "Real WooCommerce hooks and PHPMailer MIME with outbound mail captured. HTTPS response supplied through the WordPress HTTP test filter using actual Fullbleed output from this exact order. No production network or delivery claim.",
-    "recordSha256": "23e659642b9978dfa61ba7628baac04486983f4029d11f1b121624fad3e69bb4"
+    "transport": "Real WooCommerce hooks and PHPMailer MIME with outbound mail captured. HTTPS response supplied through the WordPress HTTP test filter using actual Fullbleed output from this exact order. No production network or delivery claim."
+  },
+  "shopifyApplication": {
+    "checkedAt": "2026-10-02T21:15:52.001Z",
+    "node": "v24.21.0",
+    "checks": [
+      {
+        "name": "schema",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "migrations",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "route-types",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "typecheck",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "lint",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "build",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "webhooks",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "flow",
+        "exitCode": 0,
+        "passed": true
+      }
+    ],
+    "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
+    "lockSha256": "1c0374462e3e1b6d476ad2ece2128c0e49258d318d854c585bba0ea5bae9013b",
+    "serverBuildSha256": "6091e4b136e38194963e0da6593ff6b693385c8fd66b4401d1fe894cd86086a5",
+    "browserTested": false,
+    "liveBillingTested": false
+  },
+  "shopifyTests": {
+    "webhooks": {
+      "passed": 4,
+      "failed": 0,
+      "logSha256": "7a8c67f5a26bc72cd73abdc0ed70c8b09c3123bdcbaa4f5f08022f2e9aa4a816"
+    },
+    "flow": {
+      "passed": 8,
+      "failed": 0,
+      "logSha256": "e0e919772bfe5b4978b56ff79c417677cd7c59a8239ffaaa57cfb692f596bd46"
+    }
+  },
+  "flowPdf": {
+    "sha256": "60cd76df6cc0ebc8e73ee7b79f57f571d0e9e9dc3ea9cd7b6760d49943e70d78",
+    "windowsLinuxByteIdentical": true
   }
 }
