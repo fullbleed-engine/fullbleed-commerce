@@ -25,6 +25,8 @@ source files or logs. Set:
 
 - `SHOPIFY_API_KEY`, `SHOPIFY_API_SECRET`, and the stable
   `FULLBLEED_PRIVACY_KEY` described in [PRIVACY.md](PRIVACY.md).
+- A separate `FULLBLEED_MONITOR_TOKEN` for the read-only operator probe,
+  configured as described in [MONITORING.md](MONITORING.md).
 - `SHOPIFY_APP_URL` to the service's HTTPS origin, `SCOPES=read_orders`,
   `NODE_ENV=production`, `PORT=3000`, and
   `DATABASE_URL=file:/data/commerce.sqlite`.
@@ -62,9 +64,12 @@ replacement deployment. Verify an actual Flow order trigger and downstream
 destination with synthetic data before enabling merchant workflows. Complete
 the App Pricing lifecycle separately; a healthy server is not billing evidence.
 
-Railway readiness is checked during deployment, not continuously. Configure
-external availability alerts and daily execution of
-`node scripts/privacy-status.mjs`, with a responsible operator, before launch.
+Railway readiness is checked during deployment, not continuously. The
+[GitHub monitoring workflow](MONITORING.md) checks availability and privacy
+deadlines. Enable it for continuous operation, verify operator notification
+delivery, and arrange detection of missed checks before launch. It does not
+replace signed webhook delivery monitoring or the private
+`node scripts/privacy-status.mjs` diagnostic command.
 Keep encrypted backups and the privacy key separate, test restoration and
 erasure replay, and keep the public privacy description accurate.
 

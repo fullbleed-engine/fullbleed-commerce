@@ -29,8 +29,10 @@ for marketing or sent emails.
    aggregate counts and the oldest receipt time, not customer identities.
    Exit 1 means a request is due within 48 hours (including overdue); exit 2
    means a key/configuration/database problem. Check the queue daily, assign an
-   operator, and alert well before the 30-day deadline. Wire this to the chosen
-   host's monitoring before production. The command alone is not an alert service.
+   operator, and alert well before the 30-day deadline. The read-only
+   [monitoring workflow](MONITORING.md) checks these conditions through a
+   separate authenticated endpoint. Enable checks and verify notification
+   delivery before production. The command alone is not an alert service.
 4. Open Privacy requests to download and handle outstanding requests. Never
    mark a request handled merely because the export was prepared. Downloaded
    copies need the store's own retention and access controls.

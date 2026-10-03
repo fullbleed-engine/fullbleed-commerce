@@ -1,0 +1,27 @@
+name: Monitor Fullbleed staging
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17,47 * * * *'
+permissions:
+  contents: read
+concurrency:
+  group: fullbleed-staging-monitor
+  cancel-in-progress: false
+jobs:
+  monitor:
+    # Keep off while attended staging compute is stopped. Manual runs always probe.
+    if: github.event_name == 'workflow_dispatch' || vars.FULLBLEED_STAGING_MONITOR_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: commerce-staging
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.21.0
+      - name: Probe readiness and privacy deadlines
+        run: node tools/check-monitor.mjs
+        env:
+          FULLBLEED_MONITOR_URL: ${{ vars.FULLBLEED_MONITOR_URL }}
+          FULLBLEED_MONITOR_TOKEN: ${{ secrets.FULLBLEED_MONITOR_TOKEN }}

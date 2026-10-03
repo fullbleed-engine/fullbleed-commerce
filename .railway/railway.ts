@@ -15,7 +15,7 @@ export default defineRailway((ctx) => {
     deploy: { drainingSeconds: 30, limitOverride: { containers: { cpu: 0.5, memoryBytes: 536870912.0000001 } }, overlapSeconds: 0, restartPolicyMaxRetries: 3 },
     volumeMounts: { "/data": shopifyAppVolume },
     // Keep values in Railway. Never use config pull --include-variables here.
-    env: { DATABASE_URL: preserve(), FULLBLEED_PRIVACY_KEY: preserve(), NODE_ENV: preserve(), OPT_OUT_INSTRUMENTATION: preserve(), PORT: preserve(), RAILWAY_DOCKERFILE_PATH: preserve(), RAILWAY_RUN_UID: preserve(), SCOPES: preserve(), SHOPIFY_API_KEY: preserve(), SHOPIFY_API_SECRET: preserve(), SHOPIFY_APP_URL: preserve(), SHOPIFY_PARTNER_APP_ID: preserve(), SHOPIFY_PARTNER_ORG_ID: preserve() },
+    env: { DATABASE_URL: preserve(), FULLBLEED_PRIVACY_KEY: preserve(), FULLBLEED_MONITOR_TOKEN: preserve(), NODE_ENV: preserve(), OPT_OUT_INSTRUMENTATION: preserve(), PORT: preserve(), RAILWAY_DOCKERFILE_PATH: preserve(), RAILWAY_RUN_UID: preserve(), SCOPES: preserve(), SHOPIFY_API_KEY: preserve(), SHOPIFY_API_SECRET: preserve(), SHOPIFY_APP_URL: preserve(), SHOPIFY_PARTNER_APP_ID: preserve(), SHOPIFY_PARTNER_ORG_ID: preserve() },
   });
 
   return project("fullbleed-commerce-staging", {

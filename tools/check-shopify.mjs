@@ -30,6 +30,7 @@ const jobs = [
   ['webhooks', '--test', '--test-reporter=tap', 'test/webhooks.test.mjs'],
   ['flow', '--test', '--test-reporter=tap', 'test/flow.test.mjs'],
   ['privacy', '--test', '--test-reporter=tap', 'test/privacy.test.mjs'],
+  ['monitor', '--test', '--test-reporter=tap', 'test/monitor.test.mjs'],
 ];
 const checks = clientCurrent ? [{ name: 'generated-client-matches-schema', exitCode: 0, passed: true }] : [];
 const initialChecks = checks.length;

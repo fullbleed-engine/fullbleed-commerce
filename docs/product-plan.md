@@ -171,7 +171,12 @@ real renderer checks. Eight hosted commerce PDFs match the local verified files;
 runtime resource limits are enforced. Compute is stopped between attended tests
 to preserve the total launch budget. See [hosted evidence](staging-verification.json).
 
-Fulfillment batches, automatic missing-attachment recovery, privacy monitoring
+Availability and privacy-deadline monitoring now has a read-only endpoint and a
+GitHub Actions workflow. Scheduling remains off while staging is stopped;
+operator notification delivery still needs verification before continuous use.
+See [the operator runbook](../shopify/MONITORING.md).
+
+Fulfillment batches, automatic missing-attachment recovery, webhook monitoring
 and secure support-delivery setup, production operation and paid lifecycle tests
 remain planned. No customer email or paid plan was enabled. Workflow testing
 is confined to the synthetic development store. See [the evidence](verification.md)
