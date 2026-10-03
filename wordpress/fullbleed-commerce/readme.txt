@@ -1,5 +1,5 @@
 === Fullbleed Commerce ===
-Contributors: krflol
+Contributors: kfinkelstein
 Tags: pdf, woocommerce, packing slips, order documents
 Requires at least: 6.5
 Tested up to: 7.1
