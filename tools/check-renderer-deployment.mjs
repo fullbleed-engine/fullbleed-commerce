@@ -10,6 +10,7 @@ import { setTimeout } from 'node:timers/promises';
 import { unzipSync } from 'fflate';
 import { createClient } from '../automation/create-client.mjs';
 import { renderOrder } from '../src/node.js';
+import { checkSmtpWorkflows } from './renderer-fixture/smtp-check.mjs';
 
 const project = `fullbleed-renderer-check-${process.pid}-${Date.now()}`;
 const output = resolve('output/renderer-deployment');
@@ -203,12 +204,13 @@ try {
   run(['cp', rotated.tokenFile, `${wordpress}:/tmp/wordpress-token.txt`]);
   run(['exec', wordpress, 'chown', 'www-data:www-data', '/tmp/wordpress-token.txt']);
   phase('rotated');
+  const smtp = await checkSmtpWorkflows({ project, network, wordpress, output, scratch, containers, run, compose, php, copyOut, waitUntil, passed });
   const logs = compose(['logs', '--no-color']);
   for (const tokenFile of [connection.tokenFile, rotated.tokenFile]) assert.ok(!logs.includes(readFileSync(tokenFile, 'utf8').trim()));
   for (const value of ['Alex', 'Morgan', '42 Example Street', 'LIN-MOSS']) assert.ok(!logs.includes(value));
   passed('deployment logs contain neither raw renderer tokens nor synthetic order fields');
   const evidence = ['https-summary.pdf', 'https-packing.pdf', 'render.eml', 'outage.eml', 'recovery.eml', 'rotated.eml'].map(filename => ({ file: `output/renderer-deployment/${filename}`, sha256: hash(readFileSync(join(output, filename))) }));
-  const result = { checkedAt: new Date().toISOString(), syntheticOnly: true, transport: 'Native WordPress/PHP cURL over real TLS to Caddy and the unmodified renderer container. Local fixture CA trusted explicitly; private Docker hostname permitted only in the fixture. No pre_http_request response substitution. PHPMailer MIME is captured without sending and decoded with an independent standard MIME parser.', packages, images: { ...images, proxy: configuration.services.proxy.image, rendererImageId: inspect(compose(['ps', '-q', 'renderer'])).Image }, woocommerceArchive: { url: wooUrl, sha256: hash(wooBytes) }, checks, phases, documents, evidence, limitations: ['Local TLS issuer only; public DNS, ACME issuance and a merchant host remain deployment checks.', 'PHPMailer identifies extensionless private temporary attachments as application/octet-stream; the .pdf display filename and complete decoded PDF bytes are verified separately.', 'No production email provider, managed hosting, paid entitlements or merchant data used.', 'The renderer remains one process with in-memory capacity limits; this is not metered SaaS or a high-availability claim.'] };
+  const result = { checkedAt: new Date().toISOString(), syntheticOnly: true, transport: 'Native WordPress/PHP cURL over real TLS to Caddy and the unmodified renderer container. Local fixture CA trusted explicitly; private Docker hostname permitted only in the fixture. No pre_http_request response substitution. Initial phases capture PHPMailer MIME. The separate SMTP phase uses the unmodified WordPress mailer, WooCommerce Action Scheduler, wp-cron.php and a private Mailpit inbox with no external relay.', packages, images: { ...images, proxy: configuration.services.proxy.image, rendererImageId: inspect(compose(['ps', '-q', 'renderer'])).Image }, woocommerceArchive: { url: wooUrl, sha256: hash(wooBytes) }, checks, phases, documents, smtp, evidence: [...evidence, ...smtp.evidence], limitations: ['Local TLS issuer only; public DNS, ACME issuance and a merchant host remain deployment checks.', 'PHPMailer identifies extensionless private temporary attachments as application/octet-stream; the .pdf display filename and complete decoded PDF bytes are verified separately.', 'SMTP receipt is verified only inside the disposable network; no external provider, recipient domain, SPF/DKIM/DMARC, managed hosting, paid entitlement or merchant data is used.', 'The renderer remains one process with in-memory capacity limits; this is not metered SaaS or a high-availability claim.'] };
   writeFileSync(join(output, 'verification.json'), `${JSON.stringify(result, null, 2)}\n`);
   console.log(JSON.stringify({ passed: checks.length, record: 'output/renderer-deployment/verification.json' }));
 } catch (error) {
