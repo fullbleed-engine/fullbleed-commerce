@@ -1,8 +1,26 @@
 # Preview verification
 
-The current WordPress release is **0.1.1**, published October 3, 2026.
+The current WordPress release is **0.1.2**, published October 3, 2026.
 All checks use synthetic order data. This is an evaluation preview, not
 marketplace approval or a live paid service.
+
+## 0.1.2 closing-note pagination
+
+Built-in order summaries and new starter templates keep the totals adjacent to
+the closing note. A boundary matrix covers 180 PDFs: Studio, Contrast and Quiet,
+A4 and Letter, direct rendering and editable starters, and 15 item counts from
+1 to 60. An independent pypdf check requires complete, single-copy item references
+and store amounts, with every total and the closing note on the final page.
+The previous source fails 12 of these cases; the corrected source passes all 180.
+A frozen 0.1.1 saved template must retain its original PDF hash. The six short
+design examples are byte-identical to the inspected 0.1.1 examples.
+
+The [0.1.2 release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.2)
+retains the PDFs, previews, package hashes and final verification results.
+Its upgrade check starts from the published 0.1.1 ZIPs in both WooCommerce storage
+modes. The browser demo check exercises both the built-in long summary and a
+starter saved through the actual editor, followed by a reload and download.
+The engine remains Fullbleed Node 0.1.2 / engine 2.5.6.
 
 ## 0.1.1 release verification
 

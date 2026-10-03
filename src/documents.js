@@ -75,9 +75,9 @@ h1 { font-family:'${palette.title}'; font-size:43pt; line-height:1.06; font-weig
 table { width:100%; border-collapse:collapse; table-layout:fixed; } .description { width:64%; } .quantity { width:10%; text-align:center; } .amount { width:26%; text-align:right; }
 th { padding:10pt 9pt; color:#fff; background:${palette.head}; font-size:8pt; font-weight:700; text-align:left; } td { padding:11pt 9pt; border-bottom:0.7pt solid ${palette.line}; vertical-align:top; overflow-wrap:anywhere; } tr { break-inside:avoid; }
 .item-name { font-weight:600; } .sku { font-size:8pt; color:${palette.muted}; margin-top:3pt; } .check-box { display:inline-block; width:12pt; height:12pt; border:1pt solid ${palette.muted}; }
-.totals { margin:18pt 0 0 46%; break-inside:avoid; } .total-row { display:flex; justify-content:space-between; gap:10pt; padding:5pt 0; font-size:9pt; } .total-row strong { text-align:right; } .grand-total { border-top:1.5pt solid ${palette.ink}; margin-top:6pt; padding-top:10pt; font-size:14pt; }
+.totals { margin:18pt 0 0 46%; break-inside:avoid; break-after:avoid; } .total-row { display:flex; justify-content:space-between; gap:10pt; padding:5pt 0; font-size:9pt; } .total-row strong { text-align:right; } .grand-total { border-top:1.5pt solid ${palette.ink}; margin-top:6pt; padding-top:10pt; font-size:14pt; }
 .packing-note { margin-top:16pt; padding:12pt; background:#e9ede4; break-inside:avoid; } .packing-note p { margin:3pt 0 6pt; } .packing-closing { margin-top:7pt; padding-top:7pt; border-top:0.7pt solid ${palette.line}; font-size:9pt; }
-.footer { margin-top:28pt; break-inside:avoid; } .footer-rule { width:34pt; height:4pt; background:${accent}; margin-bottom:12pt; } .footer p { margin:0 0 5pt; font-size:10pt; } .footer-reference { font-size:8pt; color:${palette.muted}; }
+.footer { margin-top:28pt; break-inside:avoid; break-before:avoid; } .footer-rule { width:34pt; height:4pt; background:${accent}; margin-bottom:12pt; } .footer p { margin:0 0 5pt; font-size:10pt; } .footer-reference { font-size:8pt; color:${palette.muted}; }
 ${palette.extraCss || ''}`;
   const slug = order.number.replace(/[^a-zA-Z0-9_-]/g, '-').replace(/^-+|-+$/g, '').slice(0, 70) || 'order';
   const content = options.template ? renderTemplate(options.template, order, { kind, footer, title }) : { html, css };
