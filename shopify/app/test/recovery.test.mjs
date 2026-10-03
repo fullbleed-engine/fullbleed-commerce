@@ -1,0 +1,178 @@
+// SPDX-License-Identifier: MIT
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { DatabaseSync, backup } from 'node:sqlite';
+import { mkdtemp, rm, readFile, writeFile, stat } from 'node:fs/promises';
+import { resolve, join, sep } from 'node:path';
+import { randomUUID } from 'node:crypto';
+import { PrismaClient } from '@prisma/client';
+import { createRecoveryJournal } from '../../recovery-journal.js';
+import { createPrivacyService, completePrivacyRequest, erasePrivacyShop, parsePrivacyPayload, applyRecoveryEvent } from '../../privacy.js';
+import { fileRecoveryStore } from '../scripts/recovery-store.mjs';
+import { configuredDatabasePath, databaseUrl, createDatabaseBackup, restoreDatabaseBackup, pruneRecoveryStorage } from '../scripts/recovery-operations.mjs';
+
+if (!process.env.DATABASE_URL?.includes('webhook-test.sqlite') || process.env.SHOPIFY_API_SECRET !== 'synthetic-webhook-test-secret') throw new Error('Use the isolated test runner.');
+const privacyKey = 'ab'.repeat(32), key = 'ef'.repeat(32);
+const primary = 'synthetic-recovery-primary.myshopify.com', other = 'synthetic-recovery-other.myshopify.com';
+const completed = 'synthetic-recovery-completed.myshopify.com', removed = 'synthetic-recovery-removed.myshopify.com';
+const target = resolve('../../target');
+const input = (shop, order = '1') => parsePrivacyPayload(Buffer.from(JSON.stringify({ shop_domain: shop, shop_id: '1', customer: { id: '9000', email: 'synthetic-recovery@example.invalid' }, data_request: { id: '7000' }, orders_requested: [order] })), shop, 'CUSTOMERS_DATA_REQUEST');
+
+async function fixture(t, now = () => new Date()) {
+  const directory = await mkdtemp(join(target, 'recovery-test-'));
+  const path = join(directory, 'source.sqlite');
+  const source = new DatabaseSync(configuredDatabasePath(process.env.DATABASE_URL), { readOnly: true });
+  try { await backup(source, path); } finally { source.close(); }
+  const db = new PrismaClient({ datasources: { db: { url: databaseUrl(path) } } });
+  const clients = [db];
+  t.after(async () => {
+    await Promise.all(clients.map(client => client.$disconnect()));
+    assert.ok(resolve(directory).startsWith(target + sep + 'recovery-test-'));
+    await rm(directory, { recursive: true, force: true });
+  });
+  await db.$transaction(async tx => {
+    await tx.privacyRequest.deleteMany(); await tx.automationSettings.deleteMany(); await tx.session.deleteMany();
+    await tx.brand.deleteMany(); await tx.documentTemplate.deleteMany(); await tx.recoveryReceipt.deleteMany();
+  });
+  const storeDirectory = join(directory, 'independent-store');
+  const store = await fileRecoveryStore(storeDirectory), dataset = randomUUID();
+  const journal = createRecoveryJournal({ store, key, dataset, now });
+  await journal.initialize();
+  const service = createPrivacyService({ db, key: privacyKey, now, recordRecovery: journal.record });
+  const requests = {};
+  for (const shop of [primary, other, completed, removed]) {
+    await db.session.create({ data: { id: `offline_${shop}`, shop, state: '', isOnline: false, accessToken: 'synthetic-recovery-access-token' } });
+    await db.brand.create({ data: { shop, sellerName: 'Synthetic saved recovery brand' } });
+    await db.documentTemplate.create({ data: { shop, kind: 'order-summary', revision: 'synthetic-saved-revision', content: '{"html":"<h1>Saved template</h1>"}' } });
+    await db.automationSettings.create({ data: { shop, enabled: true, jobs: { create: {
+      runId: 'synthetic-recovery-run', handle: 'create-order-summary-link', orderId: 'gid://shopify/Order/1', kind: 'order-summary', requestHash: 'synthetic-request-hash', ttlHours: 24,
+      retryDeadline: new Date(now().valueOf() + 3600000), status: 'ready', expiresAt: new Date(now().valueOf() + 3600000),
+    } } } });
+    requests[shop] = await service.accept(input(shop));
+  }
+  const connect = path => { const client = new PrismaClient({ datasources: { db: { url: databaseUrl(path) } } }); clients.push(client); return client; };
+  return { directory, path, db, journal, store, storeDirectory, dataset, service, requests, connect };
+}
+
+test('encrypted multipart backup restores retained data and replays later erasure, completion and uninstall', async t => {
+  const f = await fixture(t);
+  await f.db.brand.update({ where: { shop: other }, data: { sellerLines: 'Synthetic recovery design content. '.repeat(70000) } });
+  const saved = await createDatabaseBackup({ db: f.db, databasePath: f.path, journal: f.journal });
+  assert.ok(saved.parts > 1);
+  await f.service.redact({ shop: primary, customerId: null, email: 'synthetic-recovery@example.invalid', orderIds: [] });
+  await f.service.exportData(completed, f.requests[completed]);
+  await completePrivacyRequest(f.db, completed, f.requests[completed], new Date(), f.journal.record);
+  await f.db.$transaction(tx => erasePrivacyShop(tx, removed, f.journal.record));
+  const entries = await f.journal.entries();
+  assert.equal(entries.length, 3);
+  assert.doesNotMatch(JSON.stringify(entries), /synthetic-recovery@example|synthetic-recovery-access-token/);
+  for (const prefix of ['journal/', 'backups/']) for (const path of await f.store.list(prefix)) {
+    const bytes = await f.store.read(path, 2 * 1024 * 1024);
+    assert.doesNotMatch(bytes.toString(), /SQLite format|synthetic-recovery-primary|synthetic-recovery@example|synthetic-recovery-access-token|Saved template/);
+  }
+  const output = join(f.directory, 'restored');
+  const report = await restoreDatabaseBackup({ journal: f.journal, id: saved.id, outputDirectory: output, privacyKey });
+  assert.equal(report.sourceSha256, saved.sha256); assert.equal(report.replay.applied, 3);
+  assert.equal(report.outstandingPrivacyRequests, 1);
+  assert.equal(report.authenticatedPrivacySnapshots, 1);
+  const restored = f.connect(join(output, 'commerce.sqlite'));
+  const erased = await restored.privacyRequest.findUnique({ where: { id: f.requests[primary] } });
+  assert.equal(erased.status, 'redacted'); assert.equal(erased.snapshot, null);
+  assert.equal((await restored.automationJob.findFirst({ where: { shop: primary } })).orderId, '');
+  assert.equal((await restored.privacyRequest.findUnique({ where: { id: f.requests[completed] } })).snapshot, null);
+  assert.equal(await restored.brand.count({ where: { shop: removed } }), 0);
+  assert.equal(await restored.documentTemplate.count({ where: { shop: removed } }), 0);
+  assert.equal((await restored.brand.findUnique({ where: { shop: other } })).sellerName, 'Synthetic saved recovery brand');
+  assert.match((await restored.documentTemplate.findFirst({ where: { shop: other } })).content, /Saved template/);
+  const exportData = await createPrivacyService({ db: restored, key: privacyKey }).exportData(other, f.requests[other]);
+  assert.equal(exportData.customer.email, 'synthetic-recovery@example.invalid');
+  assert.equal(await restored.session.count(), 0);
+  assert.equal(await restored.automationSettings.count({ where: { enabled: true } }), 0);
+  assert.equal(await restored.automationJob.count({ where: { status: 'ready' } }), 0);
+  assert.equal((await f.journal.replay(restored, applyRecoveryEvent)).applied, 0);
+  assert.equal((await f.db.session.count()), 3, 'Restore must not replace the source database.');
+  if (process.platform !== 'win32') {
+    assert.equal((await stat(output)).mode & 0o077, 0);
+    assert.equal((await stat(join(output, 'commerce.sqlite'))).mode & 0o077, 0);
+  }
+});
+
+test('a durable erasure survives a failed original database commit and replays exactly once', async t => {
+  const f = await fixture(t);
+  await assert.rejects(f.db.$transaction(async tx => {
+    await erasePrivacyShop(tx, primary, f.journal.record);
+    throw new Error('Synthetic commit failure.');
+  }), /Synthetic commit failure/);
+  assert.equal(await f.db.brand.count({ where: { shop: primary } }), 1);
+  assert.equal((await f.journal.entries()).length, 1);
+  assert.equal(await f.db.recoveryReceipt.count(), 0);
+  assert.equal((await f.journal.replay(f.db, applyRecoveryEvent)).applied, 1);
+  assert.equal(await f.db.brand.count({ where: { shop: primary } }), 0);
+  assert.equal((await f.journal.replay(f.db, applyRecoveryEvent)).applied, 0);
+  assert.equal(await f.db.brand.count({ where: { shop: other } }), 1);
+});
+
+test('unavailable recovery storage rolls back erasure without accepting a receipt', async t => {
+  const f = await fixture(t);
+  const unavailable = createRecoveryJournal({ store: { ...f.store, write: async () => { throw new Error('Synthetic storage outage.'); } }, key, dataset: f.dataset });
+  await assert.rejects(f.db.$transaction(tx => erasePrivacyShop(tx, primary, unavailable.record)));
+  assert.equal(await f.db.brand.count({ where: { shop: primary } }), 1);
+  assert.equal(await f.db.recoveryReceipt.count(), 0);
+  assert.equal((await f.journal.entries()).length, 0);
+});
+
+test('wrong key or dataset, modified ciphertext and expired backups cannot produce a restore', async t => {
+  const f = await fixture(t);
+  const saved = await createDatabaseBackup({ db: f.db, databasePath: f.path, journal: f.journal });
+  for (const configuration of [{ key: 'cd'.repeat(32), dataset: f.dataset }, { key, dataset: randomUUID() }]) {
+    const wrong = createRecoveryJournal({ store: f.store, ...configuration });
+    await assert.rejects(restoreDatabaseBackup({ journal: wrong, id: saved.id, outputDirectory: join(f.directory, 'wrong'), privacyKey }));
+  }
+  await assert.rejects(restoreDatabaseBackup({ journal: f.journal, id: saved.id, outputDirectory: join(f.directory, 'expired'), privacyKey, now: () => new Date(Date.now() + 8 * 86400000) }));
+  const part = join(f.storeDirectory, `backups/${saved.id}/0000.bin`);
+  const bytes = await readFile(part); bytes[bytes.length - 1] ^= 1; await writeFile(part, bytes);
+  await assert.rejects(restoreDatabaseBackup({ journal: f.journal, id: saved.id, outputDirectory: join(f.directory, 'tampered'), privacyKey }));
+  await assert.rejects(stat(join(f.directory, 'tampered')), error => error.code === 'ENOENT');
+  assert.equal(await f.db.brand.count(), 4);
+});
+
+test('corrupted journal fails before replay changes records, and a database rejects a different valid dataset', async t => {
+  const f = await fixture(t);
+  await f.journal.bind(f.db);
+  const second = createRecoveryJournal({ store: await fileRecoveryStore(join(f.directory, 'second-store')), key, dataset: randomUUID() });
+  await second.initialize();
+  await assert.rejects(second.bind(f.db));
+  await assert.rejects(f.db.$transaction(async tx => { await f.journal.record(tx, { type: 'erase-shop', shop: primary }); throw new Error('Rollback.'); }));
+  const [entry] = await f.journal.entries();
+  const path = join(f.storeDirectory, entry.path), bytes = await readFile(path);
+  bytes[20] ^= 1; await writeFile(path, bytes);
+  await assert.rejects(f.journal.replay(f.db, applyRecoveryEvent));
+  assert.equal(await f.db.brand.count({ where: { shop: primary } }), 1);
+});
+
+test('retention removes expired backups and applied recovery events while retaining the dataset binding', async t => {
+  let at = Date.now() - 40 * 86400000;
+  const f = await fixture(t, () => new Date(at));
+  const saved = await createDatabaseBackup({ db: f.db, databasePath: f.path, journal: f.journal, now: () => new Date(at) });
+  await f.db.$transaction(tx => erasePrivacyShop(tx, primary, f.journal.record));
+  at = Date.now();
+  const pruned = await pruneRecoveryStorage({ journal: f.journal, db: f.db, now: new Date(at) });
+  assert.equal(pruned.removedEvents, 1); assert.equal(pruned.removedBackupObjects, saved.parts + 1);
+  assert.deepEqual(await f.store.list('backups/'), []); assert.deepEqual(await f.journal.entries(), []);
+  assert.equal(await f.db.recoveryReceipt.count(), 1);
+  assert.equal(await f.db.brand.count({ where: { shop: primary } }), 0);
+  await f.journal.verify();
+});
+
+test('a valid SQLite backup with a damaged privacy snapshot remains unpublishable', async t => {
+  const f = await fixture(t);
+  const row = await f.db.privacyRequest.findUniqueOrThrow({ where: { id: f.requests[other] } });
+  const fields = row.snapshot.split('.');
+  const cipher = Buffer.from(fields[3], 'base64url'); cipher[0] ^= 1; fields[3] = cipher.toString('base64url');
+  await f.db.privacyRequest.update({ where: { id: row.id }, data: { snapshot: fields.join('.') } });
+  const saved = await createDatabaseBackup({ db: f.db, databasePath: f.path, journal: f.journal });
+  const output = join(f.directory, 'invalid-private-export');
+  await assert.rejects(restoreDatabaseBackup({ journal: f.journal, id: saved.id, outputDirectory: output, privacyKey }));
+  await assert.rejects(stat(output), error => error.code === 'ENOENT');
+  assert.equal((await f.db.privacyRequest.findUniqueOrThrow({ where: { id: row.id } })).exports, 0);
+});

@@ -55,7 +55,8 @@ export function parsePrivacyPayload(body, shop, topic) {
   };
 }
 
-export async function erasePrivacyShop(tx, shop) {
+export async function erasePrivacyShop(tx, shop, recordRecovery = async (_tx, _event) => {}) {
+  await recordRecovery(tx, { type: 'erase-shop', shop });
   await tx.privacyRequest.deleteMany({ where: { shop } });
   await tx.session.deleteMany({ where: { shop } });
   await tx.brand.deleteMany({ where: { shop } });
@@ -68,7 +69,7 @@ export async function prunePrivacyRequests(db, now = new Date()) {
   return db.privacyRequest.deleteMany({ where: { finishedAt: { lt: new Date(now.valueOf() - 30 * DAY) }, status: { in: ['completed', 'redacted'] } } });
 }
 
-export function createPrivacyService({ db, key, now = () => new Date() }) {
+export function createPrivacyService({ db, key, now = () => new Date(), recordRecovery = async (_tx, _event) => {} }) {
   if (typeof key !== 'string' || !/^[a-fA-F0-9]{64}$/.test(key)) throw fail('Privacy exports are temporarily unavailable. Contact Fullbleed support.', 503);
   const derive = purpose => createHmac('sha256', Buffer.from(key, 'hex')).update(`fullbleed:privacy:v1:${purpose}`).digest();
   const encryptionKey = derive('encryption');
@@ -145,25 +146,7 @@ export function createPrivacyService({ db, key, now = () => new Date() }) {
     return transaction(async tx => {
       // A replaced key must not cause an email-only erasure to silently miss records.
       await checkKey(tx, input.shop);
-      const match = keys(input);
-      const requestIds = new Set();
-      const identityFilters = Object.entries(match).filter(([, value]) => value).map(([name, value]) => ({ [name]: value }));
-      if (identityFilters.length) {
-        for (const row of await tx.privacyRequest.findMany({ where: { shop: input.shop, status: 'ready', OR: identityFilters }, select: { id: true } })) requestIds.add(row.id);
-      }
-      for (const batch of chunked(input.orderIds)) {
-        for (const row of await tx.privacyRequest.findMany({ where: { shop: input.shop, status: 'ready', orders: { some: { orderId: { in: batch } } } }, select: { id: true } })) requestIds.add(row.id);
-      }
-      const orders = new Set(input.orderIds);
-      for (const batch of chunked([...requestIds])) {
-        for (const row of await tx.privacyRequestOrder.findMany({ where: { requestId: { in: batch } }, select: { orderId: true } })) orders.add(row.orderId);
-        await tx.privacyRequestOrder.deleteMany({ where: { requestId: { in: batch } } });
-        await tx.privacyRequest.updateMany({ where: { shop: input.shop, id: { in: batch } }, data: { snapshot: null, keyId: null, customerKey: null, emailKey: null, status: 'redacted', finishedAt: now(), lastExportAt: null, exports: 0 } });
-      }
-      for (const batch of chunked([...orders])) await tx.automationJob.updateMany({ where: { shop: input.shop, orderId: { in: batch } }, data: {
-        orderId: '', requestHash: '', status: 'revoked', fingerprint: null, templateRevision: null, pdfSha256: null,
-        expiresAt: null, leaseId: null, leaseUntil: null, nextAttemptAt: null, lastError: null, lastDownloadedAt: null, downloads: 0, attempts: 0, ttlHours: 0, retryDeadline: now(), createdAt: now(),
-      } });
+      await redactPrivacyRecords(tx, { shop: input.shop, ...keys(input), orderIds: input.orderIds }, now(), recordRecovery);
     });
   }
   async function status() {
@@ -177,16 +160,65 @@ export function createPrivacyService({ db, key, now = () => new Date() }) {
     ]);
     return { pending, overdue, dueWithin48Hours, keyMismatch, oldestReceivedAt: oldest?.receivedAt.toISOString() || null };
   }
-  return { accept, exportData, redact, status };
+  async function verifyPending() {
+    // Offline recovery validation must not count as a merchant export/download.
+    // Read one bounded snapshot at a time instead of loading the whole queue.
+    let cursor, checked = 0;
+    while (true) {
+      const row = await db.privacyRequest.findFirst({ where: { status: 'ready', ...(cursor ? { id: { gt: cursor } } : {}) }, orderBy: { id: 'asc' }, select: { id: true, shop: true, requestId: true, snapshot: true, keyId: true } });
+      if (!row) return { checked };
+      if (row.keyId !== keyId || ++checked > 100000) throw fail('Privacy export needs operator assistance.', 503);
+      decrypt(row); cursor = row.id;
+    }
+  }
+  return { accept, exportData, redact, status, verifyPending };
 }
 
-export async function completePrivacyRequest(db, shop, id, now = new Date()) {
+export async function completePrivacyRequest(db, shop, id, now = new Date(), recordRecovery = async (_tx, _event) => {}) {
   return db.$transaction(async tx => {
     const row = await tx.privacyRequest.findFirst({ where: { id, shop } });
     if (!row) throw fail('Privacy request not found.', 404);
     if (row.status === 'completed') return;
     if (row.status !== 'ready' || !row.lastExportAt) throw fail('Download the export before marking it handled.', 409);
+    await recordRecovery(tx, { type: 'complete-request', shop, requestId: id });
     await tx.privacyRequestOrder.deleteMany({ where: { requestId: id } });
     await tx.privacyRequest.update({ where: { id }, data: { snapshot: null, keyId: null, customerKey: null, emailKey: null, status: 'completed', finishedAt: now } });
   });
+}
+
+// Reusable erasure operation for authenticated live requests and offline replay.
+// Only keyed identifiers and order references enter the encrypted recovery log.
+export async function redactPrivacyRecords(tx, input, at, recordRecovery = async (_tx, _event) => {}) {
+  const { shop, customerKey, emailKey, orderIds } = input;
+  const requestIds = new Set();
+  const identityFilters = Object.entries({ customerKey, emailKey }).filter(([, value]) => value).map(([name, value]) => ({ [name]: value }));
+  if (identityFilters.length) {
+    for (const row of await tx.privacyRequest.findMany({ where: { shop, status: 'ready', OR: identityFilters }, select: { id: true } })) requestIds.add(row.id);
+  }
+  for (const batch of chunked(orderIds)) {
+    for (const row of await tx.privacyRequest.findMany({ where: { shop, status: 'ready', orders: { some: { orderId: { in: batch } } } }, select: { id: true } })) requestIds.add(row.id);
+  }
+  const orders = new Set(orderIds);
+  for (const batch of chunked([...requestIds])) {
+    for (const row of await tx.privacyRequestOrder.findMany({ where: { requestId: { in: batch } }, select: { orderId: true } })) orders.add(row.orderId);
+  }
+  await recordRecovery(tx, { type: 'erase-customer', shop, customerKey, emailKey, orderIds: [...orders].sort() });
+  for (const batch of chunked([...requestIds])) {
+    await tx.privacyRequestOrder.deleteMany({ where: { requestId: { in: batch } } });
+    await tx.privacyRequest.updateMany({ where: { shop, id: { in: batch } }, data: { snapshot: null, keyId: null, customerKey: null, emailKey: null, status: 'redacted', finishedAt: at, lastExportAt: null, exports: 0 } });
+  }
+  for (const batch of chunked([...orders])) await tx.automationJob.updateMany({ where: { shop, orderId: { in: batch } }, data: {
+    orderId: '', requestHash: '', status: 'revoked', fingerprint: null, templateRevision: null, pdfSha256: null,
+    expiresAt: null, leaseId: null, leaseUntil: null, nextAttemptAt: null, lastError: null, lastDownloadedAt: null, downloads: 0, attempts: 0, ttlHours: 0, retryDeadline: at, createdAt: at,
+  } });
+}
+
+export async function applyRecoveryEvent(tx, event, at) {
+  if (event.type === 'erase-shop') return erasePrivacyShop(tx, event.shop);
+  if (event.type === 'erase-customer') return redactPrivacyRecords(tx, event, at);
+  if (event.type !== 'complete-request') throw new Error('Unknown recovery event.');
+  const row = await tx.privacyRequest.findFirst({ where: { id: event.requestId, shop: event.shop } });
+  if (row?.status !== 'ready') return;
+  await tx.privacyRequestOrder.deleteMany({ where: { requestId: row.id } });
+  await tx.privacyRequest.update({ where: { id: row.id }, data: { snapshot: null, keyId: null, customerKey: null, emailKey: null, status: 'completed', finishedAt: at } });
 }

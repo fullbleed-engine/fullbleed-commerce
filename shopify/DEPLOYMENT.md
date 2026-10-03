@@ -27,6 +27,8 @@ source files or logs. Set:
   `FULLBLEED_PRIVACY_KEY` described in [PRIVACY.md](PRIVACY.md).
 - A separate `FULLBLEED_MONITOR_TOKEN` for the read-only operator probe,
   configured as described in [MONITORING.md](MONITORING.md).
+- The independent bucket, stable dataset ID and separate recovery key in
+  [RECOVERY.md](RECOVERY.md). Initialize the bucket before starting the app.
 - `SHOPIFY_APP_URL` to the service's HTTPS origin, `SCOPES=read_orders`,
   `NODE_ENV=production`, `PORT=3000`, and
   `DATABASE_URL=file:/data/commerce.sqlite`.
@@ -40,7 +42,7 @@ source files or logs. Set:
   before paid workflow testing. The Partner organization ID differs from the
   Dev Dashboard ID. Missing billing configuration denies paid access.
 
-Migrations run at startup, after mounting the volume. Do not move them into a
+Migrations and erasure-journal reconciliation run at startup, after mounting the volume. Do not move them into a
 Railway pre-deploy command: the persistent volume is unavailable there.
 Do not copy the development SQLite database or its sessions to staging.
 Install the app through Shopify to obtain fresh authorized sessions.
@@ -70,8 +72,9 @@ deadlines. Enable it for continuous operation, verify operator notification
 delivery, and arrange detection of missed checks before launch. It does not
 replace signed webhook delivery monitoring or the private
 `node scripts/privacy-status.mjs` diagnostic command.
-Keep encrypted backups and the privacy key separate, test restoration and
-erasure replay, and keep the public privacy description accurate.
+Use the [encrypted backup and recovery commands](RECOVERY.md); keep both keys
+separate from backups. Verify scheduled backup creation, freshness alerts and
+full service recovery before launch, and keep the public privacy description accurate.
 
 The launch authorization is **$50 total**. Track project-attributed usage and
 actual charges in [the budget](../docs/launch-budget.json). The existing Railway

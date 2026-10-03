@@ -1,7 +1,8 @@
 # Availability and privacy monitoring
 
 The staging monitor checks HTTPS `/health`, then the authenticated
-`/internal/monitor` endpoint. It needs no Shopify, billing, SSH or Railway account
+`/internal/monitor` endpoint. The private endpoint also verifies that independent
+recovery storage and its encrypted dataset marker are accessible. It needs no Shopify, billing, SSH or Railway account
 credential. The endpoint is read-only and does not require a paid subscription.
 It reports aggregate privacy queue counts, never shop/customer/request IDs,
 exports, order data or document links. The CLI emits static operational messages
@@ -33,7 +34,7 @@ A production operator must detect missed checks as well as failed checks.
 ## Respond to a failed check
 
 - **Unavailable:** check service state, `/health`, the mounted database and the
-  monitor credential. A missing privacy key or inaccessible database also fails
+  monitor credential and private recovery bucket. A missing privacy key or inaccessible database also fails
   closed. Do not put service logs or private exports in public issues.
 - **Privacy deadline:** open the app's Privacy requests screen, identify the
   responsible store, and complete its response process. Requests due within 48

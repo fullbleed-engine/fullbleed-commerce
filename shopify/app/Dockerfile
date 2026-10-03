@@ -29,6 +29,8 @@ COPY --from=build /commerce/shopify/app/build ./shopify/app/build
 COPY --from=build /commerce/shopify/app/prisma ./shopify/app/prisma
 COPY --from=build /commerce/shopify/app/scripts ./shopify/app/scripts
 COPY --from=build /commerce/shopify/privacy.js ./shopify/privacy.js
+COPY --from=build /commerce/shopify/flow.js ./shopify/flow.js
+COPY --from=build /commerce/shopify/recovery-journal.js ./shopify/recovery-journal.js
 COPY --from=build /commerce/shopify/app/package.json ./shopify/app/package.json
 COPY LICENSE ./LICENSE
 COPY LICENSES ./LICENSES

@@ -1,6 +1,7 @@
 import { timingSafeEqual } from 'node:crypto';
 import type { LoaderFunctionArgs } from 'react-router';
 import { privacyService } from '../privacy.server';
+import { recoveryJournal } from '../recovery.server';
 
 const headers = {
   'Cache-Control': 'no-store, private, max-age=0',
@@ -21,6 +22,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     });
   }
   try {
+    await (await recoveryJournal()).verify();
     const { pending, overdue, dueWithin48Hours, keyMismatch } = await privacyService().status();
     const attention = dueWithin48Hours > 0 || keyMismatch > 0;
     // Operator aggregates only. Never expose shop, customer, request or order IDs,

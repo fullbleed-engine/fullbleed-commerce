@@ -6,9 +6,11 @@ import { resolve, dirname, sep, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import { spawnSync } from 'node:child_process';
+import { recoveryFixtureEnvironment } from './recovery-fixture.mjs';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const app = resolve(root, 'shopify/app');
 Object.assign(process.env, {
+  ...await recoveryFixtureEnvironment(root, 'privacy-browser'),
   DATABASE_URL: `file:${resolve(root, 'target/privacy-browser.sqlite').replaceAll('\\', '/')}`,
   NODE_ENV: 'production', SHOPIFY_API_KEY: 'synthetic-test-api-key', SHOPIFY_API_SECRET: 'synthetic-webhook-test-secret',
   FULLBLEED_PRIVACY_KEY: 'ab'.repeat(32), SHOPIFY_APP_URL: 'http://127.0.0.1:9484', SCOPES: 'read_orders', FULLBLEED_DEV_STORE: '', OPT_OUT_INSTRUMENTATION: 'true',
@@ -21,7 +23,7 @@ const { createRequestHandler } = require('react-router');
 const db = new PrismaClient();
 const { createPrivacyService, parsePrivacyPayload } = await import('../shopify/privacy.js');
 const shop = 'synthetic-privacy.myshopify.com';
-await db.privacyRequest.deleteMany(); await db.session.deleteMany(); await db.automationSettings.deleteMany();
+await db.privacyRequest.deleteMany(); await db.session.deleteMany(); await db.automationSettings.deleteMany(); await db.recoveryReceipt.deleteMany();
 await db.session.create({ data: { id: `offline_${shop}`, shop, state: '', isOnline: false, accessToken: 'synthetic-token', scope: 'read_orders' } });
 await db.automationSettings.create({ data: { shop } });
 await db.automationJob.create({ data: { shop, runId: 'synthetic-browser-run', handle: 'create-order-summary-link', orderId: 'gid://shopify/Order/820982911946154508', kind: 'order-summary', requestHash: 'synthetic-hash', ttlHours: 24, retryDeadline: new Date(), status: 'ready', downloads: 2 } });

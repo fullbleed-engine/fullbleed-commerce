@@ -72,8 +72,11 @@ five-second Shopify webhook budget under the production database/load.
   that key; a planned migration must re-encrypt snapshots and recompute lookup
   hashes before activating a replacement. Restore the original key to recover
   from an accidental configuration change.
-- Configure encrypted backup retention and an erasure replay procedure before
-  production. A database restore must not resurrect deleted exports/links.
+- The [recovery tooling](RECOVERY.md) encrypts database backups and records
+  durable erasure/completion instructions separately before acknowledging them.
+  Restoration replays later erasures and revokes old active links. Verify
+  scheduled backups, key recovery and the complete promotion procedure before
+  production. A raw volume rollback must never bypass that procedure.
   HTTP erasure cannot recall a file already delivered to a browser or disk.
 
 ## Evidence and launch limits

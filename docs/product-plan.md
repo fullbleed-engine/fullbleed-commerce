@@ -176,6 +176,14 @@ GitHub Actions workflow. Scheduling remains off while staging is stopped;
 operator notification delivery still needs verification before continuous use.
 See [the operator runbook](../shopify/MONITORING.md).
 
+Encrypted database backups and an independent erasure journal now support
+offline recovery without reviving cleared exports or old active document links.
+Restoration preserves retained templates and outstanding requests, clears
+authorization sessions and requires merchants to resume automation explicitly.
+Daily backup scheduling, freshness alerts, independent key recovery and the
+complete hosted promotion drill still need verification. See
+[recovery operation](../shopify/RECOVERY.md).
+
 Fulfillment batches, automatic missing-attachment recovery, webhook monitoring
 and secure support-delivery setup, production operation and paid lifecycle tests
 remain planned. No customer email or paid plan was enabled. Workflow testing

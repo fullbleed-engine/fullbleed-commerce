@@ -4,14 +4,18 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { setTimeout } from 'node:timers/promises';
+import { createHmac, randomUUID } from 'node:crypto';
 
 const image = process.argv[2] || 'fullbleed-commerce:check';
 const docker = process.env.DOCKER_BIN || 'docker';
 const name = `fullbleed-check-${process.pid}-${Date.now()}`;
 const volume = `${name}-data`;
+const recoveryVolume = `${name}-recovery`;
+const recoveryEnv = ['-e', 'FULLBLEED_RECOVERY_DIRECTORY=/recovery', '-e', `FULLBLEED_RECOVERY_KEY=${'ef'.repeat(32)}`, '-e', `FULLBLEED_RECOVERY_DATASET=${randomUUID()}`];
 const checks = [];
 let containerCreated = false;
 let volumeCreated = false;
+let recoveryVolumeCreated = false;
 function run(args, options = {}) {
   const result = spawnSync(docker, args, { encoding: 'utf8', timeout: 60000, windowsHide: true, ...options });
   assert.equal(result.status, 0, `${args[0]} failed: ${result.error?.message || result.stderr || result.stdout}`);
@@ -22,6 +26,7 @@ function script(source) { return run(['exec', '--user', 'node', name, 'node', '-
 async function start() {
   run(['run', '-d', '--name', name, '--user', '0', '--cpus', '0.5', '--memory', '512m',
     '--mount', `type=volume,src=${volume},dst=/data,volume-nocopy`, '-p', '127.0.0.1::3000',
+    '--mount', `type=volume,src=${recoveryVolume},dst=/recovery,volume-nocopy`, ...recoveryEnv,
     '-e', 'SHOPIFY_API_KEY=synthetic-test-api-key', '-e', 'SHOPIFY_API_SECRET=synthetic-container-test-secret',
     '-e', `FULLBLEED_PRIVACY_KEY=${'ab'.repeat(32)}`, '-e', 'SHOPIFY_APP_URL=http://localhost:3000',
     '-e', 'SCOPES=read_orders', image]);
@@ -48,7 +53,15 @@ try {
   assert.equal(missingVolume.status, 1);
   assert.match(missingVolume.stderr, /requires the persistent volume at \/data/);
   passed('Railway startup refuses an absent persistent mount');
+  const missingRecovery = spawnSync(docker, ['run', '--rm', '--tmpfs', '/data:uid=1000,gid=1000,mode=0700', image], { encoding: 'utf8', windowsHide: true, timeout: 30000 });
+  assert.equal(missingRecovery.status, 1);
+  assert.match(missingRecovery.stderr, /Fullbleed recovery failed/);
+  passed('startup refuses unconfigured independent recovery storage');
   run(['volume', 'create', volume]); volumeCreated = true;
+  run(['volume', 'create', recoveryVolume]); recoveryVolumeCreated = true;
+  run(['run', '--rm', '--user', '0', '--entrypoint', 'sh', '--mount',
+    `type=volume,src=${recoveryVolume},dst=/recovery,volume-nocopy`, ...recoveryEnv, image,
+    '-c', 'chown 1000:1000 /recovery && chmod 700 /recovery && exec gosu node node scripts/recovery.mjs init']);
   assert.equal(run(['run', '--rm', '--user', '0', '--entrypoint', 'stat', '--mount',
     `type=volume,src=${volume},dst=/data,volume-nocopy`, image, '-c', '%u', '/data']), '0');
   let origin = await start();
@@ -112,10 +125,45 @@ try {
     const shop = 'synthetic-container.myshopify.com';
     assert.equal((await db.brand.findUniqueOrThrow({ where: { shop } })).sellerName, 'Synthetic persisted branding');
     assert.equal((await db.automationJob.findUniqueOrThrow({ where: { shop_runId: { shop, runId: 'synthetic-persisted-run' } } })).status, 'pending');
-    await db.brand.deleteMany(); await db.automationSettings.deleteMany();
     await db.$disconnect();
   `);
   passed('branding and pending jobs survive container replacement and repeat migration');
+  script(`
+    import { PrismaClient } from '@prisma/client';
+    import { createPrivacyService, parsePrivacyPayload } from '../../shopify/privacy.js';
+    const db = new PrismaClient();
+    const shop = 'synthetic-container.myshopify.com';
+    await db.session.create({ data: { id: 'offline_' + shop, shop, state: '', isOnline: false, accessToken: 'synthetic-container-token' } });
+    const input = parsePrivacyPayload(Buffer.from(JSON.stringify({ shop_domain: shop, shop_id: 1, customer: { email: 'synthetic-container@example.invalid' }, data_request: { id: 1 }, orders_requested: [1] })), shop, 'CUSTOMERS_DATA_REQUEST');
+    await createPrivacyService({ db, key: process.env.FULLBLEED_PRIVACY_KEY }).accept(input);
+    await db.$disconnect();
+  `);
+  const saved = JSON.parse(run(['exec', '--user', 'node', name, 'node', 'scripts/recovery.mjs', 'backup'])).result;
+  const eraseBody = JSON.stringify({ shop_domain: 'synthetic-container.myshopify.com', shop_id: 1, customer: { email: 'synthetic-container@example.invalid' }, orders_to_redact: [] });
+  response = await fetch(`${origin}/webhooks/privacy`, { method: 'POST', headers: {
+    'Content-Type': 'application/json', 'X-Shopify-Topic': 'customers/redact', 'X-Shopify-Shop-Domain': 'synthetic-container.myshopify.com',
+    'X-Shopify-API-Version': '2026-10', 'X-Shopify-Webhook-Id': randomUUID(), 'X-Shopify-Hmac-Sha256': createHmac('sha256', 'synthetic-container-test-secret').update(eraseBody).digest('base64'),
+  }, body: eraseBody });
+  assert.equal(response.status, 204);
+  const restored = JSON.parse(run(['exec', '--user', 'node', name, 'node', 'scripts/recovery.mjs', 'restore', '--backup', saved.id, '--output', '/data/restored-check'])).result;
+  assert.equal(restored.replay.applied, 1);
+  assert.equal(restored.sourceSha256, saved.sha256);
+  script(`
+    import assert from 'node:assert/strict';
+    import { PrismaClient } from '@prisma/client';
+    const restored = new PrismaClient({ datasources: { db: { url: 'file:/data/restored-check/commerce.sqlite' } } });
+    assert.equal(await restored.session.count(), 0);
+    assert.equal((await restored.privacyRequest.findFirst()).snapshot, null);
+    assert.equal((await restored.automationJob.findFirst()).orderId, '');
+    assert.equal((await restored.brand.findFirst()).sellerName, 'Synthetic persisted branding');
+    assert.equal(await restored.automationSettings.count({ where: { enabled: true } }), 0);
+    await restored.$disconnect();
+    const source = new PrismaClient();
+    await source.privacyRequest.deleteMany(); await source.session.deleteMany();
+    await source.brand.deleteMany(); await source.automationSettings.deleteMany();
+    await source.$disconnect();
+  `);
+  passed('encrypted backup restores offline and replays later signed customer erasure');
   const monitor = JSON.parse(run(['exec', '--user', 'node', name, 'node', 'scripts/privacy-status.mjs']));
   assert.equal(monitor.pending, 0);
   passed('privacy operator command runs in the production image');
@@ -129,4 +177,5 @@ try {
 } finally {
   if (containerCreated) run(['rm', '-f', name]);
   if (volumeCreated) run(['volume', 'rm', volume]);
+  if (recoveryVolumeCreated) run(['volume', 'rm', recoveryVolume]);
 }

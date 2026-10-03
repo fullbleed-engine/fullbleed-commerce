@@ -2,6 +2,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createHmac, randomUUID } from 'node:crypto';
+import { rename } from 'node:fs/promises';
+import { join } from 'node:path';
 import { PrismaClient } from '@prisma/client';
 import { createRequestHandler } from 'react-router';
 import { createPrivacyService, completePrivacyRequest, parsePrivacyPayload, prunePrivacyRequests } from '../../privacy.js';
@@ -49,6 +51,27 @@ test.beforeEach(async () => {
   }
 });
 test.after(async () => { globalThis.fetch = originalFetch; await db.$disconnect(); });
+
+test('privacy erasure and completion cannot acknowledge success without durable recovery storage', async () => {
+  const id = await service.accept(input(payload()));
+  await service.exportData(primary, id);
+  const directory = process.env.FULLBLEED_RECOVERY_DIRECTORY;
+  assert.match(directory, /webhook-recovery-/);
+  const marker = join(directory, 'dataset.bin'), held = join(directory, '.synthetic-marker-held');
+  await rename(marker, held);
+  try {
+    for (const topic of ['customers/redact', 'shop/redact', 'app/uninstalled']) {
+      const response = await hook(topic, topic === 'customers/redact' ? redaction() : { shop_domain: primary, shop_id: 1 });
+      assert.equal(response.status, 503);
+      assert.doesNotMatch(await response.text(), /webhook-recovery-|secretAccessKey|synthetic-token/);
+    }
+    assert.equal((await admin('/app/privacy', primary, { intent: 'complete', id, confirmed: 'yes' })).status, 503);
+    assert.equal((await db.privacyRequest.findUniqueOrThrow({ where: { id } })).status, 'ready');
+    assert.equal(await db.session.count({ where: { shop: primary } }), 1);
+    assert.equal((await db.automationJob.findFirst({ where: { shop: primary } })).status, 'ready');
+  } finally { await rename(held, marker); }
+  assert.equal((await hook('customers/redact', redaction())).status, 204);
+});
 
 test('signed raw webhook preserves large numeric IDs, snapshots once, and excludes credentials', async () => {
   const data = payload();

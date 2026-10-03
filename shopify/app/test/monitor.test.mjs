@@ -3,6 +3,8 @@ import test from 'node:test';
 import { PrismaClient } from '@prisma/client';
 import { createRequestHandler } from 'react-router';
 import { createPrivacyService, parsePrivacyPayload } from '../../privacy.js';
+import { rename } from 'node:fs/promises';
+import { join } from 'node:path';
 
 if (!process.env.DATABASE_URL?.includes('webhook-test.sqlite') || process.env.SHOPIFY_API_SECRET !== 'synthetic-webhook-test-secret' || process.env.FULLBLEED_PRIVACY_KEY !== 'ab'.repeat(32)) throw new Error('Use the isolated Shopify test runner.');
 const db = new PrismaClient();
@@ -84,4 +86,17 @@ test('wrong or absent privacy keys fail monitoring without leaking the encrypted
   response = await request();
   assert.equal(response.status, 503);
   assert.deepEqual(await response.json(), { status: 'unavailable' });
+});
+
+test('independent recovery storage failure makes the private monitor unhealthy', async () => {
+  const directory = process.env.FULLBLEED_RECOVERY_DIRECTORY;
+  assert.match(directory, /webhook-recovery-/);
+  const marker = join(directory, 'dataset.bin'), held = join(directory, '.synthetic-monitor-held');
+  await rename(marker, held);
+  try {
+    const response = await request();
+    assert.equal(response.status, 503);
+    assert.deepEqual(await response.json(), { status: 'unavailable' });
+  } finally { await rename(held, marker); }
+  assert.equal((await request()).status, 200);
 });

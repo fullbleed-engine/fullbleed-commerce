@@ -26,4 +26,6 @@ fi
 # Volumes are unavailable to Railway build/pre-deploy commands. Migrate here,
 # with the actual volume mounted, and stop startup on any migration failure.
 ./node_modules/.bin/prisma migrate deploy
+# Replay durable erasure intents before restored or restarted data is served.
+node scripts/recovery.mjs reconcile
 exec ./node_modules/.bin/react-router-serve ./build/server/index.js

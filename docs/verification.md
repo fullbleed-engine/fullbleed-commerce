@@ -27,11 +27,18 @@ was synthetic. No merchant store was changed and no customer PDF was retained.
 | Customer account downloads from freshly installed ZIPs | 35 checks in each of HPOS and legacy storage; real login, account pages, ownership, nonces, statuses/refunds, private downloads, cooldown and outage recovery | `output/automation/customer-*.json` and matching PDFs |
 | Customer portal in real Chrome 154 | 12 checks: desktop/mobile account actions, native PDF download, merchant enable/disable and staff browser-worker parity | `output/browser/wordpress-customer-verification.json`, PDF and screenshots |
 | Automation settings over HTTP | 12 permission, nonce, separate customer opt-in, consent withdrawal, secret handling and disconnect checks passed | `output/automation/settings-http.json` |
-| Dependency audits | Zero reported vulnerabilities in both dependency trees at check time | `output/npm-audit.json`, `output/shopify/npm-audit.json` |
+| Dependency audits | Root and Shopify production dependencies: zero findings. Shopify development tree: 11 affected dependency entries for one unpatched `braces` advisory | `output/npm-audit.json`, `output/shopify/npm-audit.json`, `output/shopify/npm-audit-production.json` |
 | Shopify installation and test fixture | Installed offline `read_orders` session; verified development-store identity; synthetic draft completed unpaid | `output/shopify/installed-store/verification.json`, `output/shopify/test-store-after.json` |
 | Live Shopify API to Fullbleed renderer | All six document/design variants rendered; one page each, zero missing glyphs | `output/shopify/installed-store/verification.json` and matching PDFs/PNGs |
 
 The tested store ran WordPress 7.1.2, WooCommerce 11.1.2 and PHP 8.3.33.
+
+The October 2 audit refresh reports [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm)
+through the optional GraphQL code-generation development tools. No patched
+`braces` version is published at this check. Its patterns here are repository
+configuration, not merchant input. The production dependency audit is clear;
+the runtime image removes development dependencies. Keep this development-tool
+finding visible until an upstream fix or suitable replacement is verified.
 The renderer was the published Fullbleed Node 0.1.1 package, with engine 2.5.5.
 The engine, fonts and compiled JavaScript served by the installed WordPress ZIPs
 matched the local packaged assets byte for byte. ZIP hashes are in

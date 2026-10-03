@@ -8,9 +8,9 @@ export const loader = async () => {
     const tables = await db.$queryRaw<Array<{ name: string }>>`
       SELECT name FROM sqlite_master WHERE type = 'table' AND name IN (
         'Session', 'Brand', 'DocumentTemplate', 'AutomationSettings',
-        'AutomationJob', 'PrivacyRequest', 'PrivacyRequestOrder'
+        'AutomationJob', 'PrivacyRequest', 'PrivacyRequestOrder', 'RecoveryReceipt'
       )`;
-    ready = tables.length === 7;
+    ready = tables.length === 8;
   } catch {
     // Public readiness responses must not expose database paths or query errors.
   }

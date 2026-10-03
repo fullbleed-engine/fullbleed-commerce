@@ -122,3 +122,12 @@ model PrivacyRequestOrder {
   @@id([requestId, orderId])
   @@index([orderId])
 }
+
+// Random event receipts commit atomically with an erasure. Payloads are kept
+// encrypted in independent recovery storage, never in these receipts.
+model RecoveryReceipt {
+  id         String   @id
+  recordedAt DateTime @default(now())
+
+  @@index([recordedAt])
+}

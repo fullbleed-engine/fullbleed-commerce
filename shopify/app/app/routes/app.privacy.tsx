@@ -7,6 +7,7 @@ import { authenticate } from '../shopify.server';
 import db from '../db.server';
 import { completePrivacyRequest, privacyHeaders } from '../../../privacy.js';
 import { readSettingsForm } from '../../../settings-form.js';
+import { recordRecovery } from '../recovery.server';
 
 export async function loader({ request }: LoaderFunctionArgs) {
   // Privacy access must never depend on a paid subscription.
@@ -29,7 +30,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const form = await readSettingsForm(request);
   const id = form.get('id');
   if (form.get('intent') !== 'complete' || form.get('confirmed') !== 'yes' || typeof id !== 'string' || !/^[0-9a-f-]{36}$/.test(id)) throw new Response('Confirm that you handled the request.', { status: 400, headers: privacyHeaders });
-  await completePrivacyRequest(db, session.shop, id);
+  await completePrivacyRequest(db, session.shop, id, new Date(), recordRecovery);
   return { saved: true };
 }
 
