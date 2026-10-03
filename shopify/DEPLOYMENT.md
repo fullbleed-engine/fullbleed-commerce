@@ -1,11 +1,18 @@
 # Shopify staging deployment
 
 Build the repository-root Docker context with `shopify/app/Dockerfile`.
-`railway.json` selects that image, one US East replica, a required `/data`
+`.railway/railway.ts` selects that image, one US West replica, a required `/data`
 volume, a 0.5 CPU / 512 MiB ceiling, and `/health` readiness. These are initial
 staging limits, not a verified production capacity or monthly spending cap.
 Keep the server awake for signed webhooks. SQLite requires one instance;
 volume deployments have a short interruption while the mount changes hands.
+
+Use Railway's current Infrastructure as Code plan/apply workflow. The first
+deployment accepted the older JSON build configuration but did not enforce its
+runtime ceilings; a subsequent redeploy lost that build selection. Service
+settings and cgroup inspection exposed the discrepancy. The current definition
+imports the actual service and volume, preserves secrets, and requires a reviewed
+plan. Do not treat a schema-valid configuration as proof of running limits.
 
 ## Runtime configuration
 
@@ -21,6 +28,8 @@ source files or logs. Set:
   prepares only `/data`, then drops to the `node` user before migrations and
   HTTP startup. Files are created with a private umask. Other Docker hosts can
   use the default unprivileged image user with a pre-owned volume.
+- `RAILWAY_DOCKERFILE_PATH=shopify/app/Dockerfile` so source redeploys retain
+  the container build selection.
 - The Partner API credentials and plan identifiers in `app/.env.example`
   before paid workflow testing. The Partner organization ID differs from the
   Dev Dashboard ID. Missing billing configuration denies paid access.
@@ -65,4 +74,4 @@ stopped deployment does not remove its volume or stop storage charges.
 Platform behavior checked October 2, 2026:
 [Railway volumes](https://docs.railway.com/volumes),
 [readiness checks](https://docs.railway.com/deployments/healthchecks), and
-[config schema](https://railway.com/railway.schema.json).
+[Infrastructure as Code](https://docs.railway.com/infrastructure-as-code).
