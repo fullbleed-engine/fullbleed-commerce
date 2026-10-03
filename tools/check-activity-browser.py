@@ -61,6 +61,7 @@ with sync_playwright() as pw:
         admin.goto(base + '/wp-admin/admin.php?page=fullbleed-activity&fb_result=failed')
         admin.set_viewport_size({'width': 390, 'height': 844})
         check('mobile activity and recovery link stay within the viewport', table.is_visible() and admin.get_by_role('link', name='Connection and automation settings').is_visible() and admin.evaluate('document.documentElement.scrollWidth <= innerWidth'))
+        check('mobile recovery guidance uses full-width labelled cells', table.locator('td[data-label="Next step"]').evaluate("el => getComputedStyle(el).display === 'block' && el.getBoundingClientRect().width > 300"))
         admin.screenshot(path=str(out / 'merchant-mobile.png'), full_page=True, animations='disabled')
         login(customer, 'activity-buyer')
         denied = buyer.request.get(base + '/wp-admin/admin.php?page=fullbleed-activity')
@@ -79,7 +80,7 @@ with sync_playwright() as pw:
         rendered = '\n'.join(page.extract_text() for page in PdfReader(pdf).pages)
         check('staff recovery still generates and downloads a real browser PDF', pdf.read_bytes().startswith(b'%PDF-') and 'Alex Morgan' in rendered and '282.00' in rendered)
         check('merchant and customer pages have no JavaScript errors', not errors)
-        evidence = [{'file': path.as_posix(), 'sha256': sha256(path.read_bytes()).hexdigest()} for path in sorted(out.glob('*.png'))]
+        evidence = [{'file': path.as_posix(), 'sha256': sha256(path.read_bytes()).hexdigest()} for path in [out / name for name in ['merchant-desktop.png', 'merchant-failed.png', 'merchant-mobile.png']]]
         (out / 'browser-verification.json').write_text(json.dumps({'checkedAt': datetime.now(timezone.utc).isoformat(), 'browser': browser.version, 'store': base, 'checks': checks, 'pdfSha256': sha256(pdf.read_bytes()).hexdigest(), 'pageErrors': errors, 'evidence': evidence}, indent=2), encoding='utf-8')
     except Exception:
         admin.screenshot(path=str(out / 'browser-failure.png'), full_page=True)
