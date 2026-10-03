@@ -49,6 +49,42 @@ To refresh this delta after executing its checks and downloading the matching CI
 artifact, run `node tools/retain-preview-verification.mjs alpha2 target/alpha2-ci`.
 Keep the historical whole-product records below separate from this release delta.
 
+## Private renderer deployment
+
+The [self-hosted deployment](../automation/DEPLOYMENT.md) now passes **39 native
+Linux checks**. A fresh WordPress/PHP and MariaDB store installs every exact
+alpha.2 ZIP entry, then calls the Compose renderer through Caddy over real TLS.
+The fixture explicitly trusts a local certificate issuer and permits its private
+Docker hostname. It does not disable certificate verification or substitute
+WordPress HTTP responses.
+
+The check rejects an untrusted issuer and an incorrect token, generates summary
+and packing-slip PDFs, and compares both files with direct Node output. It
+decodes captured WooCommerce MIME with Python's standard email parser and checks
+the attachment name and complete PDF bytes. PHPMailer labels the extensionless
+private temporary file `application/octet-stream`; its display name remains
+`.pdf`. No email leaves the fixture. Private attachment files disappear after
+the request, a stopped renderer preserves the original mail, recovery clears the
+failure, and credential rotation rejects the previous token.
+
+The actual container enforces its unprivileged user, read-only application files,
+private credential-hash mount, resource limits and isolated renderer network.
+Logs contain neither raw tokens nor the synthetic order fields. Both delivered
+PDFs were visually inspected; each has one page and zero reported missing glyphs.
+The packing-slip PDF and engine PNG also reproduce byte for byte on Windows.
+
+All **45 shared tests** and all three jobs in the
+[Linux run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37103581003)
+passed at source `061f28b`. The [retained deployment record](renderer-deployment-verification.json)
+includes exact source, image and PDF hashes, the five operational phases and
+decoded MIME metadata. Neither distributed WordPress ZIP changed in this work.
+
+This verifies the native transport and deployment components with synthetic
+data. Public DNS/ACME issuance, a merchant's host, production email delivery,
+continuous operator response, backup restoration and paid lifecycle validation
+remain separate launch requirements. The earlier mocked HPOS/legacy checks
+below retain their original scope.
+
 ## Earlier product and operational evidence
 
 The following checks were retained for the alpha.1 baseline on October 2–3, 2026.

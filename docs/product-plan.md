@@ -180,6 +180,13 @@ and refunds, reuses the saved template, streams private downloads and provides
 outage recovery without staff generation. It is a live summary, not an immutable
 issued invoice or a guest-access link.
 
+The optional WooCommerce renderer now has a
+[Docker deployment recipe](../automation/DEPLOYMENT.md) with HTTPS termination,
+private credential setup, resource limits and an operator guide. It provides a
+repeatable self-hosted path for agencies and store operators. Public certificate
+issuance, production monitoring, host restoration and merchant rollout still
+need verification on the chosen host before a production offer.
+
 Shopify customer data requests now produce encrypted snapshots of retained
 metadata with a merchant export, response deadlines and explicit completion.
 Access does not require a paid plan. Redaction clears the export and affected

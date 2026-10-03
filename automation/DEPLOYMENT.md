@@ -159,6 +159,8 @@ rotation. It never sends email. Records and PDFs go to
 Public DNS/ACME issuance, a merchant's hosting/security policies, production mail
 delivery, continuous operator response, and backup restoration remain separate
 deployment checks. This recipe is not proof that the paid product has launched.
+The [retained verification](../docs/renderer-deployment-verification.json) links
+the passing native check and full Linux CI to their exact source and PDF hashes.
 
 References: [Docker Compose services](https://docs.docker.com/reference/compose-file/services/),
 [Caddy HTTPS](https://caddyserver.com/docs/automatic-https),
