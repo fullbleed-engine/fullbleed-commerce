@@ -133,6 +133,9 @@ try {
   const caFile = join(scratch, 'root.crt');
   copyOut(proxy, '/data/caddy/pki/authorities/local/root.crt', caFile);
   run(['cp', caFile, `${wordpress}:/tmp/fullbleed-root.crt`]);
+  // Caddy stores its public CA certificate with private storage permissions.
+  // WordPress needs read access to this certificate; no CA private key is copied.
+  run(['exec', wordpress, 'chmod', '0644', '/tmp/fullbleed-root.crt']);
   assert.equal(php(wordpress, '/tmp/fullbleed-bootstrap.php').installed, true);
   assert.equal(php(wordpress, '/tmp/fullbleed-bootstrap.php', ['commerce']).installed, true);
   writeFileSync(join(scratch, 'manifest.json'), JSON.stringify(manifest));

@@ -55,11 +55,13 @@ if ( 'render' === $mode ) {
     $untrusted = render_document( $order, 'order-summary' );
     check( 'WordPress rejects the untrusted local TLS issuer', is_wp_error( $untrusted ) && 'connection_failed' === $untrusted->get_error_code() );
     add_filter( 'http_request_args', $trust, 10, 2 );
+    check( 'native PHP can read the explicitly trusted public CA certificate', is_readable( '/tmp/fullbleed-root.crt' ) );
     $observed = array();
     add_action( 'http_api_debug', function ( $response, $context, $transport, $args, $url ) use ( &$observed ) {
-        if ( 'https://renderer.example.test/v1/render' === $url ) $observed[] = array( 'tlsVerified' => true === $args['sslverify'], 'redirects' => $args['redirection'], 'code' => wp_remote_retrieve_response_code( $response ), 'transport' => $transport );
+        if ( 'https://renderer.example.test/v1/render' === $url ) $observed[] = array( 'tlsVerified' => true === $args['sslverify'], 'redirects' => $args['redirection'], 'code' => wp_remote_retrieve_response_code( $response ), 'transport' => $transport, 'error' => is_wp_error( $response ) ? $response->get_error_message() : '' );
     }, 10, 5 );
     $pdf = render_document( $order, 'order-summary' );
+    if ( is_wp_error( $pdf ) ) throw new RuntimeException( 'Fixture HTTPS failure: ' . $pdf->get_error_code() . '; transport=' . wp_json_encode( $observed ) );
     check( 'trusted HTTPS renderer returns a real verified PDF', is_string( $pdf ) && '%PDF-' === substr( $pdf, 0, 5 ) );
     check( 'WordPress verifies TLS and does not follow redirects', 1 === count( $observed ) && $observed[0]['tlsVerified'] && 0 === $observed[0]['redirects'] && 200 === $observed[0]['code'] );
     file_put_contents( '/tmp/fullbleed-native-summary.pdf', $pdf );
