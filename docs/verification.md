@@ -21,6 +21,33 @@ The shared 45-test Node suite and all six designed examples pass. The production
 loop is still gated on a working merchant scheduler and actual mail receipt.
 These source additions do not change the published alpha.3 artifacts.
 
+## Native queued email and SMTP receipt
+
+[Retained SMTP verification](smtp-verification.json) records 21 additional checks
+within the 72-check native renderer deployment run. WooCommerce 11.1.2 on
+WordPress 7.1.2 queues a real synthetic order transition in Action Scheduler.
+A separate native `wp-cron.php` process renders through HTTPS and sends through
+the unmodified WordPress mailer to a private Mailpit server. This exercises the
+queue and SMTP transport; the fixture does not invoke the email handler directly
+or replace PHPMailer's send method. Only the scheduled due times are advanced.
+
+The inbox receives four messages: the processing email with its PDF, an outage
+email without an attachment, an administrator failure summary, and an explicit
+recovery resend with its PDF. A WordPress container restart preserves alert
+cooldown. Repeated scheduler runs neither duplicate completed customer mail nor
+resend it when rendering recovers. Both received PDFs match the reference bytes
+and contain all 36 line items exactly once across three pages, verified with an
+independent PDF parser. All distinct page images were visually inspected.
+Temporary attachment files are private and removed after sending.
+
+The network has no public SMTP/mailbox ports or external relay. This proves
+receipt in the isolated inbox, not external-provider deliverability or a merchant
+host's scheduler. HPOS is used here; separate captured-mail tests cover legacy
+storage. The source Pro package includes unreleased failure alerts and does not
+replace the public alpha.3 ZIP. Follow the
+[staging acceptance sequence](../automation/DEPLOYMENT.md#check-the-complete-staging-workflow)
+before enabling a merchant workflow.
+
 ## Current release and upgrade path
 
 [Alpha.3](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.3)

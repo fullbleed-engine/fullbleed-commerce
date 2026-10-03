@@ -1,0 +1,345 @@
+{
+  "checkedAt": "2026-10-03T13:54:56.100Z",
+  "sourceCommit": "e0da0c8309f02be73d95b0836f74a3df5b1a0cf1",
+  "scope": "Synthetic native WordPress HPOS, real private TLS rendering, WooCommerce Action Scheduler, host-driven WordPress cron and SMTP receipt in a private Mailpit inbox. External-provider delivery and paid product launch are not claimed.",
+  "ci": {
+    "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37127697216",
+    "jobUrl": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37127697216/job/111216278384",
+    "job": "renderer-deployment",
+    "conclusion": "success",
+    "artifact": "renderer-deployment-verification",
+    "companionChecks": [
+      {
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37127697216",
+        "headSha": "e0da0c8309f02be73d95b0836f74a3df5b1a0cf1",
+        "conclusion": "success",
+        "jobs": [
+          {
+            "name": "renderer-deployment",
+            "conclusion": "success",
+            "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37127697216/job/111216278384"
+          },
+          {
+            "name": "integration",
+            "conclusion": "success",
+            "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37127697216/job/111216278456"
+          },
+          {
+            "name": "container",
+            "conclusion": "success",
+            "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37127697216/job/111216278505"
+          },
+          {
+            "name": "upgrade",
+            "conclusion": "success",
+            "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37127697216/job/111216278506"
+          }
+        ]
+      },
+      {
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37127697220",
+        "headSha": "e0da0c8309f02be73d95b0836f74a3df5b1a0cf1",
+        "conclusion": "success",
+        "jobs": [
+          {
+            "name": "browser (firefox)",
+            "conclusion": "success",
+            "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37127697220/job/111216278403"
+          },
+          {
+            "name": "browser (chrome)",
+            "conclusion": "success",
+            "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37127697220/job/111216278453"
+          },
+          {
+            "name": "browser (webkit)",
+            "conclusion": "success",
+            "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37127697220/job/111216278475"
+          }
+        ]
+      }
+    ]
+  },
+  "runtime": {
+    "wordpress": "7.1.2",
+    "woocommerce": "11.1.2",
+    "php": "8.3.35"
+  },
+  "smtpImage": "axllent/mailpit:v1.31.4@sha256:b68349e3a014b90c5610bfb26b2ae36f3892d7b8cf25ee140c6c71c98d2fcf48",
+  "packages": [
+    {
+      "filename": "fullbleed-commerce-0.1.0-alpha.3.zip",
+      "bytes": 3058277,
+      "sha256": "53b2a9fe3da78ac14f94e9851fcc57fe66f413c7a6b13b3e9563573b364d4f79",
+      "files": 39
+    },
+    {
+      "filename": "fullbleed-commerce-pro-0.1.0-alpha.3.zip",
+      "bytes": 38991,
+      "sha256": "2592f5a25d58c20885475e7389e6b27726fcf42c45f1687ac1e48130a5355a38",
+      "files": 14
+    }
+  ],
+  "publishedArtifactsChanged": false,
+  "totalDeploymentChecks": 72,
+  "smtpChecks": [
+    {
+      "name": "SMTP: SMTP and mailbox API expose no host ports and have no external relay",
+      "passed": true
+    },
+    {
+      "name": "SMTP: alerts retain an hourly WordPress schedule and the order has 36 distinct lines",
+      "passed": true
+    },
+    {
+      "name": "SMTP: order transition queues work without rendering or sending during the transition",
+      "passed": true
+    },
+    {
+      "name": "SMTP: wp-cron processes the persisted WooCommerce queue in a different PHP process",
+      "passed": true
+    },
+    {
+      "name": "SMTP: queued reaches the expected synthetic recipient over real SMTP",
+      "passed": true
+    },
+    {
+      "name": "SMTP: queued inbox attachment matches every byte of the saved-design, multi-page PDF",
+      "passed": true
+    },
+    {
+      "name": "SMTP: repeated cron execution does not duplicate a completed customer email",
+      "passed": true
+    },
+    {
+      "name": "SMTP: second order transition persists its email job before the next worker",
+      "passed": true
+    },
+    {
+      "name": "SMTP: renderer outage preserves the queued email and records a recoverable failure",
+      "passed": true
+    },
+    {
+      "name": "SMTP: outage reaches the expected synthetic recipient over real SMTP",
+      "passed": true
+    },
+    {
+      "name": "SMTP: the real WordPress schedule hands the failure summary to SMTP",
+      "passed": true
+    },
+    {
+      "name": "SMTP: alert reaches the expected synthetic recipient over real SMTP",
+      "passed": true
+    },
+    {
+      "name": "SMTP: administrator alert contains recovery guidance without customer data or PDFs",
+      "passed": true
+    },
+    {
+      "name": "SMTP: a fresh WordPress container process preserves the alert cooldown",
+      "passed": true
+    },
+    {
+      "name": "SMTP: restoring the renderer never automatically resends a customer email",
+      "passed": true
+    },
+    {
+      "name": "SMTP: recovery reaches the expected synthetic recipient over real SMTP",
+      "passed": true
+    },
+    {
+      "name": "SMTP: recovery inbox attachment matches every byte of the saved-design, multi-page PDF",
+      "passed": true
+    },
+    {
+      "name": "SMTP: explicit WooCommerce resend clears the failed workflow",
+      "passed": true
+    },
+    {
+      "name": "SMTP: later scheduler runs send neither a stale alert nor duplicate customer mail",
+      "passed": true
+    },
+    {
+      "name": "SMTP: both actual SMTP attachments were private and outside the public root",
+      "passed": true
+    },
+    {
+      "name": "SMTP: temporary PDFs are removed after their SMTP sending requests exit",
+      "passed": true
+    }
+  ],
+  "documents": [
+    {
+      "phase": "queued",
+      "pages": 3,
+      "missingGlyphs": 0,
+      "sha256": "17b85bc41afc4fc2916d8a1912bfabd2bb1a3f69ea8b52e70e1468b7d7668d91",
+      "bytes": 138889,
+      "savedTemplateSha256": "c86732846919a451243267944635da48ddcd280530d4280e46a190d2fb33c24d"
+    },
+    {
+      "phase": "recovery",
+      "pages": 3,
+      "missingGlyphs": 0,
+      "sha256": "020ea5538e0db4d5b7cf52887f7f8c620b1cfd4c45b6af8c3e83ac0c6fdd4701",
+      "bytes": 138870,
+      "savedTemplateSha256": "c86732846919a451243267944635da48ddcd280530d4280e46a190d2fb33c24d"
+    }
+  ],
+  "receipts": [
+    {
+      "phase": "queued",
+      "recipient": [
+        "alex@example.test"
+      ],
+      "mimeSha256": "61f45e7fbd02518ccd1cbd38bd6412205234ae73ba4eaaf24683d9b5eb99608d",
+      "receivedHeaderPresent": true,
+      "attachments": [
+        {
+          "filename": "fullbleed-order-summary-12.pdf",
+          "contentType": "application/octet-stream",
+          "disposition": "attachment",
+          "bytes": 138889,
+          "pdfSignature": true,
+          "sha256": "17b85bc41afc4fc2916d8a1912bfabd2bb1a3f69ea8b52e70e1468b7d7668d91"
+        }
+      ]
+    },
+    {
+      "phase": "outage",
+      "recipient": [
+        "alex@example.test"
+      ],
+      "mimeSha256": "69e814ef947e1ad3d3ba3b294157ba75745bf6e7a561d1e50e9fb5169d53827e",
+      "receivedHeaderPresent": true,
+      "attachments": []
+    },
+    {
+      "phase": "alert",
+      "recipient": [
+        "admin@example.test"
+      ],
+      "mimeSha256": "402e70fdf0519a65bc0ac5aad3ae61ed5f0ca20ee5bb4246a6de082f4335b724",
+      "receivedHeaderPresent": true,
+      "attachments": []
+    },
+    {
+      "phase": "recovery",
+      "recipient": [
+        "alex@example.test"
+      ],
+      "mimeSha256": "dba816efd9485914931acc8ae6c1ddf88b666e72cf893f503461b16b6554c205",
+      "receivedHeaderPresent": true,
+      "attachments": [
+        {
+          "filename": "fullbleed-order-summary-12.pdf",
+          "contentType": "application/octet-stream",
+          "disposition": "attachment",
+          "bytes": 138870,
+          "pdfSignature": true,
+          "sha256": "020ea5538e0db4d5b7cf52887f7f8c620b1cfd4c45b6af8c3e83ac0c6fdd4701"
+        }
+      ]
+    }
+  ],
+  "mailCount": 4,
+  "pendingEmailJobs": 0,
+  "independentPdfCheck": {
+    "checkedAt": "2026-10-03T13:56:29.458786+00:00",
+    "parser": "pypdf",
+    "documents": [
+      {
+        "phase": "queued",
+        "pages": 3,
+        "all36ItemsPresentExactlyOnce": true,
+        "savedTitlePresent": true,
+        "totalPresent": true,
+        "receivedAttachmentMatchesReference": true,
+        "sha256": "17b85bc41afc4fc2916d8a1912bfabd2bb1a3f69ea8b52e70e1468b7d7668d91"
+      },
+      {
+        "phase": "recovery",
+        "pages": 3,
+        "all36ItemsPresentExactlyOnce": true,
+        "savedTitlePresent": true,
+        "totalPresent": true,
+        "receivedAttachmentMatchesReference": true,
+        "sha256": "020ea5538e0db4d5b7cf52887f7f8c620b1cfd4c45b6af8c3e83ac0c6fdd4701"
+      }
+    ],
+    "images": [
+      {
+        "page": 1,
+        "queued": "8d74c69d7de4b004ff8ad0846419269ea01b24974d858f1728681d526fec5bd0",
+        "recovery": "73a9dc30619a3cf61a704f3d23914cd3483ed3e61d0e69a95073ab78c8230eef",
+        "identical": false
+      },
+      {
+        "page": 2,
+        "queued": "7362b2048d65a37c89fabe3aeeb07b9151506e6320250d8a7722fc6f5392543f",
+        "recovery": "7362b2048d65a37c89fabe3aeeb07b9151506e6320250d8a7722fc6f5392543f",
+        "identical": true
+      },
+      {
+        "page": 3,
+        "queued": "54a426e4aad91e91e22e58d13d345c77ffbb5ec97e27f0cd9cabe26b7f3e7463",
+        "recovery": "54a426e4aad91e91e22e58d13d345c77ffbb5ec97e27f0cd9cabe26b7f3e7463",
+        "identical": true
+      }
+    ]
+  },
+  "visualReview": [
+    {
+      "path": "docs/previews/woocommerce-smtp-queued-1.png",
+      "sha256": "8d74c69d7de4b004ff8ad0846419269ea01b24974d858f1728681d526fec5bd0",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/previews/woocommerce-smtp-queued-2.png",
+      "sha256": "7362b2048d65a37c89fabe3aeeb07b9151506e6320250d8a7722fc6f5392543f",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/previews/woocommerce-smtp-queued-3.png",
+      "sha256": "54a426e4aad91e91e22e58d13d345c77ffbb5ec97e27f0cd9cabe26b7f3e7463",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/previews/woocommerce-smtp-recovery-1.png",
+      "sha256": "73a9dc30619a3cf61a704f3d23914cd3483ed3e61d0e69a95073ab78c8230eef",
+      "visuallyInspected": true
+    }
+  ],
+  "code": [
+    {
+      "path": "tools/check-renderer-deployment.mjs",
+      "sha256": "4c59eb1684bcef3ad0591f20534c0ff9ae5991af1b576df7ea5a1290d5a8d8f0"
+    },
+    {
+      "path": "tools/renderer-fixture/smtp-check.mjs",
+      "sha256": "de5179f1d8db196a89d0e6274fb33de11db18839491abbcacbcd606c49c6c88c"
+    },
+    {
+      "path": "tools/renderer-fixture/smtp-control.php",
+      "sha256": "9e77dd0dd84ae963bcdf6fcc0479dd01ddcb6ce73ff611ba57eb827cc1908910"
+    },
+    {
+      "path": "tools/renderer-fixture/smtp-mu.php",
+      "sha256": "625fa2ead17aee8187be7a5fba91db0e9f5abf0332f82f6ab299eb5f168f511c"
+    },
+    {
+      "path": "tools/renderer-fixture/inspect-mail.py",
+      "sha256": "93256d2322e1c5d7cddf68e6b0b85c6e8ad27b5a380a4093ed1a3bf45144be51"
+    }
+  ],
+  "rawReportSha256": "19b4a4218bc89e3b2a5b837d8be4468f544e5aaaa9e15fa5a0f3f0d26cc6d4c6",
+  "limitations": [
+    "This verifies private SMTP inbox receipt, not external-provider deliverability or a merchant scheduler.",
+    "The deployment fixture uses HPOS; separate captured-mail checks cover legacy storage.",
+    "Only synthetic orders and example.test recipients are used.",
+    "Local TLS issuer only; public DNS, ACME issuance and a merchant host remain deployment checks.",
+    "PHPMailer identifies extensionless private temporary attachments as application/octet-stream; the .pdf display filename and complete decoded PDF bytes are verified separately.",
+    "SMTP receipt is verified only inside the disposable network; no external provider, recipient domain, SPF/DKIM/DMARC, managed hosting, paid entitlement or merchant data is used.",
+    "The renderer remains one process with in-memory capacity limits; this is not metered SaaS or a high-availability claim."
+  ]
+}
