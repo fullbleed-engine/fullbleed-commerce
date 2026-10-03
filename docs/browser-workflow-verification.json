@@ -1,0 +1,1542 @@
+{
+  "checkedAt": "2026-10-03T10:56:11.295598+00:00",
+  "version": "0.1.0-alpha.3",
+  "syntheticOnly": true,
+  "scope": "Released WooCommerce base and Pro ZIPs; staff editing and native downloads, and customer My Account downloads in owned headless browsers on Windows and Linux. No Shopify browser retest.",
+  "releaseSourceCommit": "e26de12c68ece1895474171c4e5a871e9356f65a",
+  "testHarnessCommit": "fa52070122739dcefb7d81dcd034959af95607fc",
+  "runtimeSourceUnchangedSinceRelease": true,
+  "packages": [
+    {
+      "filename": "fullbleed-commerce-0.1.0-alpha.3.zip",
+      "bytes": 3058277,
+      "sha256": "53b2a9fe3da78ac14f94e9851fcc57fe66f413c7a6b13b3e9563573b364d4f79",
+      "files": 39
+    },
+    {
+      "filename": "fullbleed-commerce-pro-0.1.0-alpha.3.zip",
+      "bytes": 35191,
+      "sha256": "7512e9b346afe2d13e0c7d8ca0b1f22eaec261e3144e87f12da33684680f25e1",
+      "files": 13
+    }
+  ],
+  "localRuntime": {
+    "wordpress": "7.1.2",
+    "woocommerce": "11.1.2",
+    "php": "8.3.33",
+    "hpos": true
+  },
+  "ci": [
+    {
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37117473557",
+      "headSha": "fa52070122739dcefb7d81dcd034959af95607fc",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "browser (firefox)",
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37117473557/job/111186953814",
+          "conclusion": "success",
+          "completedAt": "2026-10-03T10:53:15Z"
+        },
+        {
+          "name": "browser (webkit)",
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37117473557/job/111186953900",
+          "conclusion": "success",
+          "completedAt": "2026-10-03T10:53:10Z"
+        },
+        {
+          "name": "browser (chrome)",
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37117473557/job/111186953924",
+          "conclusion": "success",
+          "completedAt": "2026-10-03T10:52:14Z"
+        }
+      ]
+    },
+    {
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37117473561",
+      "headSha": "fa52070122739dcefb7d81dcd034959af95607fc",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "plugin-check",
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37117473561/job/111186953806",
+          "conclusion": "success",
+          "completedAt": "2026-10-03T10:48:30Z"
+        }
+      ]
+    },
+    {
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37117473584",
+      "headSha": "fa52070122739dcefb7d81dcd034959af95607fc",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "integration",
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37117473584/job/111186953870",
+          "conclusion": "success",
+          "completedAt": "2026-10-03T10:55:19Z"
+        },
+        {
+          "name": "container",
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37117473584/job/111186954024",
+          "conclusion": "success",
+          "completedAt": "2026-10-03T10:48:35Z"
+        },
+        {
+          "name": "renderer-deployment",
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37117473584/job/111186954056",
+          "conclusion": "success",
+          "completedAt": "2026-10-03T10:47:26Z"
+        },
+        {
+          "name": "upgrade",
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37117473584/job/111186954084",
+          "conclusion": "success",
+          "completedAt": "2026-10-03T10:47:44Z"
+        }
+      ]
+    }
+  ],
+  "browsers": {
+    "windows": {
+      "chrome": {
+        "staff": {
+          "checkedAt": "2026-10-03T10:48:38.500869+00:00",
+          "browser": "154.0.8037.93",
+          "browserEngine": "chrome",
+          "browserDistribution": "Google Chrome channel",
+          "playwright": "1.63.0",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "store": "http://127.0.0.1:9496",
+          "pro": true,
+          "upgradeTemplate": null,
+          "checks": [
+            {
+              "name": "real browser worker produces a complete PDF download",
+              "passed": true
+            },
+            {
+              "name": "visual editor renders the saved template",
+              "passed": true
+            },
+            {
+              "name": "editor uses WordPress dependencies without replacing shared globals",
+              "passed": true
+            },
+            {
+              "name": "dragging a block into the canvas adds real editable content",
+              "passed": true
+            },
+            {
+              "name": "visual text editing reaches exported HTML",
+              "passed": true
+            },
+            {
+              "name": "custom HTML and CSS save through authenticated editor",
+              "passed": true
+            },
+            {
+              "name": "PDF preview contains visual edits and order data",
+              "passed": true
+            },
+            {
+              "name": "saved template survives reload and applies to ordinary downloads",
+              "passed": true
+            },
+            {
+              "name": "Pro browser download is a complete two-PDF ZIP",
+              "passed": true
+            },
+            {
+              "name": "reset restores the built-in design",
+              "passed": true
+            },
+            {
+              "name": "mobile editor fits the viewport",
+              "passed": true
+            },
+            {
+              "name": "no browser JavaScript errors",
+              "passed": true
+            }
+          ],
+          "pdfSha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+          "documents": [
+            {
+              "file": "output/browser/wordpress-alpha3-pro-default.pdf",
+              "sha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+              "pages": 1
+            },
+            {
+              "file": "output/browser/wordpress-alpha3-pro-custom.pdf",
+              "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+              "pages": 1
+            },
+            {
+              "file": "output/browser/wordpress-alpha3-pro-saved.pdf",
+              "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+              "pages": 1
+            }
+          ],
+          "pageErrors": [],
+          "batch": {
+            "file": "output/browser/wordpress-pro-batch.zip",
+            "sha256": "d24bba5edb26e39d93375c885b57f767104f8589a9cf3010b2b03e462b1d00ad",
+            "documents": [
+              {
+                "name": "12-order-summary-12.pdf",
+                "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+              },
+              {
+                "name": "13-order-summary-13.pdf",
+                "sha256": "844220344b2021f3ac923b0ed5802f333a7baecf08bbbaef60da97cb3384480d"
+              }
+            ]
+          }
+        },
+        "customer": {
+          "checkedAt": "2026-10-03T10:48:54.833061+00:00",
+          "browser": "154.0.8037.93",
+          "browserEngine": "chrome",
+          "browserDistribution": "Google Chrome channel",
+          "playwright": "1.63.0",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "store": "http://127.0.0.1:9482",
+          "checks": [
+            {
+              "name": "buyer finds one PDF action on the actual account orders page",
+              "passed": true
+            },
+            {
+              "name": "native browser download has the promised filename and exact renderer bytes",
+              "passed": true
+            },
+            {
+              "name": "download contains saved brand styling and platform totals",
+              "passed": true
+            },
+            {
+              "name": "download leaves the account page usable",
+              "passed": true
+            },
+            {
+              "name": "buyer can also find the PDF on order details",
+              "passed": true
+            },
+            {
+              "name": "account PDF action remains visible within a mobile viewport",
+              "passed": true
+            },
+            {
+              "name": "merchant sees the enabled customer-download setting without the access token",
+              "passed": true
+            },
+            {
+              "name": "merchant can remove customer downloads without disabling email configuration",
+              "passed": true
+            },
+            {
+              "name": "previously issued account link fails immediately after disabling",
+              "passed": true
+            },
+            {
+              "name": "re-enabling restores the customer action",
+              "passed": true
+            },
+            {
+              "name": "packaged staff browser worker matches the customer server-rendered PDF",
+              "passed": true
+            },
+            {
+              "name": "customer and merchant pages have no JavaScript errors",
+              "passed": true
+            }
+          ],
+          "packages": [
+            {
+              "filename": "fullbleed-commerce-0.1.0-alpha.3.zip",
+              "bytes": 3058277,
+              "sha256": "53b2a9fe3da78ac14f94e9851fcc57fe66f413c7a6b13b3e9563573b364d4f79",
+              "files": 39
+            },
+            {
+              "filename": "fullbleed-commerce-pro-0.1.0-alpha.3.zip",
+              "bytes": 35191,
+              "sha256": "7512e9b346afe2d13e0c7d8ca0b1f22eaec261e3144e87f12da33684680f25e1",
+              "files": 13
+            }
+          ],
+          "pdfSha256": "5df220bc2320582a6a5aacf460429392e022a73bafdde1f19dd9ad452eac1637",
+          "pageErrors": [],
+          "evidence": [
+            {
+              "file": "output/browser/wordpress-customer-orders.png",
+              "sha256": "874bbffd352b79042caf831c8366cf4fa79188b07ea04e23654040392b80e32b"
+            },
+            {
+              "file": "output/browser/wordpress-customer-details.png",
+              "sha256": "cae11bc5207f7fcbe96cc95e76cb38599d586b9cb9cd5efd46dcf672d91a5cb4"
+            },
+            {
+              "file": "output/browser/wordpress-customer-mobile.png",
+              "sha256": "1d052b2c93f6ae28fdba999b586b433676dc263b26983fd2f6636d35c2e2d58a"
+            },
+            {
+              "file": "output/browser/wordpress-customer-settings.png",
+              "sha256": "47aafd963d51b0a868b383ea5e0eb42e0b199dccd76027c069f210f172adcd76"
+            }
+          ]
+        }
+      },
+      "firefox": {
+        "staff": {
+          "checkedAt": "2026-10-03T10:47:07.662225+00:00",
+          "browser": "155.0",
+          "browserEngine": "firefox",
+          "browserDistribution": "Playwright Firefox",
+          "playwright": "1.63.0",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "store": "http://127.0.0.1:9496",
+          "pro": true,
+          "upgradeTemplate": null,
+          "checks": [
+            {
+              "name": "real browser worker produces a complete PDF download",
+              "passed": true
+            },
+            {
+              "name": "visual editor renders the saved template",
+              "passed": true
+            },
+            {
+              "name": "editor uses WordPress dependencies without replacing shared globals",
+              "passed": true
+            },
+            {
+              "name": "dragging a block into the canvas adds real editable content",
+              "passed": true
+            },
+            {
+              "name": "visual text editing reaches exported HTML",
+              "passed": true
+            },
+            {
+              "name": "custom HTML and CSS save through authenticated editor",
+              "passed": true
+            },
+            {
+              "name": "PDF preview contains visual edits and order data",
+              "passed": true
+            },
+            {
+              "name": "saved template survives reload and applies to ordinary downloads",
+              "passed": true
+            },
+            {
+              "name": "Pro browser download is a complete two-PDF ZIP",
+              "passed": true
+            },
+            {
+              "name": "reset restores the built-in design",
+              "passed": true
+            },
+            {
+              "name": "mobile editor fits the viewport",
+              "passed": true
+            },
+            {
+              "name": "no browser JavaScript errors",
+              "passed": true
+            }
+          ],
+          "pdfSha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+          "documents": [
+            {
+              "file": "output/browser/wordpress-alpha3-pro-firefox-default.pdf",
+              "sha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+              "pages": 1
+            },
+            {
+              "file": "output/browser/wordpress-alpha3-pro-firefox-custom.pdf",
+              "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+              "pages": 1
+            },
+            {
+              "file": "output/browser/wordpress-alpha3-pro-firefox-saved.pdf",
+              "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+              "pages": 1
+            }
+          ],
+          "pageErrors": [],
+          "batch": {
+            "file": "output/browser/wordpress-alpha3-pro-firefox-batch.zip",
+            "sha256": "107a9c43ce08e00bd45b356303eee6991d921d83c281747274f83a7e903a38fa",
+            "documents": [
+              {
+                "name": "12-order-summary-12.pdf",
+                "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+              },
+              {
+                "name": "13-order-summary-13.pdf",
+                "sha256": "844220344b2021f3ac923b0ed5802f333a7baecf08bbbaef60da97cb3384480d"
+              }
+            ]
+          }
+        },
+        "customer": {
+          "checkedAt": "2026-10-03T10:46:20.640231+00:00",
+          "browser": "155.0",
+          "browserEngine": "firefox",
+          "browserDistribution": "Playwright Firefox",
+          "playwright": "1.63.0",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "store": "http://127.0.0.1:9482",
+          "checks": [
+            {
+              "name": "buyer finds one PDF action on the actual account orders page",
+              "passed": true
+            },
+            {
+              "name": "native browser download has the promised filename and exact renderer bytes",
+              "passed": true
+            },
+            {
+              "name": "download contains saved brand styling and platform totals",
+              "passed": true
+            },
+            {
+              "name": "download leaves the account page usable",
+              "passed": true
+            },
+            {
+              "name": "buyer can also find the PDF on order details",
+              "passed": true
+            },
+            {
+              "name": "account PDF action remains visible within a mobile viewport",
+              "passed": true
+            },
+            {
+              "name": "merchant sees the enabled customer-download setting without the access token",
+              "passed": true
+            },
+            {
+              "name": "merchant can remove customer downloads without disabling email configuration",
+              "passed": true
+            },
+            {
+              "name": "previously issued account link fails immediately after disabling",
+              "passed": true
+            },
+            {
+              "name": "re-enabling restores the customer action",
+              "passed": true
+            },
+            {
+              "name": "packaged staff browser worker matches the customer server-rendered PDF",
+              "passed": true
+            },
+            {
+              "name": "customer and merchant pages have no JavaScript errors",
+              "passed": true
+            }
+          ],
+          "packages": [
+            {
+              "filename": "fullbleed-commerce-0.1.0-alpha.3.zip",
+              "bytes": 3058277,
+              "sha256": "53b2a9fe3da78ac14f94e9851fcc57fe66f413c7a6b13b3e9563573b364d4f79",
+              "files": 39
+            },
+            {
+              "filename": "fullbleed-commerce-pro-0.1.0-alpha.3.zip",
+              "bytes": 35191,
+              "sha256": "7512e9b346afe2d13e0c7d8ca0b1f22eaec261e3144e87f12da33684680f25e1",
+              "files": 13
+            }
+          ],
+          "pdfSha256": "5df220bc2320582a6a5aacf460429392e022a73bafdde1f19dd9ad452eac1637",
+          "pageErrors": [],
+          "evidence": [
+            {
+              "file": "output/browser/wordpress-customer-firefox-orders.png",
+              "sha256": "d73c980f2a54b5c4af2a4e99397b0cc1710ea2dbb1104d609297ae3fd655bf63"
+            },
+            {
+              "file": "output/browser/wordpress-customer-firefox-details.png",
+              "sha256": "c4064434cd78c917cdf9af4b2703fd8bc62e81c3de37a4378353fbd4d7330937"
+            },
+            {
+              "file": "output/browser/wordpress-customer-firefox-mobile.png",
+              "sha256": "4b421d9336e64b4881a04c05a820411a50ad9358006f535fcf03b1e59a92aff7"
+            },
+            {
+              "file": "output/browser/wordpress-customer-firefox-settings.png",
+              "sha256": "cbdeaa8da391090fa0b67b2bcbb606947d0e1678e798fe32254ba566f521518d"
+            }
+          ]
+        }
+      },
+      "webkit": {
+        "staff": {
+          "checkedAt": "2026-10-03T10:45:48.818003+00:00",
+          "browser": "26.6",
+          "browserEngine": "webkit",
+          "browserDistribution": "Playwright WebKit (not branded Safari)",
+          "playwright": "1.63.0",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "store": "http://127.0.0.1:9496",
+          "pro": true,
+          "upgradeTemplate": null,
+          "checks": [
+            {
+              "name": "real browser worker produces a complete PDF download",
+              "passed": true
+            },
+            {
+              "name": "visual editor renders the saved template",
+              "passed": true
+            },
+            {
+              "name": "editor uses WordPress dependencies without replacing shared globals",
+              "passed": true
+            },
+            {
+              "name": "dragging a block into the canvas adds real editable content",
+              "passed": true
+            },
+            {
+              "name": "visual text editing reaches exported HTML",
+              "passed": true
+            },
+            {
+              "name": "custom HTML and CSS save through authenticated editor",
+              "passed": true
+            },
+            {
+              "name": "PDF preview contains visual edits and order data",
+              "passed": true
+            },
+            {
+              "name": "saved template survives reload and applies to ordinary downloads",
+              "passed": true
+            },
+            {
+              "name": "Pro browser download is a complete two-PDF ZIP",
+              "passed": true
+            },
+            {
+              "name": "reset restores the built-in design",
+              "passed": true
+            },
+            {
+              "name": "mobile editor fits the viewport",
+              "passed": true
+            },
+            {
+              "name": "no browser JavaScript errors",
+              "passed": true
+            }
+          ],
+          "pdfSha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+          "documents": [
+            {
+              "file": "output/browser/wordpress-alpha3-pro-webkit-default.pdf",
+              "sha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+              "pages": 1
+            },
+            {
+              "file": "output/browser/wordpress-alpha3-pro-webkit-custom.pdf",
+              "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+              "pages": 1
+            },
+            {
+              "file": "output/browser/wordpress-alpha3-pro-webkit-saved.pdf",
+              "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+              "pages": 1
+            }
+          ],
+          "pageErrors": [],
+          "batch": {
+            "file": "output/browser/wordpress-alpha3-pro-webkit-batch.zip",
+            "sha256": "f2a02b704a187573d8422037eb85da431e1c977f3f5d5b54667f70d49553e20e",
+            "documents": [
+              {
+                "name": "12-order-summary-12.pdf",
+                "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+              },
+              {
+                "name": "13-order-summary-13.pdf",
+                "sha256": "844220344b2021f3ac923b0ed5802f333a7baecf08bbbaef60da97cb3384480d"
+              }
+            ]
+          }
+        },
+        "customer": {
+          "checkedAt": "2026-10-03T10:44:18.211931+00:00",
+          "browser": "26.6",
+          "browserEngine": "webkit",
+          "browserDistribution": "Playwright WebKit (not branded Safari)",
+          "playwright": "1.63.0",
+          "platform": "Windows-10-10.0.26200-SP0",
+          "store": "http://127.0.0.1:9482",
+          "checks": [
+            {
+              "name": "buyer finds one PDF action on the actual account orders page",
+              "passed": true
+            },
+            {
+              "name": "native browser download has the promised filename and exact renderer bytes",
+              "passed": true
+            },
+            {
+              "name": "download contains saved brand styling and platform totals",
+              "passed": true
+            },
+            {
+              "name": "download leaves the account page usable",
+              "passed": true
+            },
+            {
+              "name": "buyer can also find the PDF on order details",
+              "passed": true
+            },
+            {
+              "name": "account PDF action remains visible within a mobile viewport",
+              "passed": true
+            },
+            {
+              "name": "merchant sees the enabled customer-download setting without the access token",
+              "passed": true
+            },
+            {
+              "name": "merchant can remove customer downloads without disabling email configuration",
+              "passed": true
+            },
+            {
+              "name": "previously issued account link fails immediately after disabling",
+              "passed": true
+            },
+            {
+              "name": "re-enabling restores the customer action",
+              "passed": true
+            },
+            {
+              "name": "packaged staff browser worker matches the customer server-rendered PDF",
+              "passed": true
+            },
+            {
+              "name": "customer and merchant pages have no JavaScript errors",
+              "passed": true
+            }
+          ],
+          "packages": [
+            {
+              "filename": "fullbleed-commerce-0.1.0-alpha.3.zip",
+              "bytes": 3058277,
+              "sha256": "53b2a9fe3da78ac14f94e9851fcc57fe66f413c7a6b13b3e9563573b364d4f79",
+              "files": 39
+            },
+            {
+              "filename": "fullbleed-commerce-pro-0.1.0-alpha.3.zip",
+              "bytes": 35191,
+              "sha256": "7512e9b346afe2d13e0c7d8ca0b1f22eaec261e3144e87f12da33684680f25e1",
+              "files": 13
+            }
+          ],
+          "pdfSha256": "5df220bc2320582a6a5aacf460429392e022a73bafdde1f19dd9ad452eac1637",
+          "pageErrors": [],
+          "evidence": [
+            {
+              "file": "output/browser/wordpress-customer-webkit-orders.png",
+              "sha256": "da34e7f26c42d0b7dc70877cb5706454d37b41ccaf082737648a845692491635"
+            },
+            {
+              "file": "output/browser/wordpress-customer-webkit-details.png",
+              "sha256": "a68c0c5ec4a668addb0c901eaeb8131a41fa77ed2a13824a78793f50879039e6"
+            },
+            {
+              "file": "output/browser/wordpress-customer-webkit-mobile.png",
+              "sha256": "441eb892c3f033a5e3ca3a85c931dc9ca00ab713125770ddda3428f788b656eb"
+            },
+            {
+              "file": "output/browser/wordpress-customer-webkit-settings.png",
+              "sha256": "9e11b7512711070f0f3e82355a5e7f2daebd03c6b892794c512fbd3c111f1105"
+            }
+          ]
+        }
+      }
+    },
+    "linux": {
+      "chrome": {
+        "checkedAt": "2026-10-03T10:52:09.606Z",
+        "syntheticOnly": true,
+        "engine": "chrome",
+        "hpos": true,
+        "packages": [
+          {
+            "filename": "fullbleed-commerce-0.1.0-alpha.3.zip",
+            "bytes": 3058277,
+            "sha256": "53b2a9fe3da78ac14f94e9851fcc57fe66f413c7a6b13b3e9563573b364d4f79",
+            "files": 39
+          },
+          {
+            "filename": "fullbleed-commerce-pro-0.1.0-alpha.3.zip",
+            "bytes": 35191,
+            "sha256": "7512e9b346afe2d13e0c7d8ca0b1f22eaec261e3144e87f12da33684680f25e1",
+            "files": 13
+          }
+        ],
+        "staff": {
+          "checkedAt": "2026-10-03T10:48:45.787384+00:00",
+          "browser": "154.0.8037.97",
+          "browserEngine": "chrome",
+          "browserDistribution": "Google Chrome channel",
+          "playwright": "1.63.0",
+          "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+          "store": "http://127.0.0.1:9496",
+          "pro": true,
+          "upgradeTemplate": null,
+          "checks": [
+            {
+              "name": "real browser worker produces a complete PDF download",
+              "passed": true
+            },
+            {
+              "name": "visual editor renders the saved template",
+              "passed": true
+            },
+            {
+              "name": "editor uses WordPress dependencies without replacing shared globals",
+              "passed": true
+            },
+            {
+              "name": "dragging a block into the canvas adds real editable content",
+              "passed": true
+            },
+            {
+              "name": "visual text editing reaches exported HTML",
+              "passed": true
+            },
+            {
+              "name": "custom HTML and CSS save through authenticated editor",
+              "passed": true
+            },
+            {
+              "name": "PDF preview contains visual edits and order data",
+              "passed": true
+            },
+            {
+              "name": "saved template survives reload and applies to ordinary downloads",
+              "passed": true
+            },
+            {
+              "name": "Pro browser download is a complete two-PDF ZIP",
+              "passed": true
+            },
+            {
+              "name": "reset restores the built-in design",
+              "passed": true
+            },
+            {
+              "name": "mobile editor fits the viewport",
+              "passed": true
+            },
+            {
+              "name": "no browser JavaScript errors",
+              "passed": true
+            }
+          ],
+          "pdfSha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+          "documents": [
+            {
+              "file": "output/browser/wordpress-matrix-default.pdf",
+              "sha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+              "pages": 1
+            },
+            {
+              "file": "output/browser/wordpress-matrix-custom.pdf",
+              "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+              "pages": 1
+            },
+            {
+              "file": "output/browser/wordpress-matrix-saved.pdf",
+              "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+              "pages": 1
+            }
+          ],
+          "pageErrors": [],
+          "batch": {
+            "file": "output/browser/wordpress-pro-batch.zip",
+            "sha256": "d9fb6be57048a265b9d690ca276238a742e797f6bb32a4ae7b8109e518295238",
+            "documents": [
+              {
+                "name": "12-order-summary-12.pdf",
+                "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+              },
+              {
+                "name": "13-order-summary-13.pdf",
+                "sha256": "844220344b2021f3ac923b0ed5802f333a7baecf08bbbaef60da97cb3384480d"
+              }
+            ]
+          }
+        },
+        "customer": {
+          "checkedAt": "2026-10-03T10:52:09.413328+00:00",
+          "browser": "154.0.8037.97",
+          "browserEngine": "chrome",
+          "browserDistribution": "Google Chrome channel",
+          "playwright": "1.63.0",
+          "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+          "store": "http://127.0.0.1:9482",
+          "checks": [
+            {
+              "name": "buyer finds one PDF action on the actual account orders page",
+              "passed": true
+            },
+            {
+              "name": "native browser download has the promised filename and exact renderer bytes",
+              "passed": true
+            },
+            {
+              "name": "download contains saved brand styling and platform totals",
+              "passed": true
+            },
+            {
+              "name": "download leaves the account page usable",
+              "passed": true
+            },
+            {
+              "name": "buyer can also find the PDF on order details",
+              "passed": true
+            },
+            {
+              "name": "account PDF action remains visible within a mobile viewport",
+              "passed": true
+            },
+            {
+              "name": "merchant sees the enabled customer-download setting without the access token",
+              "passed": true
+            },
+            {
+              "name": "merchant can remove customer downloads without disabling email configuration",
+              "passed": true
+            },
+            {
+              "name": "previously issued account link fails immediately after disabling",
+              "passed": true
+            },
+            {
+              "name": "re-enabling restores the customer action",
+              "passed": true
+            },
+            {
+              "name": "packaged staff browser worker matches the customer server-rendered PDF",
+              "passed": true
+            },
+            {
+              "name": "customer and merchant pages have no JavaScript errors",
+              "passed": true
+            }
+          ],
+          "packages": [
+            {
+              "filename": "fullbleed-commerce-0.1.0-alpha.3.zip",
+              "bytes": 3058277,
+              "sha256": "53b2a9fe3da78ac14f94e9851fcc57fe66f413c7a6b13b3e9563573b364d4f79",
+              "files": 39
+            },
+            {
+              "filename": "fullbleed-commerce-pro-0.1.0-alpha.3.zip",
+              "bytes": 35191,
+              "sha256": "7512e9b346afe2d13e0c7d8ca0b1f22eaec261e3144e87f12da33684680f25e1",
+              "files": 13
+            }
+          ],
+          "pdfSha256": "5df220bc2320582a6a5aacf460429392e022a73bafdde1f19dd9ad452eac1637",
+          "pageErrors": [],
+          "evidence": [
+            {
+              "file": "output/browser/wordpress-customer-orders.png",
+              "sha256": "7572f6923d720f626c98d3ee09c0e4e7cdda3c39aedd858892526651aea8a30a"
+            },
+            {
+              "file": "output/browser/wordpress-customer-details.png",
+              "sha256": "f5f4af806d86c96eedb0bb0c7cf64fe00843652d86bffdbce85df189c51e8ded"
+            },
+            {
+              "file": "output/browser/wordpress-customer-mobile.png",
+              "sha256": "e05da2401a92de7cbde7ec7eaa8c975a26dc1665f45363f7f57d949ba75f1944"
+            },
+            {
+              "file": "output/browser/wordpress-customer-settings.png",
+              "sha256": "6eb7d3c3af57d669f230acb67bfe9695267e4df6e89cadb3faee2ac83fdb9afd"
+            }
+          ]
+        },
+        "scope": "Actual browser editing and downloads on disposable WordPress. Customer renderer HTTPS transport is substituted with a fixture using real Fullbleed PDF bytes. No production network, email delivery or branded Safari claim.",
+        "runtime": {
+          "wordpress": "7.1.2",
+          "woocommerce": "11.1.2",
+          "php": "8.3.33",
+          "hpos": true
+        },
+        "customerHttpCheckCount": 38
+      },
+      "firefox": {
+        "checkedAt": "2026-10-03T10:53:12.023Z",
+        "syntheticOnly": true,
+        "engine": "firefox",
+        "hpos": true,
+        "packages": [
+          {
+            "filename": "fullbleed-commerce-0.1.0-alpha.3.zip",
+            "bytes": 3058277,
+            "sha256": "53b2a9fe3da78ac14f94e9851fcc57fe66f413c7a6b13b3e9563573b364d4f79",
+            "files": 39
+          },
+          {
+            "filename": "fullbleed-commerce-pro-0.1.0-alpha.3.zip",
+            "bytes": 35191,
+            "sha256": "7512e9b346afe2d13e0c7d8ca0b1f22eaec261e3144e87f12da33684680f25e1",
+            "files": 13
+          }
+        ],
+        "staff": {
+          "checkedAt": "2026-10-03T10:48:44.197356+00:00",
+          "browser": "155.0",
+          "browserEngine": "firefox",
+          "browserDistribution": "Playwright Firefox",
+          "playwright": "1.63.0",
+          "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+          "store": "http://127.0.0.1:9496",
+          "pro": true,
+          "upgradeTemplate": null,
+          "checks": [
+            {
+              "name": "real browser worker produces a complete PDF download",
+              "passed": true
+            },
+            {
+              "name": "visual editor renders the saved template",
+              "passed": true
+            },
+            {
+              "name": "editor uses WordPress dependencies without replacing shared globals",
+              "passed": true
+            },
+            {
+              "name": "dragging a block into the canvas adds real editable content",
+              "passed": true
+            },
+            {
+              "name": "visual text editing reaches exported HTML",
+              "passed": true
+            },
+            {
+              "name": "custom HTML and CSS save through authenticated editor",
+              "passed": true
+            },
+            {
+              "name": "PDF preview contains visual edits and order data",
+              "passed": true
+            },
+            {
+              "name": "saved template survives reload and applies to ordinary downloads",
+              "passed": true
+            },
+            {
+              "name": "Pro browser download is a complete two-PDF ZIP",
+              "passed": true
+            },
+            {
+              "name": "reset restores the built-in design",
+              "passed": true
+            },
+            {
+              "name": "mobile editor fits the viewport",
+              "passed": true
+            },
+            {
+              "name": "no browser JavaScript errors",
+              "passed": true
+            }
+          ],
+          "pdfSha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+          "documents": [
+            {
+              "file": "output/browser/wordpress-matrix-firefox-default.pdf",
+              "sha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+              "pages": 1
+            },
+            {
+              "file": "output/browser/wordpress-matrix-firefox-custom.pdf",
+              "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+              "pages": 1
+            },
+            {
+              "file": "output/browser/wordpress-matrix-firefox-saved.pdf",
+              "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+              "pages": 1
+            }
+          ],
+          "pageErrors": [],
+          "batch": {
+            "file": "output/browser/wordpress-matrix-firefox-batch.zip",
+            "sha256": "6b1658e2ce2e07b2938c073d8ee17a2a0ba730c51b99e5639e95a2c0ccd848ee",
+            "documents": [
+              {
+                "name": "12-order-summary-12.pdf",
+                "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+              },
+              {
+                "name": "13-order-summary-13.pdf",
+                "sha256": "844220344b2021f3ac923b0ed5802f333a7baecf08bbbaef60da97cb3384480d"
+              }
+            ]
+          }
+        },
+        "customer": {
+          "checkedAt": "2026-10-03T10:53:11.545345+00:00",
+          "browser": "155.0",
+          "browserEngine": "firefox",
+          "browserDistribution": "Playwright Firefox",
+          "playwright": "1.63.0",
+          "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+          "store": "http://127.0.0.1:9482",
+          "checks": [
+            {
+              "name": "buyer finds one PDF action on the actual account orders page",
+              "passed": true
+            },
+            {
+              "name": "native browser download has the promised filename and exact renderer bytes",
+              "passed": true
+            },
+            {
+              "name": "download contains saved brand styling and platform totals",
+              "passed": true
+            },
+            {
+              "name": "download leaves the account page usable",
+              "passed": true
+            },
+            {
+              "name": "buyer can also find the PDF on order details",
+              "passed": true
+            },
+            {
+              "name": "account PDF action remains visible within a mobile viewport",
+              "passed": true
+            },
+            {
+              "name": "merchant sees the enabled customer-download setting without the access token",
+              "passed": true
+            },
+            {
+              "name": "merchant can remove customer downloads without disabling email configuration",
+              "passed": true
+            },
+            {
+              "name": "previously issued account link fails immediately after disabling",
+              "passed": true
+            },
+            {
+              "name": "re-enabling restores the customer action",
+              "passed": true
+            },
+            {
+              "name": "packaged staff browser worker matches the customer server-rendered PDF",
+              "passed": true
+            },
+            {
+              "name": "customer and merchant pages have no JavaScript errors",
+              "passed": true
+            }
+          ],
+          "packages": [
+            {
+              "filename": "fullbleed-commerce-0.1.0-alpha.3.zip",
+              "bytes": 3058277,
+              "sha256": "53b2a9fe3da78ac14f94e9851fcc57fe66f413c7a6b13b3e9563573b364d4f79",
+              "files": 39
+            },
+            {
+              "filename": "fullbleed-commerce-pro-0.1.0-alpha.3.zip",
+              "bytes": 35191,
+              "sha256": "7512e9b346afe2d13e0c7d8ca0b1f22eaec261e3144e87f12da33684680f25e1",
+              "files": 13
+            }
+          ],
+          "pdfSha256": "5df220bc2320582a6a5aacf460429392e022a73bafdde1f19dd9ad452eac1637",
+          "pageErrors": [],
+          "evidence": [
+            {
+              "file": "output/browser/wordpress-customer-firefox-orders.png",
+              "sha256": "b8800e2e23c185a5dbde38d0af8426ec9b8261f3a5882318f3fff0405daac133"
+            },
+            {
+              "file": "output/browser/wordpress-customer-firefox-details.png",
+              "sha256": "a568985851a7dc48e52112655a66bd0fc8ad8ea71b9f844d4d8418a6a38d4a18"
+            },
+            {
+              "file": "output/browser/wordpress-customer-firefox-mobile.png",
+              "sha256": "55ce92ed07fd8e49a9dbebe670aac6f0e3ca6059ee3f26faba7c39174a3338b7"
+            },
+            {
+              "file": "output/browser/wordpress-customer-firefox-settings.png",
+              "sha256": "ae8f82b8a821d6c5ef4c1c0c7e7ed40bbcdc380245ab3823f23575ea4fd35813"
+            }
+          ]
+        },
+        "scope": "Actual browser editing and downloads on disposable WordPress. Customer renderer HTTPS transport is substituted with a fixture using real Fullbleed PDF bytes. No production network, email delivery or branded Safari claim.",
+        "runtime": {
+          "wordpress": "7.1.2",
+          "woocommerce": "11.1.2",
+          "php": "8.3.33",
+          "hpos": true
+        },
+        "customerHttpCheckCount": 38
+      },
+      "webkit": {
+        "checkedAt": "2026-10-03T10:53:06.812Z",
+        "syntheticOnly": true,
+        "engine": "webkit",
+        "hpos": true,
+        "packages": [
+          {
+            "filename": "fullbleed-commerce-0.1.0-alpha.3.zip",
+            "bytes": 3058277,
+            "sha256": "53b2a9fe3da78ac14f94e9851fcc57fe66f413c7a6b13b3e9563573b364d4f79",
+            "files": 39
+          },
+          {
+            "filename": "fullbleed-commerce-pro-0.1.0-alpha.3.zip",
+            "bytes": 35191,
+            "sha256": "7512e9b346afe2d13e0c7d8ca0b1f22eaec261e3144e87f12da33684680f25e1",
+            "files": 13
+          }
+        ],
+        "staff": {
+          "checkedAt": "2026-10-03T10:48:54.585891+00:00",
+          "browser": "26.6",
+          "browserEngine": "webkit",
+          "browserDistribution": "Playwright WebKit (not branded Safari)",
+          "playwright": "1.63.0",
+          "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+          "store": "http://127.0.0.1:9496",
+          "pro": true,
+          "upgradeTemplate": null,
+          "checks": [
+            {
+              "name": "real browser worker produces a complete PDF download",
+              "passed": true
+            },
+            {
+              "name": "visual editor renders the saved template",
+              "passed": true
+            },
+            {
+              "name": "editor uses WordPress dependencies without replacing shared globals",
+              "passed": true
+            },
+            {
+              "name": "dragging a block into the canvas adds real editable content",
+              "passed": true
+            },
+            {
+              "name": "visual text editing reaches exported HTML",
+              "passed": true
+            },
+            {
+              "name": "custom HTML and CSS save through authenticated editor",
+              "passed": true
+            },
+            {
+              "name": "PDF preview contains visual edits and order data",
+              "passed": true
+            },
+            {
+              "name": "saved template survives reload and applies to ordinary downloads",
+              "passed": true
+            },
+            {
+              "name": "Pro browser download is a complete two-PDF ZIP",
+              "passed": true
+            },
+            {
+              "name": "reset restores the built-in design",
+              "passed": true
+            },
+            {
+              "name": "mobile editor fits the viewport",
+              "passed": true
+            },
+            {
+              "name": "no browser JavaScript errors",
+              "passed": true
+            }
+          ],
+          "pdfSha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+          "documents": [
+            {
+              "file": "output/browser/wordpress-matrix-webkit-default.pdf",
+              "sha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+              "pages": 1
+            },
+            {
+              "file": "output/browser/wordpress-matrix-webkit-custom.pdf",
+              "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+              "pages": 1
+            },
+            {
+              "file": "output/browser/wordpress-matrix-webkit-saved.pdf",
+              "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+              "pages": 1
+            }
+          ],
+          "pageErrors": [],
+          "batch": {
+            "file": "output/browser/wordpress-matrix-webkit-batch.zip",
+            "sha256": "c5f8bea00151c600c7dea11845e389eda7e4b8d7d9e6d0c80fdbab29b14792c1",
+            "documents": [
+              {
+                "name": "12-order-summary-12.pdf",
+                "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+              },
+              {
+                "name": "13-order-summary-13.pdf",
+                "sha256": "844220344b2021f3ac923b0ed5802f333a7baecf08bbbaef60da97cb3384480d"
+              }
+            ]
+          }
+        },
+        "customer": {
+          "checkedAt": "2026-10-03T10:53:06.610230+00:00",
+          "browser": "26.6",
+          "browserEngine": "webkit",
+          "browserDistribution": "Playwright WebKit (not branded Safari)",
+          "playwright": "1.63.0",
+          "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+          "store": "http://127.0.0.1:9482",
+          "checks": [
+            {
+              "name": "buyer finds one PDF action on the actual account orders page",
+              "passed": true
+            },
+            {
+              "name": "native browser download has the promised filename and exact renderer bytes",
+              "passed": true
+            },
+            {
+              "name": "download contains saved brand styling and platform totals",
+              "passed": true
+            },
+            {
+              "name": "download leaves the account page usable",
+              "passed": true
+            },
+            {
+              "name": "buyer can also find the PDF on order details",
+              "passed": true
+            },
+            {
+              "name": "account PDF action remains visible within a mobile viewport",
+              "passed": true
+            },
+            {
+              "name": "merchant sees the enabled customer-download setting without the access token",
+              "passed": true
+            },
+            {
+              "name": "merchant can remove customer downloads without disabling email configuration",
+              "passed": true
+            },
+            {
+              "name": "previously issued account link fails immediately after disabling",
+              "passed": true
+            },
+            {
+              "name": "re-enabling restores the customer action",
+              "passed": true
+            },
+            {
+              "name": "packaged staff browser worker matches the customer server-rendered PDF",
+              "passed": true
+            },
+            {
+              "name": "customer and merchant pages have no JavaScript errors",
+              "passed": true
+            }
+          ],
+          "packages": [
+            {
+              "filename": "fullbleed-commerce-0.1.0-alpha.3.zip",
+              "bytes": 3058277,
+              "sha256": "53b2a9fe3da78ac14f94e9851fcc57fe66f413c7a6b13b3e9563573b364d4f79",
+              "files": 39
+            },
+            {
+              "filename": "fullbleed-commerce-pro-0.1.0-alpha.3.zip",
+              "bytes": 35191,
+              "sha256": "7512e9b346afe2d13e0c7d8ca0b1f22eaec261e3144e87f12da33684680f25e1",
+              "files": 13
+            }
+          ],
+          "pdfSha256": "5df220bc2320582a6a5aacf460429392e022a73bafdde1f19dd9ad452eac1637",
+          "pageErrors": [],
+          "evidence": [
+            {
+              "file": "output/browser/wordpress-customer-webkit-orders.png",
+              "sha256": "e92d302cefa238d476e8caa34f12923e12ce0f08269c98112c16ac8502560c71"
+            },
+            {
+              "file": "output/browser/wordpress-customer-webkit-details.png",
+              "sha256": "deacfa6f13dfee059f12da40a4680b6aeb289d8dac36f45bf3e37413087c8357"
+            },
+            {
+              "file": "output/browser/wordpress-customer-webkit-mobile.png",
+              "sha256": "24d1d16b4c857203870c6b9c1f35f2c1ec0dd18dab4bf77e6e005cd5f2f9cd93"
+            },
+            {
+              "file": "output/browser/wordpress-customer-webkit-settings.png",
+              "sha256": "3c0dbec17f698e874822552f696eb7e46b7aa30867ee10f94c40cd0a1cad2c27"
+            }
+          ]
+        },
+        "scope": "Actual browser editing and downloads on disposable WordPress. Customer renderer HTTPS transport is substituted with a fixture using real Fullbleed PDF bytes. No production network, email delivery or branded Safari claim.",
+        "runtime": {
+          "wordpress": "7.1.2",
+          "woocommerce": "11.1.2",
+          "php": "8.3.33",
+          "hpos": true
+        },
+        "customerHttpCheckCount": 38
+      }
+    }
+  },
+  "documentParity": [
+    {
+      "platform": "windows",
+      "engine": "chrome",
+      "staffDocuments": [
+        "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+        "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+        "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+      ],
+      "batchDocuments": [
+        {
+          "name": "12-order-summary-12.pdf",
+          "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+        },
+        {
+          "name": "13-order-summary-13.pdf",
+          "sha256": "844220344b2021f3ac923b0ed5802f333a7baecf08bbbaef60da97cb3384480d"
+        }
+      ],
+      "customerAndStaffPreview": "5df220bc2320582a6a5aacf460429392e022a73bafdde1f19dd9ad452eac1637"
+    },
+    {
+      "platform": "linux",
+      "engine": "chrome",
+      "staffDocuments": [
+        "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+        "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+        "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+      ],
+      "batchDocuments": [
+        {
+          "name": "12-order-summary-12.pdf",
+          "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+        },
+        {
+          "name": "13-order-summary-13.pdf",
+          "sha256": "844220344b2021f3ac923b0ed5802f333a7baecf08bbbaef60da97cb3384480d"
+        }
+      ],
+      "customerAndStaffPreview": "5df220bc2320582a6a5aacf460429392e022a73bafdde1f19dd9ad452eac1637"
+    },
+    {
+      "platform": "windows",
+      "engine": "firefox",
+      "staffDocuments": [
+        "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+        "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+        "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+      ],
+      "batchDocuments": [
+        {
+          "name": "12-order-summary-12.pdf",
+          "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+        },
+        {
+          "name": "13-order-summary-13.pdf",
+          "sha256": "844220344b2021f3ac923b0ed5802f333a7baecf08bbbaef60da97cb3384480d"
+        }
+      ],
+      "customerAndStaffPreview": "5df220bc2320582a6a5aacf460429392e022a73bafdde1f19dd9ad452eac1637"
+    },
+    {
+      "platform": "linux",
+      "engine": "firefox",
+      "staffDocuments": [
+        "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+        "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+        "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+      ],
+      "batchDocuments": [
+        {
+          "name": "12-order-summary-12.pdf",
+          "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+        },
+        {
+          "name": "13-order-summary-13.pdf",
+          "sha256": "844220344b2021f3ac923b0ed5802f333a7baecf08bbbaef60da97cb3384480d"
+        }
+      ],
+      "customerAndStaffPreview": "5df220bc2320582a6a5aacf460429392e022a73bafdde1f19dd9ad452eac1637"
+    },
+    {
+      "platform": "windows",
+      "engine": "webkit",
+      "staffDocuments": [
+        "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+        "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+        "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+      ],
+      "batchDocuments": [
+        {
+          "name": "12-order-summary-12.pdf",
+          "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+        },
+        {
+          "name": "13-order-summary-13.pdf",
+          "sha256": "844220344b2021f3ac923b0ed5802f333a7baecf08bbbaef60da97cb3384480d"
+        }
+      ],
+      "customerAndStaffPreview": "5df220bc2320582a6a5aacf460429392e022a73bafdde1f19dd9ad452eac1637"
+    },
+    {
+      "platform": "linux",
+      "engine": "webkit",
+      "staffDocuments": [
+        "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+        "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+        "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+      ],
+      "batchDocuments": [
+        {
+          "name": "12-order-summary-12.pdf",
+          "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9"
+        },
+        {
+          "name": "13-order-summary-13.pdf",
+          "sha256": "844220344b2021f3ac923b0ed5802f333a7baecf08bbbaef60da97cb3384480d"
+        }
+      ],
+      "customerAndStaffPreview": "5df220bc2320582a6a5aacf460429392e022a73bafdde1f19dd9ad452eac1637"
+    }
+  ],
+  "identicalPdfBytesAcrossSixBrowserOsCombinations": true,
+  "visualReview": {
+    "renderer": "Fullbleed 2.5.5",
+    "dpi": 96,
+    "files": [
+      {
+        "file": "output/browser-workflows/previews/wordpress-alpha3-pro-custom_page1.png",
+        "sha256": "a7faf43ba6185f90aea9f1865b31687c412b790bc2bbaa3d9355ddaabf08d90f"
+      },
+      {
+        "file": "output/browser-workflows/previews/wordpress-alpha3-pro-default_page1.png",
+        "sha256": "3784e35a0e055dff78af795ccdc90db50c386fe28434c170a86b0ee203915a37"
+      },
+      {
+        "file": "output/browser-workflows/previews/wordpress-customer-summary_page1.png",
+        "sha256": "098a81c6c717c2b7ab03de6849915edef7f6e9fd27a76926b5faf8880dc024cc"
+      }
+    ],
+    "result": "Inspected default, visually edited and customer PDF pages: headings, addresses, items and totals fit without overlap or clipping for these synthetic fixtures. WebKit account actions were inspected at desktop and 390px widths."
+  },
+  "limitations": [
+    "Playwright Firefox and WebKit are automation distributions. WebKit is not branded Safari; Safari, macOS, iOS and physical mobile devices were not tested.",
+    "The browser matrix uses disposable WordPress Playground/PHP WASM stores with HPOS. The separate native WordPress free-plugin job passes on Chrome only. Existing HPOS/legacy backend checks are separate from browser coverage.",
+    "Customer renderer HTTPS transport is a test filter returning actual Fullbleed PDF bytes. This is not a production renderer, email delivery or continuous availability claim.",
+    "A 390px viewport check does not establish full mobile editor usability or all theme/browser/merchant template combinations.",
+    "PDF preview bytes and native downloads are checked. Embedded PDF-viewer rendering is browser-dependent and was not asserted in headless WebKit.",
+    "Paid purchase, update delivery, merchant pilots and marketplace approval remain open. Runtime ZIPs and the prerelease status are unchanged."
+  ],
+  "inputs": [
+    {
+      "file": "dist/packages.json",
+      "sha256": "a6436ba448684ac85e1ab64074dda851cc9b35daf634fb4394bdb565d07c41b0"
+    },
+    {
+      "file": "docs/alpha3-release-verification.json",
+      "sha256": "66b008c02fb25cb6398ada5933eb222b929ceb1599411573409044aeaf5befa5"
+    },
+    {
+      "file": "target/browser-matrix-ci/run-37117473557.json",
+      "sha256": "462c6f7e606fce1bc333833e222b0f5bce3001ceebc5e4091b080c579f0df37c"
+    },
+    {
+      "file": "target/browser-matrix-ci/run-37117473561.json",
+      "sha256": "a8efbde01f9ce457e6669f84dcd633037cd922baf31f20d744844fa0367e0864"
+    },
+    {
+      "file": "target/browser-matrix-ci/run-37117473584.json",
+      "sha256": "f3c07bcc0f34c41965647108ad78a2866681fcb101edb8962afc4a57a6d42eac"
+    },
+    {
+      "file": "output/browser/wordpress-alpha3-pro-verification.json",
+      "sha256": "8e31c63073d0f658bd9b7b02d80c84d60e5bacc2f6c695cbc5f993a94e172a1d"
+    },
+    {
+      "file": "output/browser/wordpress-customer-verification.json",
+      "sha256": "1a18b8b10897a0afc86dc86a367b7c44b5d9d13bbea64b8e58b03efeb0d75016"
+    },
+    {
+      "file": "target/browser-matrix-ci/commerce-browser-chrome/output/browser-workflows/chrome.json",
+      "sha256": "155d61c06c70f15c4ff2906089300e20a41a2ab33da763dc6cc45f71845a72bf"
+    },
+    {
+      "file": "target/browser-matrix-ci/commerce-browser-chrome/output/automation/customer-hpos.json",
+      "sha256": "8a25f6f7b3531b9eacfc97831b7637b2cc8b4b3f550a162f64825c3cbb9c5faf"
+    },
+    {
+      "file": "output/browser/wordpress-alpha3-pro-firefox-verification.json",
+      "sha256": "bc1ddc70afa6abf01fa5ba2222581ca45e582fe8550ea672e7a1c0a372b364b3"
+    },
+    {
+      "file": "output/browser/wordpress-customer-firefox-verification.json",
+      "sha256": "6a6fd14e81042758a9f85320c15ce1453d6126fd8b9e6cf17e3429270b6cd7b8"
+    },
+    {
+      "file": "target/browser-matrix-ci/commerce-browser-firefox/output/browser-workflows/firefox.json",
+      "sha256": "b1d694d646975a9d9ad922c61b35a878f9b355bbe8f3871dbf32eb3b311442a7"
+    },
+    {
+      "file": "target/browser-matrix-ci/commerce-browser-firefox/output/automation/customer-hpos.json",
+      "sha256": "ee9087e6dedc2ad00e8b74db76b6228935cdf3217977ddcde9449734b33b73d0"
+    },
+    {
+      "file": "output/browser/wordpress-alpha3-pro-webkit-verification.json",
+      "sha256": "56ee296fac9dd247b1c3f551b94c7bf34d8373ae2a508c6e0df5c00b7d7c06b2"
+    },
+    {
+      "file": "output/browser/wordpress-customer-webkit-verification.json",
+      "sha256": "4276acddb022c28c6195e3e216f78ab21ced4c0c6802fed5976ecf34c80d8151"
+    },
+    {
+      "file": "target/browser-matrix-ci/commerce-browser-webkit/output/browser-workflows/webkit.json",
+      "sha256": "beb9d8c8d1c15e4e07068d935e7a24a8699108b1511c8937c7ce1abba6c72057"
+    },
+    {
+      "file": "target/browser-matrix-ci/commerce-browser-webkit/output/automation/customer-hpos.json",
+      "sha256": "5f55b016da7b9f760ba3bf838bfd4f452c69cdc9ad2313535201e1019096f13a"
+    },
+    {
+      "file": "target/wordpress/runtime.json",
+      "sha256": "8e9645f895019d4c3ba221c63704cad2931f676a59821bfc54f156b7cccf546b"
+    }
+  ]
+}

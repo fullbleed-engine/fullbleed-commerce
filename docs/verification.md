@@ -45,6 +45,54 @@ with uploaded**, then repeat for Pro if installed. Export templates and back up
 the store first. Existing enabled workflows stay enabled; check the connection
 and a synthetic order after updating. There is no automatic updater in this preview.
 
+## Browser workflow matrix
+
+The released alpha.3 base and Pro ZIPs pass **12 merchant checks and 12 customer
+checks in each of six browser/OS combinations**. The runtime packages are
+unchanged. [Retained evidence](browser-workflow-verification.json) records the
+package hashes, browser versions, source commits, checks and downloaded PDFs.
+
+| Browser distribution | Windows | Linux CI |
+| --- | --- | --- |
+| Google Chrome channel | 154.0.8037.93 | 154.0.8037.97 |
+| Playwright Firefox | 155.0 | 155.0 |
+| Playwright WebKit | 26.6 | 26.6 |
+
+These use Playwright 1.63.0 and disposable WordPress 7.1.2 / WooCommerce 11.1.2 /
+PHP 8.3.33 stores with HPOS. Merchant checks cover actual worker PDFs, drag/drop,
+visual text editing, HTML/CSS save and reload, batch ZIPs, reset, WordPress shared
+library identity and a 390px viewport. Customer checks cover native My Account
+downloads, order details, saved styling, staff/server PDF parity, and immediate
+revocation after the merchant disables downloads. Uncaught JavaScript errors
+fail the journeys.
+
+The default, customized, saved, batch and customer PDFs are byte-identical
+across these six combinations. Final default, customized and customer PDF pages
+were rendered with Fullbleed 2.5.5 and visually inspected. The Linux matrix also
+runs the 38-check customer HTTP/authorization fixture separately in each job.
+The [native WordPress directory job](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37117473561)
+passes Plugin Check and the free editor in Chrome; native WordPress coverage
+has not been broadened to the other two browsers.
+
+The [browser workflow](../.github/workflows/browser-workflows.yml) installs pinned
+Python dependencies from `tools/browser-requirements.txt`, installs the selected
+Playwright browser and runs `node tools/check-browser-workflows.mjs` after build
+and packaging. Set `FULLBLEED_TEST_BROWSER` to `chrome`, `firefox` or `webkit`;
+set `FULLBLEED_TEST_PYTHON` when using a virtual environment. The runner owns
+loopback ports 9496 and 9482, refuses to replace existing services, and closes
+its fixture processes. Failure records include the original exception, browser
+metadata and screenshots; merchant failures also retain a Playwright trace.
+
+[Playwright's browser documentation](https://playwright.dev/python/docs/browsers)
+distinguishes its Firefox/WebKit distributions from branded browsers. This is
+**not Safari, macOS, iOS or physical-device verification**. A narrow viewport
+does not establish full mobile editor usability. Preview PDF bytes and downloads
+are checked; embedded PDF-viewer rendering remains browser-dependent. Customer
+rendering uses an HTTPS test filter around actual Fullbleed output, so these
+checks do not establish production service availability or email delivery.
+Merchant pilots, paid purchase/update delivery and marketplace approval remain
+separate launch gates.
+
 ## Alpha.2 release evidence (historical)
 
 The [release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.2)
