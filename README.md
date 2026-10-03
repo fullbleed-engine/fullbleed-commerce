@@ -102,6 +102,19 @@ privacy operations and paid lifecycle validation remain launch gates. The
 [privacy request workflow](shopify/PRIVACY.md) now captures encrypted exports and
 tracks merchant handling independently of paid-plan access.
 
+## Evaluate an automation with us
+
+Running a WooCommerce store or building one for a client? Start with the free
+sample store, then [describe the document task you want to automate](https://github.com/fullbleed-engine/fullbleed-commerce/issues/new?template=commerce-pilot.yml).
+Tell us what should trigger it, who needs the document, and whether you can run
+a private renderer or need managed hosting. Shopify developers can describe a
+Flow workflow for a development store.
+
+The first evaluation covers a saved design, one normal order, one long order,
+and what happens when rendering fails. Keep tests on staging with fictional data.
+The request is public and does not purchase a service or reserve a launch date.
+For a private inquiry, [contact Fullbleed](https://www.fullbleed.dev/contact).
+
 ## Development
 
 The development toolchain requires Node.js 24.18+ because of WordPress Playground.

@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Try the free WooCommerce editor
+    url: https://docs.fullbleed.dev/guides/woocommerce/
+    about: Open a temporary sample store and generate a real PDF before installing anything.
+  - name: Contact Fullbleed privately
+    url: https://www.fullbleed.dev/contact
+    about: Use the contact page for a private inquiry. Never send passwords or customer documents.

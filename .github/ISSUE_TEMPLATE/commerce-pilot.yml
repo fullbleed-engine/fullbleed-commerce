@@ -1,0 +1,60 @@
+name: Evaluate a commerce workflow
+description: Tell us which WooCommerce or Shopify document task you want to automate.
+title: "[Workflow evaluation]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Help shape Fullbleed Commerce around a real recurring task.
+        [Try the free editor first](https://docs.fullbleed.dev/guides/woocommerce/).
+
+        This is a development preview for staging/development stores. Submitting
+        a request does not buy a service or promise an installation date.
+        WooCommerce automation currently needs a private Node renderer; the
+        Shopify integration is not yet an App Store installation.
+
+        **This issue and your answers will be public.** Use fictional examples.
+        Do not include customer records, credentials, private store URLs or payment
+        details. For a private conversation, use [Contact Fullbleed](https://www.fullbleed.dev/contact).
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - WooCommerce
+        - Shopify
+    validations:
+      required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: What recurring document task should disappear?
+      description: Describe the trigger, document and recipient. Include what you do manually today.
+      placeholder: When an order enters processing, attach our branded order summary to the existing customer email. Today a staff member exports and sends it separately.
+    validations:
+      required: true
+  - type: dropdown
+    id: hosting
+    attributes:
+      label: How could you run the automation?
+      description: The free WooCommerce editor works in a browser. Automatic documents need a server to run while that browser is closed.
+      options:
+        - WooCommerce - I or my agency can run a private Node/Docker renderer
+        - WooCommerce - I need managed hosting
+        - Shopify - I can test in a development store
+        - I need help choosing
+    validations:
+      required: true
+  - type: textarea
+    id: success
+    attributes:
+      label: What would make the evaluation useful?
+      description: Optional. Tell us about layout needs, languages, typical batch size, time spent today or a blocker to trying the preview. Keep business details you do not want public out of this issue.
+      placeholder: Our design needs a logo, two shipping-address lines and a care note. We want to test a normal order, a long order and recovery when the renderer is unavailable.
+  - type: checkboxes
+    id: preview-scope
+    attributes:
+      label: Evaluation scope
+      options:
+        - label: I understand this is a staging/development preview and have kept customer data and credentials out of this public issue.
+          required: true
