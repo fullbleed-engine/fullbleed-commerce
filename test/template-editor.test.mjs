@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MIT
-// DOM interaction coverage for the real bundled editor. Not browser acceptance.
+// DOM interaction coverage for the shared standalone editor. WordPress core
+// dependency integration is exercised against WordPress by check-browser.py.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { build } from 'esbuild';
 import { JSDOM } from 'jsdom';
 import { starterTemplate } from '../src/documents.js';
-const source = await readFile(new URL('../wordpress/fullbleed-commerce/assets/generated/editor.js', import.meta.url), 'utf8');
+const bundled = await build({ entryPoints: ['src/editor-entry.js'], bundle: true, write: false, format: 'iife', target: 'es2022' });
+const source = bundled.outputFiles[0].text;
 
 test('visual editor, source editing and PDF preview share the saved template without losing print CSS', async () => {
   const dom = new JSDOM('<!doctype html><div id="editor"></div>', { url: 'https://merchant.invalid/admin', runScripts: 'outside-only', pretendToBeVisual: true });

@@ -151,6 +151,13 @@ installing anything. The [public walkthrough](https://docs.fullbleed.dev/guides/
 connects that first document to the Pro automation offer. The demo contains only
 fictional orders and does not enable Pro automation or any paid service.
 
+Directory preparation now includes an installed-ZIP gate using the official
+WordPress Plugin Check action plus native WordPress/Chrome editing and PDF checks.
+The free editor uses WordPress's shared libraries, and all generated assets can
+be rebuilt from the source included in its ZIP. These changes are unreleased;
+WordPress.org account ownership, submission and manual approval are still pending.
+See [directory verification](verification.md#unreleased-wordpress-directory-preparation).
+
 The editor foundation is complete in the development preview: both platforms
 passed real Chrome editing and download checks. The first automation slice is
 also implemented: an optional authenticated renderer and opt-in WooCommerce Pro

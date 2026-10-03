@@ -5,12 +5,17 @@ from pathlib import Path
 import json
 import os
 from urllib.parse import urlparse
+from urllib.request import urlopen
 from zipfile import ZipFile
 from playwright.sync_api import sync_playwright
 from pypdf import PdfReader
 
 base = os.environ.get('FULLBLEED_TEST_URL', 'http://127.0.0.1:9477')
 assert urlparse(base).hostname == '127.0.0.1'
+with urlopen(base + '/fullbleed-fixture.json', timeout=30) as fixture_response:
+    fixture = json.load(fixture_response)
+order_id = str(fixture['orders'][0])
+batch_ids = ','.join(str(value) for value in fixture['orders'])
 pro = os.environ.get('FULLBLEED_TEST_PRO') == '1'
 label = os.environ.get('FULLBLEED_TEST_LABEL', 'wordpress-pro' if pro else 'wordpress-free')
 out = Path('output/browser')
@@ -35,7 +40,7 @@ with sync_playwright() as pw:
         page.locator('#wp-submit').click()
         page.wait_for_url('**/wp-admin/**', wait_until='domcontentloaded', timeout=45000)
         page.goto(base + '/wp-admin/admin.php?page=fullbleed-commerce')
-        page.locator('#fb-orders').fill('12')
+        page.locator('#fb-orders').fill(order_id)
         page.locator('[data-render]').click()
         page.locator('[data-preview]').wait_for(state='visible')
         with page.expect_download() as download:
@@ -44,11 +49,26 @@ with sync_playwright() as pw:
         download.value.save_as(pdf)
         check('real browser worker produces a complete PDF download', len(PdfReader(pdf).pages) >= 1)
 
+        page.evaluate("""() => {
+            window.fullbleedCoreBefore = {
+                backbone: window.Backbone, dollar: window.Backbone.$,
+                model: window.Backbone.Model, view: window.Backbone.View,
+                undo: window.Backbone.UndoManager, underscore: window._,
+                jquery: window.jQuery, codemirror: window.wp.CodeMirror
+            };
+        }""")
         page.locator('[data-edit-template]').click()
         page.locator('[data-visual] iframe.gjs-frame').wait_for(state='visible')
         canvas = page.frame_locator('[data-visual] iframe.gjs-frame')
         canvas.locator('h1').wait_for(state='visible')
         check('visual editor renders its order fields', '{{document.title}}' in canvas.locator('h1').inner_text())
+        check('editor uses WordPress dependencies without replacing shared globals', page.evaluate("""() => {
+            const before = window.fullbleedCoreBefore;
+            return before.backbone === window.Backbone && before.dollar === window.Backbone.$
+                && before.model === window.Backbone.Model && before.view === window.Backbone.View
+                && before.undo === window.Backbone.UndoManager && before.underscore === window._
+                && before.jquery === window.jQuery && before.codemirror === window.wp.CodeMirror;
+        }"""))
         block = page.locator('.gjs-block').filter(has_text='Heading')
         block.scroll_into_view_if_needed()
         start = block.bounding_box()
@@ -82,7 +102,7 @@ with sync_playwright() as pw:
         check('PDF preview contains visual edits and order data', 'YOUR CUSTOM ORDER' in text and '282.00' in text)
         page.screenshot(path=str(out / f'{label}-editor.png'), full_page=True)
         page.reload()
-        page.locator('#fb-orders').fill('12')
+        page.locator('#fb-orders').fill(order_id)
         page.locator('[data-render]').click()
         page.locator('[data-preview]').wait_for(state='visible')
         with page.expect_download() as download:
@@ -91,7 +111,7 @@ with sync_playwright() as pw:
         download.value.save_as(applied)
         check('saved template survives reload and applies to ordinary downloads', 'YOUR CUSTOM ORDER' in '\n'.join(p.extract_text() for p in PdfReader(applied).pages))
         if pro:
-            page.locator('#fb-orders').fill('12,13')
+            page.locator('#fb-orders').fill(batch_ids)
             with page.expect_download() as download:
                 page.locator('[data-render]').click()
             archive = out / 'wordpress-pro-batch.zip'

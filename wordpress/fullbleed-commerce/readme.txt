@@ -2,6 +2,7 @@
 Contributors: krflol
 Tags: pdf, woocommerce, packing slips, order documents
 Requires at least: 6.5
+Tested up to: 7.1
 Requires PHP: 7.4
 Stable tag: 0.1.0-alpha.2
 License: GPL-2.0-or-later
