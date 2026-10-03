@@ -1,0 +1,60 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "meta": {
+    "title": "Fullbleed Commerce: design your order documents",
+    "author": "fullbleed-engine",
+    "description": "Try the free visual and HTML/CSS editor with fictional WooCommerce orders. No account, connected store or payment required."
+  },
+  "landingPage": "/wp-admin/admin.php?page=fullbleed-commerce",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "7.1"
+  },
+  "features": {
+    "networking": false
+  },
+  "constants": {
+    "FULLBLEED_COMMERCE_DEMO": true,
+    "WP_HTTP_BLOCK_EXTERNAL": true,
+    "DISABLE_WP_CRON": true,
+    "WC_TRACKING_ENABLED": false
+  },
+  "steps": [
+    {
+      "step": "mkdir",
+      "path": "/wordpress/wp-content/mu-plugins"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/mu-plugins/fullbleed-demo.php",
+      "data": "<?php\n// Demo-only controls. Never installed in the distributed Fullbleed plugins.\ndefined( 'ABSPATH' ) || exit;\nif ( ! defined( 'FULLBLEED_COMMERCE_DEMO' ) || true !== FULLBLEED_COMMERCE_DEMO ) {\n    return;\n}\n\n// This sample store cannot deliver transactional messages or run queued jobs.\nadd_filter( 'pre_wp_mail', '__return_true' );\nadd_filter( 'woocommerce_allow_tracking', '__return_false' );\n\nadd_action( 'admin_init', function () {\n    if ( ! current_user_can( 'manage_woocommerce' ) || ( $_GET['page'] ?? '' ) !== 'fullbleed-commerce' || isset( $_GET['order_ids'] ) ) {\n        return;\n    }\n    $orders = get_option( 'fullbleed_demo_orders', array() );\n    if ( $orders ) {\n        wp_safe_redirect( add_query_arg( array( 'page' => 'fullbleed-commerce', 'order_ids' => absint( $orders[0] ) ), admin_url( 'admin.php' ) ) );\n        exit;\n    }\n} );\n\nadd_action( 'admin_notices', function () {\n    if ( ( $_GET['page'] ?? '' ) !== 'fullbleed-commerce' ) {\n        return;\n    }\n    echo '<div class=\"notice notice-info\" data-fullbleed-demo><p><strong>Your sample store is ready.</strong> Generate a PDF, then use <strong>Customize selected document</strong> to edit the design visually or paste HTML/CSS. Save and generate again to see your changes.</p><p>';\n    foreach ( get_option( 'fullbleed_demo_orders', array() ) as $index => $order_id ) {\n        $url = add_query_arg( array( 'page' => 'fullbleed-commerce', 'order_ids' => absint( $order_id ) ), admin_url( 'admin.php' ) );\n        echo '<a class=\"button\" href=\"' . esc_url( $url ) . '\">' . esc_html( ( $index ? 'Long order #' : 'Sample order #' ) . $order_id ) . '</a> ';\n    }\n    echo '</p><p>Disposable WordPress Playground demo with fictional orders. No store connection or payment is needed. Outgoing mail and WordPress networking are disabled. Use sample data only; export your template if you want to keep it.</p><p>The demo includes the free editor and browser PDFs. Pro email attachments and customer downloads need a separate server renderer and are not enabled here. <a href=\"https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.1\" target=\"_blank\" rel=\"noopener noreferrer\">Download the preview</a> · <a href=\"https://github.com/fullbleed-engine/fullbleed-commerce/blob/main/automation/README.md\" target=\"_blank\" rel=\"noopener noreferrer\">Explore automation setup</a></p></div>';\n} );\n"
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "url",
+        "url": "https://downloads.wordpress.org/plugin/woocommerce.11.1.2.zip"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "url",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/download/v0.1.0-alpha.1/fullbleed-commerce-0.1.0-alpha.1.zip"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\n// Only for a new, disposable Playground. Refuse to seed an existing store.\nrequire '/wordpress/wp-load.php';\nif ( ! defined( 'FULLBLEED_COMMERCE_DEMO' ) || true !== FULLBLEED_COMMERCE_DEMO || ! class_exists( 'WooCommerce' ) ) {\n    throw new RuntimeException( 'This seed requires the Fullbleed Playground demo.' );\n}\nif ( get_option( 'fullbleed_demo_orders' ) ) {\n    return;\n}\nif ( wc_get_orders( array( 'limit' => 1, 'return' => 'ids' ) ) ) {\n    throw new RuntimeException( 'The sample store must not contain existing orders.' );\n}\n\nupdate_option( 'blogname', 'Cedar & Form' );\nupdate_option( 'woocommerce_store_address', '18 Maker Lane' );\nupdate_option( 'woocommerce_store_city', 'Portland' );\nupdate_option( 'woocommerce_store_postcode', '97205' );\nupdate_option( 'woocommerce_default_country', 'US:OR' );\nupdate_option( 'woocommerce_currency', 'USD' );\nupdate_option( 'woocommerce_custom_orders_table_enabled', 'yes' );\nupdate_option( 'woocommerce_coming_soon', 'no' );\nupdate_option( 'woocommerce_store_pages_only', 'no' );\nupdate_option( 'woocommerce_allow_tracking', 'no' );\nupdate_option( 'woocommerce_onboarding_profile', array( 'completed' => true ) );\ndelete_transient( '_wc_activation_redirect' );\n\n$products = array();\nforeach ( array(\n    array( 'Everyday linen throw / Moss', 'LIN-MOSS', '80.00' ),\n    array( 'Stoneware serving bowl / Chalk', 'BWL-CHALK', '110.00' ),\n) as $details ) {\n    $product = new WC_Product_Simple();\n    $product->set_name( $details[0] );\n    $product->set_sku( $details[1] );\n    $product->set_regular_price( $details[2] );\n    $product->save();\n    $products[] = $product;\n}\n\n$orders = array();\nforeach ( array( 2, 32 ) as $item_count ) {\n    $order = wc_create_order();\n    $order->set_date_created( '2026-10-02 09:00:00' );\n    for ( $i = 0; $i < $item_count; $i++ ) {\n        $order->add_product( $products[ $i % 2 ], $i % 2 ? 1 : 2 );\n    }\n    $address = array( 'first_name' => 'Alex', 'last_name' => 'Morgan', 'address_1' => '42 Example Street', 'city' => 'Chicago', 'state' => 'IL', 'postcode' => '60601', 'country' => 'US', 'email' => 'alex@example.test' );\n    $order->set_address( $address, 'billing' );\n    $order->set_address( $address, 'shipping' );\n    $shipping = new WC_Order_Item_Shipping();\n    $shipping->set_method_title( 'Standard delivery' );\n    $shipping->set_total( '12.00' );\n    $order->add_item( $shipping );\n    $order->calculate_totals( false );\n    // Unpaid synthetic orders: no payment or fulfillment is recorded.\n    $order->set_status( 'pending' );\n    $order->save();\n    $orders[] = $order->get_id();\n}\nupdate_option( 'fullbleed_demo_orders', $orders, false );\necho wp_json_encode( array( 'orders' => $orders, 'wordpress' => get_bloginfo( 'version' ), 'woocommerce' => WC_VERSION ) );\n"
+    },
+    {
+      "step": "login"
+    }
+  ]
+}

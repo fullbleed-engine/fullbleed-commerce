@@ -28,6 +28,8 @@ jobs:
       - run: npm test
       - run: npm run examples
       - run: npm run pack
+      - run: node tools/build-playground.mjs --check
+      - run: node tools/check-playground.mjs
       - run: node tools/check-automation.mjs --hpos
       - run: node tools/check-customer-downloads.mjs --hpos --packages
       - run: node tools/check-customer-downloads.mjs --packages
@@ -43,6 +45,7 @@ jobs:
             output/examples/
             output/templates/
             output/automation/
+            output/playground/local-verification.json
             output/shopify/*.json
             output/shopify/*.log
             output/shopify/flow/
