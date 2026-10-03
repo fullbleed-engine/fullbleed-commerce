@@ -9,6 +9,7 @@ on:
       - 'tools/build.mjs'
       - 'tools/wordpress-editor.mjs'
       - 'tools/pack.mjs'
+      - 'tools/plugin-metadata.mjs'
       - 'tools/check-browser.py'
       - 'tools/browser_runtime.py'
       - 'tools/browser-requirements.txt'
@@ -23,6 +24,7 @@ on:
       - 'tools/build.mjs'
       - 'tools/wordpress-editor.mjs'
       - 'tools/pack.mjs'
+      - 'tools/plugin-metadata.mjs'
       - 'tools/check-browser.py'
       - 'tools/browser_runtime.py'
       - 'tools/browser-requirements.txt'
@@ -51,8 +53,8 @@ jobs:
       - name: Extract the exact free plugin archive
         run: |
           mkdir -p target/directory-package
-          version=$(node -p 'require("./package.json").version')
-          unzip -q "dist/fullbleed-commerce-${version}.zip" -d target/directory-package
+          archive=$(node -p 'require("./dist/packages.json").find(p => p.plugin === "fullbleed-commerce").filename')
+          unzip -q "dist/${archive}" -d target/directory-package
           node --input-type=module <<'JS'
           import { readFileSync, writeFileSync } from 'node:fs';
           const seed = readFileSync('tools/seed-wordpress.php', 'utf8')

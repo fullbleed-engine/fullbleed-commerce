@@ -3,10 +3,11 @@ import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { zipSync } from 'fflate';
-const version = JSON.parse(await readFile('package.json', 'utf8')).version;
+import { pluginMetadata } from './plugin-metadata.mjs';
 await mkdir('dist', { recursive: true });
 const records = [];
 for (const name of ['fullbleed-commerce', 'fullbleed-commerce-pro']) {
+  const metadata = await pluginMetadata(name);
   const files = {};
   async function addTree(directory, zipRoot) {
     for (const entry of (await readdir(directory, { withFileTypes: true })).sort((a, b) => a.name.localeCompare(b.name))) {
@@ -35,9 +36,9 @@ for (const name of ['fullbleed-commerce', 'fullbleed-commerce-pro']) {
   // ZIP stores local DOS date/time fields without a timezone. Construct those
   // fields directly so identical sources produce identical archives in any TZ.
   const archive = zipSync(files, { level: 9, mtime: new Date(2020, 0, 1, 0, 0, 0) });
-  const filename = `${name}-${version}.zip`;
+  const { filename } = metadata;
   await writeFile(`dist/${filename}`, archive);
-  records.push({ filename, bytes: archive.length, sha256: createHash('sha256').update(archive).digest('hex'), files: Object.keys(files).length });
+  records.push({ ...metadata, bytes: archive.length, sha256: createHash('sha256').update(archive).digest('hex'), files: Object.keys(files).length });
 }
 await writeFile('dist/SHA256SUMS.txt', records.map(r => `${r.sha256}  ${r.filename}`).join('\n') + '\n');
 await writeFile('dist/packages.json', JSON.stringify(records, null, 2) + '\n');

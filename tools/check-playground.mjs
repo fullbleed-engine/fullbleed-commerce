@@ -9,13 +9,14 @@ const blueprintBytes = await readFile('playground/blueprint.json');
 const blueprint = JSON.parse(blueprintBytes);
 const packages = JSON.parse(await readFile('dist/packages.json', 'utf8'));
 const version = JSON.parse(await readFile('package.json', 'utf8')).version;
-const archive = packages.find(item => item.filename === `fullbleed-commerce-${version}.zip`);
+const archive = packages.find(item => item.plugin === 'fullbleed-commerce');
 assert.ok(archive);
 const bytes = await readFile(`dist/${archive.filename}`);
 assert.equal(createHash('sha256').update(bytes).digest('hex'), archive.sha256);
 const install = blueprint.steps.find(step => step.pluginData?.url?.startsWith('https://github.com/fullbleed-engine/fullbleed-commerce/'));
-assert.ok(install.pluginData.url.endsWith(`/${archive.filename}`));
-// Only replace the public release download with its exact local bytes.
+assert.ok(install.pluginData.url.endsWith(`/fullbleed-commerce-${version}.zip`));
+// Keep the public demo pinned to its published release; exercise the candidate's
+// independently versioned WordPress archive through the same Blueprint steps.
 install.pluginData = { resource: 'literal', name: archive.filename, contents: new Uint8Array(bytes) };
 const port = Number(process.env.FULLBLEED_DEMO_PORT || 9488);
 const base = `http://127.0.0.1:${port}`;
@@ -46,7 +47,7 @@ echo wp_json_encode( array(
   const runtime = JSON.parse(result.text);
   const checks = [];
   function check(name, value) { assert.ok(value, name); checks.push({ name, passed: true }); }
-  check('exact released plugin archive installed', runtime.freePluginActive && !runtime.proPluginActive);
+  check('exact candidate plugin archive installed', runtime.freePluginActive && !runtime.proPluginActive);
   check('two synthetic unpaid orders with short and long item lists', runtime.orders.length === 2 && runtime.orders.every(order => order.status === 'pending' && !order.paid) && runtime.orders[0].items === 2 && runtime.orders[1].items === 32);
   check('sample platform totals retained', runtime.orders[0].total === '282.00' && runtime.orders[1].total === '4332.00');
   check('HPOS order storage enabled', runtime.hpos);
@@ -54,7 +55,7 @@ echo wp_json_encode( array(
   check('WordPress external request blocked', runtime.externalRequestBlocked);
   check('cron and WooCommerce tracking disabled', runtime.cronDisabled && runtime.trackingDisabled);
   await mkdir('output/playground', { recursive: true });
-  const record = { checkedAt: new Date().toISOString(), source: 'Disposable local execution of public Blueprint with exact local release ZIP bytes', base, blueprintSha256: createHash('sha256').update(blueprintBytes).digest('hex'), archive, runtime, checks };
+  const record = { checkedAt: new Date().toISOString(), source: 'Disposable local execution of public Blueprint with exact local candidate ZIP bytes', base, blueprintSha256: createHash('sha256').update(blueprintBytes).digest('hex'), archive, runtime, checks };
   await writeFile('output/playground/local-verification.json', JSON.stringify(record, null, 2) + '\n');
   console.log(JSON.stringify(record, null, 2));
   if (process.argv.includes('--serve')) {

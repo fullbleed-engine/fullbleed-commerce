@@ -52,8 +52,9 @@ customer data to Fullbleed and stores no generated documents.
 
 Back up your staging store and export your templates first. Upload the new free
 ZIP through **Plugins > Add New > Upload Plugin**, then choose **Replace current
-with uploaded**. If you use Pro, replace its ZIP next. Keep both packages on the
-same release; the base is upgraded first. Do not delete the plugins to update them.
+with uploaded**. If you use Pro, replace its ZIP next using the compatible pair
+listed in the release notes; the base is upgraded first. Free and Pro may have
+different version numbers. Do not delete the plugins to update them.
 
 Saved summary and packing-slip templates, their revisions, and existing automation
 settings are retained. An enabled automation remains enabled after an upgrade;
@@ -164,6 +165,14 @@ The HTTP verification script uses Python `requests`. The store binds to
 site. Omit `--pro --hpos` to test the free package with legacy order storage.
 
 ## Current verification and limits
+
+The free WordPress directory candidate uses numeric version `0.1.0`, as required
+by WordPress.org, and retains the staging-preview limitations below. It contains
+the alpha.3 free workflow with corrected contributor and version metadata.
+Plugin archives use the version in each plugin's PHP header and matching readme;
+the private integration package and published Playground demo remain separately
+versioned. `npm run pack` rejects invalid directory versions or mismatched
+metadata. Directory submission and approval are separate from automated checks.
 
 See [docs/verification.md](docs/verification.md) for checks and gaps. Node generation,
 the browser-worker runtime, DOM workflows, WordPress authentication, and actual

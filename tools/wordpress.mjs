@@ -3,16 +3,17 @@
 import { runCLI } from '@wp-playground/cli';
 import { resolve } from 'node:path';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { pluginMetadata } from './plugin-metadata.mjs';
 
 const seed = await readFile('tools/seed-wordpress.php', 'utf8');
 const usePro = process.argv.includes('--pro');
 const useHpos = process.argv.includes('--hpos');
 const usePackages = process.argv.includes('--packages');
-const version = JSON.parse(await readFile('package.json', 'utf8')).version;
 const packageSteps = [];
 if (usePackages) {
   for (const name of ['fullbleed-commerce', ...(usePro ? ['fullbleed-commerce-pro'] : [])]) {
-    packageSteps.push({ step: 'installPlugin', pluginData: { resource: 'literal', name: `${name}.zip`, contents: new Uint8Array(await readFile(`dist/${name}-${version}.zip`)) }, options: { activate: true } });
+    const { filename } = await pluginMetadata(name);
+    packageSteps.push({ step: 'installPlugin', pluginData: { resource: 'literal', name: `${name}.zip`, contents: new Uint8Array(await readFile(`dist/${filename}`)) }, options: { activate: true } });
   }
 }
 const port = Number(process.env.FULLBLEED_TEST_PORT || 9475);
