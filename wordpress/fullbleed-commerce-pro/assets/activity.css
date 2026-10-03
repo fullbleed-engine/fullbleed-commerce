@@ -1,0 +1,62 @@
+.fullbleed-activity-table td,
+.fullbleed-activity-table th {
+  vertical-align: top;
+}
+
+@media (max-width: 782px) {
+  .fullbleed-activity-table table,
+  .fullbleed-activity-table tbody,
+  .fullbleed-activity-table tr,
+  .fullbleed-activity-table td,
+  .fullbleed-activity-table th {
+    display: block;
+    width: auto;
+    box-sizing: border-box;
+  }
+
+  .fullbleed-activity-table table {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .fullbleed-activity-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .fullbleed-activity-table tbody tr {
+    margin: 0 0 16px;
+    border: 1px solid #c3c4c7;
+    background: #fff;
+  }
+
+  .fullbleed-activity-table td,
+  .fullbleed-activity-table th {
+    padding: 10px 14px;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  .fullbleed-activity-table th {
+    border-bottom: 1px solid #dcdcde;
+    font-size: 16px;
+  }
+
+  .fullbleed-activity-table [data-label]::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 2px;
+    color: #50575e;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .fullbleed-activity-table small {
+    font-size: 13px;
+  }
+}

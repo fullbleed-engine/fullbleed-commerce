@@ -107,9 +107,13 @@ $mime = file_get_contents( '/tmp/fullbleed-native-mail.eml' );
 check( 'WooCommerce serializes the original transactional email without outbound mail', false !== strpos( $mime, 'alex@example.test' ) );
 $fresh_order = wc_get_order( $order_id );
 $result = $fresh_order->get_meta( '_fullbleed_attachment_result' );
+$activity = Fullbleed\CommercePro\Activity\rows();
+check( 'native database retains one latest result for the actual email workflow', is_array( $activity ) && 1 === count( $activity ) && (int) $activity[0]['order_id'] === $order_id && 'customer_processing_order' === $activity[0]['context'] );
+check( 'native activity contains no customer fields or renderer credentials', false === strpos( wp_json_encode( $activity ), 'Alex' ) && false === strpos( wp_json_encode( $activity ), $config['token'] ) );
 if ( 'outage' === $mode ) {
     check( 'renderer outage preserves the email without an invalid attachment', empty( $paths ) && false === strpos( $mime, 'fullbleed-order-summary-' . $order_id . '.pdf' ) );
     check( 'renderer outage records a safe merchant-visible failure', 'failed' === $result['state'] && 'renderer_502' === $result['code'] );
+    check( 'real renderer outage appears in the failed activity view', 'failed' === $activity[0]['state'] && 'renderer_502' === $activity[0]['code'] && 1 === count( Fullbleed\CommercePro\Activity\rows( true ) ) );
 } else {
     // PHPMailer derives a generic MIME type from the private extensionless
     // temporary path. The displayed .pdf name and decoded MIME bytes are
@@ -119,6 +123,7 @@ if ( 'outage' === $mode ) {
     check( 'attachment bytes match the direct HTTPS PDF', hash_equals( hash_file( 'sha256', '/tmp/fullbleed-native-summary.pdf' ), hash( 'sha256', $attachment ) ) );
     check( 'attachment uses private temporary storage outside the public root', 0 !== strpos( realpath( $paths[0] ), realpath( ABSPATH ) . '/' ) && 0600 === ( fileperms( $paths[0] ) & 0777 ) );
     check( 'successful preparation clears a previous failure', 'prepared' === $result['state'] );
+    check( 'native recovery clears failed activity without duplicating a workflow', 'prepared' === $activity[0]['state'] && 0 === count( Fullbleed\CommercePro\Activity\rows( true ) ) );
 }
 file_put_contents( '/tmp/fullbleed-native-attachment-paths.json', json_encode( $paths ) );
 echo json_encode( array( 'mode' => $mode, 'wordpress' => get_bloginfo( 'version' ), 'woocommerce' => WC_VERSION, 'php' => PHP_VERSION, 'checks' => $checks, 'filename' => 'fullbleed-order-summary-' . $order_id . '.pdf', 'pdfSha256' => hash_file( 'sha256', '/tmp/fullbleed-native-summary.pdf' ) ) );

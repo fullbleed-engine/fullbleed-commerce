@@ -67,4 +67,5 @@ require_once ABSPATH . 'wp-admin/includes/template.php';
 wp_set_current_user( 1 ); ob_start(); \Fullbleed\CommercePro\Automation\page(); $page = ob_get_clean();
 fb_check( 'renderer credentials are absent from admin HTML', false === strpos( $page, 'synthetic-renderer-token-not-for-production' ) );
 fb_check( 'automation does not alter order state', wc_get_order( 12 )->get_status() === $old_status );
+require '/tmp/fullbleed-check-activity.php';
 echo wp_json_encode( array( 'wordpress' => get_bloginfo( 'version' ), 'woocommerce' => WC_VERSION, 'php' => PHP_VERSION, 'checks' => $checks ) );

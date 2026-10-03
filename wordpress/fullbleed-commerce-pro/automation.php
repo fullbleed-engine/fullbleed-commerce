@@ -103,9 +103,10 @@ function private_attachment( $pdf ) {
     return $path;
 }
 
-function record( $order, $email_id, $state, $code ) {
+function record( $order, $email_id, $state, $code, $kinds = array( 'order-summary' ) ) {
     $order->update_meta_data( '_fullbleed_attachment_result', array( 'state' => $state, 'code' => sanitize_key( $code ), 'email' => sanitize_key( $email_id ), 'time' => gmdate( 'c' ) ) );
     $order->save_meta_data();
+    \Fullbleed\CommercePro\Activity\record( $order, 'email', $email_id, count( $kinds ) > 1 ? 'both' : $kinds[0], $state, $code );
 }
 
 function attachments( $attachments, $email_id, $order, $email = null ) {
@@ -119,12 +120,12 @@ function attachments( $attachments, $email_id, $order, $email = null ) {
     foreach ( $kinds as $kind ) {
         $pdf = render_document( $order, $kind );
         $path = is_wp_error( $pdf ) ? $pdf : private_attachment( $pdf );
-        if ( is_wp_error( $path ) ) { record( $order, $email_id, 'failed', $path->get_error_code() ); return $attachments; }
+        if ( is_wp_error( $path ) ) { record( $order, $email_id, 'failed', $path->get_error_code(), $kinds ); return $attachments; }
         // WordPress accepts display name => path attachment maps. This supplies
         // a useful .pdf filename without exposing an order ID in a public path.
         $created[ 'fullbleed-' . $kind . '-' . $order->get_id() . '.pdf' ] = $path;
     }
-    record( $order, $email_id, 'prepared', 'attachment_prepared' );
+    record( $order, $email_id, 'prepared', 'attachment_prepared', $kinds );
     return array_merge( $attachments, $created );
 }
 
@@ -152,6 +153,7 @@ function page() {
     $config = settings();
     ?>
     <div class="wrap"><h1>Fullbleed automation</h1><p>Attach your branded documents to the transactional emails WooCommerce already sends, and let customers download their order summaries from My Account.</p>
+    <p><a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=fullbleed-activity' ) ); ?>">View activity and failures</a></p>
     <p>Automation requires a connected server renderer. It receives the order's document fields and template over HTTPS and returns a PDF. The free browser workflow works independently. Only enable a renderer you operate or trust.</p>
     <?php if ( isset( $_GET['saved'] ) ) : ?><div class="notice notice-success"><p>Automation settings saved.</p></div><?php endif; ?>
     <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">

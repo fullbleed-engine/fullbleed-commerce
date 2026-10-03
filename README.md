@@ -81,6 +81,12 @@ Store operators and agencies can use the
 credential provisioning, bounded container resources, maintenance and rotation.
 It runs on infrastructure the operator controls; it is not a hosted plan.
 
+Current source also adds **Fullbleed activity**: the latest email-attachment and
+customer-download results, a failure filter, recovery guidance and native order
+links. Successful retries clear stale failures. This view is newer than the
+published alpha.2 ZIPs; it reports PDF preparation, not customer receipt. See the
+[activity and retention details](automation/README.md#merchant-activity-and-recovery).
+
 Shopify adds **Create order summary link** and **Create packing slip link** to
 Flow. Enable automation, connect an order trigger, and use the returned private
 link in your next workflow step. Jobs survive restarts, duplicate events reuse

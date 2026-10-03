@@ -49,6 +49,48 @@ To refresh this delta after executing its checks and downloading the matching CI
 artifact, run `node tools/retain-preview-verification.mjs alpha2 target/alpha2-ci`.
 Keep the historical whole-product records below separate from this release delta.
 
+## Unreleased WooCommerce activity view
+
+The current source adds **Fullbleed activity**, plus a notice on WooCommerce
+screens for failed PDF workflows. The published alpha.2 downloads predate this
+change. The free plugin archive remains identical; the Pro candidate is retained
+by hash and has not replaced a published release asset.
+
+The view shows the latest result per order/email or customer-download workflow,
+with failure filtering, specific recovery guidance, and native authorized order
+links. Success clears the previous failure for that workflow. Preparation and
+response readiness remain distinct from delivery. The view never sends email.
+
+Real WordPress checks cover HPOS and legacy storage, actual attachment-hook
+results, customer HTTP requests, permission denial, failure recovery, retention,
+schema upgrades, deletion/trash, WooCommerce anonymization, deactivation and
+uninstall. Simulating a missing activity table preserves real PDF preparation
+and shows an incomplete-record warning. Unknown error codes cannot store private
+extension error text in the activity table.
+
+The [full Linux run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37106090860)
+passed all three jobs and **45 shared tests**. Each storage mode passed **60
+email/activity checks** and **38 customer-download checks**. Every installed ZIP
+entry matched the candidate archives, which also match the Windows build.
+
+Chrome passed **12 checks** for the failure notice, activity navigation,
+filtering, native HPOS order links, customer denial, readable mobile layout and
+an actual browser-worker PDF download. Desktop, failure and mobile screenshots
+were inspected, along with the downloaded one-page PDF. No page errors occurred.
+The [desktop view](previews/woocommerce-activity.png) and
+[mobile view](previews/woocommerce-activity-mobile.png) contain only synthetic data.
+
+The native WordPress/MariaDB/HTTPS fixture passed **51 checks**, including failed
+activity during a stopped renderer and replacement with a single prepared result
+after recovery. The complete run and exact candidate archives are recorded in
+[activity verification](activity-verification.json). The source used in CI is
+`d8c2a61`; subsequent changes only retain evidence and strengthen the separately
+executed browser assertions. No runtime or packaged source changed afterward.
+
+The activity view is an attended status tool with bounded retention, not a
+complete delivery ledger, push alert or automatic email retry. Production
+delivery, merchant pilots, billing and update distribution remain open gates.
+
 ## Private renderer deployment
 
 The [self-hosted deployment](../automation/DEPLOYMENT.md) now passes **39 native

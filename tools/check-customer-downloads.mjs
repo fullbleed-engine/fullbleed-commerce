@@ -151,6 +151,9 @@ try {
     check(`${mode} renderer produces a private recoverable error with no remote details`, failure.status === 503 && /no-store/.test(failure.headers.get('cache-control')) && failure.text.includes('Return to your account') && !failure.text.includes('PRIVATE-REMOTE-DETAILS') && !failure.text.includes('%PDF-') && !failure.text.includes(config.token));
   }
   check('renderer failure records a safe merchant recovery status', (await phpJson("wc_get_order(12)->get_meta('_fullbleed_customer_download_result')")).code === 'invalid_pdf');
+  const failureActivity = await phpJson("\\Fullbleed\\CommercePro\\Activity\\rows(true)");
+  check('actual customer-download failures appear in merchant activity', failureActivity.length === 1 && failureActivity[0].channel === 'customer' && failureActivity[0].state === 'failed' && failureActivity[0].code === 'invalid_pdf');
+  check('customer cannot open the merchant activity HTTP page', (await body(await owner('/wp-admin/admin.php?page=fullbleed-activity'))).status === 403);
   for (const mode of ['reassign', 'cancel', 'disconnect']) {
     await rateReset(); await php(`update_option('fullbleed_fixture_mode', '${mode}');`);
     const denied = await body(await owner(link));
@@ -164,6 +167,8 @@ try {
   const recovery = await owner(link);
   check('a later customer retry succeeds after renderer recovery', recovery.status === 200 && hash(Buffer.from(await recovery.arrayBuffer())) === hash(pdf));
   check('successful recovery clears the failed merchant status', (await phpJson("wc_get_order(12)->get_meta('_fullbleed_customer_download_result')")).state === 'prepared');
+  const recoveredActivity = await phpJson("\\Fullbleed\\CommercePro\\Activity\\rows()");
+  check('actual customer recovery replaces failure with response readiness', recoveredActivity.length === 1 && recoveredActivity[0].state === 'ready' && (await phpJson("\\Fullbleed\\CommercePro\\Activity\\rows(true)")).length === 0);
   const finalOrder = await phpJson(`(function () { $r = new WP_REST_Request(); $r['id'] = 12; return \\Fullbleed\\Commerce\\get_order($r)->get_data(); })()`);
   check('download leaves order totals, addresses and status intact', JSON.stringify(order) === JSON.stringify(finalOrder));
   // Remove the fixture-only nonce generator before browser checks or leaving a preview running.

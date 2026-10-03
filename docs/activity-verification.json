@@ -1,0 +1,557 @@
+{
+  "schema": "fullbleed.commerce.woocommerce-activity-verification.v1",
+  "checkedAt": "2026-10-03T07:30:44.343656+00:00",
+  "scope": "Unreleased WooCommerce Pro merchant activity and recovery guidance. Synthetic orders only. No customer mail or paid plan enabled.",
+  "distribution": {
+    "publishedReleaseUnchanged": "v0.1.0-alpha.2",
+    "candidateOnly": true,
+    "note": "Candidate ZIP filenames still use the development version. The Pro candidate hash differs from the published alpha.2 asset; it has not replaced that asset. The free ZIP is byte-identical to the release.",
+    "publishedProSha256": "3a309bec70c90ed9f1127c86e496ae80946eb615ddf2212d85ccc60835545728",
+    "candidatePackages": [
+      {
+        "filename": "fullbleed-commerce-0.1.0-alpha.2.zip",
+        "bytes": 3174709,
+        "sha256": "b1141910948e038e1ee8565c44708d304f0ee78967442cc26c0a68162985a5fe",
+        "files": 35
+      },
+      {
+        "filename": "fullbleed-commerce-pro-0.1.0-alpha.2.zip",
+        "bytes": 35137,
+        "sha256": "f5a64260e3d527ed6a40beb57a64635c6b741477b7a843eafb5ceee0b4cf619f",
+        "files": 13
+      }
+    ]
+  },
+  "ci": {
+    "id": 37106090860,
+    "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37106090860",
+    "sourceCommit": "d8c2a61730dafbcb4ad2f8a086a8a8f12e4e376f",
+    "conclusion": "success",
+    "completedAt": "2026-10-03T07:28:12Z",
+    "sharedTestsPassed": 45,
+    "sharedTestsFailed": 0,
+    "jobs": [
+      {
+        "name": "renderer-deployment",
+        "databaseId": 111154836675,
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37106090860/job/111154836675",
+        "conclusion": "success",
+        "completedAt": "2026-10-03T07:23:46Z"
+      },
+      {
+        "name": "container",
+        "databaseId": 111154836764,
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37106090860/job/111154836764",
+        "conclusion": "success",
+        "completedAt": "2026-10-03T07:24:45Z"
+      },
+      {
+        "name": "integration",
+        "databaseId": 111154836838,
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37106090860/job/111154836838",
+        "conclusion": "success",
+        "completedAt": "2026-10-03T07:28:11Z"
+      }
+    ],
+    "runRecordSha256": "b09dc42ab3bd2de611adfcbc2637b13cd0f6098da6f8cad3bda7ec178ccfe79a",
+    "integrationLogSha256": "8b2482df8057036bfdfdd368533e9e3daf8305dee82602b89be026b8f7397959"
+  },
+  "verifiedSource": {
+    "wordpress/fullbleed-commerce-pro/activity.php": "aaed2e54aee378b5650af1a02eb355780f06ae38aea8479743d816e01fa29ae1",
+    "wordpress/fullbleed-commerce-pro/assets/activity.css": "80aef87050b14802b8d2ba7feb3f43996df45a13a952b25d171c391a134e1004",
+    "wordpress/fullbleed-commerce-pro/automation.php": "0315a68985723e8e704f1c684154dee4b2348d92d5a5836cc530341d8aae20c7",
+    "wordpress/fullbleed-commerce-pro/customer-downloads.php": "2fdf809ced2964723860a22085f96d02b209f86e3895ce9a4466a51ed2812130",
+    "wordpress/fullbleed-commerce-pro/fullbleed-commerce-pro.php": "2fcf06330449870339e50f9fd7280dff1dec68edba4a5d63100d2956fb32a0c0",
+    "wordpress/fullbleed-commerce-pro/uninstall.php": "559205f889340a4317ff8a0517aa9667d004afcd030b3a9e9642ce2ab3d6620b",
+    "wordpress/fullbleed-commerce-pro/readme.txt": "bc364c46591a0fa6b607039bffae00d792f0819f8547ccc1c32eabe3d4e1a5f9",
+    "tools/check-activity.php": "c637684de68e7d03d46a6e76443dd50db207a5f8404fee987510d26b5b1d23ca",
+    "tools/check-automation.php": "3241f2a203be30fd5e97e55688c0d5fab2a46fce0f7def5047a294186ea649f9",
+    "tools/check-automation.mjs": "474d6267582fddbd2c1a4b229240086d42ab135a061a8d5587a71deda358b1a7",
+    "tools/check-customer-downloads.mjs": "409b13b2a1c712e7f36184753e3f32c21671def36c84fc0e1e3bbfae8a751b99",
+    "tools/renderer-fixture/check.php": "dc1c7e383760f1d29f617c32b23830738edf73452d5265fdeea85bb77416a369",
+    ".github/workflows/verify.yml": "1b3138400a0a91c7cb2a912ee745953de47bc360ff800280d9ca7d0e537a3643"
+  },
+  "wordpress": [
+    {
+      "fixture": "woocommerce-hpos",
+      "checksPassed": 60,
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.33",
+      "recordSha256": "d10a72a4b8dd21af1f1d3a09ebb9196ce8a513947e5f8749151e6336a6b692fb",
+      "transport": "Real WooCommerce hooks and PHPMailer MIME with outbound mail captured. HTTPS response supplied through the WordPress HTTP test filter using actual Fullbleed output from this exact order. No production network or delivery claim.",
+      "checks": [
+        "attachments remain unchanged before opt-in",
+        "unselected emails cause no rendering",
+        "renderer request uses server-only credentials and disables redirects",
+        "automation serializes the authorized WooCommerce order",
+        "existing transactional email gets one PDF with a useful filename",
+        "attachment is outside the web root",
+        "attachment matches actual renderer bytes",
+        "attachment uses private permissions",
+        "enabled attachments request WooCommerce background emails",
+        "wp_mail accepts the prepared attachment",
+        "captured MIME names the PDF attachment",
+        "renderer request uses server-only credentials and disables redirects",
+        "automation serializes the authorized WooCommerce order",
+        "WooCommerce queued-email handler renders the attachment",
+        "real WooCommerce email MIME contains the branded PDF",
+        "renderer request uses server-only credentials and disables redirects",
+        "automation serializes the authorized WooCommerce order",
+        "renderer outage preserves all existing email attachments",
+        "renderer outage records a safe recoverable status",
+        "renderer request uses server-only credentials and disables redirects",
+        "automation serializes the authorized WooCommerce order",
+        "truncated or mismatched PDF never reaches an email",
+        "refunded orders never call the renderer",
+        "renderer credentials are absent from admin HTML",
+        "automation does not alter order state",
+        "activity records actual attachment-hook failures",
+        "activity cleanup is scheduled once",
+        "renderer request uses server-only credentials and disables redirects",
+        "automation serializes the authorized WooCommerce order",
+        "a real recovery replaces stale failure without duplicating the workflow",
+        "different email workflows retain separate results",
+        "customer response readiness is distinct from mail preparation",
+        "unknown workflows and unsupported states are rejected",
+        "activity stores only references and allowlisted error codes",
+        "activity view is unavailable to anonymous visitors",
+        "customer role cannot read merchant activity",
+        "failed filter excludes recovered workflow and supplies specific guidance",
+        "activity links use the authorized WooCommerce order edit URL",
+        "activity HTML excludes tokens, customer names, addresses and remote bodies",
+        "WooCommerce screens surface unresolved PDF failures",
+        "failure notice is scoped to WooCommerce screens",
+        "WooCommerce order deletion removes activity",
+        "WooCommerce order trash also removes activity",
+        "WooCommerce anonymization removes activity and prevents new records",
+        "schema upgrade preserves existing workflow results",
+        "scheduled retention removes results older than 30 days",
+        "activity storage retains at most 1000 latest workflow results",
+        "cursor pagination moves to older results without repeating the first page",
+        "renderer request uses server-only credentials and disables redirects",
+        "automation serializes the authorized WooCommerce order",
+        "activity storage failure preserves actual PDF preparation without leaking SQL",
+        "missing activity storage shows an honest incomplete-record warning",
+        "successful storage recovery clears the warning and resumes results",
+        "successful recovery clears the WooCommerce failure notice",
+        "deactivation clears temporary activity and its scheduled task",
+        "WordPress uninstall removes the activity table and schema options",
+        "reactivation restores cleanup without changing automation settings",
+        "private attachments are deleted after the mail request",
+        "next request wires order transitions to the WooCommerce email queue",
+        "captured WooCommerce email contains exact complete renderer PDF bytes"
+      ]
+    },
+    {
+      "fixture": "woocommerce-legacy",
+      "checksPassed": 60,
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.33",
+      "recordSha256": "39b3a2b3d3b864237eb22a77b29c9886a5dee442588c25f35efa3990f9cd8862",
+      "transport": "Real WooCommerce hooks and PHPMailer MIME with outbound mail captured. HTTPS response supplied through the WordPress HTTP test filter using actual Fullbleed output from this exact order. No production network or delivery claim.",
+      "checks": [
+        "attachments remain unchanged before opt-in",
+        "unselected emails cause no rendering",
+        "renderer request uses server-only credentials and disables redirects",
+        "automation serializes the authorized WooCommerce order",
+        "existing transactional email gets one PDF with a useful filename",
+        "attachment is outside the web root",
+        "attachment matches actual renderer bytes",
+        "attachment uses private permissions",
+        "enabled attachments request WooCommerce background emails",
+        "wp_mail accepts the prepared attachment",
+        "captured MIME names the PDF attachment",
+        "renderer request uses server-only credentials and disables redirects",
+        "automation serializes the authorized WooCommerce order",
+        "WooCommerce queued-email handler renders the attachment",
+        "real WooCommerce email MIME contains the branded PDF",
+        "renderer request uses server-only credentials and disables redirects",
+        "automation serializes the authorized WooCommerce order",
+        "renderer outage preserves all existing email attachments",
+        "renderer outage records a safe recoverable status",
+        "renderer request uses server-only credentials and disables redirects",
+        "automation serializes the authorized WooCommerce order",
+        "truncated or mismatched PDF never reaches an email",
+        "refunded orders never call the renderer",
+        "renderer credentials are absent from admin HTML",
+        "automation does not alter order state",
+        "activity records actual attachment-hook failures",
+        "activity cleanup is scheduled once",
+        "renderer request uses server-only credentials and disables redirects",
+        "automation serializes the authorized WooCommerce order",
+        "a real recovery replaces stale failure without duplicating the workflow",
+        "different email workflows retain separate results",
+        "customer response readiness is distinct from mail preparation",
+        "unknown workflows and unsupported states are rejected",
+        "activity stores only references and allowlisted error codes",
+        "activity view is unavailable to anonymous visitors",
+        "customer role cannot read merchant activity",
+        "failed filter excludes recovered workflow and supplies specific guidance",
+        "activity links use the authorized WooCommerce order edit URL",
+        "activity HTML excludes tokens, customer names, addresses and remote bodies",
+        "WooCommerce screens surface unresolved PDF failures",
+        "failure notice is scoped to WooCommerce screens",
+        "WooCommerce order deletion removes activity",
+        "WooCommerce order trash also removes activity",
+        "WooCommerce anonymization removes activity and prevents new records",
+        "schema upgrade preserves existing workflow results",
+        "scheduled retention removes results older than 30 days",
+        "activity storage retains at most 1000 latest workflow results",
+        "cursor pagination moves to older results without repeating the first page",
+        "renderer request uses server-only credentials and disables redirects",
+        "automation serializes the authorized WooCommerce order",
+        "activity storage failure preserves actual PDF preparation without leaking SQL",
+        "missing activity storage shows an honest incomplete-record warning",
+        "successful storage recovery clears the warning and resumes results",
+        "successful recovery clears the WooCommerce failure notice",
+        "deactivation clears temporary activity and its scheduled task",
+        "WordPress uninstall removes the activity table and schema options",
+        "reactivation restores cleanup without changing automation settings",
+        "private attachments are deleted after the mail request",
+        "next request wires order transitions to the WooCommerce email queue",
+        "captured WooCommerce email contains exact complete renderer PDF bytes"
+      ]
+    },
+    {
+      "fixture": "customer-hpos",
+      "checksPassed": 38,
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.33",
+      "recordSha256": "21585821c860ceb0dea40c430bfca611630439995e919ed4551782d35511956a",
+      "transport": "Real WordPress login, WooCommerce My Account pages and admin-post HTTP. Renderer HTTPS response substituted by a test-only WordPress filter using actual Fullbleed bytes for the exact order and saved template. No email, payment or production service.",
+      "checks": [
+        "every installed plugin entry matches the final ZIP",
+        "customer downloads start disabled",
+        "My Account lists one PDF action for the eligible owned order",
+        "order details also expose one native PDF action",
+        "account page does not expose renderer credentials or endpoints",
+        "anonymous replay of an owner link is forbidden",
+        "another customer cannot reuse the owner nonce",
+        "another customer order denied even with a valid customer nonce",
+        "guest order denied even with a valid customer nonce",
+        "refunded order denied even with a valid customer nonce",
+        "partially refunded order denied even with a valid customer nonce",
+        "missing order denied even with a valid customer nonce",
+        "staff capabilities do not bypass customer ownership",
+        "missing or malformed nonce is rejected",
+        "negative, overflowing and array order IDs fail closed",
+        "unsupported request method is rejected",
+        "ineligible status changes hide the action and revoke old links",
+        "completed orders remain eligible",
+        "all denied requests avoid the renderer",
+        "owner HTTP download equals actual Fullbleed PDF bytes",
+        "PDF response is private and cannot be cached or sniffed",
+        "PDF has a useful filename, correct type and complete length",
+        "customer PDF uses the exact saved merchant template and Woo order data",
+        "repeat clicks receive a retry delay without another render",
+        "offline renderer produces a private recoverable error with no remote details",
+        "remote-error renderer produces a private recoverable error with no remote details",
+        "corrupt renderer produces a private recoverable error with no remote details",
+        "renderer failure records a safe merchant recovery status",
+        "actual customer-download failures appear in merchant activity",
+        "customer cannot open the merchant activity HTTP page",
+        "reassign during rendering prevents PDF bytes from leaving WordPress",
+        "cancel during rendering prevents PDF bytes from leaving WordPress",
+        "disconnect during rendering prevents PDF bytes from leaving WordPress",
+        "disabled portal, withdrawn processing consent or missing credentials revoke old links",
+        "a later customer retry succeeds after renderer recovery",
+        "successful recovery clears the failed merchant status",
+        "actual customer recovery replaces failure with response readiness",
+        "download leaves order totals, addresses and status intact"
+      ]
+    },
+    {
+      "fixture": "customer-legacy",
+      "checksPassed": 38,
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.33",
+      "recordSha256": "ad9f62cbb9720da5768794f9bb6bfa7df09f4e03dbee45bf97627d450a476ccb",
+      "transport": "Real WordPress login, WooCommerce My Account pages and admin-post HTTP. Renderer HTTPS response substituted by a test-only WordPress filter using actual Fullbleed bytes for the exact order and saved template. No email, payment or production service.",
+      "checks": [
+        "every installed plugin entry matches the final ZIP",
+        "customer downloads start disabled",
+        "My Account lists one PDF action for the eligible owned order",
+        "order details also expose one native PDF action",
+        "account page does not expose renderer credentials or endpoints",
+        "anonymous replay of an owner link is forbidden",
+        "another customer cannot reuse the owner nonce",
+        "another customer order denied even with a valid customer nonce",
+        "guest order denied even with a valid customer nonce",
+        "refunded order denied even with a valid customer nonce",
+        "partially refunded order denied even with a valid customer nonce",
+        "missing order denied even with a valid customer nonce",
+        "staff capabilities do not bypass customer ownership",
+        "missing or malformed nonce is rejected",
+        "negative, overflowing and array order IDs fail closed",
+        "unsupported request method is rejected",
+        "ineligible status changes hide the action and revoke old links",
+        "completed orders remain eligible",
+        "all denied requests avoid the renderer",
+        "owner HTTP download equals actual Fullbleed PDF bytes",
+        "PDF response is private and cannot be cached or sniffed",
+        "PDF has a useful filename, correct type and complete length",
+        "customer PDF uses the exact saved merchant template and Woo order data",
+        "repeat clicks receive a retry delay without another render",
+        "offline renderer produces a private recoverable error with no remote details",
+        "remote-error renderer produces a private recoverable error with no remote details",
+        "corrupt renderer produces a private recoverable error with no remote details",
+        "renderer failure records a safe merchant recovery status",
+        "actual customer-download failures appear in merchant activity",
+        "customer cannot open the merchant activity HTTP page",
+        "reassign during rendering prevents PDF bytes from leaving WordPress",
+        "cancel during rendering prevents PDF bytes from leaving WordPress",
+        "disconnect during rendering prevents PDF bytes from leaving WordPress",
+        "disabled portal, withdrawn processing consent or missing credentials revoke old links",
+        "a later customer retry succeeds after renderer recovery",
+        "successful recovery clears the failed merchant status",
+        "actual customer recovery replaces failure with response readiness",
+        "download leaves order totals, addresses and status intact"
+      ]
+    }
+  ],
+  "nativeDeployment": {
+    "recordSha256": "acb4b0b0a8b560bbedc1c176588e72d8663b0d70c2838febeaca226a0e22bc9e",
+    "transport": "Native WordPress/PHP cURL over real TLS to Caddy and the unmodified renderer container. Local fixture CA trusted explicitly; private Docker hostname permitted only in the fixture. No pre_http_request response substitution. PHPMailer MIME is captured without sending and decoded with an independent standard MIME parser.",
+    "checksPassed": 51,
+    "checks": [
+      "deployment configuration publishes only the TLS proxy and isolates renderer egress",
+      "renderer starts as an unprivileged user with read-only files, health checks and enforced resource limits",
+      "running renderer cannot write into its application directory",
+      "public-certificate Caddy configuration validates without requesting a certificate",
+      "fresh native WordPress and WooCommerce install every exact base and Pro ZIP entry",
+      "render: native PHP has a real cURL transport",
+      "render: WooCommerce uses HPOS",
+      "render: WordPress rejects the untrusted local TLS issuer",
+      "render: native PHP can read the explicitly trusted public CA certificate",
+      "render: trusted HTTPS renderer returns a real verified PDF",
+      "render: WordPress verifies TLS and does not follow redirects",
+      "render: real HTTPS service rejects a revoked or incorrect token",
+      "render: same HTTPS service generates a packing slip",
+      "render: WooCommerce serializes the original transactional email without outbound mail",
+      "render: native database retains one latest result for the actual email workflow",
+      "render: native activity contains no customer fields or renderer credentials",
+      "render: native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+      "render: attachment bytes match the direct HTTPS PDF",
+      "render: attachment uses private temporary storage outside the public root",
+      "render: successful preparation clears a previous failure",
+      "render: native recovery clears failed activity without duplicating a workflow",
+      "render: independently decoded MIME has the expected attachment filename and exact PDF bytes",
+      "TLS PDFs match direct Node rendering and complete summary bytes reach the captured email",
+      "request-owned private attachment files are removed after mail processing",
+      "outage: WooCommerce serializes the original transactional email without outbound mail",
+      "outage: native database retains one latest result for the actual email workflow",
+      "outage: native activity contains no customer fields or renderer credentials",
+      "outage: renderer outage preserves the email without an invalid attachment",
+      "outage: renderer outage records a safe merchant-visible failure",
+      "outage: real renderer outage appears in the failed activity view",
+      "outage: independently decoded MIME has the expected attachment filename and exact PDF bytes",
+      "recovery: WooCommerce serializes the original transactional email without outbound mail",
+      "recovery: native database retains one latest result for the actual email workflow",
+      "recovery: native activity contains no customer fields or renderer credentials",
+      "recovery: native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+      "recovery: attachment bytes match the direct HTTPS PDF",
+      "recovery: attachment uses private temporary storage outside the public root",
+      "recovery: successful preparation clears a previous failure",
+      "recovery: native recovery clears failed activity without duplicating a workflow",
+      "recovery: independently decoded MIME has the expected attachment filename and exact PDF bytes",
+      "revoked: previous token is rejected after connection rotation",
+      "rotated: WooCommerce serializes the original transactional email without outbound mail",
+      "rotated: native database retains one latest result for the actual email workflow",
+      "rotated: native activity contains no customer fields or renderer credentials",
+      "rotated: native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+      "rotated: attachment bytes match the direct HTTPS PDF",
+      "rotated: attachment uses private temporary storage outside the public root",
+      "rotated: successful preparation clears a previous failure",
+      "rotated: native recovery clears failed activity without duplicating a workflow",
+      "rotated: independently decoded MIME has the expected attachment filename and exact PDF bytes",
+      "deployment logs contain neither raw renderer tokens nor synthetic order fields"
+    ],
+    "documents": [
+      {
+        "filename": "https-summary.pdf",
+        "sha256": "47e33b12b9c9c8318e823874fde93cfe0f27dd04d89bdb010687b1d4a9131411",
+        "bytes": 133152,
+        "pages": 1,
+        "missingGlyphs": 0,
+        "matchesDirectNodeRenderer": true
+      },
+      {
+        "filename": "https-packing.pdf",
+        "sha256": "6f0c03254128f0265790c668ad94baaa5f955cc788eff6094346c8ed61aa5ead",
+        "bytes": 133878,
+        "pages": 1,
+        "missingGlyphs": 0,
+        "matchesDirectNodeRenderer": true
+      }
+    ],
+    "phases": [
+      {
+        "mode": "render",
+        "checksPassed": 16,
+        "checks": [
+          "native PHP has a real cURL transport",
+          "WooCommerce uses HPOS",
+          "WordPress rejects the untrusted local TLS issuer",
+          "native PHP can read the explicitly trusted public CA certificate",
+          "trusted HTTPS renderer returns a real verified PDF",
+          "WordPress verifies TLS and does not follow redirects",
+          "real HTTPS service rejects a revoked or incorrect token",
+          "same HTTPS service generates a packing slip",
+          "WooCommerce serializes the original transactional email without outbound mail",
+          "native database retains one latest result for the actual email workflow",
+          "native activity contains no customer fields or renderer credentials",
+          "native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+          "attachment bytes match the direct HTTPS PDF",
+          "attachment uses private temporary storage outside the public root",
+          "successful preparation clears a previous failure",
+          "native recovery clears failed activity without duplicating a workflow"
+        ]
+      },
+      {
+        "mode": "outage",
+        "checksPassed": 6,
+        "checks": [
+          "WooCommerce serializes the original transactional email without outbound mail",
+          "native database retains one latest result for the actual email workflow",
+          "native activity contains no customer fields or renderer credentials",
+          "renderer outage preserves the email without an invalid attachment",
+          "renderer outage records a safe merchant-visible failure",
+          "real renderer outage appears in the failed activity view"
+        ]
+      },
+      {
+        "mode": "recovery",
+        "checksPassed": 8,
+        "checks": [
+          "WooCommerce serializes the original transactional email without outbound mail",
+          "native database retains one latest result for the actual email workflow",
+          "native activity contains no customer fields or renderer credentials",
+          "native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+          "attachment bytes match the direct HTTPS PDF",
+          "attachment uses private temporary storage outside the public root",
+          "successful preparation clears a previous failure",
+          "native recovery clears failed activity without duplicating a workflow"
+        ]
+      },
+      {
+        "mode": "revoked",
+        "checksPassed": 1,
+        "checks": [
+          "previous token is rejected after connection rotation"
+        ]
+      },
+      {
+        "mode": "rotated",
+        "checksPassed": 8,
+        "checks": [
+          "WooCommerce serializes the original transactional email without outbound mail",
+          "native database retains one latest result for the actual email workflow",
+          "native activity contains no customer fields or renderer credentials",
+          "native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+          "attachment bytes match the direct HTTPS PDF",
+          "attachment uses private temporary storage outside the public root",
+          "successful preparation clears a previous failure",
+          "native recovery clears failed activity without duplicating a workflow"
+        ]
+      }
+    ]
+  },
+  "browser": {
+    "checkedAt": "2026-10-03T07:24:18.165849+00:00",
+    "browser": "154.0.8037.93",
+    "store": "http://127.0.0.1:9478",
+    "checks": [
+      {
+        "name": "WooCommerce displays a failure notice without needing to open each order",
+        "passed": true
+      },
+      {
+        "name": "merchant opens activity directly from automation settings",
+        "passed": true
+      },
+      {
+        "name": "activity distinguishes failed, prepared-attachment and ready-response results",
+        "passed": true
+      },
+      {
+        "name": "activity reveals no customer fields or renderer token",
+        "passed": true
+      },
+      {
+        "name": "failed filter shows only the affected workflow",
+        "passed": true
+      },
+      {
+        "name": "failure provides connection and resend guidance without a send action",
+        "passed": true
+      },
+      {
+        "name": "order action opens the native HPOS order screen",
+        "passed": true
+      },
+      {
+        "name": "mobile activity and recovery link stay within the viewport",
+        "passed": true
+      },
+      {
+        "name": "mobile recovery guidance uses full-width labelled cells",
+        "passed": true
+      },
+      {
+        "name": "customer HTTP session is forbidden from merchant activity",
+        "passed": true
+      },
+      {
+        "name": "staff recovery still generates and downloads a real browser PDF",
+        "passed": true
+      },
+      {
+        "name": "merchant and customer pages have no JavaScript errors",
+        "passed": true
+      }
+    ],
+    "pdfSha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+    "pageErrors": [],
+    "evidence": [
+      {
+        "file": "output/activity/merchant-desktop.png",
+        "sha256": "b2f957d5e72d285d8f756e0dc2be1f6303415772a01442d7d3b16df8d907c632",
+        "retainedFile": "docs/previews/woocommerce-activity.png"
+      },
+      {
+        "file": "output/activity/merchant-failed.png",
+        "sha256": "e47ae5080a6f5c3548fdb201adc2095de007d8f686266e9b7f27b6dd8ee6a609",
+        "retainedFile": "docs/previews/woocommerce-activity-failed.png"
+      },
+      {
+        "file": "output/activity/merchant-mobile.png",
+        "sha256": "bd9297e81580c72e1bb38e540b0674b6f98382449c828952946641ecd32770b6",
+        "retainedFile": "docs/previews/woocommerce-activity-mobile.png"
+      }
+    ]
+  },
+  "browserScriptSha256": "6795510c1f6efd46043b92c1a1d1601ae35817da454421598bf2f5d73363dc27",
+  "postCiChanges": "Only verification records, screenshots, and the separately executed browser script assertions changed after this CI source. Packaged/runtime source remains identical.",
+  "visualInspection": {
+    "screens": [
+      "woocommerce-activity.png",
+      "woocommerce-activity-failed.png",
+      "woocommerce-activity-mobile.png"
+    ],
+    "result": "Desktop results and failure filter readable; mobile uses labelled full-width cells. Staff PDF inspected from its downloaded bytes: one page, complete names/items/totals and no visible clipping.",
+    "pdfSha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+    "pdfPreviewSha256": "c0dd90c80d079aff193f67fc47acc39c074585b163051955fa786c32a3baff9a"
+  },
+  "limitations": [
+    "Latest status per order/workflow, not an immutable audit ledger or proof of delivery/receipt.",
+    "No automatic missing-attachment retry or off-site alert delivery. Recovery uses existing WooCommerce controls.",
+    "Retention: 30 days / up to 1000 results, on writes, page access and daily cron; physical cleanup requires execution. Deactivation clears temporary activity.",
+    "Native TLS fixture uses an explicitly trusted local issuer. Public DNS/ACME, merchant hosts and real mail providers remain separate checks.",
+    "No production merchant, multisite rollout, payment, license renewal or paid updater verified here.",
+    "Local browser used the mounted candidate source; Linux customer/native checks install and hash every entry from candidate ZIPs."
+  ]
+}

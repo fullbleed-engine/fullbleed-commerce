@@ -105,6 +105,48 @@ order screen. Customers can retry after recovery; the previous failure indicator
 clears after a successful response. Disabling the setting or disconnecting the
 renderer rejects future requests, including previously copied links.
 
+## Merchant activity and recovery
+
+The current source adds **WooCommerce → Fullbleed activity**. This view is newer
+than the published alpha.2 ZIPs. It shows the latest result for each order/email
+type and customer My Account workflow, with a Failed filter, connection guidance
+and authorized links to WooCommerce's order screen. The automation settings page
+links directly to it. A notice on WooCommerce screens surfaces failed results
+without opening each order. A successful retry replaces that workflow's failed result;
+other email types and customer downloads retain their own results.
+
+**Attachment prepared** means the PDF was handed to WooCommerce's attachment
+filter. **PDF response ready** means WordPress prepared the customer download
+response. Neither state confirms delivery or receipt. After fixing a failed
+connection or template, test a PDF first. For email recovery, open the order and
+use WooCommerce's existing resend control if appropriate; a customer can retry
+from My Account. The activity view does not send, schedule or duplicate email.
+
+The per-site database table retains up to 1,000 latest workflow results from the
+last 30 days: internal order ID, workflow, document kind, state, an allowlisted
+error code and UTC time. It stores no names, addresses, recipient email, document
+bytes, raw error messages, renderer URL or token. There is no historic backfill
+or complete delivery ledger. Administrator and shop-manager permissions are
+required; each order link also checks order-edit permission.
+
+Retention runs on new results, when the activity page opens and in a daily
+WordPress scheduled task. Older records are excluded from the view immediately;
+physical cleanup depends on a running site/scheduler. Order deletion, trash and
+WooCommerce's order anonymization remove the related activity. Deactivating Pro
+clears these temporary results and the cleanup task; uninstall removes the table
+and its schema options. Existing templates and automation settings are retained.
+Protect database backups separately and apply the store's backup retention policy.
+
+Activity storage is independent of document generation: a failed activity write
+must not suppress the original email or PDF response. An incomplete-record warning
+appears when storage fails; after repair, a successful write resumes recording.
+This page is an attended operational view, not alerting or a monitoring service.
+
+The table uses WordPress's [plugin schema lifecycle](https://developer.wordpress.org/plugins/creating-tables-with-plugins/)
+and [atomic row replacement](https://developer.wordpress.org/reference/classes/wpdb/replace/).
+WooCommerce's [order privacy hook](https://woocommerce.github.io/code-reference/files/woocommerce-includes-class-wc-privacy-erasers.html)
+connects anonymization to activity cleanup.
+
 ## Verification and remaining work
 
 `node --test test/renderer.test.mjs` runs real deterministic rendering plus
@@ -114,6 +156,10 @@ email attachment hook, and captures real PHPMailer MIME without sending mail.
 Omit `--hpos` to exercise legacy order storage. The test substitutes the HTTPS
 transport with a WordPress test filter using actual Fullbleed output for the
 exact serialized order. This is not proof of production networking or delivery.
+The same fixture checks the activity view, retention, storage failure, upgrade,
+uninstall and WooCommerce order deletion/anonymization. `--serve` leaves the HPOS
+fixture available for `python tools/check-activity-browser.py`, which checks real
+Chrome filtering, order navigation, mobile layout and a browser-worker PDF.
 
 `node tools/check-customer-downloads.mjs --hpos` tests real customer logins,
 My Account pages and the download endpoint, including ownership, nonce replay,
