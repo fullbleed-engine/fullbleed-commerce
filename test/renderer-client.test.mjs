@@ -8,6 +8,7 @@ import { createClient } from '../automation/create-client.mjs';
 
 test('renderer connection provisioning separates the token from its mountable hash and never overwrites', () => {
   const root = mkdtempSync(join(tmpdir(), 'fullbleed-client-test-'));
+  const previousMask = process.umask(0o077);
   try {
     const directory = join(root, 'store');
     const result = createClient(directory, 'cedar-form');
@@ -28,6 +29,7 @@ test('renderer connection provisioning separates the token from its mountable ha
     }
     assert.throws(() => createClient(join(root, 'invalid'), 'has spaces'), TypeError);
   } finally {
+    process.umask(previousMask);
     assert.equal(dirname(resolve(root)), resolve(tmpdir()));
     assert.ok(basename(root).startsWith('fullbleed-client-test-'));
     rmSync(root, { recursive: true, force: true });

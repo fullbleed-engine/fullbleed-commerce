@@ -134,6 +134,7 @@ try {
   copyOut(proxy, '/data/caddy/pki/authorities/local/root.crt', caFile);
   run(['cp', caFile, `${wordpress}:/tmp/fullbleed-root.crt`]);
   assert.equal(php(wordpress, '/tmp/fullbleed-bootstrap.php').installed, true);
+  assert.equal(php(wordpress, '/tmp/fullbleed-bootstrap.php', ['commerce']).installed, true);
   writeFileSync(join(scratch, 'manifest.json'), JSON.stringify(manifest));
   run(['cp', join(scratch, 'manifest.json'), `${wordpress}:/tmp/fullbleed-manifest.json`]);
   assert.equal(run(['exec', wordpress, 'php', '-r', "$items=json_decode(file_get_contents('/tmp/fullbleed-manifest.json'),true);foreach($items as $item){if(hash_file('sha256','/var/www/html/wp-content/plugins/'.$item['name'])!==$item['sha256'])exit(1);}echo count($items);"]), String(manifest.length));
@@ -187,6 +188,9 @@ try {
   const result = { checkedAt: new Date().toISOString(), syntheticOnly: true, transport: 'Native WordPress/PHP cURL over real TLS to Caddy and the unmodified renderer container. Local fixture CA trusted explicitly; private Docker hostname permitted only in the fixture. No pre_http_request response substitution. PHPMailer MIME is captured without sending.', packages, images: { ...images, proxy: configuration.services.proxy.image, rendererImageId: inspect(compose(['ps', '-q', 'renderer'])).Image }, woocommerceArchive: { url: wooUrl, sha256: hash(wooBytes) }, checks, phases, documents, evidence, limitations: ['Local TLS issuer only; public DNS, ACME issuance and a merchant host remain deployment checks.', 'No production email provider, managed hosting, paid entitlements or merchant data used.', 'The renderer remains one process with in-memory capacity limits; this is not metered SaaS or a high-availability claim.'] };
   writeFileSync(join(output, 'verification.json'), `${JSON.stringify(result, null, 2)}\n`);
   console.log(JSON.stringify({ passed: checks.length, record: 'output/renderer-deployment/verification.json' }));
+} catch (error) {
+  writeFileSync(join(output, 'failure.json'), `${JSON.stringify({ checkedAt: new Date().toISOString(), checks, error: error.message.slice(0,3000) }, null, 2)}\n`);
+  throw error;
 } finally {
   // Resource names and paths are owned by this invocation. Never prune globally.
   assert.ok(project.startsWith('fullbleed-renderer-check-'));

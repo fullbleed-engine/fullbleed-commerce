@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Create a new private directory; never overwrite an existing connection.
 import { createHash, randomBytes } from 'node:crypto';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { chmodSync, mkdirSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
@@ -16,6 +16,7 @@ export function createClient(directory, site) {
   // Hashes are not bearer credentials. Read access allows a non-root container
   // to mount this file; the parent remains private and the raw token is separate.
   writeFileSync(clientsFile, `${JSON.stringify([{ site, tokenSha256: createHash('sha256').update(token).digest('hex') }], null, 2)}\n`, { mode: 0o644, flag: 'wx' });
+  chmodSync(clientsFile, 0o644); // Also works when the operator uses umask 077.
   return { site, clientsFile, tokenFile };
 }
 
