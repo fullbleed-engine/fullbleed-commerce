@@ -35,6 +35,23 @@ ten-minute customer-fixture readiness cap before launching that browser. The sam
 standalone customer fixture subsequently passed all 38 HTTP checks and 13 browser
 checks. The original log and recovery evidence are retained.
 
+The [public demo](public-demo-011-verification.json) passes 13 checks in the
+authorized Chrome session: the ordinary PDF, all 32 items across long summaries
+and packing slips, visual/source edits, preview/save/reload, reset and mobile
+layout. Its saved custom heading extracts once, and the subsequent download
+matches the actual editor preview bytes. The [WordPress.org update](wordpress-update-011.json)
+was accepted into the existing review; the uploaded free ZIP matches this release.
+Its status remains **Awaiting Review**. Visual inspection also found a pagination
+limitation: the 32-item Studio summary leaves only its closing note on page 4.
+All items and amounts are present; grouping the closing content is follow-up work.
+
+A subsequent documentation-commit Firefox run stopped on WordPress's login form,
+before any plugin check. Its screenshot shows the synthetic password in the
+username field and an empty password. The retained trace contains WordPress's
+200 ms delayed username-focus action. The fixture helper now waits for its
+existing startup readiness condition and asserts both fields before submission.
+This changes test synchronization only; the released ZIPs are unchanged.
+
 The previous main-branch Chrome run failed its strict JavaScript-error check in
 the alert journey after the other nine checks passed. That failure did not retain
 the error text. A local baseline rerun passed; its cause has not been established.
