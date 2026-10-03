@@ -2,7 +2,7 @@
 Contributors: krflol
 Requires at least: 6.5
 Requires PHP: 7.4
-Stable tag: 0.1.1
+Stable tag: 0.1.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,9 @@ Requires the separate Fullbleed Commerce base plugin and WooCommerce. This packa
 
 
 == Changelog ==
+
+= 0.1.2 =
+Pair with Fullbleed Commerce 0.1.2 for improved closing-note pagination in Contrast and Quiet. Existing saved templates retain their layout rules.
 
 = 0.1.1 =
 Add optional administrator summaries for unresolved document failures. Pair with Fullbleed Commerce 0.1.1 for the corrected renderer. This remains an evaluation preview without checkout or live billing.

@@ -31,9 +31,9 @@ template to keep it. The [walkthrough](https://docs.fullbleed.dev/guides/woocomm
 includes an actual sample PDF and explains the automated workflows.
 
 Download the free plugin from the
-[WooCommerce preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.1).
+[WooCommerce preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.2).
 Use a staging store. Install WooCommerce, then upload
-`fullbleed-commerce-0.1.1.zip` in WordPress Plugins. Open
+`fullbleed-commerce-0.1.2.zip` in WordPress Plugins. Open
 **WooCommerce → Fullbleed documents**, enter a numeric order ID, and generate a
 PDF. An order edit screen also has a **Create Fullbleed PDF** link.
 
@@ -61,6 +61,16 @@ settings are retained. An enabled automation remains enabled after an upgrade;
 check its connection and one synthetic order before returning to normal use.
 The [release verification](docs/verification.md) records the upgrade checks and
 which configurations were exercised. The preview still has no automatic updater.
+
+Version 0.1.2 keeps summary totals and the closing note together in built-in
+designs and newly created starter templates. Existing saved designs retain their
+own CSS. To apply this pagination rule to a previously saved built-in summary,
+add the following in its HTML/CSS editor, preview a long order, then save:
+
+```css
+.totals { break-after: avoid; }
+.footer { break-before: avoid; }
+```
 
 ## Customize templates
 

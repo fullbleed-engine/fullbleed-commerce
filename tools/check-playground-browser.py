@@ -9,6 +9,7 @@ import time
 
 from playwright.sync_api import sync_playwright, expect
 from pypdf import PdfReader
+from browser_runtime import wait_for_fixture_page
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--url', default='http://127.0.0.1:9488')
@@ -52,8 +53,11 @@ with sync_playwright() as pw:
         page.goto(args.url, timeout=60000, wait_until='domcontentloaded')
         if not public:
             page.goto(args.url + '/wp-login.php')
+            wait_for_fixture_page(page)
             page.locator('#user_login').fill('admin')
             page.locator('#user_pass').fill('password')
+            assert page.locator('#user_login').input_value() == 'admin'
+            assert page.locator('#user_pass').input_value() == 'password'
             page.locator('#wp-submit').click()
             page.wait_for_url('**/wp-admin/**', wait_until='domcontentloaded', timeout=45000)
             page.goto(args.url + '/wp-admin/admin.php?page=fullbleed-commerce')
@@ -102,6 +106,19 @@ with sync_playwright() as pw:
         expect(frame.locator('#fb-orders')).to_have_value(long_order)
         text, pages = download('long-summary')
         check('long sample paginates and preserves every item and platform total', pages > 1 and text.count('LIN-MOSS') == 16 and text.count('BWL-CHALK') == 16 and '4,332.00' in text)
+        closing = frame.locator('[name="footer"]').input_value()
+        last = ' '.join(PdfReader(out / f'{label}-long-summary.pdf').pages[-1].extract_text().split())
+        check('built-in long summary keeps the closing note with every total', all(value in last for value in [closing, '4,320.00', '12.00', '4,332.00']))
+        frame.locator('[data-edit-template]').click()
+        frame.frame_locator('[data-visual] iframe.gjs-frame').locator('h1').wait_for(state='visible')
+        frame.locator('[data-action="save"]').click()
+        frame.locator('[data-message]').filter(has_text='Saved.').wait_for()
+        frame.get_by_role('link', name='Long order #', exact=False).click()
+        expect(frame.locator('[data-template-editor] [data-html]')).to_have_count(0)
+        expect(frame.locator('#fb-orders')).to_have_value(long_order)
+        text, pages = download('long-saved-summary')
+        last = ' '.join(PdfReader(out / f'{label}-long-saved-summary.pdf').pages[-1].extract_text().split())
+        check('saved starter keeps all items and the closing note with totals after reload', text.count('LIN-MOSS') == 16 and text.count('BWL-CHALK') == 16 and all(value in last for value in [closing, '4,320.00', '12.00', '4,332.00']))
         frame.locator('select[name="kind"]').select_option('packing-slip')
         text, pages = download('long-packing-slip')
         check('packing slip includes every item without order prices', pages > 1 and text.count('LIN-MOSS') == 16 and text.count('BWL-CHALK') == 16 and '$' not in text and 'Packing slip' in text)
