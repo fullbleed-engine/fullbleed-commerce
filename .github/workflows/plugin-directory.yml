@@ -1,0 +1,56 @@
+name: WordPress directory checks
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, feat/wordpress-directory-readiness]
+    paths:
+      - 'wordpress/fullbleed-commerce/**'
+      - 'src/**'
+      - 'tools/build.mjs'
+      - 'tools/pack.mjs'
+      - 'package*.json'
+      - '.github/workflows/plugin-directory.yml'
+  pull_request:
+    paths:
+      - 'wordpress/fullbleed-commerce/**'
+      - 'src/**'
+      - 'tools/build.mjs'
+      - 'tools/pack.mjs'
+      - 'package*.json'
+      - '.github/workflows/plugin-directory.yml'
+permissions:
+  contents: read
+concurrency:
+  group: plugin-directory-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  plugin-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.21.0
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - run: npm run pack
+      - name: Extract the exact free plugin archive
+        run: |
+          mkdir -p target/directory-package
+          unzip -q dist/fullbleed-commerce-*.zip -d target/directory-package
+          node -e 'require("fs").writeFileSync(".wp-env.json", JSON.stringify({core:"https://wordpress.org/wordpress-7.1.2.zip",config:{WP_DEBUG:true,WP_DEBUG_LOG:true,WP_DEBUG_DISPLAY:false,DISABLE_WP_CRON:true}}))'
+      - uses: WordPress/plugin-check-action@10857da14b6c2246d15402b3e69f777edcf8c12e # v1
+        with:
+          build-dir: target/directory-package/fullbleed-commerce
+          slug: fullbleed-commerce
+          strict: true
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        if: always()
+        with:
+          name: directory-candidate
+          path: |
+            dist/fullbleed-commerce-*.zip
+            dist/packages.json
+          retention-days: 14
