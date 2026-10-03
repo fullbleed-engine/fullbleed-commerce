@@ -21,10 +21,11 @@ const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const check = (name, ok) => { assert.ok(ok, name); checks.push({ name, passed: true }); console.log(`${name}: passed`); };
 const pluginNames = ['fullbleed-commerce', 'fullbleed-commerce-pro'];
 const packageRecords = packages ? JSON.parse(await readFile('dist/packages.json', 'utf8')) : [];
+const version = JSON.parse(await readFile('package.json', 'utf8')).version;
 const installSteps = [];
 for (const name of pluginNames) {
   installSteps.push(packages
-    ? { step: 'installPlugin', pluginData: { resource: 'literal', name: `${name}.zip`, contents: new Uint8Array(await readFile(`dist/${name}-0.1.0-alpha.1.zip`)) }, options: { activate: true } }
+    ? { step: 'installPlugin', pluginData: { resource: 'literal', name: `${name}.zip`, contents: new Uint8Array(await readFile(`dist/${name}-${version}.zip`)) }, options: { activate: true } }
     : { step: 'activatePlugin', pluginPath: `${name}/${name}.php` });
 }
 const site = await runCLI({

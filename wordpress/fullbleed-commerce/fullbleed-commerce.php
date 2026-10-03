@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Fullbleed Commerce
  * Description: Designed order summaries and packing slips, generated privately in your browser.
- * Version: 0.1.0-alpha.1
+ * Version: 0.1.0-alpha.2
  * Author: Fullbleed
  * Author URI: https://fullbleed.dev
  * Requires at least: 6.5
@@ -17,7 +17,7 @@ namespace Fullbleed\Commerce;
 
 defined( 'ABSPATH' ) || exit;
 
-const VERSION = '0.1.0-alpha.1';
+const VERSION = '0.1.0-alpha.2';
 
 add_action( 'before_woocommerce_init', function () {
     if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
@@ -196,6 +196,7 @@ function admin_page() {
     }
     $themes = apply_filters( 'fullbleed_commerce_themes', array( array( 'value' => 'studio', 'label' => __( 'Studio', 'fullbleed-commerce' ) ) ) );
     $config = array(
+        'extensions' => apply_filters( 'fullbleed_commerce_client_extensions', array() ),
         'endpoint' => rest_url( 'fullbleed-commerce/v1/orders' ),
         'nonce' => wp_create_nonce( 'wp_rest' ),
         'assets' => plugins_url( 'assets/generated/', __FILE__ ),
@@ -220,12 +221,13 @@ function admin_page() {
             <div class="fb-row"><div><label for="fb-theme"><?php esc_html_e( 'Design', 'fullbleed-commerce' ); ?></label><select id="fb-theme" name="theme"><?php foreach ( $themes as $theme ) : ?><option value="<?php echo esc_attr( $theme['value'] ); ?>"><?php echo esc_html( $theme['label'] ); ?></option><?php endforeach; ?></select></div><div><label for="fb-paper"><?php esc_html_e( 'Paper', 'fullbleed-commerce' ); ?></label><select id="fb-paper" name="paper"><option value="A4">A4</option><option value="Letter">US Letter</option></select></div></div>
             <label for="fb-accent"><?php esc_html_e( 'Accent color', 'fullbleed-commerce' ); ?></label><input id="fb-accent" name="accent" type="color" value="#c5542d">
             <label for="fb-footer"><?php esc_html_e( 'Closing note', 'fullbleed-commerce' ); ?></label><textarea id="fb-footer" name="footer" rows="2" maxlength="500"><?php esc_html_e( 'Thank you for shopping with us.', 'fullbleed-commerce' ); ?></textarea>
-            <button type="submit" class="button button-primary" data-render><?php esc_html_e( 'Generate PDF', 'fullbleed-commerce' ); ?></button>
-            <p class="fb-status" data-status role="status" aria-live="polite"><?php esc_html_e( 'Ready when you are.', 'fullbleed-commerce' ); ?></p>
+            <button type="submit" class="button button-primary" data-render disabled><?php esc_html_e( 'Generate PDF', 'fullbleed-commerce' ); ?></button>
+            <p class="fb-status" data-status role="status" aria-live="polite"><?php esc_html_e( 'Loading document tools. If this message remains, reload the page.', 'fullbleed-commerce' ); ?></p>
+            <noscript><p><?php esc_html_e( 'Enable JavaScript to create and customize PDFs.', 'fullbleed-commerce' ); ?></p></noscript>
             <a class="button" data-preview hidden><?php esc_html_e( 'Download PDF', 'fullbleed-commerce' ); ?></a>
         </form><aside class="fb-card fb-note"><div class="fb-swatch"></div><h2><?php esc_html_e( 'Your store. Your documents.', 'fullbleed-commerce' ); ?></h2><p><?php esc_html_e( 'For these manual downloads, order information travels only between your store and this browser. No Fullbleed account or hosted rendering service is needed.', 'fullbleed-commerce' ); ?></p><ul><li><?php esc_html_e( 'Store prices and totals are preserved.', 'fullbleed-commerce' ); ?></li><li><?php esc_html_e( 'Packing slips leave out prices.', 'fullbleed-commerce' ); ?></li><li><?php esc_html_e( 'PDFs use bundled fonts and vector type.', 'fullbleed-commerce' ); ?></li></ul><p class="description"><?php esc_html_e( 'Preview release: order summaries are not fiscal invoices. Refunded orders are not supported.', 'fullbleed-commerce' ); ?></p></aside></div>
         <?php if ( $config['canCustomize'] ) : ?>
-        <section class="fb-template-section"><h2><?php esc_html_e( 'Make it unmistakably yours.', 'fullbleed-commerce' ); ?></h2><p><?php esc_html_e( 'Move blocks, edit text and typography, or paste your own HTML and CSS. Save separate templates for summaries and packing slips.', 'fullbleed-commerce' ); ?></p><button type="button" class="button" data-edit-template><?php esc_html_e( 'Customize selected document', 'fullbleed-commerce' ); ?></button><p data-template-status role="status"></p><div data-template-editor></div></section>
+        <section class="fb-template-section"><h2><?php esc_html_e( 'Make it unmistakably yours.', 'fullbleed-commerce' ); ?></h2><p><?php esc_html_e( 'Move blocks, edit text and typography, or paste your own HTML and CSS. Save separate templates for summaries and packing slips.', 'fullbleed-commerce' ); ?></p><button type="button" class="button" data-edit-template disabled><?php esc_html_e( 'Customize selected document', 'fullbleed-commerce' ); ?></button><p data-template-status role="status"></p><div data-template-editor></div></section>
         <?php endif; ?>
     </div>
     <?php

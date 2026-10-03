@@ -10,9 +10,9 @@ const fixture = JSON.parse(await readFile(new URL('../fixtures/order.json', impo
 const base = await readFile(new URL('../wordpress/fullbleed-commerce/assets/generated/admin.js', import.meta.url), 'utf8');
 const pro = await readFile(new URL('../wordpress/fullbleed-commerce-pro/assets/admin.js', import.meta.url), 'utf8');
 
-function setup(isPro = false, denied = []) {
-  const config = { endpoint: 'https://store.example/orders', assets: 'https://store.example/assets/', nonce: 'test-only', themes: [{ value: 'studio', label: 'Studio' }, ...(isPro ? [{ value: 'contrast', label: 'Contrast' }, { value: 'quiet', label: 'Quiet' }] : [])] };
-  const dom = new JSDOM(`<div id="fullbleed-commerce"><form><input name="order_ids" value="1042"><select name="kind"><option value="order-summary">Order</option><option value="packing-slip">Packing</option></select><select name="theme">${config.themes.map(t => `<option value="${t.value}">${t.label}</option>`).join('')}</select><select name="paper"><option>A4</option><option>Letter</option></select><input name="accent" value="#c5542d"><textarea name="footer">Thank you.</textarea><button data-render type="submit">Generate</button></form><p data-status></p><a data-preview hidden></a></div>`, { url: 'https://store.example/admin', runScripts: 'outside-only' });
+function setup(isPro = false, denied = [], { delayExtension = false } = {}) {
+  const config = { endpoint: 'https://store.example/orders', assets: 'https://store.example/assets/', nonce: 'test-only', extensions: isPro ? ['fullbleed-commerce-pro'] : [], themes: [{ value: 'studio', label: 'Studio' }, ...(isPro ? [{ value: 'contrast', label: 'Contrast' }, { value: 'quiet', label: 'Quiet' }] : [])] };
+  const dom = new JSDOM(`<div id="fullbleed-commerce"><form><input name="order_ids" value="1042"><select name="kind"><option value="order-summary">Order</option><option value="packing-slip">Packing</option></select><select name="theme">${config.themes.map(t => `<option value="${t.value}">${t.label}</option>`).join('')}</select><select name="paper"><option>A4</option><option>Letter</option></select><input name="accent" value="#c5542d"><textarea name="footer">Thank you.</textarea><button data-render type="submit" disabled>Generate</button></form><p data-status></p><a data-preview hidden></a></div>`, { url: 'https://store.example/admin', runScripts: 'outside-only' });
   const { window } = dom;
   window.document.querySelector('#fullbleed-commerce').dataset.config = JSON.stringify(config);
   const urls = new Map(); const downloads = []; const requests = []; const terminated = [];
@@ -36,7 +36,7 @@ function setup(isPro = false, denied = []) {
     terminate() { terminated.push(true); }
   };
   window.eval(base);
-  if (isPro) window.eval(pro);
+  if (isPro && !delayExtension) window.eval(pro);
   const api = window.FullbleedCommerce;
   const submit = async () => {
     api.form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
@@ -44,8 +44,28 @@ function setup(isPro = false, denied = []) {
     while (api.root.querySelector('[data-render]').disabled && Date.now() < deadline) await new Promise(resolve => setTimeout(resolve, 10));
     assert.equal(api.root.querySelector('[data-render]').disabled, false, 'Form must recover after success or failure.');
   };
-  return { window, api, urls, requests, downloads, terminated, submit, close: () => dom.window.close() };
+  return { window, api, urls, requests, downloads, terminated, submit, loadExtension: () => window.eval(pro), close: () => dom.window.close() };
 }
+
+test('declared add-ons keep generation disabled until their designs and handlers are ready', async () => {
+  const app = setup(true, [], { delayExtension: true });
+  try {
+    const button = app.api.root.querySelector('[data-render]');
+    assert.equal(button.disabled, true);
+    app.api.registerExtension('an-unrelated-extension');
+    app.api.form.dispatchEvent(new app.window.Event('submit', { bubbles: true, cancelable: true }));
+    assert.equal(button.disabled, true);
+    assert.equal(app.requests.length, 0);
+    app.loadExtension();
+    assert.equal(button.disabled, false);
+    app.api.form.elements.order_ids.value = '1042,1043';
+    app.api.form.elements.theme.value = 'contrast';
+    await app.submit();
+    const files = unzipSync(new Uint8Array(await app.downloads[0].blob.arrayBuffer()));
+    assert.equal(Object.keys(files).length, 2);
+    assert.ok(Object.values(files).every(bytes => Buffer.from(bytes).subarray(0, 5).toString() === '%PDF-'));
+  } finally { app.close(); }
+});
 
 test('free admin creates a real PDF and invalidates an old download when inputs change', async () => {
   const app = setup();

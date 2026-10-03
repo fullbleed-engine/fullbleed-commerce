@@ -1,6 +1,6 @@
 # Try Fullbleed in a sample store
 
-[Open the browser demo](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/fullbleed-engine/fullbleed-commerce/main/playground/blueprint.json)
+[Open the browser demo](https://playground.wordpress.net/?storage=temp&blueprint-url=https://raw.githubusercontent.com/fullbleed-engine/fullbleed-commerce/main/playground/blueprint.json)
 
 The demo starts a disposable WordPress Playground with WooCommerce, the free
 Fullbleed plugin and two fictional, unpaid orders. No account, payment or store
@@ -16,7 +16,8 @@ take a minute or two.
    document type to make a packing slip, with its own saved template.
 
 Use **Export template** to keep a JSON copy of your design. The sample store is
-temporary; do not enter customer information, payment details or service tokens.
+temporary and resets when you refresh the browser or close the tab; do not enter
+customer information, payment details or service tokens.
 Outgoing mail, WordPress networking, cron and WooCommerce tracking are disabled.
 The browser still downloads the public code needed to start the demo.
 
@@ -29,7 +30,7 @@ workflows and remaining paid-launch requirements.
 ## Install the preview on your staging store
 
 Download the free plugin ZIP from the
-[preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.1).
+[preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.2).
 With WooCommerce active, use **Plugins → Add New → Upload Plugin**, activate
 Fullbleed, then open **WooCommerce → Fullbleed documents**. No Node or PDF service
 is needed for the free plugin. Use staging data while evaluating this alpha.

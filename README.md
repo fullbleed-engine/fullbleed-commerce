@@ -25,9 +25,9 @@ PDFs locally with `npm run examples`.
 ## Try the WooCommerce preview
 
 Download the free plugin from the
-[WooCommerce preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.1).
+[WooCommerce preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.2).
 Use a staging store. Install WooCommerce, then upload
-`fullbleed-commerce-0.1.0-alpha.1.zip` in WordPress Plugins. Open
+`fullbleed-commerce-0.1.0-alpha.2.zip` in WordPress Plugins. Open
 **WooCommerce → Fullbleed documents**, enter a numeric order ID, and generate a
 PDF. An order edit screen also has a **Create Fullbleed PDF** link.
 

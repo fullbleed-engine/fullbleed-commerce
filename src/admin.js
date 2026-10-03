@@ -8,6 +8,8 @@ const status = root.querySelector('[data-status]');
 const preview = root.querySelector('[data-preview]');
 const form = root.querySelector('form');
 const runButton = root.querySelector('[data-render]');
+const editButton = root.querySelector('[data-edit-template]');
+const pendingExtensions = new Set(config.extensions || []);
 let objectUrl;
 
 function clearPreview() {
@@ -77,7 +79,7 @@ async function getDocumentOptions() {
 
 let editorInstance;
 let editorScript;
-root.querySelector('[data-edit-template]')?.addEventListener('click', async event => {
+editButton?.addEventListener('click', async event => {
   const button = event.currentTarget;
   const editorStatus = root.querySelector('[data-template-status]');
   if (editorInstance?.hasUnsavedChanges() && !window.confirm('Discard the unsaved template edits and open the selected document?')) return;
@@ -110,6 +112,7 @@ root.querySelector('[data-edit-template]')?.addEventListener('click', async even
 form.addEventListener('submit', async event => {
   if (event.defaultPrevented) return;
   event.preventDefault();
+  if (pendingExtensions.size) return;
   runButton.disabled = true;
   clearPreview();
   try {
@@ -131,5 +134,18 @@ form.addEventListener('submit', async event => {
   }
 });
 
+function enableControls() {
+  if (pendingExtensions.size) return;
+  runButton.disabled = false;
+  if (editButton) editButton.disabled = false;
+  report('Choose an order and generate a PDF.');
+}
+
 // Extension point for separate workflow add-ons. The base includes no paid-only code.
-window.FullbleedCommerce = { root, form, config, loadOrder, getOptions, getDocumentOptions, buildDocument, render, report, download, clearPreview };
+// Keep the server-rendered controls disabled until every declared extension has
+// installed its designs and event handlers. A slow script must not submit the
+// native form or silently render the wrong design.
+window.FullbleedCommerce = { root, form, config, loadOrder, getOptions, getDocumentOptions, buildDocument, render, report, download, clearPreview,
+  registerExtension(name) { pendingExtensions.delete(name); enableControls(); },
+};
+enableControls();

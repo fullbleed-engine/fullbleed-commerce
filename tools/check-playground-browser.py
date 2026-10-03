@@ -2,12 +2,12 @@
 from datetime import datetime, timezone
 from hashlib import sha256
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 import argparse
 import json
 import time
 
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, expect
 from pypdf import PdfReader
 
 parser = argparse.ArgumentParser()
@@ -16,10 +16,14 @@ args = parser.parse_args()
 parsed = urlparse(args.url)
 assert parsed.hostname in ['127.0.0.1', 'playground.wordpress.net']
 public = parsed.hostname == 'playground.wordpress.net'
+if public:
+    assert parse_qs(parsed.query).get('storage') == ['temp'], 'Use the disposable public demo URL.'
 label = 'public' if public else 'local'
 out = Path('output/playground')
 out.mkdir(parents=True, exist_ok=True)
-checks, errors, documents = [], [], []
+checks, errors, documents, dialogs = [], [], [], []
+storage_state = None
+expect.set_options(timeout=45000)
 
 def check(name, condition):
     assert condition, name
@@ -36,6 +40,14 @@ with sync_playwright() as pw:
     page = context.new_page()
     page.set_default_timeout(45000)
     page.on('pageerror', lambda error: errors.append(str(error)))
+    def handle_dialog(dialog):
+        dialogs.append({'type': dialog.type, 'message': dialog.message})
+        if dialog.type == 'beforeunload':
+            # This context contains only the disposable synthetic demo.
+            dialog.accept()
+        else:
+            dialog.dismiss()
+    page.on('dialog', handle_dialog)
     try:
         page.goto(args.url, timeout=60000, wait_until='domcontentloaded')
         if not public:
@@ -59,6 +71,10 @@ with sync_playwright() as pw:
                 break
             page.wait_for_timeout(1000)
         check('sample store opens directly in the Fullbleed document screen', frame is not None)
+        if public:
+            page.wait_for_function('Boolean(window.playgroundSites)')
+            storage_state = page.evaluate('async () => { await window.playgroundSites.isReady(); return window.playgroundSites.list().find(site => site.isActive); }')
+            check('public Playground confirms temporary storage', storage_state['storage'] == 'temporary' and not storage_state.get('persistence'))
         first_order = frame.locator('#fb-orders').input_value()
         check('first sample order is preselected without looking up its ID', first_order.isdigit())
         check('demo explains its scope and offers a long-order example', frame.get_by_role('link', name='Long order #', exact=False).count() == 1 and 'Pro email attachments' in frame.locator('[data-fullbleed-demo]').inner_text())
@@ -78,12 +94,20 @@ with sync_playwright() as pw:
         check('actual browser worker downloads a complete branded order summary', pages == 1 and 'Cedar & Form' in text and '282.00' in text and 'Alex Morgan' in text)
         page.screenshot(path=str(out / f'{label}-documents.png'), full_page=True)
 
-        frame.get_by_role('link', name='Long order #', exact=False).click()
-        frame.locator('#fb-orders').wait_for()
+        long_link = frame.get_by_role('link', name='Long order #', exact=False)
+        long_order = long_link.inner_text().split('#')[-1]
+        long_link.click()
+        # The public Playground routes navigation through its service worker;
+        # the old document can remain visible after click() has returned.
+        expect(frame.locator('#fb-orders')).to_have_value(long_order)
         text, pages = download('long-summary')
         check('long sample paginates and preserves every item and platform total', pages > 1 and text.count('LIN-MOSS') == 16 and text.count('BWL-CHALK') == 16 and '4,332.00' in text)
+        frame.locator('select[name="kind"]').select_option('packing-slip')
+        text, pages = download('long-packing-slip')
+        check('packing slip includes every item without order prices', pages > 1 and text.count('LIN-MOSS') == 16 and text.count('BWL-CHALK') == 16 and '$' not in text and 'Packing slip' in text)
 
         frame.get_by_role('link', name='Sample order #', exact=False).click()
+        expect(frame.locator('#fb-orders')).to_have_value(first_order)
         frame.locator('[data-edit-template]').click()
         canvas = frame.frame_locator('[data-visual] iframe.gjs-frame')
         canvas.locator('h1').wait_for(state='visible')
@@ -108,7 +132,8 @@ with sync_playwright() as pw:
         # Navigate through the demo's own link: saved state must survive a full
         # WordPress page load, rather than only the editor's in-memory state.
         frame.get_by_role('link', name='Sample order #', exact=False).click()
-        frame.locator('#fb-orders').wait_for()
+        expect(frame.locator('[data-template-editor] [data-html]')).to_have_count(0)
+        expect(frame.locator('#fb-orders')).to_have_value(first_order)
         text, pages = download('saved-summary')
         check('saved design is used by subsequent document downloads', 'MADE FOR YOUR HOME' in text and '282.00' in text)
         frame.locator('[data-edit-template]').click()
@@ -124,11 +149,11 @@ with sync_playwright() as pw:
         for name in ['documents', 'editor', 'mobile']:
             file = out / f'{label}-{name}.png'
             evidence.append({'file': file.as_posix(), 'sha256': sha256(file.read_bytes()).hexdigest()})
-        record = {'checkedAt': datetime.now(timezone.utc).isoformat(), 'browser': browser.version, 'publicPlayground': public, 'url': args.url, 'blueprintSha256': sha256(Path('playground/blueprint.json').read_bytes()).hexdigest(), 'checks': checks, 'documents': documents, 'evidence': evidence, 'pageErrors': errors}
+        record = {'checkedAt': datetime.now(timezone.utc).isoformat(), 'browser': browser.version, 'publicPlayground': public, 'url': args.url, 'storage': storage_state, 'blueprintSha256': sha256(Path('playground/blueprint.json').read_bytes()).hexdigest(), 'checks': checks, 'documents': documents, 'evidence': evidence, 'pageErrors': errors, 'dialogs': dialogs}
         (out / f'{label}-browser-verification.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
     except Exception:
         page.screenshot(path=str(out / f'{label}-failure.png'), full_page=True)
-        (out / f'{label}-failure.json').write_text(json.dumps({'checks': checks, 'errors': errors, 'frames': [f.url for f in page.frames], 'text': page.locator('body').inner_text()[-12000:]}, indent=2), encoding='utf-8')
+        (out / f'{label}-failure.json').write_text(json.dumps({'checks': checks, 'errors': errors, 'dialogs': dialogs, 'frames': [f.url for f in page.frames], 'text': page.locator('body').inner_text()[-12000:]}, indent=2), encoding='utf-8')
         raise
     finally:
         context.close()

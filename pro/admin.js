@@ -34,4 +34,5 @@ if (api) {
       button.disabled = false;
     }
   }, { capture: true });
+  api.registerExtension?.('fullbleed-commerce-pro');
 }

@@ -13,5 +13,6 @@ shopify/app/build/
 shopify/app/prisma/*.sqlite*
 shopify/app/prisma/*.db*
 *.log
+__pycache__/
 shopify/app/public/fonts/
 shopify/app/public/EDITOR-THIRD-PARTY-NOTICES.txt

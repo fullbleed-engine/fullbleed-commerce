@@ -12,7 +12,7 @@ from pypdf import PdfReader
 base = os.environ.get('FULLBLEED_TEST_URL', 'http://127.0.0.1:9477')
 assert urlparse(base).hostname == '127.0.0.1'
 pro = os.environ.get('FULLBLEED_TEST_PRO') == '1'
-label = 'wordpress-pro' if pro else 'wordpress-free'
+label = os.environ.get('FULLBLEED_TEST_LABEL', 'wordpress-pro' if pro else 'wordpress-free')
 out = Path('output/browser')
 out.mkdir(parents=True, exist_ok=True)
 checks = []

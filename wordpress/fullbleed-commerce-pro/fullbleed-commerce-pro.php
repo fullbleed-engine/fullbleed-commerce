@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Fullbleed Commerce Pro
  * Description: Automated order documents, customer downloads, additional designs and batch exports for Fullbleed Commerce.
- * Version: 0.1.0-alpha.1
+ * Version: 0.1.0-alpha.2
  * Author: Fullbleed
  * Requires at least: 6.5
  * Requires PHP: 7.4
@@ -21,7 +21,7 @@ require_once __DIR__ . '/customer-downloads.php';
 
 add_action( 'admin_enqueue_scripts', function ( $hook ) {
     if ( 'woocommerce_page_fullbleed-commerce' === $hook ) {
-        wp_enqueue_script( 'fullbleed-commerce-pro', plugins_url( 'assets/admin.js', __FILE__ ), array( 'fullbleed-commerce' ), '0.1.0-alpha.1', true );
+        wp_enqueue_script( 'fullbleed-commerce-pro', plugins_url( 'assets/admin.js', __FILE__ ), array( 'fullbleed-commerce' ), '0.1.0-alpha.2', true );
     }
 } );
 
@@ -38,6 +38,10 @@ add_filter( 'fullbleed_commerce_themes', function ( $themes ) {
 } );
 
 add_filter( 'fullbleed_commerce_batch_limit', function () { return 25; } );
+add_filter( 'fullbleed_commerce_client_extensions', function ( $extensions ) {
+    $extensions[] = 'fullbleed-commerce-pro';
+    return $extensions;
+} );
 
 function bulk_actions( $actions ) {
     $actions['fullbleed_documents'] = __( 'Create Fullbleed PDFs', 'fullbleed-commerce-pro' );
