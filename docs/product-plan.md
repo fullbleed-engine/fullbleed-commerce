@@ -180,6 +180,14 @@ also implemented: an optional authenticated renderer and opt-in WooCommerce Pro
 attachments through the platform's transactional-email queue, with captured-mail
 verification and admin recovery guidance. It is not a managed paid service.
 
+The native integration also verifies real SMTP receipt in a private test inbox:
+a persisted order-transition job runs through Action Scheduler and WordPress
+cron, delivering a saved three-page design. Outage mail, scheduled failure
+summaries, alert cooldown after restart and explicit resend recovery pass.
+The [SMTP evidence](smtp-verification.json) retains the exact package and PDF
+hashes. The merchant host's scheduler and external mail provider still need
+the [complete staging acceptance check](../automation/DEPLOYMENT.md#check-the-complete-staging-workflow).
+
 Shopify Flow now has order-summary and packing-slip actions backed by a persistent
 job ledger, signed request verification, bounded retries, expiring private links,
 and merchant pause/retry/revoke controls. The synthetic development store has

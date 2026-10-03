@@ -89,6 +89,34 @@ The connection sends order document fields and the template to the chosen host.
 Customer-account ownership is enforced in WordPress. The renderer token is a
 store credential; do not give it to shoppers or embed it in front-end JavaScript.
 
+### Check the complete staging workflow
+
+Use fictional order data and a test mailbox. Keep a record of the plugin ZIPs,
+renderer commit, scheduler configuration and received messages for your host:
+
+1. Save a distinctive template and create a long order that spans several pages.
+   Change it from pending to processing with attachments enabled. Confirm that
+   WooCommerce's scheduled email job completes and the recipient's mailbox
+   receives one email with the complete, readable PDF and the saved design.
+2. Stop the staging renderer and trigger a second selected order email. Confirm
+   that the original email arrives without the missing PDF, and Fullbleed activity
+   shows the failure. If administrator alerts are enabled, let the site's normal
+   scheduler run and check the administrator's mailbox for the failure summary.
+3. Run the scheduler again and restart the site's PHP workers. Confirm that
+   finished customer email jobs are not repeated and that the administrator
+   summary respects its 24-hour attempt limit.
+4. Restore the renderer and test a PDF. Recovery must not send another customer
+   email by itself. Deliberately resend through WooCommerce once, verify the
+   received attachment, and confirm that the relevant failure clears.
+5. Check temporary attachment cleanup, the site's mail logs and the queue for
+   stuck jobs. Repeat with the actual mail plugin/provider used by the store;
+   plugins that postpone reading attachment files need their own check.
+
+A successful mail handoff is not evidence of recipient delivery. Inspect the
+receiving mailbox and provider's delivery or bounce records. The repository's
+isolated SMTP check does not establish external-domain deliverability or replace
+the merchant host's scheduler and mail acceptance check.
+
 ## Operate and recover
 
 `docker compose --project-name fullbleed-renderer -f automation/compose.yaml ps`
@@ -153,7 +181,13 @@ It explicitly trusts that fixture issuer and permits only the private test
 hostname; it does not disable TLS verification or substitute HTTP responses.
 It checks an untrusted certificate, authenticated PDFs, matching Node output,
 captured WooCommerce MIME, private attachment cleanup, outages, recovery and token
-rotation. It never sends email. Records and PDFs go to
+rotation. A separate phase installs a fixture-only SMTP configuration and sends
+synthetic mail to a pinned Mailpit container on the private network. No SMTP or
+mailbox port is published and no external relay is configured. Real order
+transitions persist jobs in WooCommerce's Action Scheduler; a separate native
+`wp-cron.php` process runs them. The check advances scheduled due times, verifies
+received PDF bytes, exercises an outage and explicit recovery, and checks alert
+cooldown across a WordPress container restart. Records and PDFs go to
 `output/renderer-deployment/` and the matching CI artifact.
 
 Public DNS/ACME issuance, a merchant's hosting/security policies, production mail
