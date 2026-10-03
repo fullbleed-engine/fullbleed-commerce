@@ -171,14 +171,25 @@ Directory preparation now includes an installed-ZIP gate using the official
 WordPress Plugin Check action plus native WordPress/Chrome editing and PDF checks.
 The free editor uses WordPress's shared libraries, and all generated assets can
 be rebuilt from the source included in its ZIP. These changes ship in alpha.3;
-WordPress.org account ownership, submission and manual approval are still pending.
-See [directory verification](verification.md#unreleased-wordpress-directory-preparation).
+the free directory candidate uses WordPress's required numeric version `0.1.0`.
+It was submitted October 3 under maintainer account `kfinkelstein`, assigned slug
+`fullbleed-commerce`, and passed WordPress.org's upload scan. It is awaiting human
+review and is not yet listed. See [submission evidence](wordpress-submission.json)
+and [directory verification](verification.md#wordpress-directory-submission).
 
 The editor foundation is complete in the development preview: both platforms
 passed real Chrome editing and download checks. The first automation slice is
 also implemented: an optional authenticated renderer and opt-in WooCommerce Pro
 attachments through the platform's transactional-email queue, with captured-mail
 verification and admin recovery guidance. It is not a managed paid service.
+
+The native integration also verifies real SMTP receipt in a private test inbox:
+a persisted order-transition job runs through Action Scheduler and WordPress
+cron, delivering a saved three-page design. Outage mail, scheduled failure
+summaries, alert cooldown after restart and explicit resend recovery pass.
+The [SMTP evidence](smtp-verification.json) retains the exact package and PDF
+hashes. The merchant host's scheduler and external mail provider still need
+the [complete staging acceptance check](../automation/DEPLOYMENT.md#check-the-complete-staging-workflow).
 
 Shopify Flow now has order-summary and packing-slip actions backed by a persistent
 job ledger, signed request verification, bounded retries, expiring private links,

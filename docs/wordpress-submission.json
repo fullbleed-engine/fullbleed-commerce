@@ -1,0 +1,566 @@
+{
+  "checkedAt": "2026-10-03T14:41:35.864442+00:00",
+  "scope": "Free WordPress directory submission only; not marketplace approval, a paid launch or merchant production evidence.",
+  "submission": {
+    "name": "Fullbleed Commerce",
+    "version": "0.1.0",
+    "account": "kfinkelstein",
+    "date": "2026-10-03",
+    "assignedSlug": "fullbleed-commerce",
+    "status": "Awaiting Review",
+    "automatedScan": "Pass",
+    "approved": false,
+    "directoryListed": false,
+    "confirmationImage": {
+      "path": "docs/previews/wordpress-submission-confirmation.png",
+      "sha256": "d861e9234078b2f6177eb2572968221777c520a3dd840933f22aa8f06439ae35",
+      "visuallyInspected": true
+    }
+  },
+  "source": {
+    "commit": "e02f564de39758decf3ec001d1b9a029ba63b0e6",
+    "pullRequest": "https://github.com/fullbleed-engine/fullbleed-commerce/pull/10",
+    "integrationPackageVersion": "0.1.0-alpha.3",
+    "freePluginVersion": "0.1.0",
+    "proVersion": "0.1.0-alpha.3",
+    "previewLabelingRetained": true
+  },
+  "archive": {
+    "filename": "fullbleed-commerce-0.1.0.zip",
+    "bytes": 3058350,
+    "sha256": "019faacd52a47798249fd0aa477f7447b560d3c9dd6afd2608e5dcf0c1ade57f",
+    "changedEntries": [
+      "fullbleed-commerce/fullbleed-commerce.php",
+      "fullbleed-commerce/readme.txt"
+    ],
+    "unchangedEntries": 37,
+    "files": [
+      {
+        "path": "fullbleed-commerce/assets/admin.css",
+        "bytes": 2375,
+        "sha256": "671e11f1902af9cf4a3e351eb60358b6859c74eeeee0dcfedab5317e050b5205"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/admin.js",
+        "bytes": 521008,
+        "sha256": "56c07ba37fd9c3f3432671d4e1801e851cb57294f3d8d36c7b2ed242e5b17015"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/build.json",
+        "bytes": 927,
+        "sha256": "781e7471c24b36fd1d209f3af0801693ed7db8cafe1548b63055ccd8283a3557"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/EDITOR-THIRD-PARTY-NOTICES.txt",
+        "bytes": 28368,
+        "sha256": "03ff6d87cef7b5c0d501facdd0d002324d36c4c3f74530bb1077108567bd8b9e"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/editor.css",
+        "bytes": 64864,
+        "sha256": "5f74864064d4e4f11e9dab9f26ddf896fd93d3f72be33c7ce732c56941561415"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/editor.js",
+        "bytes": 2337747,
+        "sha256": "096c5dd8781d88d1b8a261d192339a88a2603ba31231b38845658ebe08d3d732"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/engine-build.json",
+        "bytes": 2613,
+        "sha256": "902d2d9592064d56b8832c09b1b98d7f903d82efff309a8fe8f3355081643939"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/engine.wasm",
+        "bytes": 5047938,
+        "sha256": "60f06871dcd0109f919581f21ba5dac716c2c160094f380d5dba58ec96f0d5ee"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/fonts/BebasNeue-OFL.txt",
+        "bytes": 4337,
+        "sha256": "72082f6cb4d04be2ecf7cc7d9e1e7d73787f0af8a5a278a47cade70c16b78341"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/fonts/BebasNeue-Regular.ttf",
+        "bytes": 61400,
+        "sha256": "08e4623805102d819f58601e46e345648846075e363b2ceb23313c2d1c83ec73"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/fonts/DMSerifDisplay-Italic.ttf",
+        "bytes": 71208,
+        "sha256": "df74c0ac387baeaeb0fe4f2324e1668e6a3ed8c09cd9796fe162c71753e19e45"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/fonts/DMSerifDisplay-OFL.txt",
+        "bytes": 4512,
+        "sha256": "aa49c876a28d8c0b0a3027d6c25b9c607eee8c0fb96165011d42a6ace1408fe1"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/fonts/DMSerifDisplay-Regular.ttf",
+        "bytes": 76580,
+        "sha256": "8cc3643535edf039aa5d95440a8542735e9197e4f4b8d9303e980fefbf5ab616"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/fonts/Inter-OFL.txt",
+        "bytes": 4377,
+        "sha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/fonts/Inter-Variable.ttf",
+        "bytes": 876576,
+        "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/FULLBLEED-LICENSE.txt",
+        "bytes": 1079,
+        "sha256": "36a2115938f6e68cf0d87eccff7a6a3e57c17017e909cbd640d51aff1fa0c5a9"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/THIRD_PARTY_NOTICES.txt",
+        "bytes": 57660,
+        "sha256": "f369b7da5c0d54fb0be0917475e5964cfa276cfe3c7c830f7853213592d41ab8"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/WASI-LICENSE.txt",
+        "bytes": 1023,
+        "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+      },
+      {
+        "path": "fullbleed-commerce/assets/generated/worker.js",
+        "bytes": 51742,
+        "sha256": "73a3f65c8262bb13a2ad1e2cf35f7e77a1cb25fe9f84450a04785cf3f472ae33"
+      },
+      {
+        "path": "fullbleed-commerce/fullbleed-commerce.php",
+        "bytes": 16625,
+        "sha256": "2e0f89883715954402d5734161761daf4151d90da9850aa10a3ea85cca3c6a02"
+      },
+      {
+        "path": "fullbleed-commerce/LICENSE.txt",
+        "bytes": 17984,
+        "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6"
+      },
+      {
+        "path": "fullbleed-commerce/readme.txt",
+        "bytes": 3766,
+        "sha256": "12654e150def8e37e994d4ee9b66a8550abd5aa3e7654650393fda53c862ab68"
+      },
+      {
+        "path": "fullbleed-commerce/source/src/admin.js",
+        "bytes": 7261,
+        "sha256": "40e06b0b304b0038c53a80f67dc72ee5a1f2efbdc87a2c8359a0c9de19ded98c"
+      },
+      {
+        "path": "fullbleed-commerce/source/src/browser-worker.js",
+        "bytes": 2270,
+        "sha256": "6ba092155fdf7c8240f3d581cf2771f437845673525ce4b015c8eee644b7e31f"
+      },
+      {
+        "path": "fullbleed-commerce/source/src/documents.js",
+        "bytes": 11260,
+        "sha256": "5ce99b21492625109b32f3c5e4a22313cdb9f9101d42a6d7ca248d2faea175d5"
+      },
+      {
+        "path": "fullbleed-commerce/source/src/templates.js",
+        "bytes": 8805,
+        "sha256": "65fccfc51f4802cefb06a41426ded0a3ef37c0c73c4f1e307b9f6d92c5eaf63c"
+      },
+      {
+        "path": "fullbleed-commerce/source/src/editor-entry.js",
+        "bytes": 170,
+        "sha256": "fb94e8b0772ccdaa75e2b8c02d4114edcdc0e1a4378c8402f43eb2d3d82ab7ab"
+      },
+      {
+        "path": "fullbleed-commerce/source/src/template-editor.js",
+        "bytes": 15662,
+        "sha256": "fee9e30193c8261737277debec7a2ed5f1ceff74daae45b4c8bb15e8ab9dfd5b"
+      },
+      {
+        "path": "fullbleed-commerce/source/src/template-editor.css",
+        "bytes": 3810,
+        "sha256": "a231a832dee8242fdce57cad707c4ff437c86b0aa72e5a86580b766e4424dc41"
+      },
+      {
+        "path": "fullbleed-commerce/source/tools/build.mjs",
+        "bytes": 5391,
+        "sha256": "f1c9c7f2137cc3869c23311df553384bb039a890bef22eaa97565480dbf77a01"
+      },
+      {
+        "path": "fullbleed-commerce/source/tools/wordpress-editor.mjs",
+        "bytes": 4195,
+        "sha256": "759e8e90107c5e255f9b623a95546f83214f2579bf921ed620dd3c1a1cb03844"
+      },
+      {
+        "path": "fullbleed-commerce/source/package.json",
+        "bytes": 680,
+        "sha256": "838e7e391f2cea85893729239872b49eae785cc16ab7c8f74858e9f2644e6707"
+      },
+      {
+        "path": "fullbleed-commerce/source/package-lock.json",
+        "bytes": 160974,
+        "sha256": "9fbe0d5386a301ef38f43b38c760d46257999e855d84f5f5b73f9be248e26daf"
+      },
+      {
+        "path": "fullbleed-commerce/source/LICENSES/MIT-WASI.txt",
+        "bytes": 1023,
+        "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+      },
+      {
+        "path": "fullbleed-commerce/source/LICENSES/MIT-Fullbleed.txt",
+        "bytes": 1079,
+        "sha256": "36a2115938f6e68cf0d87eccff7a6a3e57c17017e909cbd640d51aff1fa0c5a9"
+      },
+      {
+        "path": "fullbleed-commerce/source/LICENSES/MIT-CodeMirror-formatting.txt",
+        "bytes": 1450,
+        "sha256": "a8e26dbe803668b516b857d23bade59eff150da9ce9f300adf547ec5c9ebbb0a"
+      },
+      {
+        "path": "fullbleed-commerce/source/LICENSES/MIT-Spectrum.txt",
+        "bytes": 1213,
+        "sha256": "85fdc7fb0f05b12d263f1fbbb9b50753d0aca59bb8d2ce4f37f30fda64076d62"
+      },
+      {
+        "path": "fullbleed-commerce/source/LICENSES/MIT-Cash.txt",
+        "bytes": 1243,
+        "sha256": "0675613c80765aaf35719e111d9d965aec623e34d3699981be8afee0a9fc9002"
+      },
+      {
+        "path": "fullbleed-commerce/source/README.txt",
+        "bytes": 306,
+        "sha256": "5919e486670c4160cff09f4c8db027bfd0bf82e5c188e1d1506e6296240f9bdf"
+      }
+    ]
+  },
+  "comparison": {
+    "releasedFreeVersion": "0.1.0-alpha.3",
+    "releasedFreeSha256": "53b2a9fe3da78ac14f94e9851fcc57fe66f413c7a6b13b3e9563573b364d4f79",
+    "changes": [
+      "PHP plugin header and asset-cache version",
+      "Readme contributor, Stable tag and changelog"
+    ],
+    "generatedAssetsSourceAndLicensesUnchanged": true,
+    "windowsAndLinuxArchivesIdentical": true,
+    "publicReleaseAssetsUnchanged": true
+  },
+  "downloadedBackFromWordPress": {
+    "checkedAt": "2026-10-03T14:40:03.749442+00:00",
+    "url": "https://wordpress.org/plugins/files/2026/10/03_14-36-59_fullbleed-commerce-0.1.0.zip",
+    "bytes": 3058350,
+    "sha256": "019faacd52a47798249fd0aa477f7447b560d3c9dd6afd2608e5dcf0c1ade57f",
+    "matchesSubmittedCandidateAndLinuxCI": true
+  },
+  "readmeValidation": {
+    "url": "https://wordpress.org/plugins/developers/readme-validator/?readme=https%3A%2F%2Fraw.githubusercontent.com%2Ffullbleed-engine%2Ffullbleed-commerce%2Fe02f564de39758decf3ec001d1b9a029ba63b0e6%2Fwordpress%2Ffullbleed-commerce%2Freadme.txt",
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "order documents tag not widely used",
+      "No Upgrade Notice section",
+      "No Screenshots section",
+      "No donate link"
+    ]
+  },
+  "nativeDirectory": {
+    "run": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37129983784",
+    "conclusion": "success",
+    "strictPluginCheck": true,
+    "pluginCheckVersion": "2.1.0",
+    "wordpress": "7.1.2",
+    "woocommerce": "11.1.2",
+    "php": "8.3",
+    "browser": {
+      "checkedAt": "2026-10-03T14:35:19.814001+00:00",
+      "browser": "154.0.8037.97",
+      "browserEngine": "chrome",
+      "browserDistribution": "Google Chrome channel",
+      "playwright": "1.63.0",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "store": "http://127.0.0.1:8888",
+      "pro": false,
+      "upgradeTemplate": null,
+      "checks": [
+        {
+          "name": "real browser worker produces a complete PDF download",
+          "passed": true
+        },
+        {
+          "name": "visual editor renders the saved template",
+          "passed": true
+        },
+        {
+          "name": "editor uses WordPress dependencies without replacing shared globals",
+          "passed": true
+        },
+        {
+          "name": "dragging a block into the canvas adds real editable content",
+          "passed": true
+        },
+        {
+          "name": "visual text editing reaches exported HTML",
+          "passed": true
+        },
+        {
+          "name": "custom HTML and CSS save through authenticated editor",
+          "passed": true
+        },
+        {
+          "name": "PDF preview contains visual edits and order data",
+          "passed": true
+        },
+        {
+          "name": "saved template survives reload and applies to ordinary downloads",
+          "passed": true
+        },
+        {
+          "name": "reset restores the built-in design",
+          "passed": true
+        },
+        {
+          "name": "mobile editor fits the viewport",
+          "passed": true
+        },
+        {
+          "name": "no browser JavaScript errors",
+          "passed": true
+        }
+      ],
+      "pdfSha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+      "documents": [
+        {
+          "file": "output/browser/wordpress-directory-default.pdf",
+          "sha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+          "pages": 1
+        },
+        {
+          "file": "output/browser/wordpress-directory-custom.pdf",
+          "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+          "pages": 1
+        },
+        {
+          "file": "output/browser/wordpress-directory-saved.pdf",
+          "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+          "pages": 1
+        }
+      ],
+      "pageErrors": []
+    }
+  },
+  "upgradeVerification": {
+    "run": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37129983880/job/111223003022",
+    "conclusion": "success",
+    "results": [
+      {
+        "storage": "hpos",
+        "pluginVersions": {
+          "fullbleed-commerce": "0.1.0",
+          "fullbleed-commerce-pro": "0.1.0-alpha.3"
+        },
+        "checks": [
+          {
+            "name": "numeric directory version upgrades the published alpha.3 base",
+            "passed": true
+          },
+          {
+            "name": "released alpha.2 base and Pro are active in the requested storage mode",
+            "passed": true
+          },
+          {
+            "name": "alpha.2 has no new activity schema",
+            "passed": true
+          },
+          {
+            "name": "WordPress replaces fullbleed-commerce without upgrader errors",
+            "passed": true
+          },
+          {
+            "name": "every installed fullbleed-commerce file matches its candidate ZIP",
+            "passed": true
+          },
+          {
+            "name": "WordPress removes obsolete fullbleed-commerce files",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement preserves both templates and revisions",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement preserves automation configuration",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement preserves orders and does not send mail",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement keeps both plugins active",
+            "passed": true
+          },
+          {
+            "name": "new base remains compatible with the previous Pro version during upgrade",
+            "passed": true
+          },
+          {
+            "name": "WordPress replaces fullbleed-commerce-pro without upgrader errors",
+            "passed": true
+          },
+          {
+            "name": "every installed fullbleed-commerce-pro file matches its candidate ZIP",
+            "passed": true
+          },
+          {
+            "name": "WordPress removes obsolete fullbleed-commerce-pro files",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement preserves both templates and revisions",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement preserves automation configuration",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement preserves orders and does not send mail",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement keeps both plugins active",
+            "passed": true
+          },
+          {
+            "name": "both installed plugin versions match the release candidate",
+            "passed": true
+          },
+          {
+            "name": "upgrade initializes the activity schema and retention schedule on the next request",
+            "passed": true
+          },
+          {
+            "name": "saved document renders identical PDF bytes after both upgrades",
+            "passed": true
+          }
+        ],
+        "pdfSha256": "002576e473c382372bc1f11c42abf40f0669c60aa257ee5581ecd3abb6322d76",
+        "automationPreserved": true
+      },
+      {
+        "storage": "legacy",
+        "pluginVersions": {
+          "fullbleed-commerce": "0.1.0",
+          "fullbleed-commerce-pro": "0.1.0-alpha.3"
+        },
+        "checks": [
+          {
+            "name": "numeric directory version upgrades the published alpha.3 base",
+            "passed": true
+          },
+          {
+            "name": "released alpha.2 base and Pro are active in the requested storage mode",
+            "passed": true
+          },
+          {
+            "name": "alpha.2 has no new activity schema",
+            "passed": true
+          },
+          {
+            "name": "WordPress replaces fullbleed-commerce without upgrader errors",
+            "passed": true
+          },
+          {
+            "name": "every installed fullbleed-commerce file matches its candidate ZIP",
+            "passed": true
+          },
+          {
+            "name": "WordPress removes obsolete fullbleed-commerce files",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement preserves both templates and revisions",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement preserves automation configuration",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement preserves orders and does not send mail",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement keeps both plugins active",
+            "passed": true
+          },
+          {
+            "name": "new base remains compatible with the previous Pro version during upgrade",
+            "passed": true
+          },
+          {
+            "name": "WordPress replaces fullbleed-commerce-pro without upgrader errors",
+            "passed": true
+          },
+          {
+            "name": "every installed fullbleed-commerce-pro file matches its candidate ZIP",
+            "passed": true
+          },
+          {
+            "name": "WordPress removes obsolete fullbleed-commerce-pro files",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement preserves both templates and revisions",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement preserves automation configuration",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement preserves orders and does not send mail",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement keeps both plugins active",
+            "passed": true
+          },
+          {
+            "name": "both installed plugin versions match the release candidate",
+            "passed": true
+          },
+          {
+            "name": "upgrade initializes the activity schema and retention schedule on the next request",
+            "passed": true
+          },
+          {
+            "name": "saved document renders identical PDF bytes after both upgrades",
+            "passed": true
+          }
+        ],
+        "pdfSha256": "002576e473c382372bc1f11c42abf40f0669c60aa257ee5581ecd3abb6322d76",
+        "automationPreserved": true
+      }
+    ]
+  },
+  "localChecks": {
+    "sharedTests": 45,
+    "failed": 0,
+    "build": true,
+    "pack": true,
+    "publishedBlueprintSourceCheck": true
+  },
+  "pdfComparison": {
+    "byteIdenticalToPreviousDirectoryRun": true,
+    "previousRun": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37129327502",
+    "previouslyInspectedPreviews": [
+      "docs/previews/woocommerce-wordpress-default.png",
+      "docs/previews/woocommerce-wordpress-custom.png"
+    ]
+  },
+  "limits": [
+    "Human review is pending; assigned slug may change before approval.",
+    "Submission notifications go to the WordPress.org account email.",
+    "The free package retains its staging-preview, order/refund and resource/font limitations.",
+    "No new charge was incurred; paid-product, external mail and merchant-host gates remain separate."
+  ]
+}
