@@ -108,7 +108,7 @@ renderer rejects future requests, including previously copied links.
 ## Merchant activity and recovery
 
 The current source adds **WooCommerce → Fullbleed activity**. This view is newer
-than the published alpha.2 ZIPs. It shows the latest result for each order/email
+than the alpha.2 ZIPs and ships in alpha.3. It shows the latest result for each order/email
 type and customer My Account workflow, with a Failed filter, connection guidance
 and authorized links to WooCommerce's order screen. The automation settings page
 links directly to it. A notice on WooCommerce screens surfaces failed results

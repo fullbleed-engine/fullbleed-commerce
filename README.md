@@ -31,9 +31,9 @@ template to keep it. The [walkthrough](https://docs.fullbleed.dev/guides/woocomm
 includes an actual sample PDF and explains the automated workflows.
 
 Download the free plugin from the
-[WooCommerce preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.2).
+[WooCommerce preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.3).
 Use a staging store. Install WooCommerce, then upload
-`fullbleed-commerce-0.1.0-alpha.2.zip` in WordPress Plugins. Open
+`fullbleed-commerce-0.1.0-alpha.3.zip` in WordPress Plugins. Open
 **WooCommerce → Fullbleed documents**, enter a numeric order ID, and generate a
 PDF. An order edit screen also has a **Create Fullbleed PDF** link.
 
@@ -47,6 +47,19 @@ JavaScript, fonts, and the WebAssembly engine are served by the merchant's own
 WordPress site. Authorized staff read an order over WordPress's authenticated REST
 API; rendering occurs in a dedicated worker in that browser. This plugin sends no
 customer data to Fullbleed and stores no generated documents.
+
+## Upgrade the preview
+
+Back up your staging store and export your templates first. Upload the new free
+ZIP through **Plugins > Add New > Upload Plugin**, then choose **Replace current
+with uploaded**. If you use Pro, replace its ZIP next. Keep both packages on the
+same release; the base is upgraded first. Do not delete the plugins to update them.
+
+Saved summary and packing-slip templates, their revisions, and existing automation
+settings are retained. An enabled automation remains enabled after an upgrade;
+check its connection and one synthetic order before returning to normal use.
+The [release verification](docs/verification.md) records the upgrade checks and
+which configurations were exercised. The preview still has no automatic updater.
 
 ## Customize templates
 
@@ -81,10 +94,10 @@ Store operators and agencies can use the
 credential provisioning, bounded container resources, maintenance and rotation.
 It runs on infrastructure the operator controls; it is not a hosted plan.
 
-Current source also adds **Fullbleed activity**: the latest email-attachment and
+Alpha.3 adds **Fullbleed activity**: the latest email-attachment and
 customer-download results, a failure filter, recovery guidance and native order
-links. Successful retries clear stale failures. This view is newer than the
-published alpha.2 ZIPs; it reports PDF preparation, not customer receipt. See the
+links. Successful retries clear stale failures. It reports PDF preparation,
+not customer receipt. See the
 [activity and retention details](automation/README.md#merchant-activity-and-recovery).
 
 Shopify adds **Create order summary link** and **Create packing slip link** to
@@ -152,7 +165,7 @@ the browser-worker runtime, DOM workflows, WordPress authentication, and actual
 WooCommerce order reads are checked separately. DOM simulation is not a real
 Chrome/Safari test or Shopify approval.
 
-The alpha.2 release fixes controls becoming usable before their scripts or add-ons
+The alpha.2 release fixed controls becoming usable before their scripts or add-ons
 are ready. Its public demo, delayed-script checks, saved templates and Pro batch
 downloads pass in real Chrome. All 44 shared tests and the Linux integration and
 container jobs pass; released ZIPs match Windows and Linux builds. See the

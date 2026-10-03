@@ -2,7 +2,7 @@
 Contributors: krflol
 Requires at least: 6.5
 Requires PHP: 7.4
-Stable tag: 0.1.0-alpha.2
+Stable tag: 0.1.0-alpha.3
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,3 +24,9 @@ Fullbleed activity shows the latest email-attachment and customer-download resul
 The plugin is GPL-compatible. Purchasing distribution, updates and support does not restrict rights granted by the GPL. No automatic disabling on subscription expiry is implemented.
 
 Requires the separate Fullbleed Commerce base plugin and WooCommerce. This package is not intended for submission to the free WordPress.org plugin directory.
+
+
+== Changelog ==
+
+= 0.1.0-alpha.3 =
+Add Fullbleed activity for email and customer-download results, failure filtering, native order links and recovery guidance.
