@@ -14,12 +14,12 @@
     "projectId": "ee2c5784-260b-44d7-aff3-ef46714687bc",
     "existingWorkspacePlan": "Hobby",
     "newSubscriptionPurchased": false,
-    "meteredUsageDollars": 0.0006133850781133558,
-    "usageCheckedAt": "2026-10-03T02:27:25.761925+00:00",
+    "meteredUsageDollars": 0.001176759314569074,
+    "usageCheckedAt": "2026-10-03T02:59:18.609420+00:00",
     "computeStopped": true,
     "persistentVolumeRetained": true,
-    "notes": "Metered resource usage before plan credits, not an invoice or confirmed card charge. Usage can lag; the project report does not itemize bucket charges. Retained volume and private bucket storage remain metered. The synthetic backup was removed; only the dataset marker and eight encrypted synthetic erasure instructions remain. Reconcile actual launch charges against the $50 total cap.",
+    "notes": "Metered resource usage before plan credits, not an invoice or confirmed card charge. Usage can lag; the project report does not itemize bucket charges. Retained volume and private bucket storage remain metered. One verified synthetic staging snapshot, the dataset marker and eight encrypted synthetic erasure instructions remain. Automatic backup creation resumes only when compute starts. Reconcile actual launch charges against the $50 total cap.",
     "privateRecoveryBucketRetained": true,
-    "recoveryBucketBytes": 2002
+    "recoveryBucketBytes": 2583218
   }
 }

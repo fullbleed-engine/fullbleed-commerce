@@ -174,6 +174,13 @@ and active links stayed disabled. Readiness and private monitoring passed.
 The [retained recovery evidence](../docs/recovery-verification.json) identifies
 the exact source, deployments, hashes and cleanup.
 
+The [automatic backup evidence](../docs/backup-schedule-verification.json)
+records startup creation without an operator backup command, a deliberately
+backdated synthetic snapshot that failed the GitHub monitor, successful catch-up,
+and a replacement service that kept the same fresh snapshot. Time-controlled
+tests cover the 24-hour boundary and longer downtime; the attended hosted drill
+does not represent a continuous 24-hour uptime or notification-receipt test.
+
 Independent key recovery, operator alert receipt and a representative merchant
 pilot remain launch work.
 These checks do not claim legal compliance, a recovery-time SLA or marketplace

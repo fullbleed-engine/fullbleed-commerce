@@ -181,8 +181,10 @@ offline recovery without reviving cleared exports or old active document links.
 Restoration preserves retained templates and outstanding requests, clears
 authorization sessions and requires merchants to resume automation explicitly.
 The hosted promotion drill also passed, including a late erasure applied before
-the replacement service opened HTTP. Daily backup scheduling, freshness alerts
-and independent key recovery still need verification. See
+the replacement service opened HTTP. Daily backups now run automatically while
+the service is online, with stored-byte verification, restart-safe scheduling and
+external freshness checks. Independent key recovery and actual operator alert
+receipt still need verification. See
 [recovery operation](../shopify/RECOVERY.md).
 
 Fulfillment batches, automatic missing-attachment recovery, webhook monitoring
