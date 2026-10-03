@@ -1,0 +1,662 @@
+{
+  "checkedAt": "2026-10-03T22:51:53.876437+00:00",
+  "scope": "Live Shopify private zero-price subscription lifecycle, using the production entitlement function from the merged billing fix. This does not verify a running hosted installation or a paid merchant workflow.",
+  "sourceCommit": "ce5324b701c602a29ad50fcc4a82c9abe24444c7",
+  "mergedCommit": "13010931f184f6f9aa048aea4b169d8a1000c8d4",
+  "pullRequest": "https://github.com/fullbleed-engine/fullbleed-commerce/pull/14",
+  "registration": {
+    "date": "2026-10-03",
+    "amount": 19,
+    "currency": "USD",
+    "status": "Paid",
+    "evidence": "Shopify Partner billing page: App Store Registration Fee; subtotal and total both $19.00; Paid status visually read on October 3, 2026."
+  },
+  "plan": {
+    "handle": "shopify-test",
+    "price": 0,
+    "currency": "USD",
+    "interval": "EVERY_30_DAYS",
+    "storeAllowlist": [
+      "fullbleed-commerce-test.myshopify.com"
+    ],
+    "redirect": "/app",
+    "developmentStoreBypass": false,
+    "configurationSavedAndReloaded": true,
+    "publicPlans": 0
+  },
+  "credentials": {
+    "runtimePermissions": [
+      "Manage apps"
+    ],
+    "temporaryCancellationPermissions": [
+      "Manage apps",
+      "View financials"
+    ],
+    "temporaryClientDeleted": true,
+    "deletionVerifiedInClientList": true,
+    "temporaryLocalCredentialDeleted": true,
+    "secretValuesRetainedInEvidence": false
+  },
+  "phases": [
+    {
+      "checkedAt": "2026-10-03T22:34:06.016Z",
+      "phase": "before-activation",
+      "apiVersion": "2026-07",
+      "organizationId": "5227588",
+      "appId": "gid://shopify/App/430863056897",
+      "identity": {
+        "shopId": "gid://shopify/Shop/79783100574",
+        "shop": "fullbleed-commerce-test.myshopify.com"
+      },
+      "allowedHandles": [
+        "shopify-test"
+      ],
+      "nodeEnv": "production",
+      "developmentBypass": false,
+      "querySha256": "a4d1fee0ccea7ba72e8ba1a1b2899b5049f0f988caeef9f8880868f3bfd3370d",
+      "httpStatus": 200,
+      "response": {
+        "data": {
+          "activeSubscription": null
+        }
+      },
+      "allowed": false,
+      "ok": true
+    },
+    {
+      "checkedAt": "2026-10-03T22:35:27.313Z",
+      "phase": "after-activation",
+      "apiVersion": "2026-07",
+      "organizationId": "5227588",
+      "appId": "gid://shopify/App/430863056897",
+      "identity": {
+        "shopId": "gid://shopify/Shop/79783100574",
+        "shop": "fullbleed-commerce-test.myshopify.com"
+      },
+      "allowedHandles": [
+        "shopify-test"
+      ],
+      "nodeEnv": "production",
+      "developmentBypass": false,
+      "querySha256": "a4d1fee0ccea7ba72e8ba1a1b2899b5049f0f988caeef9f8880868f3bfd3370d",
+      "httpStatus": 200,
+      "response": {
+        "data": {
+          "activeSubscription": {
+            "shop": {
+              "id": "gid://shopify/Shop/79783100574",
+              "myshopifyDomain": "fullbleed-commerce-test.myshopify.com"
+            },
+            "items": [
+              {
+                "handle": "shopify-test"
+              }
+            ]
+          }
+        }
+      },
+      "allowed": true,
+      "ok": true
+    },
+    {
+      "checkedAt": "2026-10-03T22:39:20.336Z",
+      "phase": "deferred",
+      "variables": {
+        "appId": "gid://shopify/App/430863056897",
+        "shopId": "gid://shopify/Shop/79783100574"
+      },
+      "apiVersion": "2026-07",
+      "testStore": "fullbleed-commerce-test.myshopify.com",
+      "before": {
+        "httpStatus": 200,
+        "body": {
+          "data": {
+            "activeSubscription": {
+              "shop": {
+                "id": "gid://shopify/Shop/79783100574",
+                "myshopifyDomain": "fullbleed-commerce-test.myshopify.com"
+              },
+              "billingPeriod": "EVERY_30_DAYS",
+              "cancelAtEndOfCycle": false,
+              "items": [
+                {
+                  "handle": "shopify-test",
+                  "price": {
+                    "__typename": "FlatRatePrice",
+                    "currency": "USD",
+                    "amount": "0.0"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "options": {
+        "prorate": false,
+        "skipFinalUsageCharge": false,
+        "deferCancellation": true
+      },
+      "cancellation": {
+        "httpStatus": 200,
+        "body": {
+          "data": {
+            "appSubscriptionCancel": {
+              "appSubscription": {
+                "cancelledAt": null,
+                "cancelAtEndOfCycle": true,
+                "shop": {
+                  "id": "gid://shopify/Shop/79783100574",
+                  "myshopifyDomain": "fullbleed-commerce-test.myshopify.com"
+                },
+                "items": [
+                  {
+                    "handle": "shopify-test"
+                  }
+                ]
+              },
+              "userErrors": []
+            }
+          }
+        }
+      },
+      "ok": true
+    },
+    {
+      "checkedAt": "2026-10-03T22:39:33.144Z",
+      "phase": "scheduled-cancellation",
+      "apiVersion": "2026-07",
+      "organizationId": "5227588",
+      "appId": "gid://shopify/App/430863056897",
+      "identity": {
+        "shopId": "gid://shopify/Shop/79783100574",
+        "shop": "fullbleed-commerce-test.myshopify.com"
+      },
+      "allowedHandles": [
+        "shopify-test"
+      ],
+      "nodeEnv": "production",
+      "developmentBypass": false,
+      "querySha256": "a4d1fee0ccea7ba72e8ba1a1b2899b5049f0f988caeef9f8880868f3bfd3370d",
+      "httpStatus": 200,
+      "response": {
+        "data": {
+          "activeSubscription": {
+            "shop": {
+              "id": "gid://shopify/Shop/79783100574",
+              "myshopifyDomain": "fullbleed-commerce-test.myshopify.com"
+            },
+            "items": [
+              {
+                "handle": "shopify-test"
+              }
+            ]
+          }
+        }
+      },
+      "allowed": true,
+      "ok": true
+    },
+    {
+      "checkedAt": "2026-10-03T22:39:34.761Z",
+      "phase": "immediate",
+      "variables": {
+        "appId": "gid://shopify/App/430863056897",
+        "shopId": "gid://shopify/Shop/79783100574"
+      },
+      "apiVersion": "2026-07",
+      "testStore": "fullbleed-commerce-test.myshopify.com",
+      "before": {
+        "httpStatus": 200,
+        "body": {
+          "data": {
+            "activeSubscription": {
+              "shop": {
+                "id": "gid://shopify/Shop/79783100574",
+                "myshopifyDomain": "fullbleed-commerce-test.myshopify.com"
+              },
+              "billingPeriod": "EVERY_30_DAYS",
+              "cancelAtEndOfCycle": true,
+              "items": [
+                {
+                  "handle": "shopify-test",
+                  "price": {
+                    "__typename": "FlatRatePrice",
+                    "currency": "USD",
+                    "amount": "0.0"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "options": {
+        "prorate": false,
+        "skipFinalUsageCharge": false,
+        "deferCancellation": false
+      },
+      "cancellation": {
+        "httpStatus": 200,
+        "body": {
+          "data": {
+            "appSubscriptionCancel": {
+              "appSubscription": {
+                "cancelledAt": null,
+                "cancelAtEndOfCycle": true,
+                "shop": {
+                  "id": "gid://shopify/Shop/79783100574",
+                  "myshopifyDomain": "fullbleed-commerce-test.myshopify.com"
+                },
+                "items": [
+                  {
+                    "handle": "shopify-test"
+                  }
+                ]
+              },
+              "userErrors": []
+            }
+          }
+        }
+      },
+      "ok": false,
+      "acknowledged": true,
+      "expectedStateReached": false,
+      "observation": "Shopify acknowledged the second cancellation but retained the previously scheduled end-of-cycle state."
+    },
+    {
+      "checkedAt": "2026-10-03T22:39:36.458Z",
+      "phase": "after-cancellation",
+      "apiVersion": "2026-07",
+      "organizationId": "5227588",
+      "appId": "gid://shopify/App/430863056897",
+      "identity": {
+        "shopId": "gid://shopify/Shop/79783100574",
+        "shop": "fullbleed-commerce-test.myshopify.com"
+      },
+      "allowedHandles": [
+        "shopify-test"
+      ],
+      "nodeEnv": "production",
+      "developmentBypass": false,
+      "querySha256": "a4d1fee0ccea7ba72e8ba1a1b2899b5049f0f988caeef9f8880868f3bfd3370d",
+      "httpStatus": 200,
+      "response": {
+        "data": {
+          "activeSubscription": {
+            "shop": {
+              "id": "gid://shopify/Shop/79783100574",
+              "myshopifyDomain": "fullbleed-commerce-test.myshopify.com"
+            },
+            "items": [
+              {
+                "handle": "shopify-test"
+              }
+            ]
+          }
+        }
+      },
+      "allowed": true,
+      "ok": true
+    },
+    {
+      "checkedAt": "2026-10-03T22:41:33.851Z",
+      "phase": "after-reactivation",
+      "apiVersion": "2026-07",
+      "organizationId": "5227588",
+      "appId": "gid://shopify/App/430863056897",
+      "identity": {
+        "shopId": "gid://shopify/Shop/79783100574",
+        "shop": "fullbleed-commerce-test.myshopify.com"
+      },
+      "allowedHandles": [
+        "shopify-test"
+      ],
+      "nodeEnv": "production",
+      "developmentBypass": false,
+      "querySha256": "a4d1fee0ccea7ba72e8ba1a1b2899b5049f0f988caeef9f8880868f3bfd3370d",
+      "httpStatus": 200,
+      "response": {
+        "data": {
+          "activeSubscription": {
+            "shop": {
+              "id": "gid://shopify/Shop/79783100574",
+              "myshopifyDomain": "fullbleed-commerce-test.myshopify.com"
+            },
+            "items": [
+              {
+                "handle": "shopify-test"
+              }
+            ]
+          }
+        }
+      },
+      "allowed": true,
+      "ok": true
+    },
+    {
+      "checkedAt": "2026-10-03T22:41:35.408Z",
+      "phase": "immediate",
+      "variables": {
+        "appId": "gid://shopify/App/430863056897",
+        "shopId": "gid://shopify/Shop/79783100574"
+      },
+      "apiVersion": "2026-07",
+      "testStore": "fullbleed-commerce-test.myshopify.com",
+      "before": {
+        "httpStatus": 200,
+        "body": {
+          "data": {
+            "activeSubscription": {
+              "shop": {
+                "id": "gid://shopify/Shop/79783100574",
+                "myshopifyDomain": "fullbleed-commerce-test.myshopify.com"
+              },
+              "billingPeriod": "EVERY_30_DAYS",
+              "cancelAtEndOfCycle": false,
+              "items": [
+                {
+                  "handle": "shopify-test",
+                  "price": {
+                    "__typename": "FlatRatePrice",
+                    "currency": "USD",
+                    "amount": "0.0"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "options": {
+        "prorate": false,
+        "skipFinalUsageCharge": false,
+        "deferCancellation": false
+      },
+      "cancellation": {
+        "httpStatus": 200,
+        "body": {
+          "data": {
+            "appSubscriptionCancel": {
+              "appSubscription": {
+                "cancelledAt": "2026-10-03T22:41:48Z",
+                "cancelAtEndOfCycle": true,
+                "shop": {
+                  "id": "gid://shopify/Shop/79783100574",
+                  "myshopifyDomain": "fullbleed-commerce-test.myshopify.com"
+                },
+                "items": [
+                  {
+                    "handle": "shopify-test"
+                  }
+                ]
+              },
+              "userErrors": []
+            }
+          }
+        }
+      },
+      "acknowledged": true,
+      "expectedStateReached": true,
+      "ok": true,
+      "subsequentProductionCheck": "live-after-immediate-cancellation.json",
+      "observation": "Shopify recorded cancelledAt and the subsequent activeSubscription query returned null. The cancellation payload retained cancelAtEndOfCycle=true, so that payload flag alone is not authoritative for access."
+    },
+    {
+      "checkedAt": "2026-10-03T22:41:37.553Z",
+      "phase": "after-immediate-cancellation",
+      "apiVersion": "2026-07",
+      "organizationId": "5227588",
+      "appId": "gid://shopify/App/430863056897",
+      "identity": {
+        "shopId": "gid://shopify/Shop/79783100574",
+        "shop": "fullbleed-commerce-test.myshopify.com"
+      },
+      "allowedHandles": [
+        "shopify-test"
+      ],
+      "nodeEnv": "production",
+      "developmentBypass": false,
+      "querySha256": "a4d1fee0ccea7ba72e8ba1a1b2899b5049f0f988caeef9f8880868f3bfd3370d",
+      "httpStatus": 200,
+      "response": {
+        "data": {
+          "activeSubscription": null
+        }
+      },
+      "allowed": false,
+      "ok": true
+    }
+  ],
+  "localChecks": {
+    "ok": true,
+    "checks": [
+      {
+        "name": "build",
+        "exit_code": 0
+      },
+      {
+        "name": "shared-tests",
+        "exit_code": 0
+      },
+      {
+        "name": "shopify",
+        "exit_code": 0
+      }
+    ],
+    "source_hashes": {
+      "shopify/billing.js": "4789ea16ed4601453dca279d1df5b62e6e600492136cd9e764d99bfc8b8b3d5a",
+      "test/shopify-access.test.mjs": "5c6f91cad0e0f75269dd8e1a9e443f0d6ed57b892a763ed8daa4a63babf20483",
+      "shopify/app/test/flow.test.mjs": "6baad441d05ac0493e037bf2f4728372757a3784a253a7e190b792ad1bc8cdf9"
+    },
+    "shopify": {
+      "checkedAt": "2026-10-03T22:15:27.163Z",
+      "node": "v24.21.0",
+      "checks": [
+        {
+          "name": "schema",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "migrations",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "recovery-fixture",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "route-types",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "typecheck",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "lint",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "build",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "health",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "webhooks",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "flow",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "privacy",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "monitor",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "recovery",
+          "exitCode": 0,
+          "passed": true
+        }
+      ],
+      "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
+      "lockSha256": "757b5134c727243dd70fecab8e20258c83c27505157577006e310f54909d2f7b",
+      "serverBuildSha256": "d2f37eb52148c19e387a0ca0c969094eed83fecff00fbdb76100b8847af44b72",
+      "browserTested": false,
+      "liveBillingTested": false
+    }
+  },
+  "schemaValidation": {
+    "api": "partner",
+    "version": "2026-07",
+    "allPassed": true,
+    "artifacts": [
+      "commerce-subscription-query",
+      "commerce-test-subscription-details",
+      "commerce-cancel-test-subscription"
+    ]
+  },
+  "ci": [
+    {
+      "name": "renderer-deployment",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37158248458/job/111306067694"
+    },
+    {
+      "name": "pagination",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37158248458/job/111306067686"
+    },
+    {
+      "name": "container",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37158248458/job/111306067657"
+    },
+    {
+      "name": "integration",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37158248458/job/111306067616"
+    },
+    {
+      "name": "upgrade",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37158248458/job/111306067534"
+    },
+    {
+      "name": "container",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37158179159/job/111305867037"
+    },
+    {
+      "name": "renderer-deployment",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37158179159/job/111305867032"
+    },
+    {
+      "name": "pagination",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37158179159/job/111305866891"
+    },
+    {
+      "name": "upgrade",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37158179159/job/111305866890"
+    },
+    {
+      "name": "integration",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37158179159/job/111305866787"
+    }
+  ],
+  "hostedConfiguration": {
+    "checkedAt": "2026-10-03T22:43:49.889472+00:00",
+    "projectId": "ee2c5784-260b-44d7-aff3-ef46714687bc",
+    "serviceId": "bcd8801b-e89c-4c4c-baf3-b8e1d0fe8b59",
+    "configuredKeys": [
+      "SHOPIFY_PARTNER_ORG_ID",
+      "SHOPIFY_PARTNER_APP_ID",
+      "SHOPIFY_APP_HANDLE",
+      "SHOPIFY_PLAN_HANDLES",
+      "SHOPIFY_PARTNER_API_ACCESS_TOKEN"
+    ],
+    "nodeEnv": "production",
+    "secretValueOmitted": true,
+    "deployed": false,
+    "computeStopped": true,
+    "allowedPlanHandles": [
+      "shopify-test"
+    ],
+    "appHandle": "fullbleed-commerce"
+  },
+  "iacPlan": {
+    "ok": true,
+    "command": "railway config plan --file .railway/railway.ts --json",
+    "cliVersion": "5.63.1",
+    "sdkVersion": "3.12.0",
+    "nodeVersion": "24.21.0",
+    "changes": [],
+    "applied": false
+  },
+  "finalState": {
+    "subscriptionActive": false,
+    "computeStopped": true,
+    "listing": "draft",
+    "submittedForReview": false,
+    "merchantChargesCreated": false
+  },
+  "limits": {
+    "realCatalogPriceMigrationVerified": false,
+    "planChangesVerified": false,
+    "storeFreezeVerified": false,
+    "hostedInstallCheckoutFlowVerified": false,
+    "paidMerchantVerified": false,
+    "appStoreApproved": false
+  },
+  "sourceHashes": {
+    "shopify/billing.js": "4789ea16ed4601453dca279d1df5b62e6e600492136cd9e764d99bfc8b8b3d5a",
+    "test/shopify-access.test.mjs": "5c6f91cad0e0f75269dd8e1a9e443f0d6ed57b892a763ed8daa4a63babf20483",
+    "shopify/app/test/flow.test.mjs": "6baad441d05ac0493e037bf2f4728372757a3784a253a7e190b792ad1bc8cdf9",
+    ".railway/railway.ts": "379dd0c2e7b2c00f4d16c7e104d73b2496554947f94c8bb6fb274aaae4bad235"
+  },
+  "artifactHashes": {
+    "live-before-activation.json": "4f09aeb19a6413e76b4139de44a0bd5da585f3a66200085039059c14ffed33e8",
+    "live-after-activation.json": "17462d496127eb52be12b75feec28aa3300c7963471dc76181fc1fcfc08b6067",
+    "cancel-deferred.json": "3c9762e17fd3f12744dd3bb9a8578881868593dbdf22c0d072f72db8b9aa1946",
+    "live-scheduled-cancellation.json": "21d2f6f2fa5d6730bd67d778199f48b8ee3380b7428afe48929fc72a3cde8121",
+    "cancel-already-scheduled-immediate.json": "dd9d89d4024a8a30a922740a2462fda38d95c3cba310491a938ca64cd6b44941",
+    "live-after-cancellation.json": "1bc35549efe25e5d7d9f7ddfc45eec16598d7d2c672d10d0b61b8eec7f327a60",
+    "live-after-reactivation.json": "e8c972de2d8af7e3ee9725f2efd6ca6e316a4cfa30ee6991dbb408069559db35",
+    "cancel-immediate.json": "12ef1829ebee4b54b01a7c38919c6a1805c95f852a3cfd2d06705c22774a179b",
+    "live-after-immediate-cancellation.json": "2cb5430f8882609eb140b112c2f88cfa028f79e49ae2940272bb29ac6bdd309e"
+  }
+}

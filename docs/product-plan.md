@@ -295,8 +295,10 @@ for the checks actually run.
 | 4. Wider automation | Conditional warehouse jobs and merchant-selected external destinations | Shipment/refund semantics, durable delivery state, destination verification and retry reconciliation before adding Make, Zapier or n8n recipes |
 
 Use Shopify App Pricing's hosted plan selection and Partner API entitlement
-checks for the new public app. The current subscription checks are implemented,
-but paid activation and lifecycle have not been exercised.
+checks for the new public app. Live activation, scheduled cancellation,
+reactivation and immediate-cancellation access checks passed with a private $0
+test plan. Plan changes, freezes and the hosted purchase-to-Flow path remain
+release gates; no paid merchant is enabled. See the [billing evidence](../shopify/BILLING.md).
 [Shopify's current pricing integration](https://shopify.dev/docs/apps/launch/billing/shopify-app-pricing)
 defines the required platform behavior.
 
@@ -318,9 +320,9 @@ usage, support burden and paid conversion. Do not invent targets from absent
 merchant data. Offer no lifetime hosted service and make recurring costs explicit.
 
 The authorization is $50 total. Spending remains in
-[launch-budget.json](launch-budget.json). Reserve room for Shopify registration
-and a short staging-hosting trial; no charge or recurring infrastructure
-commitment is implied by this document. Exceeding the cap requires approval.
+[launch-budget.json](launch-budget.json). The $19 Shopify registration is paid,
+leaving $31 before metered hosting charges. Preserve room for attended staging;
+this is not a recurring infrastructure allowance. Exceeding the cap requires approval.
 
 ## Platform evidence
 

@@ -1,21 +1,31 @@
 {
   "currency": "USD",
   "authorized_total": 50,
-  "spent": 0,
-  "charges": [],
+  "spent": 19,
+  "charges": [
+    {
+      "date": "2026-10-03",
+      "vendor": "Shopify",
+      "description": "One-time App Store registration",
+      "amount": 19,
+      "currency": "USD",
+      "status": "Paid",
+      "evidence": "billing-verification.json#/registration"
+    }
+  ],
   "proposed_allocation": {
-    "shopify_registration_if_required": 19,
     "attended_staging_usage": 5,
-    "remaining_reserve": 26
+    "remaining_reserve": 26,
+    "shopify_registration_paid": 19
   },
-  "rule": "This is a total launch cap, not monthly authorization. Any charge taking cumulative launch spending above $50 requires explicit user approval. Shopify registration payment remains unconfirmed. Staging compute is stopped between attended tests; no new hosting subscription was purchased.",
+  "rule": "This is a total launch cap, not monthly authorization. Any charge taking cumulative launch spending above $50 requires explicit user approval. The $19 Shopify registration invoice is paid. Staging compute is stopped between attended tests; no new hosting subscription was purchased.",
   "staging": {
     "provider": "Railway",
     "projectId": "ee2c5784-260b-44d7-aff3-ef46714687bc",
     "existingWorkspacePlan": "Hobby",
     "newSubscriptionPurchased": false,
-    "meteredUsageDollars": 0.0012524412798165458,
-    "usageCheckedAt": "2026-10-03T04:44:34.320744+00:00",
+    "meteredUsageDollars": 0.0015950915565891956,
+    "usageCheckedAt": "2026-10-03T22:51:53.876437+00:00",
     "computeStopped": true,
     "persistentVolumeRetained": true,
     "notes": "Metered resource usage before plan credits, not an invoice or confirmed card charge. Usage can lag; the project report does not itemize bucket charges. Retained volume and private bucket storage remain metered. One verified synthetic staging snapshot, the dataset marker and eight encrypted synthetic erasure instructions remain. Automatic backup creation resumes only when compute starts. Reconcile actual launch charges against the $50 total cap.",

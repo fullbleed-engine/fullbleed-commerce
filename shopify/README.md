@@ -86,7 +86,10 @@ produce fiscal invoices.
   each one page with zero reported missing glyphs. Three resulting layouts were
   visually inspected. Real Chrome checks also passed for the visible Create PDF action, visual and
   HTML/CSS editing, template save/reload/reset, summary and packing-slip downloads. The current machine record is in [verification.json](../docs/verification.json).
-- Live subscription lifecycle tests, Safari and production merchant staging remain.
+- A private $0 Shopify test plan passed live activation, scheduled cancellation,
+  reactivation and immediate-cancellation access checks with the production
+  entitlement function. See [billing verification](BILLING.md). Plan changes,
+  freezes, hosted purchase-to-Flow testing, Safari and merchant staging remain.
   The Shopify UI toolkit validator failed in its own JSX/type environment;
   the actual application typecheck and build pass.
 - The Railway staging container passed readiness, authentication, private file
@@ -95,10 +98,11 @@ produce fiscal invoices.
   CPU/memory limits were checked inside the container. Compute is stopped
   between attended tests; see [the hosted evidence](../docs/staging-verification.json).
 
-Public distribution has been selected; the app is not listed or approved.
-Before paid release, configure a private development-store test plan, a Partner API client and
-the app/plan identifiers.
-Exercise plan activation, cancellation, freezes and changes; complete protected
+Public distribution has been selected and the $19 App Store registration is paid;
+the app is not listed or approved. The private development-store test plan, a
+Partner API client and staging identifiers are configured.
+Before paid release, exercise plan freezes and changes and the hosted billing
+workflow; complete protected
 customer data requirements and merchant staging checks; deploy with durable,
 encrypted session storage; verify privacy monitoring, backup erasure and secure
 support delivery; finalize support/privacy/refund terms and App Store
@@ -106,9 +110,10 @@ materials; then submit for review. No unverified data-protection answers should
 be submitted as completed controls.
 
 The proposed starting price is $12/month, subject to cost and merchant validation.
-The total launch allowance is $50. Confirmed charges remain $0, with less than
-one cent of staging usage recorded so far. The $19 App Store registration fee
-is reserved within that cap; payment has not been confirmed.
+The total launch allowance is $50. The paid registration invoice totals $19,
+leaving $31 before metered hosting charges. Less than one cent of staging usage
+is reported so far; usage is not a settled invoice. See the
+[current budget](../docs/launch-budget.json).
 
 References checked October 2, 2026:
 [official template](https://github.com/Shopify/shopify-app-template-react-router),
