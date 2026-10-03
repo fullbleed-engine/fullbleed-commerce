@@ -76,9 +76,14 @@ produce fiscal invoices.
 - Live subscription lifecycle tests, Safari and production merchant staging remain.
   The Shopify UI toolkit validator failed in its own JSX/type environment;
   the actual application typecheck and build pass.
+- The Railway staging container passed readiness, authentication, private file
+  permissions and persistence through replacement. Eight hosted commerce PDFs
+  matched the verified local files, including two eight-page documents. Actual
+  CPU/memory limits were checked inside the container. Compute is stopped
+  between attended tests; see [the hosted evidence](../docs/staging-verification.json).
 
 Public distribution has been selected; the app is not listed or approved.
-Before paid release, configure a private $0 test plan, a Partner API client and
+Before paid release, configure a private development-store test plan, a Partner API client and
 the app/plan identifiers.
 Exercise plan activation, cancellation, freezes and changes; complete protected
 customer data requirements and merchant staging checks; deploy with durable,
@@ -88,8 +93,9 @@ materials; then submit for review. No unverified data-protection answers should
 be submitted as completed controls.
 
 The proposed starting price is $12/month, subject to cost and merchant validation.
-The total launch allowance is $50 and spending remains $0. The $19 App Store
-registration fee may be used within that cap if required; it has not been paid.
+The total launch allowance is $50. Confirmed charges remain $0, with less than
+one cent of staging usage recorded so far. The $19 App Store registration fee
+is reserved within that cap; payment has not been confirmed.
 
 References checked October 2, 2026:
 [official template](https://github.com/Shopify/shopify-app-template-react-router),

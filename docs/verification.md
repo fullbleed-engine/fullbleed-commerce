@@ -13,7 +13,9 @@ was synthetic. No merchant store was changed and no customer PDF was retained.
 | WordPress/WooCommerce, installed base and Pro ZIPs with HPOS | 46 HTTP checks passed; HPOS enabled in runtime | `output/wordpress/packaged-hpos-pro-verification.json`, `packaged-hpos-pro-runtime.json` |
 | Six designed sample PDFs | Each one page, zero reported missing glyphs | `output/examples/verification.json` and matching PDFs/PNGs |
 | Sixty-item long order summary and packing slip | Eight pages each; every SKU retained; text bounds inside pages | `output/pdf-text-verification.json`, `output/layout/` |
-| Shopify application migrations, route types, TypeScript, lint, production build and request-handler tests | All checks passed; four application, eight Flow and 15 privacy tests passed | `output/shopify/verification.json`, `output/shopify/webhooks.log`, `output/shopify/flow.log`, `output/shopify/privacy.log` |
+| Shopify application migrations, route types, TypeScript, lint, production build and request-handler tests | All checks passed; two readiness, four application, eight Flow and 15 privacy tests passed | `output/shopify/verification.json` and matching test logs |
+| Linux production container | Seven checks: unprivileged server, missing-volume refusal, fresh root-owned mount, private files, authentication, persistence through replacement and privacy monitor | [CI record](ci-verification.json) |
+| Railway staging | HTTPS/authentication checks, eight byte-identical commerce PDFs, enforced 0.5 CPU / 512 MiB limits and persistent branding/jobs through replacement | [Hosted evidence](staging-verification.json) |
 | Privacy requests in real Chrome with synthetic Shopify sessions | 13 browser checks: encrypted snapshot download, exact large IDs, explicit completion, erasure, overdue notice and 390px layout | `output/browser/shopify-privacy-verification.json`, JSON download and screenshots |
 | Shopify Flow extensions | CLI validates both native actions and output schemas | `output/shopify/flow-config-validation.json` |
 | Actual Shopify Flow execution and browser downloads | 19 retained checks; both actions and the downstream step completed; downloaded PDFs match returned SHA-256 values; revoke and pause return HTTP 410 | `output/browser/shopify-flow-verification.json`, matching PDFs/PNGs |
@@ -166,6 +168,29 @@ synthetic store running on port 9482. In a second terminal run
 `python tools/check-customer-browser.py`. It opens its own headless Chrome context
 with synthetic customer and administrator accounts; no existing browser is used.
 
+## Hosted staging
+
+The final container was deployed to a separate Railway project in the United
+States. The host served the privacy disclosure and database readiness endpoint,
+denied forged webhooks and required Shopify authentication for documents. Its
+actual server ran as `node`; the volume and SQLite file had private permissions.
+Synthetic branding and a pending job survived replacement deployments. The
+synthetic records were cleared after verification.
+
+The deployed Fullbleed module rendered all six designed fixtures and both
+60-item, eight-page fixtures. Every PDF matched its previously verified local
+file byte for byte. Sequential renders took 242–750 ms under the observed
+0.5 CPU / 512 MiB ceiling; the probe process peaked at 158,204 KiB RSS. This is
+a small synthetic sample, not a concurrency benchmark, end-to-end Shopify
+workflow measurement or production capacity promise.
+
+The final infrastructure plan matched the live service. After testing, compute
+was stopped and the persistent volume retained. The host is not currently
+serving merchants. Billing, full installation, automatic Flow delivery, alerts
+and backup/erasure recovery remain separate gates. See
+[deployment operation](../shopify/DEPLOYMENT.md) and the
+[retained hosted record](staging-verification.json).
+
 ## Release work still required
 
 - Real-browser desktop and mobile workflow checks, including downloads, worker
@@ -179,10 +204,11 @@ with synthetic customer and administrator accounts; no existing browser is used.
   implement fiscal invoices or recalculate taxes.
 - Paid purchase, delivery, update and support setup for the separate Pro add-on.
   No checkout, licensing server or renewal workflow exists yet.
-- Shopify live entitlement lifecycle checks, hosting and App Store review.
+- Shopify live entitlement lifecycle checks, production operation and App Store review.
   The Partner organization, registered app, development store, installation and
   access to the synthetic order are verified. Billing configuration and
-  production deployment are not complete.
+  production merchant rollout are not complete. The isolated staging container
+  deployment and persistent storage have now been verified.
 - Shopify privacy monitoring, backup erasure and secure support-delivery setup,
   automatic new-order trigger testing,
   and a real configured delivery destination remain required. Native Flow actions
@@ -193,12 +219,12 @@ with synthetic customer and administrator accounts; no existing browser is used.
   component. The app's installed Polaris types pass TypeScript and production
   build checks; this does not substitute for real-browser QA.
 
-The final [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37076537502)
+The final [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37081796371)
 passed clean dependency installation, all 36 shared tests, plugin packaging,
 28 WooCommerce email automation checks, 35 customer-download checks in each
-order-storage mode, four Shopify application tests, eight Flow tests, 15 privacy
-tests, Docker build, database migrations, HTTP startup and the aggregate privacy
-monitor command. Linux also verified restrictive attachment
+order-storage mode, two readiness tests, four Shopify application tests, eight
+Flow tests, 15 privacy tests and all seven production-container checks. Linux
+also verified restrictive attachment
 file permissions. Both plugin archives are byte-identical to the Windows packages
 installed for browser checks. Both customer-summary PDFs and the Flow fixture
 PDF are identical across both operating systems. The retained [CI record](ci-verification.json)

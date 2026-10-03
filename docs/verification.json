@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-02T23:11:51.461Z",
+  "checkedAt": "2026-10-03T00:32:14.312Z",
   "previewVersion": "0.1.0-alpha.1",
   "sourceLocks": {
     "root": "1a9f225f14867ca8a82402accfdce87f2c590f31b80a67a6014c4527bf3258b1",
@@ -1523,7 +1523,7 @@
   ],
   "shopify": {
     "app": {
-      "checkedAt": "2026-10-02T23:10:30.335Z",
+      "checkedAt": "2026-10-03T00:18:17.675Z",
       "node": "v24.21.0",
       "checks": [
         {
@@ -1557,6 +1557,11 @@
           "passed": true
         },
         {
+          "name": "health",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
           "name": "webhooks",
           "exitCode": 0,
           "passed": true
@@ -1574,32 +1579,32 @@
       ],
       "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
       "lockSha256": "1c0374462e3e1b6d476ad2ece2128c0e49258d318d854c585bba0ea5bae9013b",
-      "serverBuildSha256": "1933cc9de1b161ec0a0b93ecdf9c267e35d641fc40552bfd411adb4f2e8f0b2b",
+      "serverBuildSha256": "9739789b144319e5922d04a1543ec358f88317c4eef6f6fd09046765c9c9606c",
       "browserTested": false,
       "liveBillingTested": false
     },
     "requestHandlerTests": {
       "passed": 4,
       "failed": 0,
-      "logSha256": "48410882768b5a71f92efc39202efcfe5eff552060b631ca77ec1c486bacfb7d"
+      "logSha256": "ce2861448460ab7061bba164d1b541197e0d1ab924444e953654db55507f4cc3"
     },
     "flowTests": {
       "passed": 8,
       "failed": 0,
-      "logSha256": "cb203ec485fc0543ad4ce9e94045f76a15bbf0613cea32c401889dcaa7be37ee"
+      "logSha256": "ebf977f028e7119de61dea314bb1de8841fb326669660aae6f699f4ebec4ac17"
     },
     "privacyTests": {
       "passed": 15,
       "failed": 0,
-      "logSha256": "87361d5ed1925482c9ebd6a7a599b0e11931409a12369fa7bd350b7a994a6bec"
+      "logSha256": "24a01f0b0b52ee3487b186f76db84ea60b56a45973dc3e6d3a5e4fb88e1439ad"
     },
     "privacyBrowser": {
-      "checkedAt": "2026-10-02T23:11:37Z",
+      "checkedAt": "2026-10-03T00:20:20Z",
       "browser": "154.0.8037.93",
       "syntheticOnly": true,
       "shopifyAdminShellStubbed": true,
       "realSdkAuthentication": true,
-      "productionBuildSha256": "1933cc9de1b161ec0a0b93ecdf9c267e35d641fc40552bfd411adb4f2e8f0b2b",
+      "productionBuildSha256": "9739789b144319e5922d04a1543ec358f88317c4eef6f6fd09046765c9c9606c",
       "checks": [
         {
           "name": "authenticated merchant page with no paid-plan or Admin API call",
@@ -1657,15 +1662,15 @@
       "evidence": [
         {
           "file": "output/browser/shopify-privacy-desktop.png",
-          "sha256": "39b4a3e482ee82ad4d0e80842c530fec8624b4c3136c727986e34ae68821c78f"
+          "sha256": "2dd61c3478493aedea199802cb3cbece925b23b59f6f15c1cdf2f376a7293a7e"
         },
         {
           "file": "output/browser/shopify-privacy-mobile.png",
-          "sha256": "d981ef242723740032c3d774366ad0c34b1291125873bfba2e98e0df15fe8aec"
+          "sha256": "820c1950a45acd98432249ebacff07f3fb838836c604a2fdb9f825809b43c5a9"
         },
         {
           "file": "output/browser/shopify-privacy-export.json",
-          "sha256": "81d495ec26a108c2f70fed07e0c83bfba6bc0cc73630c8355ec030e4d2915e4c"
+          "sha256": "28b30f238590fc9f49bc4416379fcf18dc279304057648c212dffeeb3763a5b3"
         }
       ]
     },
@@ -2102,8 +2107,20 @@
     "charges": [],
     "proposed_allocation": {
       "shopify_registration_if_required": 19,
-      "remaining_reserve": 31
+      "attended_staging_usage": 5,
+      "remaining_reserve": 26
     },
-    "rule": "This is a total launch cap, not monthly authorization. Any charge taking cumulative launch spending above $50 requires explicit user approval. No paid hosting or registration has been purchased."
+    "rule": "This is a total launch cap, not monthly authorization. Any charge taking cumulative launch spending above $50 requires explicit user approval. Shopify registration payment remains unconfirmed. Staging compute is stopped between attended tests; no new hosting subscription was purchased.",
+    "staging": {
+      "provider": "Railway",
+      "projectId": "ee2c5784-260b-44d7-aff3-ef46714687bc",
+      "existingWorkspacePlan": "Hobby",
+      "newSubscriptionPurchased": false,
+      "meteredUsageDollars": 0.00037255497569135804,
+      "usageCheckedAt": "2026-10-03T00:31:08.658422+00:00",
+      "computeStopped": true,
+      "persistentVolumeRetained": true,
+      "notes": "Metered resource usage before plan credits, not an invoice or confirmed card charge. Usage can lag; retained volume storage remains metered. Reconcile actual launch charges against the $50 total cap."
+    }
   }
 }

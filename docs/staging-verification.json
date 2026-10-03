@@ -1,0 +1,212 @@
+{
+  "deployment": {
+    "id": "06b6a09d-8623-4dc6-b6e3-6b0aef9d177d",
+    "status": "SUCCESS",
+    "createdAt": "2026-10-03T00:23:50.731Z",
+    "sourceCommit": "1922ed6a50ff9ffe009982a8ae06379794efa398",
+    "imageDigest": "sha256:e6fa531337f01ab2b5b99b1117223c9f5be0d72abef798e4a87e60e144454109",
+    "volumeMounts": [
+      "/data"
+    ],
+    "infrastructurePlanHasNoChanges": true
+  },
+  "http": {
+    "checkedAt": "2026-10-03T00:28:30.567431+00:00",
+    "origin": "https://shopify-app-production-346e.up.railway.app",
+    "checks": [
+      {
+        "name": "HTTPS database readiness",
+        "passed": true,
+        "status": 200
+      },
+      {
+        "name": "public privacy disclosure names actual staging host",
+        "passed": true,
+        "status": 200
+      },
+      {
+        "name": "unauthenticated browser receives only Shopify auth handshake",
+        "passed": true,
+        "status": 200
+      },
+      {
+        "name": "malformed webhook rejected",
+        "passed": true,
+        "status": 400
+      },
+      {
+        "name": "forged Shopify signature rejected",
+        "passed": true,
+        "status": 401
+      }
+    ]
+  },
+  "renderer": {
+    "checkedAt": "2026-10-03T00:27:01.851Z",
+    "deploymentId": "06b6a09d-8623-4dc6-b6e3-6b0aef9d177d",
+    "sourceCommit": "1922ed6a50ff9ffe009982a8ae06379794efa398",
+    "region": "us-west2",
+    "cpuMax": "50000 100000",
+    "memoryMax": "536870912",
+    "processPeakRssKiB": 158204,
+    "checks": [
+      "expected source revision serves the app",
+      "0.5 CPU and 512 MiB cgroup limits enforced",
+      "persistent brand and pending job survived replacement deployments",
+      "no merchant installation present",
+      "privacy monitor confirms an empty healthy queue",
+      "synthetic persistence fixture cleared after verification"
+    ],
+    "privacy": {
+      "pending": 0,
+      "overdue": 0,
+      "dueWithin48Hours": 0,
+      "keyMismatch": 0,
+      "oldestReceivedAt": null
+    },
+    "documents": [
+      {
+        "stem": "studio-order-summary",
+        "pages": 1,
+        "bytes": 142529,
+        "missingGlyphs": 0,
+        "engineVersion": "2.5.5",
+        "milliseconds": 667,
+        "cpuMilliseconds": 340,
+        "sha256": "71b50b0bc5d89bd58a94b41f3a88b306422c96d08cec9de57edd6703405cc2df",
+        "matchesPreviouslyVerifiedLocalPdf": true
+      },
+      {
+        "stem": "studio-packing-slip",
+        "pages": 1,
+        "bytes": 142909,
+        "missingGlyphs": 0,
+        "engineVersion": "2.5.5",
+        "milliseconds": 504,
+        "cpuMilliseconds": 245,
+        "sha256": "8836ae03b8863ebb04706a0e36a4123c4d00dc5fcb84b36358d753c57ea30a0c",
+        "matchesPreviouslyVerifiedLocalPdf": true
+      },
+      {
+        "stem": "contrast-order-summary",
+        "pages": 1,
+        "bytes": 124670,
+        "missingGlyphs": 0,
+        "engineVersion": "2.5.5",
+        "milliseconds": 397,
+        "cpuMilliseconds": 191,
+        "sha256": "a956e4e98298efce78c76aed27489bdfef41c3bfbd915230b5dde9b4ab6f26ab",
+        "matchesPreviouslyVerifiedLocalPdf": true
+      },
+      {
+        "stem": "contrast-packing-slip",
+        "pages": 1,
+        "bytes": 123306,
+        "missingGlyphs": 0,
+        "engineVersion": "2.5.5",
+        "milliseconds": 397,
+        "cpuMilliseconds": 191,
+        "sha256": "bbf6b8232486c0be9c93c9251fa39a513be722e86c1cdb861ccb33ba72d3462d",
+        "matchesPreviouslyVerifiedLocalPdf": true
+      },
+      {
+        "stem": "quiet-order-summary",
+        "pages": 1,
+        "bytes": 121534,
+        "missingGlyphs": 0,
+        "engineVersion": "2.5.5",
+        "milliseconds": 242,
+        "cpuMilliseconds": 127,
+        "sha256": "9ac311b176bd220d9a49d9e6d1ab00a7499a8cc285f43a5c5a1381887127104b",
+        "matchesPreviouslyVerifiedLocalPdf": true
+      },
+      {
+        "stem": "quiet-packing-slip",
+        "pages": 1,
+        "bytes": 121739,
+        "missingGlyphs": 0,
+        "engineVersion": "2.5.5",
+        "milliseconds": 263,
+        "cpuMilliseconds": 126,
+        "sha256": "aa92c753512cc16b2065f2ee599fc198cbe9973683bcb5f03598bd9e0845e9cf",
+        "matchesPreviouslyVerifiedLocalPdf": true
+      },
+      {
+        "stem": "long-order-summary",
+        "pages": 8,
+        "bytes": 162911,
+        "missingGlyphs": 0,
+        "engineVersion": "2.5.5",
+        "milliseconds": 750,
+        "cpuMilliseconds": 380,
+        "sha256": "d46fe3c77912000d5d4097ef94595f9d92924674ec081f3fe0fe6217fea91738",
+        "matchesPreviouslyVerifiedLocalPdf": true
+      },
+      {
+        "stem": "long-packing-slip",
+        "pages": 8,
+        "bytes": 164227,
+        "missingGlyphs": 0,
+        "engineVersion": "2.5.5",
+        "milliseconds": 552,
+        "cpuMilliseconds": 264,
+        "sha256": "79e8f441e692ae49c178e6e6aeb5c73e548de0cfffaefd4cc92330b02c5e2bb5",
+        "matchesPreviouslyVerifiedLocalPdf": true
+      }
+    ],
+    "scope": "Sequential synthetic rendering through the deployed Fullbleed module. This is not an end-to-end Shopify billing/Flow test, concurrency benchmark or sustained capacity promise."
+  },
+  "currentState": {
+    "checkedAt": "2026-10-03T00:31:08.658422+00:00",
+    "computeStopped": true,
+    "activeDeployments": 0,
+    "persistentVolumeRetained": true,
+    "project": {
+      "deletedAt": null,
+      "id": "ee2c5784-260b-44d7-aff3-ef46714687bc",
+      "name": "fullbleed-commerce-staging"
+    },
+    "billingPeriod": {
+      "end": "2026-10-24T18:42:11+00:00",
+      "start": "2026-09-24T18:42:11+00:00"
+    },
+    "meteredUsageDollars": 0.00037255497569135804,
+    "serviceUsage": [
+      {
+        "backupDollars": 0.0,
+        "cpuDollars": 6.475693672839506e-05,
+        "egressDollars": 1.3529000000000002e-06,
+        "id": "bcd8801b-e89c-4c4c-baf3-b8e1d0fe8b59",
+        "memoryDollars": 0.00029733963851851853,
+        "name": "shopify-app",
+        "totalDollars": 0.00037255497569135804,
+        "volumeDollars": 9.105500444444445e-06
+      }
+    ]
+  },
+  "limits": {
+    "productionMerchantInstalled": false,
+    "shopifyBillingLifecycleVerified": false,
+    "continuousMonitoringConfigured": false,
+    "backupRestoreAndErasureReplayVerified": false,
+    "marketplaceApproved": false
+  },
+  "artifacts": [
+    {
+      "file": "output/staging/deployment.json",
+      "sha256": "025eabd8abc56c23dedaf34409a30600ec5d8559a15c5ecb1415ac2a1d79a140"
+    },
+    {
+      "file": "output/staging/http-verification.json",
+      "sha256": "05c1603637ac31837f290edbe715a4db22208f94bf0a9ee859b7a99ba4537952"
+    },
+    {
+      "file": "output/staging/commerce-render-verification.json",
+      "sha256": "d4f2f5aaa86f4c634b6edeb7c26223176b445f2a6f099b66417a5967981421b4"
+    },
+    {
+      "file": "output/staging/stopped-state.json",
+      "sha256": "9addb691e3504d83b329ff6b5a80a402e69b6104f5260b587dd5b77855f2f6bf"
+    }
+  ]
+}

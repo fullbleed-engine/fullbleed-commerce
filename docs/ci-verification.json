@@ -1,26 +1,26 @@
 {
   "conclusion": "success",
-  "createdAt": "2026-10-02T23:13:32Z",
-  "headSha": "c9ba2ebebf8d80ad30c177145a9677ad74224d76",
+  "createdAt": "2026-10-03T00:22:28Z",
+  "headSha": "1922ed6a50ff9ffe009982a8ae06379794efa398",
   "jobs": [
-    {
-      "name": "integration",
-      "conclusion": "success",
-      "startedAt": "2026-10-02T23:13:34Z",
-      "completedAt": "2026-10-02T23:19:17Z",
-      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37076537502/job/111067600161"
-    },
     {
       "name": "container",
       "conclusion": "success",
-      "startedAt": "2026-10-02T23:13:34Z",
-      "completedAt": "2026-10-02T23:14:19Z",
-      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37076537502/job/111067600395"
+      "startedAt": "2026-10-03T00:23:56Z",
+      "completedAt": "2026-10-03T00:25:18Z",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37081796371/job/111084017932"
+    },
+    {
+      "name": "integration",
+      "conclusion": "success",
+      "startedAt": "2026-10-03T00:23:57Z",
+      "completedAt": "2026-10-03T00:32:01Z",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37081796371/job/111084018120"
     }
   ],
   "status": "completed",
-  "updatedAt": "2026-10-02T23:19:17Z",
-  "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37076537502",
+  "updatedAt": "2026-10-03T00:32:02Z",
+  "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37081796371",
   "artifact": "preview-verification",
   "archives": [
     {
@@ -39,7 +39,7 @@
     }
   ],
   "woocommerceAutomationLinux": {
-    "checkedAt": "2026-10-02T23:14:15.675Z",
+    "checkedAt": "2026-10-03T00:24:59.753Z",
     "wordpress": "7.1.2",
     "woocommerce": "11.1.2",
     "php": "8.3.33",
@@ -164,7 +164,7 @@
   },
   "customerPortalLinux": {
     "hpos": {
-      "checkedAt": "2026-10-02T23:16:30.418Z",
+      "checkedAt": "2026-10-03T00:28:08.423Z",
       "wordpress": "7.1.2",
       "woocommerce": "11.1.2",
       "php": "8.3.33",
@@ -334,7 +334,7 @@
       "windowsLinuxPdfByteIdentical": true
     },
     "legacy": {
-      "checkedAt": "2026-10-02T23:18:44.981Z",
+      "checkedAt": "2026-10-03T00:31:17.247Z",
       "wordpress": "7.1.2",
       "woocommerce": "11.1.2",
       "php": "8.3.33",
@@ -505,7 +505,7 @@
     }
   },
   "shopifyApplication": {
-    "checkedAt": "2026-10-02T23:19:13.422Z",
+    "checkedAt": "2026-10-03T00:31:56.554Z",
     "node": "v24.21.0",
     "checks": [
       {
@@ -539,6 +539,11 @@
         "passed": true
       },
       {
+        "name": "health",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
         "name": "webhooks",
         "exitCode": 0,
         "passed": true
@@ -556,29 +561,71 @@
     ],
     "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
     "lockSha256": "1c0374462e3e1b6d476ad2ece2128c0e49258d318d854c585bba0ea5bae9013b",
-    "serverBuildSha256": "4c0de1d02d620ceb14f69c53cb300a8fa8050c3ffa08e24189990bf93cbeea4c",
+    "serverBuildSha256": "c1b7e5ca005bdc0b846b53fce2c2c6bd7fbfea9fb30d3693e4504c92954872ed",
     "browserTested": false,
     "liveBillingTested": false
   },
   "shopifyTests": {
+    "health": {
+      "passed": 2,
+      "failed": 0,
+      "logSha256": "7393a11dbcc077e0998ae710d10e1a03237ce5411d5bd6c281f2bef32252bba4"
+    },
     "webhooks": {
       "passed": 4,
       "failed": 0,
-      "logSha256": "d71f3824e9ed89ea0c4d0a2ca60de25d018310ace1524c5f3f3894337ba70d5c"
+      "logSha256": "6c1612d7e99b087026cf50906a2d63ebafde8d7e74145d8cd106ec736e6f8f58"
     },
     "flow": {
       "passed": 8,
       "failed": 0,
-      "logSha256": "e88f13986cfc178ae0fbf2e38a168f31a804be445441ba10b746fcd51758f78b"
+      "logSha256": "a24aec5bee526aa6ce1725f20b0f1372f4438ab12f3eea56e466a850f2e6f2ed"
     },
     "privacy": {
       "passed": 15,
       "failed": 0,
-      "logSha256": "94eca96a987df440fc69b2e76fe66b847328b06d9b0496dea8f7f15637c7763b"
+      "logSha256": "bc3323d67b0be4d7bf7c4d4cc5c213172c0a18483f1e38e3030b9ed4cca24e19"
     }
   },
   "flowPdf": {
     "sha256": "60cd76df6cc0ebc8e73ee7b79f57f571d0e9e9dc3ea9cd7b6760d49943e70d78",
     "windowsLinuxByteIdentical": true
+  },
+  "containerVerification": {
+    "checkedAt": "2026-10-03T00:25:15.475Z",
+    "imageId": "sha256:76ebb3220d909c3c0bd321e72c6a088d54ee752ce2d35783197f6d1124cb6f3a",
+    "cpuLimit": 0.5,
+    "memoryBytes": 536870912,
+    "syntheticOnly": true,
+    "checks": [
+      {
+        "name": "default image user is unprivileged",
+        "passed": true
+      },
+      {
+        "name": "Railway startup refuses an absent persistent mount",
+        "passed": true
+      },
+      {
+        "name": "fresh root-owned volume migrates and passes HTTP readiness under resource limits",
+        "passed": true
+      },
+      {
+        "name": "application process and private database remain owned by node",
+        "passed": true
+      },
+      {
+        "name": "public privacy page works and unauthenticated documents and webhooks are denied",
+        "passed": true
+      },
+      {
+        "name": "branding and pending jobs survive container replacement and repeat migration",
+        "passed": true
+      },
+      {
+        "name": "privacy operator command runs in the production image",
+        "passed": true
+      }
+    ]
   }
 }

@@ -144,9 +144,11 @@ the paid product's central value: WooCommerce email and order workflows, Shopify
 Flow, customer downloads, fulfillment batches and visible failure recovery. It
 distinguishes development milestones from the requirements for a paid launch.
 
-The launch budget is **$50 total**, with **$0 spent**. The proposed $19 Shopify
-registration fee is within that cap; no recurring hosting has been purchased.
-Actual charges must be recorded in [docs/launch-budget.json](docs/launch-budget.json).
+The launch budget is **$50 total**. Confirmed charges remain **$0**; the attended
+Railway staging test has accrued less than one cent of metered resource usage.
+Compute is stopped between tests, with its persistent volume retained. The
+proposed $19 Shopify registration fee is within the cap. Usage and actual charges
+are recorded in [docs/launch-budget.json](docs/launch-budget.json).
 More than $50 requires explicit user approval.
 
 Before selling: complete real-browser and staging-store checks; finalize support,
