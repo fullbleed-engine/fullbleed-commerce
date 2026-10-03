@@ -9,6 +9,7 @@ from urllib.request import urlopen
 from zipfile import ZipFile
 from playwright.sync_api import sync_playwright
 from pypdf import PdfReader
+from browser_runtime import browser_label, browser_metadata, engine, launch_browser, login_to
 
 base = os.environ.get('FULLBLEED_TEST_URL', 'http://127.0.0.1:9477')
 assert urlparse(base).hostname == '127.0.0.1'
@@ -18,7 +19,7 @@ order_id = str(fixture['orders'][0])
 batch_ids = ','.join(str(value) for value in fixture['orders'])
 pro = os.environ.get('FULLBLEED_TEST_PRO') == '1'
 saved_title = os.environ.get('FULLBLEED_TEST_SAVED_TITLE')
-label = os.environ.get('FULLBLEED_TEST_LABEL', 'wordpress-pro' if pro else 'wordpress-free')
+label = browser_label(os.environ.get('FULLBLEED_TEST_LABEL', 'wordpress-pro' if pro else 'wordpress-free'))
 out = Path('output/browser')
 out.mkdir(parents=True, exist_ok=True)
 checks = []
@@ -28,19 +29,21 @@ def check(name, condition):
     print(name + ': passed', flush=True)
 
 with sync_playwright() as pw:
-    browser = pw.chromium.launch(channel='chrome', headless=True)
+    browser = launch_browser(pw)
     context = browser.new_context(viewport={'width': 1440, 'height': 1100}, accept_downloads=True)
+    context.tracing.start(screenshots=True, snapshots=True, sources=True)
     page = context.new_page()
     page.set_default_timeout(45000)
     errors = []
-    page.on('pageerror', lambda error: errors.append(str(error)))
+    error_details, console_errors = [], []
+    def page_error(error):
+        errors.append(str(error))
+        error_details.append({'message': error.message, 'name': error.name, 'stack': error.stack, 'url': page.url, 'completedChecks': len(checks)})
+    page.on('pageerror', page_error)
+    page.on('console', lambda message: console_errors.append({'text': message.text, 'location': message.location, 'completedChecks': len(checks)}) if message.type == 'error' else None)
     try:
-        page.goto(base + '/wp-login.php')
-        page.locator('#user_login').fill('admin')
-        page.locator('#user_pass').fill('fullbleed-local-test')
-        page.locator('#wp-submit').click()
-        page.wait_for_url('**/wp-admin/**', wait_until='domcontentloaded', timeout=45000)
-        page.goto(base + '/wp-admin/admin.php?page=fullbleed-commerce')
+        document_url = base + '/wp-admin/admin.php?page=fullbleed-commerce'
+        login_to(page, base, 'admin', document_url)
         page.locator('#fb-orders').fill(order_id)
         page.locator('[data-render]').click()
         page.locator('[data-preview]').wait_for(state='visible')
@@ -65,6 +68,8 @@ with sync_playwright() as pw:
         page.locator('[data-visual] iframe.gjs-frame').wait_for(state='visible')
         canvas = page.frame_locator('[data-visual] iframe.gjs-frame')
         canvas.locator('h1').wait_for(state='visible')
+        frame = page.locator('[data-visual] iframe.gjs-frame').element_handle().content_frame()
+        frame.wait_for_function("document.fonts.status === 'loaded'")
         check('visual editor renders the saved template', (saved_title or '{{document.title}}') in canvas.locator('h1').inner_text())
         check('editor uses WordPress dependencies without replacing shared globals', page.evaluate("""() => {
             const before = window.fullbleedCoreBefore;
@@ -74,10 +79,11 @@ with sync_playwright() as pw:
                 && before.jquery === window.jQuery && before.codemirror === window.wp.CodeMirror;
         }"""))
         block = page.locator('.gjs-block').filter(has_text='Heading')
-        block.scroll_into_view_if_needed()
-        start = block.bounding_box()
+        # Locator hover waits for stable layout after fonts and editor zoom.
+        # Move through the iframe edge so the editor's custom pointer drag
+        # starts before the final drop; this is not HTML5 native drag/drop.
+        block.hover()
         target = canvas.locator('h1').bounding_box()
-        page.mouse.move(start['x'] + start['width'] / 2, start['y'] + start['height'] / 2)
         page.mouse.down()
         page.mouse.move(target['x'] + target['width'] / 2, target['y'] + target['height'] - 2, steps=25)
         page.mouse.move(target['x'] + target['width'] / 2, target['y'] + target['height'] + 4, steps=3)
@@ -118,7 +124,7 @@ with sync_playwright() as pw:
             page.locator('#fb-orders').fill(batch_ids)
             with page.expect_download() as download:
                 page.locator('[data-render]').click()
-            archive = out / 'wordpress-pro-batch.zip'
+            archive = out / ('wordpress-pro-batch.zip' if engine == 'chrome' else f'{label}-batch.zip')
             download.value.save_as(archive)
             with ZipFile(archive) as zipped:
                 check('Pro browser download is a complete two-PDF ZIP', len(zipped.namelist()) == 2 and all(zipped.read(name).startswith(b'%PDF-') for name in zipped.namelist()))
@@ -131,11 +137,22 @@ with sync_playwright() as pw:
         check('mobile editor fits the viewport', page.evaluate('document.documentElement.scrollWidth <= innerWidth'))
         page.screenshot(path=str(out / f'{label}-mobile.png'), full_page=True)
         check('no browser JavaScript errors', not errors)
-        record = {'checkedAt': datetime.now(timezone.utc).isoformat(), 'browser': browser.version, 'store': base, 'pro': pro, 'upgradeTemplate': saved_title, 'checks': checks, 'pdfSha256': sha256(custom.read_bytes()).hexdigest(), 'pageErrors': errors}
+        documents = [{'file': p.as_posix(), 'sha256': sha256(p.read_bytes()).hexdigest(), 'pages': len(PdfReader(p).pages)} for p in [pdf, custom, applied]]
+        record = {'checkedAt': datetime.now(timezone.utc).isoformat(), **browser_metadata(browser), 'store': base, 'pro': pro, 'upgradeTemplate': saved_title, 'checks': checks, 'pdfSha256': sha256(custom.read_bytes()).hexdigest(), 'documents': documents, 'pageErrors': errors}
+        if pro:
+            record['batch'] = {'file': archive.as_posix(), 'sha256': sha256(archive.read_bytes()).hexdigest()}
         (out / f'{label}-verification.json').write_text(json.dumps(record, indent=2), encoding='utf-8')
-    except Exception:
-        page.screenshot(path=str(out / f'{label}-failure.png'), full_page=True)
-        (out / f'{label}-failure.json').write_text(json.dumps({'checks': checks, 'errors': errors, 'url': page.url, 'text': page.locator('body').inner_text()[-12000:]}, indent=2), encoding='utf-8')
+    except Exception as error:
+        failure = {**browser_metadata(browser), 'error': str(error), 'checks': checks, 'errors': errors, 'errorDetails': error_details, 'consoleErrors': console_errors, 'url': page.url}
+        failure_file = out / f'{label}-failure.json'
+        failure_file.write_text(json.dumps(failure, indent=2), encoding='utf-8')
+        try:
+            failure['text'] = page.locator('body').inner_text(timeout=5000)[-12000:]
+            page.screenshot(path=str(out / f'{label}-failure.png'), full_page=True, timeout=5000)
+        except Exception as inspection_error:
+            failure['inspectionError'] = str(inspection_error)
+        failure_file.write_text(json.dumps(failure, indent=2), encoding='utf-8')
+        context.tracing.stop(path=str(out / f'{label}-failure-trace.zip'))
         raise
     finally:
         context.close()

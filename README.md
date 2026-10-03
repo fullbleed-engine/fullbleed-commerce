@@ -174,6 +174,13 @@ Both released ZIPs match Windows and Linux builds. See the
 archive hashes, automation checks and browser results. Historical release checks
 remain separately identified in the verification guide.
 
+The unchanged alpha.3 base and Pro ZIPs also pass merchant editing and customer
+account-download journeys in Chrome, Playwright Firefox and Playwright WebKit
+on Windows and Linux. Each combination passes 24 checks and produces identical
+PDF bytes for the fixtures. See the [browser workflow matrix](docs/verification.md#browser-workflow-matrix)
+for exact versions, reproducible CI and limits; this is not branded Safari or
+physical-device coverage.
+
 This preview produces order summaries, not fiscal invoices. It preserves store
 display amounts and does not calculate tax, create invoice numbers, or reconcile
 refunds. Refunded orders are rejected. Shopify edited orders are also rejected.
