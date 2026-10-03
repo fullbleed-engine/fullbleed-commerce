@@ -7,7 +7,11 @@ on:
       - 'wordpress/fullbleed-commerce/**'
       - 'src/**'
       - 'tools/build.mjs'
+      - 'tools/wordpress-editor.mjs'
       - 'tools/pack.mjs'
+      - 'tools/check-browser.py'
+      - 'tools/seed-wordpress.php'
+      - 'LICENSES/**'
       - 'package*.json'
       - '.github/workflows/plugin-directory.yml'
   pull_request:
@@ -15,7 +19,11 @@ on:
       - 'wordpress/fullbleed-commerce/**'
       - 'src/**'
       - 'tools/build.mjs'
+      - 'tools/wordpress-editor.mjs'
       - 'tools/pack.mjs'
+      - 'tools/check-browser.py'
+      - 'tools/seed-wordpress.php'
+      - 'LICENSES/**'
       - 'package*.json'
       - '.github/workflows/plugin-directory.yml'
 permissions:
@@ -41,12 +49,38 @@ jobs:
           mkdir -p target/directory-package
           version=$(node -p 'require("./package.json").version')
           unzip -q "dist/fullbleed-commerce-${version}.zip" -d target/directory-package
-          node -e 'require("fs").writeFileSync(".wp-env.json", JSON.stringify({core:"https://wordpress.org/wordpress-7.1.2.zip",config:{WP_DEBUG:true,WP_DEBUG_LOG:true,WP_DEBUG_DISPLAY:false,DISABLE_WP_CRON:true}}))'
+          node --input-type=module <<'JS'
+          import { readFileSync, writeFileSync } from 'node:fs';
+          const seed = readFileSync('tools/seed-wordpress.php', 'utf8')
+            .replace("require '/wordpress/wp-load.php';", "add_filter('pre_wp_mail', '__return_true');")
+            .replaceAll("'/wordpress/", "'/var/www/html/");
+          writeFileSync('target/directory-seed.php', seed);
+          writeFileSync('.wp-env.json', JSON.stringify({
+            core: 'https://wordpress.org/wordpress-7.1.2.zip', phpVersion: '8.3', testsEnvironment: false,
+            config: { WP_DEBUG: true, WP_DEBUG_LOG: true, WP_DEBUG_DISPLAY: false, DISABLE_WP_CRON: true,
+              WP_HOME: 'http://127.0.0.1:8888', WP_SITEURL: 'http://127.0.0.1:8888' },
+            mappings: { 'wp-content/fullbleed-test-seed.php': './target/directory-seed.php' }
+          }));
+          JS
       - uses: WordPress/plugin-check-action@005058d6dbd2942b6a58610836b981c2ee3cc19d # reviewed main; preserves wp-env configuration
         with:
           build-dir: target/directory-package/fullbleed-commerce
           slug: fullbleed-commerce
           strict: true
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Verify the packaged editor in native WordPress
+        env:
+          FULLBLEED_TEST_URL: http://127.0.0.1:8888
+          FULLBLEED_TEST_LABEL: wordpress-directory
+        run: |
+          wp-env run cli wp eval-file wp-content/fullbleed-test-seed.php
+          wp-env run cli wp core version > target/directory-runtime.txt
+          wp-env run cli wp plugin list --format=json >> target/directory-runtime.txt
+          python -m pip install playwright==1.49.1 pypdf==6.1.1
+          python -m playwright install --with-deps chrome
+          python tools/check-browser.py
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: always()
         with:
@@ -54,4 +88,7 @@ jobs:
           path: |
             dist/fullbleed-commerce-*.zip
             dist/packages.json
+            output/browser/wordpress-directory-*
+            target/directory-runtime.txt
+            wordpress/fullbleed-commerce/assets/generated/build.json
           retention-days: 14

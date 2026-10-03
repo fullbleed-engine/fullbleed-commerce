@@ -45,7 +45,7 @@ function assets( $hook ) {
     }
     wp_enqueue_style( 'fullbleed-commerce', plugins_url( 'assets/admin.css', __FILE__ ), array(), VERSION );
     wp_enqueue_style( 'fullbleed-template-editor', plugins_url( 'assets/generated/editor.css', __FILE__ ), array(), VERSION );
-    wp_enqueue_script( 'fullbleed-commerce', plugins_url( 'assets/generated/admin.js', __FILE__ ), array(), VERSION, true );
+    wp_enqueue_script( 'fullbleed-commerce', plugins_url( 'assets/generated/admin.js', __FILE__ ), array( 'jquery', 'backbone', 'underscore', 'wp-codemirror' ), VERSION, true );
 }
 
 function routes() {
@@ -103,6 +103,8 @@ function save_template( $request ) {
     if ( null === $saved ) {
         $written = add_option( $key, $value, '', false );
     } else {
+        // Options API has no compare-and-swap operation; the prepared conditional update keeps revision conflicts atomic.
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Required atomic update; values are prepared and option cache is invalidated below.
         $written = $wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->options} SET option_value = %s WHERE option_name = %s AND option_value = %s", maybe_serialize( $value ), $key, maybe_serialize( $saved ) ) );
         wp_cache_delete( $key, 'options' );
     }
@@ -206,6 +208,7 @@ function admin_page() {
         'canCustomize' => current_user_can( 'manage_woocommerce' ),
     );
     // Query values select orders only. Every order is authorized again by the REST API.
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only prefill, not a submission; rendering requires an explicit click and an authorized REST request.
     $ids = isset( $_GET['order_ids'] ) ? preg_replace( '/[^0-9,]/', '', sanitize_text_field( wp_unslash( $_GET['order_ids'] ) ) ) : '';
     ?>
     <div class="wrap" id="fullbleed-commerce" data-config="<?php echo esc_attr( wp_json_encode( $config ) ); ?>">
