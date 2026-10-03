@@ -185,7 +185,9 @@ to preserve the total launch budget. See [hosted evidence](staging-verification.
 
 Availability and privacy-deadline monitoring now has a read-only endpoint and a
 GitHub Actions workflow. Scheduling remains off while staging is stopped;
-operator notification delivery still needs verification before continuous use.
+delivery to the operator's GitHub inbox now passes an attended failure/recovery
+drill. Human coverage, any additional paging channel and detection of missed
+checks still need continuous-operation setup.
 See [the operator runbook](../shopify/MONITORING.md).
 
 Encrypted database backups and an independent erasure journal now support
@@ -195,8 +197,8 @@ authorization sessions and requires merchants to resume automation explicitly.
 The hosted promotion drill also passed, including a late erasure applied before
 the replacement service opened HTTP. Daily backups now run automatically while
 the service is online, with stored-byte verification, restart-safe scheduling and
-external freshness checks. Independent key recovery and actual operator alert
-receipt still need verification. See
+external freshness checks. Independent key recovery still needs verification;
+GitHub inbox alert delivery has passed a separate drill. See
 [recovery operation](../shopify/RECOVERY.md).
 
 Fulfillment batches, automatic missing-attachment recovery, webhook monitoring

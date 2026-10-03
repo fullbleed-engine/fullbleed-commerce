@@ -78,12 +78,14 @@ the App Pricing lifecycle separately; a healthy server is not billing evidence.
 
 Railway readiness is checked during deployment, not continuously. The
 [GitHub monitoring workflow](MONITORING.md) checks availability, privacy
-deadlines and backup freshness. Enable it for continuous operation, verify operator notification
-delivery, and arrange detection of missed checks before launch. It does not
+deadlines and backup freshness. Enable it for continuous operation and arrange
+operator coverage and detection of missed checks before launch. GitHub inbox
+notification delivery has passed the [attended drill](../docs/alert-verification.json);
+verify any additional paging channel separately. It does not
 replace signed webhook delivery monitoring or the private
 `node scripts/privacy-status.mjs` diagnostic command.
 Use the [encrypted backup and recovery commands](RECOVERY.md); keep both keys
-separate from backups. Verify operator alert receipt and independent key recovery
+separate from backups. Verify independent key recovery
 before launch, and keep the public privacy description accurate.
 
 The launch authorization is **$50 total**. Track project-attributed usage and

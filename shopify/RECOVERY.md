@@ -181,8 +181,10 @@ and a replacement service that kept the same fresh snapshot. Time-controlled
 tests cover the 24-hour boundary and longer downtime; the attended hosted drill
 does not represent a continuous 24-hour uptime or notification-receipt test.
 
-Independent key recovery, operator alert receipt and a representative merchant
-pilot remain launch work.
+GitHub inbox alert delivery has since passed a separate
+[failure/recovery drill](../docs/alert-verification.json). Independent key
+recovery, continuous operator coverage, missed-check detection and a
+representative merchant pilot remain launch work.
 These checks do not claim legal compliance, a recovery-time SLA or marketplace
 approval.
 

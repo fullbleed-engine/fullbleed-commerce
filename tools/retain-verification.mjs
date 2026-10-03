@@ -64,6 +64,20 @@ assert.ok(capacity.workload.checks.every(check => check.passed) && capacity.arti
 assert.equal(capacity.workload.burst.jobs, 24);
 for (const [file, expected] of Object.entries(capacity.workload.sourceSha256)) assert.equal(hash(file), expected);
 for (const item of capacity.evidence) assert.equal(hash(item.file), item.sha256);
+const alerts = json('docs/alert-verification.json');
+assert.ok(alerts.syntheticOnly && alerts.checks.length >= 18 && alerts.checks.every(check => check.passed));
+assert.equal(alerts.channel, 'GitHub inbox');
+assert.equal(alerts.failure.conclusion, 'failure');
+assert.equal(alerts.failure.headSha, alerts.recovery.headSha);
+assert.equal(alerts.delivery.initiallyUnread, true);
+assert.equal(alerts.delivery.browserVisible, true);
+assert.equal(alerts.delivery.openedRunUrl, alerts.failure.url);
+assert.equal(alerts.delivery.readAfterOpening, true);
+assert.equal(alerts.recovery.conclusion, 'success');
+assert.equal(alerts.finalState.status, 'REMOVED');
+assert.equal(alerts.finalState.noActiveDeployments, true);
+assert.equal(alerts.limitations.scheduledMonitoringEnabled, false);
+for (const item of alerts.evidence) assert.equal(hash(item.file), item.sha256);
 assert.ok(json('output/shopify/flow-config-validation.json').valid);
 const templates = json('output/templates/verification.json');
 for (const item of templates.documents) assert.equal(hash(`output/templates/${item.kind}.pdf`), item.sha256);
@@ -78,7 +92,7 @@ const record = {
   browser, templates, automation, customerPortal, orderTrigger, capacity,
   examples, textChecks: json('output/pdf-text-verification.json'),
   shopify: { app, requestHandlerTests: tap('output/shopify/webhooks.log'), flowTests: tap('output/shopify/flow.log'), privacyTests: tap('output/shopify/privacy.log'), privacyBrowser, privacyUiToolkit: { success: privacyUiValidation.success, version: privacyUiValidation.resolvedVersion, evidenceSha256: hash('output/shopify/privacy-ui-minimal-validation.json'), limitation: 'Remote validator cannot resolve its own preact/jsx-runtime and JSX types, including a minimal component. Installed types, production build and browser checks provide separate evidence.' }, flowBrowser, flowConfiguration: json('output/shopify/flow-config-validation.json'), installedStore: installed, graphQLValidation: json('output/shopify/validation/verification.json') },
-  monitoring: { requestHandlerTests: tap('output/shopify/monitor.log'), notificationDeliveryVerified: false, scheduledEnabled: false },
+  monitoring: { requestHandlerTests: tap('output/shopify/monitor.log'), notificationDeliveryVerified: true, notificationChannel: alerts.channel, alertDelivery: alerts, emailReceiptVerified: alerts.limitations.emailReceiptVerified, humanAcknowledgementVerified: alerts.limitations.humanAcknowledgementVerified, missedCheckDetectionConfigured: alerts.limitations.missedCheckDetectionConfigured, scheduledEnabled: alerts.limitations.scheduledMonitoringEnabled },
   recovery: { tests: tap('output/shopify/recovery.log'), hosted: json('docs/recovery-verification.json'), automaticBackups: json('docs/backup-schedule-verification.json'), backupScheduleEnabled: true, executesOnlyWhileOnline: true, independentKeyRecoveryVerified: false },
   dependencyAudit: { root: json('output/npm-audit.json').metadata.vulnerabilities, shopify: json('output/shopify/npm-audit.json').metadata.vulnerabilities, shopifyProduction: json('output/shopify/npm-audit-production.json').metadata.vulnerabilities },
   visualInspection: { exampleOrderDesigns: ['studio', 'contrast', 'quiet'], longPackingSlipPage: 8, customTemplates: ['order-summary', 'packing-slip'], wordpressEditor: ['desktop', '390px viewport'], customerPortal: ['saved-template-pdf', 'orders', 'order-details', '390px viewport'], liveShopify: ['studio-order-summary', 'contrast-order-summary', 'quiet-packing-slip'] },

@@ -1,0 +1,227 @@
+{
+  "checkedAt": "2026-10-03T04:46:32.508588+00:00",
+  "syntheticOnly": true,
+  "operator": "krflol",
+  "channel": "GitHub inbox",
+  "settings": {
+    "repositoryWatchMode": "All Activity",
+    "actionsOnGitHub": true,
+    "failedWorkflowsOnly": true,
+    "existingEmailSettingPreserved": true
+  },
+  "failure": {
+    "conclusion": "failure",
+    "createdAt": "2026-10-03T04:34:08Z",
+    "headSha": "de6abc824ce98b128c7acf938d576932588b6e45",
+    "jobs": [
+      {
+        "name": "monitor",
+        "conclusion": "failure",
+        "startedAt": "2026-10-03T04:34:13Z",
+        "completedAt": "2026-10-03T04:34:23Z",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37096974578/job/111128778960"
+      }
+    ],
+    "status": "completed",
+    "updatedAt": "2026-10-03T04:34:23Z",
+    "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37096974578"
+  },
+  "failureMessage": "Fullbleed returned an invalid or stale monitoring response.",
+  "delivery": {
+    "notificationUpdatedAt": "2026-10-03T04:34:46Z",
+    "apiObservedAt": "2026-10-03T04:34:58.795689+00:00",
+    "initiallyUnread": true,
+    "subjectType": "CheckSuite",
+    "reason": "ci_activity",
+    "browserObservedAt": "2026-10-03T04:36:24.630Z",
+    "browserVisible": true,
+    "openedAt": "2026-10-03T04:39:53.940Z",
+    "openedRunUrl": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37096974578",
+    "readAfterOpening": true
+  },
+  "recovery": {
+    "conclusion": "success",
+    "createdAt": "2026-10-03T04:41:32Z",
+    "headSha": "de6abc824ce98b128c7acf938d576932588b6e45",
+    "jobs": [
+      {
+        "name": "monitor",
+        "conclusion": "success",
+        "startedAt": "2026-10-03T04:41:37Z",
+        "completedAt": "2026-10-03T04:41:42Z",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37097380101/job/111129969905"
+      }
+    ],
+    "status": "completed",
+    "updatedAt": "2026-10-03T04:41:43Z",
+    "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37097380101"
+  },
+  "runtime": {
+    "checkedAt": "2026-10-03T04:42:01.156Z",
+    "sourceCommit": "cd92c77272cac19d3645fe18656e2c38e3ef5a69",
+    "deploymentId": "c2989ddc-9423-4d6d-988c-7eaaff09ffe2",
+    "emptyStagingVerified": true,
+    "cpuLimit": 0.5,
+    "memoryBytes": 536870912,
+    "privacyHealthy": true,
+    "backupFresh": true,
+    "independentJournalVerified": true
+  },
+  "finalState": {
+    "checkedAt": "2026-10-03T04:44:34.320744+00:00",
+    "deploymentId": "c2989ddc-9423-4d6d-988c-7eaaff09ffe2",
+    "status": "REMOVED",
+    "noActiveDeployments": true,
+    "meteredUsageDollars": 0.0012524412798165458,
+    "newSubscriptionPurchased": false
+  },
+  "checks": [
+    {
+      "name": "failure workflow completed with the expected unsuccessful status",
+      "passed": true
+    },
+    {
+      "name": "both checks use the same monitor workflow source",
+      "passed": true
+    },
+    {
+      "name": "operator inbox received a new unread Actions failure notification",
+      "passed": true
+    },
+    {
+      "name": "browser displayed the notification and opened the exact failed run",
+      "passed": true
+    },
+    {
+      "name": "opening the alert marked that notification read",
+      "passed": true
+    },
+    {
+      "name": "GitHub inbox and failure-only preferences persisted with email preserved",
+      "passed": true
+    },
+    {
+      "name": "operator account watches the commerce repository",
+      "passed": true
+    },
+    {
+      "name": "infrastructure plan requires no configuration changes",
+      "passed": true
+    },
+    {
+      "name": "temporary deployment contains no merchant installation or records",
+      "passed": true
+    },
+    {
+      "name": "deployed resource ceilings and recovery health verified",
+      "passed": true
+    },
+    {
+      "name": "same monitor passed after staging recovered",
+      "passed": true
+    },
+    {
+      "name": "test deployment removed and no compute deployments remain",
+      "passed": true
+    },
+    {
+      "name": "scheduled checks remain disabled for stopped staging",
+      "passed": true
+    },
+    {
+      "name": "no new infrastructure subscription purchased",
+      "passed": true
+    },
+    {
+      "name": "failure: public logs contain no monitor token or private queue payload",
+      "passed": true
+    },
+    {
+      "name": "recovery: public logs contain no monitor token or private queue payload",
+      "passed": true
+    },
+    {
+      "name": "recovery workflow includes the expected safe success message",
+      "passed": true
+    },
+    {
+      "name": "failure workflow includes the actual safe operational message",
+      "passed": true
+    }
+  ],
+  "limitations": {
+    "emailReceiptVerified": false,
+    "humanAcknowledgementVerified": false,
+    "mobileDeliveryVerified": false,
+    "scheduledRunDeliveryVerified": false,
+    "missedCheckDetectionConfigured": false,
+    "scheduledMonitoringEnabled": false,
+    "continuousServiceEnabled": false,
+    "productionMerchantInstalled": false
+  },
+  "notes": [
+    "The agent observed and opened the alert in the signed-in operator account; human acknowledgement is not inferred.",
+    "The failure was an attended manual check while empty staging was intentionally stopped. The host returned a non-monitoring response, so this monitor version reported its invalid-response message.",
+    "The same workflow passed after restoring verified application source on the existing staging service. Compute was removed again without deleting the persistent volume or recovery bucket.",
+    "GitHub inbox failure delivery is verified. Additional notification channels, continuous operator coverage and independent missed-check detection remain separate operating requirements.",
+    "Metered usage can lag and precedes plan credits; it is not a confirmed card charge. No new subscription was purchased."
+  ],
+  "evidence": [
+    {
+      "file": "output/alerts/failure-run.json",
+      "sha256": "60e8371972a31fb93ab41d224a652919f8d7cb9575021b93148f95b105e449d3"
+    },
+    {
+      "file": "output/alerts/recovery-run.json",
+      "sha256": "059314e9944bb2a7eab62f805a6fe147633d78331ca5c6da294642a391d76749"
+    },
+    {
+      "file": "output/alerts/failure-workflow.log",
+      "sha256": "5f8f65bef892cc9257df3105fbbadf3c90801d66acf787485016cb95754e05c7"
+    },
+    {
+      "file": "output/alerts/recovery-workflow.log",
+      "sha256": "45252bac90ce4fcbfba715e90f5e83fa06be49b02c2720661025fc73dab2c363"
+    },
+    {
+      "file": "output/alerts/inbox-observation.json",
+      "sha256": "0d9d3049995914bc2a71f03e392116434dc5a5ed134eba413e315f559bebb66b"
+    },
+    {
+      "file": "output/alerts/after-recovery-inbox.json",
+      "sha256": "7496cecaa47ca8a9da03e0d06e006d5f9fc6a494969edab54fd1be456e6822c7"
+    },
+    {
+      "file": "output/alerts/browser-receipt.json",
+      "sha256": "6cffd10512e554ec17e5ba9e84294c83f4fbb1f1386969acca0df15162a36a0c"
+    },
+    {
+      "file": "output/alerts/infrastructure-plan.json",
+      "sha256": "5228d05651ff36f7a988c66ec957a0bcbf11c3d6fd7bc995e3e385c98d784b14"
+    },
+    {
+      "file": "output/alerts/runtime.json",
+      "sha256": "2c798ebe3b7dcbf3a0bff6191cf2afb591781aa9230bc4595f611d94906fc886"
+    },
+    {
+      "file": "output/alerts/stopped.json",
+      "sha256": "e1bf697597ceb4da276bb05c81d6e014d76e4e83318165c91df9cb8d4f0c4bb0"
+    },
+    {
+      "file": "output/alerts/usage.json",
+      "sha256": "0a39f0967f1cfbe8967263e61fa4fe4b18c092cdf676052b04ce1cadb6f9a4c3"
+    },
+    {
+      "file": "output/alerts/final-schedule.json",
+      "sha256": "94d0e97a4678867889ade12577afc88f71e606b89a702eb980fca84e9f535920"
+    },
+    {
+      "file": "output/browser/monitor-actions-notifications.png",
+      "sha256": "d1609f4c5163d8026f1f0009a4ca997a9d349c6410c7ad8ae6e4ec2acf6c05ab"
+    },
+    {
+      "file": "output/browser/monitor-failure-inbox.png",
+      "sha256": "c84445162c820f0c694bba4c0f3ecb3628f3d7c618e26b3387cda930ff4ee05e"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # Availability, privacy and backup monitoring
 
 The staging monitor checks HTTPS `/health`, then the authenticated
-`/internal/monitor` endpoint. The private endpoint also verifies that independent
+`/internal/monitor` endpoint. The private endpoint also verifies independent
 recovery storage, its encrypted dataset marker and verified backup freshness. It needs no Shopify, billing, SSH or Railway account
 credential. The endpoint is read-only and does not require a paid subscription.
 It reports aggregate privacy queue counts and backup status/age, never shop/customer/request IDs,
@@ -62,12 +62,28 @@ container for private operator diagnostics.
 ## Verify alert delivery before launch
 
 Assign an operator who watches the repository and enables GitHub Actions failure
-notifications in their account settings. Complete an attended synthetic failure
-and recovery drill, and verify that the operator actually receives the failure
-notification. A failed Actions run alone does not prove notification delivery.
-Keep a private incident record with receipt and response times; do not publish
-customer information. Account notification settings and receipt are not yet
-verified for this deployment.
+notifications in their account settings. Under **System → Actions**, enable
+**On GitHub** and **Only notify for failed workflows**; preserve any existing
+email preference. Watch this repository so its workflows are included. Complete
+an attended failure and recovery drill and inspect the resulting notification
+in the operator's inbox. A failed Actions run alone does not prove delivery.
+Do not publish customer information in incident records.
+
+On October 3, 2026, the signed-in `krflol` account enabled GitHub inbox alerts
+while preserving email and failure-only settings, and subscribed to this
+repository. An attended manual probe of intentionally stopped, empty staging
+failed. Its notification appeared unread through the notifications API and in
+the account's browser inbox; opening it led to the exact failed run. Staging was
+then temporarily restored, its empty database and resource limits checked, and
+the same monitor passed before compute was stopped again. See
+[alert-delivery evidence](../docs/alert-verification.json).
+
+This verifies delivery to the operator's GitHub inbox. The agent observed and
+opened the alert; it does not establish human acknowledgement, email receipt,
+mobile delivery or out-of-hours coverage. The drill used manual dispatch, not a
+scheduled run. For continuous service, designate a person to monitor the tested
+channel, verify any additional paging channel, and arrange independent detection
+when checks stop arriving. Scheduling remains disabled while staging is stopped.
 
 The backup probe authenticates the manifest and checks part presence. Creation
 and restore verify full part contents; normal monitoring does not repeat a full
@@ -77,6 +93,7 @@ renderer capacity. Those remain separate
 launch checks. Keep scheduling disabled and compute stopped between attended
 staging tests under the [total launch budget](../docs/launch-budget.json).
 
-Sources checked October 2, 2026: [GitHub scheduled workflow behavior](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule),
+Sources checked October 3, 2026: [GitHub scheduled workflow behavior](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule),
 [Actions notification settings](https://docs.github.com/en/subscriptions-and-notifications/how-tos/managing-github-actions-notifications),
+[notification reasons and polling](https://docs.github.com/en/rest/activity/notifications),
 and [environment branch policies](https://docs.github.com/en/rest/deployments/branch-policies).

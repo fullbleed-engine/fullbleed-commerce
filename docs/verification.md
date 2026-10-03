@@ -23,6 +23,7 @@ was synthetic. No merchant store was changed and no customer PDF was retained.
 | Shopify Flow extensions | CLI validates both native actions and output schemas | `output/shopify/flow-config-validation.json` |
 | Actual Shopify Flow execution and browser downloads | 19 retained checks; both actions and the downstream step completed; downloaded PDFs match returned SHA-256 values; revoke and pause return HTTP 410 | `output/browser/shopify-flow-verification.json`, matching PDFs/PNGs |
 | Automatic Shopify order trigger and staff destination | A new unpaid order triggered both actions and four native order-metafield updates; real Chrome downloads match preparation hashes; private field access and revoked links verified | [Order-trigger evidence](order-trigger-verification.json) |
+| Operator notification delivery | Actual failed monitor notification observed through the API and browser inbox; its link opened the exact run; restored empty staging passed the recovery monitor before stopping | [Alert evidence](alert-verification.json) |
 | Shopify service burst under staging ceilings | 24 jobs across four stores, one preparation each, 24 matching downloads; 0.5 CPU / 512 MiB, 709 successful readiness probes and no OOM events | [Capacity evidence](capacity-verification.json), [scope and reproduction](../shopify/CAPACITY.md) |
 | Visual and source template editing in real Chrome 154 | Free editor saves, previews, reloads and resets; Pro also downloads a two-PDF ZIP and fits a 390px viewport | `output/browser/*-verification.json`, PDFs and screenshots |
 | Shopify real-browser editing and downloads | Summary/packing-slip downloads, visual edit, HTML/CSS save, actual preview, persisted template and reset passed | `output/browser/shopify-verification.json` |
@@ -97,7 +98,9 @@ GitHub drill accepted an empty queue, failed for a synthetic request due in 24
 hours, and recovered after exact fixture cleanup. Public readiness stayed healthy
 through the privacy warning. The public workflow log was checked for accidental
 credential or queue disclosure. Scheduling remains disabled while compute is
-stopped; operator notification receipt and missed-check detection are unverified.
+stopped. A later attended failure/recovery drill verified that the alert reached
+the operator's GitHub inbox and linked to the exact failed run. Email receipt,
+human acknowledgement and detection of missed checks were not verified.
 See [monitoring operation](../shopify/MONITORING.md).
 
 Recovery tests authenticate multipart SQLite snapshots and replay independent
@@ -112,8 +115,10 @@ were synthetic. Daily creation and external freshness monitoring now pass an
 attended hosted drill. Time-controlled tests cover the 24-hour schedule boundary,
 longer downtime, interrupted uploads and private temporary snapshot cleanup.
 The hosted stale condition used a deliberately backdated synthetic snapshot;
-it was not a day-long availability test. Independent key recovery and actual
-operator alert receipt remain operational launch gates. See [recovery operation](../shopify/RECOVERY.md).
+it was not a day-long availability test. GitHub inbox delivery is verified in
+the [separate alert drill](alert-verification.json). Independent key recovery,
+continuous operator coverage and missed-check detection remain operational
+launch gates. See [recovery operation](../shopify/RECOVERY.md).
 
 The privacy browser fixture uses the production build and official SDK JWT
 verification with synthetic sessions. Only the external Shopify admin/App Bridge
@@ -224,7 +229,7 @@ workflow measurement or production capacity promise.
 
 The final infrastructure plan matched the live service. After testing, compute
 was stopped and the persistent volume retained. The host is not currently
-serving merchants. Billing, full hosted installation and Flow verification, alert receipt,
+serving merchants. Billing, full hosted installation and Flow verification, continuous operator coverage,
 independent key recovery and merchant rollout remain separate gates. See
 [deployment operation](../shopify/DEPLOYMENT.md) and the
 [retained hosted record](staging-verification.json).
@@ -247,7 +252,7 @@ independent key recovery and merchant rollout remain separate gates. See
   access to the synthetic order are verified. Billing configuration and
   production merchant rollout are not complete. The isolated staging container
   deployment and persistent storage have now been verified.
-- Shopify webhook monitoring, operator alert receipt, independent key recovery and secure support-delivery setup
+- Shopify webhook monitoring, continuous operator coverage, missed-check detection, independent key recovery and secure support-delivery setup
   remain required. A real automatic new-order trigger now prepares both PDFs and
   saves links and expiry times in private Shopify order fields. Actual browser
   downloads and revocation passed. Repeat that complete workflow on the stable
