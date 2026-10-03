@@ -1,0 +1,4789 @@
+{
+  "checkedAt": "2026-10-03T18:42:24.836300+00:00",
+  "version": "0.1.1",
+  "sourceCommit": "e9732f8d73ea63349451b6ad982dfc66c95e3ae8",
+  "syntheticOnly": true,
+  "releaseUrl": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.1",
+  "scope": "WooCommerce evaluation release with Node 0.1.2 / engine 2.5.6 and optional Pro administrator failure alerts. Shared Shopify checks are synthetic; this is not a hosted Shopify deployment.",
+  "packages": [
+    {
+      "plugin": "fullbleed-commerce",
+      "version": "0.1.1",
+      "filename": "fullbleed-commerce-0.1.1.zip",
+      "bytes": 3061180,
+      "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+      "files": 39
+    },
+    {
+      "plugin": "fullbleed-commerce-pro",
+      "version": "0.1.1",
+      "filename": "fullbleed-commerce-pro-0.1.1.zip",
+      "bytes": 39012,
+      "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+      "files": 14
+    }
+  ],
+  "windowsLinuxArchivesIdentical": true,
+  "renderer": {
+    "engine": "2.5.6",
+    "nodePackage": "0.1.2",
+    "wordpressCoreScripts": [
+      "jquery",
+      "backbone",
+      "underscore",
+      "wp-codemirror"
+    ],
+    "grapesjsSourceMapSha256": "4f0bf04d1e75018b51fa1878868b5ee637572e8a5502998be2c6f8d3615af905",
+    "files": {
+      "admin.js": {
+        "bytes": 521008,
+        "sha256": "56c07ba37fd9c3f3432671d4e1801e851cb57294f3d8d36c7b2ed242e5b17015"
+      },
+      "editor.js": {
+        "bytes": 2337747,
+        "sha256": "096c5dd8781d88d1b8a261d192339a88a2603ba31231b38845658ebe08d3d732"
+      },
+      "editor.css": {
+        "bytes": 64864,
+        "sha256": "5f74864064d4e4f11e9dab9f26ddf896fd93d3f72be33c7ce732c56941561415"
+      },
+      "worker.js": {
+        "bytes": 51742,
+        "sha256": "73a3f65c8262bb13a2ad1e2cf35f7e77a1cb25fe9f84450a04785cf3f472ae33"
+      },
+      "engine.wasm": {
+        "bytes": 5053312,
+        "sha256": "2e9c27d67f21483df2e9e63414346eb01170ae5a8ba4a04f48c0a7d647a577a6"
+      }
+    }
+  },
+  "ci": [
+    {
+      "conclusion": "success",
+      "createdAt": "2026-10-03T18:24:34Z",
+      "headSha": "e9732f8d73ea63349451b6ad982dfc66c95e3ae8",
+      "jobs": [
+        {
+          "completedAt": "2026-10-03T18:34:14Z",
+          "conclusion": "success",
+          "databaseId": 111264313271,
+          "name": "integration",
+          "startedAt": "2026-10-03T18:24:37Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-03T18:24:39Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-03T18:24:38Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:40Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 2,
+              "startedAt": "2026-10-03T18:24:39Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:43Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v6",
+              "number": 3,
+              "startedAt": "2026-10-03T18:24:40Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:52Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 4,
+              "startedAt": "2026-10-03T18:24:43Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:55Z",
+              "conclusion": "success",
+              "name": "Run npm run build",
+              "number": 5,
+              "startedAt": "2026-10-03T18:24:52Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:25:01Z",
+              "conclusion": "success",
+              "name": "Run npm test",
+              "number": 6,
+              "startedAt": "2026-10-03T18:24:55Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:25:04Z",
+              "conclusion": "success",
+              "name": "Run npm run examples",
+              "number": 7,
+              "startedAt": "2026-10-03T18:25:01Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:25:05Z",
+              "conclusion": "success",
+              "name": "Run npm run pack",
+              "number": 8,
+              "startedAt": "2026-10-03T18:25:04Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:25:05Z",
+              "conclusion": "success",
+              "name": "Run node tools/build-playground.mjs --check",
+              "number": 9,
+              "startedAt": "2026-10-03T18:25:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:25:35Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-playground.mjs",
+              "number": 10,
+              "startedAt": "2026-10-03T18:25:05Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:26:14Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-automation.mjs --hpos",
+              "number": 11,
+              "startedAt": "2026-10-03T18:25:35Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:26:53Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-automation.mjs",
+              "number": 12,
+              "startedAt": "2026-10-03T18:26:14Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:30:06Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-customer-downloads.mjs --hpos --packages",
+              "number": 13,
+              "startedAt": "2026-10-03T18:26:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:33:19Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-customer-downloads.mjs --packages",
+              "number": 14,
+              "startedAt": "2026-10-03T18:30:06Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:33:36Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 15,
+              "startedAt": "2026-10-03T18:33:19Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:34:06Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-shopify.mjs",
+              "number": 16,
+              "startedAt": "2026-10-03T18:33:36Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:34:08Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+              "number": 17,
+              "startedAt": "2026-10-03T18:34:06Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:34:12Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v6",
+              "number": 33,
+              "startedAt": "2026-10-03T18:34:09Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:34:12Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 34,
+              "startedAt": "2026-10-03T18:34:12Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:34:12Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 35,
+              "startedAt": "2026-10-03T18:34:12Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37144079612/job/111264313271"
+        },
+        {
+          "completedAt": "2026-10-03T18:27:28Z",
+          "conclusion": "success",
+          "databaseId": 111264313356,
+          "name": "container",
+          "startedAt": "2026-10-03T18:24:36Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-03T18:24:38Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-03T18:24:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:39Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 2,
+              "startedAt": "2026-10-03T18:24:38Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:39Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v6",
+              "number": 3,
+              "startedAt": "2026-10-03T18:24:39Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:25:37Z",
+              "conclusion": "success",
+              "name": "Run docker build -f shopify/app/Dockerfile -t fullbleed-commerce:check .",
+              "number": 4,
+              "startedAt": "2026-10-03T18:24:39Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:27:25Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-container.mjs",
+              "number": 5,
+              "startedAt": "2026-10-03T18:25:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:27:26Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+              "number": 6,
+              "startedAt": "2026-10-03T18:27:25Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:27:26Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v6",
+              "number": 11,
+              "startedAt": "2026-10-03T18:27:26Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:27:26Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 12,
+              "startedAt": "2026-10-03T18:27:26Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:27:26Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 13,
+              "startedAt": "2026-10-03T18:27:26Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37144079612/job/111264313356"
+        },
+        {
+          "completedAt": "2026-10-03T18:26:31Z",
+          "conclusion": "success",
+          "databaseId": 111264313375,
+          "name": "upgrade",
+          "startedAt": "2026-10-03T18:24:37Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-03T18:24:38Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-03T18:24:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:39Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 2,
+              "startedAt": "2026-10-03T18:24:38Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:39Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v6",
+              "number": 3,
+              "startedAt": "2026-10-03T18:24:39Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:48Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 4,
+              "startedAt": "2026-10-03T18:24:39Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:51Z",
+              "conclusion": "success",
+              "name": "Run npm run build",
+              "number": 5,
+              "startedAt": "2026-10-03T18:24:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:52Z",
+              "conclusion": "success",
+              "name": "Run npm run pack",
+              "number": 6,
+              "startedAt": "2026-10-03T18:24:51Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:25:40Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-upgrade.mjs --hpos",
+              "number": 7,
+              "startedAt": "2026-10-03T18:24:52Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:26:28Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-upgrade.mjs",
+              "number": 8,
+              "startedAt": "2026-10-03T18:25:40Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:26:28Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+              "number": 9,
+              "startedAt": "2026-10-03T18:26:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:26:30Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v6",
+              "number": 17,
+              "startedAt": "2026-10-03T18:26:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:26:30Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 18,
+              "startedAt": "2026-10-03T18:26:30Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:26:30Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 19,
+              "startedAt": "2026-10-03T18:26:30Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37144079612/job/111264313375"
+        },
+        {
+          "completedAt": "2026-10-03T18:26:31Z",
+          "conclusion": "success",
+          "databaseId": 111264313412,
+          "name": "renderer-deployment",
+          "startedAt": "2026-10-03T18:24:36Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-03T18:24:38Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-03T18:24:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:39Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 2,
+              "startedAt": "2026-10-03T18:24:38Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:40Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v6",
+              "number": 3,
+              "startedAt": "2026-10-03T18:24:39Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:48Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 4,
+              "startedAt": "2026-10-03T18:24:40Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:51Z",
+              "conclusion": "success",
+              "name": "Run npm run build",
+              "number": 5,
+              "startedAt": "2026-10-03T18:24:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:52Z",
+              "conclusion": "success",
+              "name": "Run npm run pack",
+              "number": 6,
+              "startedAt": "2026-10-03T18:24:51Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:26:28Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-renderer-deployment.mjs",
+              "number": 7,
+              "startedAt": "2026-10-03T18:24:52Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:26:29Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+              "number": 8,
+              "startedAt": "2026-10-03T18:26:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:26:29Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v6",
+              "number": 15,
+              "startedAt": "2026-10-03T18:26:29Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:26:30Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 16,
+              "startedAt": "2026-10-03T18:26:29Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:26:30Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 17,
+              "startedAt": "2026-10-03T18:26:30Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37144079612/job/111264313412"
+        }
+      ],
+      "status": "completed",
+      "updatedAt": "2026-10-03T18:34:15Z",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37144079612"
+    },
+    {
+      "conclusion": "success",
+      "createdAt": "2026-10-03T18:24:34Z",
+      "headSha": "e9732f8d73ea63349451b6ad982dfc66c95e3ae8",
+      "jobs": [
+        {
+          "completedAt": "2026-10-03T18:32:31Z",
+          "conclusion": "success",
+          "databaseId": 111264313086,
+          "name": "browser (webkit)",
+          "startedAt": "2026-10-03T18:24:36Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-03T18:24:38Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-03T18:24:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:39Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 2,
+              "startedAt": "2026-10-03T18:24:38Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:40Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v6",
+              "number": 3,
+              "startedAt": "2026-10-03T18:24:39Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:42Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-python@v6",
+              "number": 4,
+              "startedAt": "2026-10-03T18:24:40Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:49Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 5,
+              "startedAt": "2026-10-03T18:24:42Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:51Z",
+              "conclusion": "success",
+              "name": "Run npm run build",
+              "number": 6,
+              "startedAt": "2026-10-03T18:24:49Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:52Z",
+              "conclusion": "success",
+              "name": "Run npm run pack",
+              "number": 7,
+              "startedAt": "2026-10-03T18:24:51Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:54Z",
+              "conclusion": "success",
+              "name": "Run python -m pip install -r tools/browser-requirements.txt",
+              "number": 8,
+              "startedAt": "2026-10-03T18:24:52Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:25:42Z",
+              "conclusion": "success",
+              "name": "Run python -m playwright install --with-deps webkit",
+              "number": 9,
+              "startedAt": "2026-10-03T18:24:54Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:32:27Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-browser-workflows.mjs",
+              "number": 10,
+              "startedAt": "2026-10-03T18:25:42Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:32:28Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+              "number": 11,
+              "startedAt": "2026-10-03T18:32:27Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:32:28Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@v6",
+              "number": 20,
+              "startedAt": "2026-10-03T18:32:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:32:29Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v6",
+              "number": 21,
+              "startedAt": "2026-10-03T18:32:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:32:29Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 22,
+              "startedAt": "2026-10-03T18:32:29Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:32:29Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 23,
+              "startedAt": "2026-10-03T18:32:29Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37144079630/job/111264313086"
+        },
+        {
+          "completedAt": "2026-10-03T18:32:12Z",
+          "conclusion": "success",
+          "databaseId": 111264313226,
+          "name": "browser (firefox)",
+          "startedAt": "2026-10-03T18:24:36Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-03T18:24:38Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-03T18:24:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:39Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 2,
+              "startedAt": "2026-10-03T18:24:38Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:40Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v6",
+              "number": 3,
+              "startedAt": "2026-10-03T18:24:39Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:42Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-python@v6",
+              "number": 4,
+              "startedAt": "2026-10-03T18:24:40Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:48Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 5,
+              "startedAt": "2026-10-03T18:24:42Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:50Z",
+              "conclusion": "success",
+              "name": "Run npm run build",
+              "number": 6,
+              "startedAt": "2026-10-03T18:24:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:51Z",
+              "conclusion": "success",
+              "name": "Run npm run pack",
+              "number": 7,
+              "startedAt": "2026-10-03T18:24:50Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:52Z",
+              "conclusion": "success",
+              "name": "Run python -m pip install -r tools/browser-requirements.txt",
+              "number": 8,
+              "startedAt": "2026-10-03T18:24:51Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:25:12Z",
+              "conclusion": "success",
+              "name": "Run python -m playwright install --with-deps firefox",
+              "number": 9,
+              "startedAt": "2026-10-03T18:24:52Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:32:08Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-browser-workflows.mjs",
+              "number": 10,
+              "startedAt": "2026-10-03T18:25:12Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:32:09Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+              "number": 11,
+              "startedAt": "2026-10-03T18:32:08Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:32:09Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@v6",
+              "number": 20,
+              "startedAt": "2026-10-03T18:32:09Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:32:10Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v6",
+              "number": 21,
+              "startedAt": "2026-10-03T18:32:09Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:32:10Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 22,
+              "startedAt": "2026-10-03T18:32:10Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:32:10Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 23,
+              "startedAt": "2026-10-03T18:32:10Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37144079630/job/111264313226"
+        },
+        {
+          "completedAt": "2026-10-03T18:34:01Z",
+          "conclusion": "success",
+          "databaseId": 111264313236,
+          "name": "browser (chrome)",
+          "startedAt": "2026-10-03T18:24:36Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-03T18:24:38Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-03T18:24:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:39Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 2,
+              "startedAt": "2026-10-03T18:24:38Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:39Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v6",
+              "number": 3,
+              "startedAt": "2026-10-03T18:24:39Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:40Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-python@v6",
+              "number": 4,
+              "startedAt": "2026-10-03T18:24:39Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:49Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 5,
+              "startedAt": "2026-10-03T18:24:40Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:52Z",
+              "conclusion": "success",
+              "name": "Run npm run build",
+              "number": 6,
+              "startedAt": "2026-10-03T18:24:49Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:53Z",
+              "conclusion": "success",
+              "name": "Run npm run pack",
+              "number": 7,
+              "startedAt": "2026-10-03T18:24:52Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:56Z",
+              "conclusion": "success",
+              "name": "Run python -m pip install -r tools/browser-requirements.txt",
+              "number": 8,
+              "startedAt": "2026-10-03T18:24:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:25:23Z",
+              "conclusion": "success",
+              "name": "Run python -m playwright install --with-deps chrome",
+              "number": 9,
+              "startedAt": "2026-10-03T18:24:56Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:33:57Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-browser-workflows.mjs",
+              "number": 10,
+              "startedAt": "2026-10-03T18:25:23Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:33:58Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+              "number": 11,
+              "startedAt": "2026-10-03T18:33:57Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:33:58Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@v6",
+              "number": 20,
+              "startedAt": "2026-10-03T18:33:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:33:59Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v6",
+              "number": 21,
+              "startedAt": "2026-10-03T18:33:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:33:59Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 22,
+              "startedAt": "2026-10-03T18:33:59Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:33:59Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 23,
+              "startedAt": "2026-10-03T18:33:59Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37144079630/job/111264313236"
+        }
+      ],
+      "status": "completed",
+      "updatedAt": "2026-10-03T18:34:01Z",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37144079630"
+    },
+    {
+      "conclusion": "success",
+      "createdAt": "2026-10-03T18:24:34Z",
+      "headSha": "e9732f8d73ea63349451b6ad982dfc66c95e3ae8",
+      "jobs": [
+        {
+          "completedAt": "2026-10-03T18:27:03Z",
+          "conclusion": "success",
+          "databaseId": 111264312991,
+          "name": "plugin-check",
+          "startedAt": "2026-10-03T18:24:36Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-03T18:24:38Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-03T18:24:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:39Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 2,
+              "startedAt": "2026-10-03T18:24:38Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:40Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v6",
+              "number": 3,
+              "startedAt": "2026-10-03T18:24:39Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:49Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 4,
+              "startedAt": "2026-10-03T18:24:40Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:52Z",
+              "conclusion": "success",
+              "name": "Run npm run build",
+              "number": 5,
+              "startedAt": "2026-10-03T18:24:49Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:53Z",
+              "conclusion": "success",
+              "name": "Run npm run pack",
+              "number": 6,
+              "startedAt": "2026-10-03T18:24:52Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:24:53Z",
+              "conclusion": "success",
+              "name": "Extract the exact free plugin archive",
+              "number": 7,
+              "startedAt": "2026-10-03T18:24:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:26:14Z",
+              "conclusion": "success",
+              "name": "Run WordPress/plugin-check-action@005058d6dbd2942b6a58610836b981c2ee3cc19d",
+              "number": 8,
+              "startedAt": "2026-10-03T18:24:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:26:14Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-python@v6",
+              "number": 9,
+              "startedAt": "2026-10-03T18:26:14Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:26:59Z",
+              "conclusion": "success",
+              "name": "Verify the packaged editor in native WordPress",
+              "number": 10,
+              "startedAt": "2026-10-03T18:26:14Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:27:00Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+              "number": 11,
+              "startedAt": "2026-10-03T18:26:59Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:27:01Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@v6",
+              "number": 19,
+              "startedAt": "2026-10-03T18:27:00Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:27:01Z",
+              "conclusion": "success",
+              "name": "Post Run WordPress/plugin-check-action@005058d6dbd2942b6a58610836b981c2ee3cc19d",
+              "number": 20,
+              "startedAt": "2026-10-03T18:27:01Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:27:02Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v6",
+              "number": 21,
+              "startedAt": "2026-10-03T18:27:01Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:27:02Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 22,
+              "startedAt": "2026-10-03T18:27:02Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T18:27:02Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 23,
+              "startedAt": "2026-10-03T18:27:02Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37144079615/job/111264312991"
+        }
+      ],
+      "status": "completed",
+      "updatedAt": "2026-10-03T18:27:04Z",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37144079615"
+    }
+  ],
+  "linuxBrowserMatrix": [
+    {
+      "checkedAt": "2026-10-03T18:33:57.740Z",
+      "syntheticOnly": true,
+      "engine": "chrome",
+      "hpos": true,
+      "packages": [
+        {
+          "plugin": "fullbleed-commerce",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-0.1.1.zip",
+          "bytes": 3061180,
+          "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+          "files": 39
+        },
+        {
+          "plugin": "fullbleed-commerce-pro",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-pro-0.1.1.zip",
+          "bytes": 39012,
+          "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+          "files": 14
+        }
+      ],
+      "staff": {
+        "checkedAt": "2026-10-03T18:27:28.642559+00:00",
+        "browser": "154.0.8037.97",
+        "browserEngine": "chrome",
+        "browserDistribution": "Google Chrome channel",
+        "playwright": "1.63.0",
+        "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+        "store": "http://127.0.0.1:9496",
+        "pro": true,
+        "upgradeTemplate": null,
+        "checks": [
+          {
+            "name": "real browser worker produces a complete PDF download",
+            "passed": true
+          },
+          {
+            "name": "visual editor renders the saved template",
+            "passed": true
+          },
+          {
+            "name": "editor uses WordPress dependencies without replacing shared globals",
+            "passed": true
+          },
+          {
+            "name": "dragging a block into the canvas adds real editable content",
+            "passed": true
+          },
+          {
+            "name": "visual text editing reaches exported HTML",
+            "passed": true
+          },
+          {
+            "name": "custom HTML and CSS save through authenticated editor",
+            "passed": true
+          },
+          {
+            "name": "PDF preview contains visual edits and order data",
+            "passed": true
+          },
+          {
+            "name": "custom bold heading extracts exactly once",
+            "passed": true
+          },
+          {
+            "name": "saved template survives reload and applies to ordinary downloads",
+            "passed": true
+          },
+          {
+            "name": "Pro browser download is a complete two-PDF ZIP",
+            "passed": true
+          },
+          {
+            "name": "reset restores the built-in design",
+            "passed": true
+          },
+          {
+            "name": "mobile editor fits the viewport",
+            "passed": true
+          },
+          {
+            "name": "no browser JavaScript errors",
+            "passed": true
+          }
+        ],
+        "pdfSha256": "9e31cc1373a948360b56713ea176a483c854e9c2bda07a7630286419b870ecdf",
+        "documents": [
+          {
+            "file": "output/browser/wordpress-matrix-default.pdf",
+            "sha256": "dd9a52b7bcc11a26ec63825c95fb46177d57cb560b3014337c3868e85a011289",
+            "pages": 1
+          },
+          {
+            "file": "output/browser/wordpress-matrix-custom.pdf",
+            "sha256": "9e31cc1373a948360b56713ea176a483c854e9c2bda07a7630286419b870ecdf",
+            "pages": 1
+          },
+          {
+            "file": "output/browser/wordpress-matrix-saved.pdf",
+            "sha256": "9e31cc1373a948360b56713ea176a483c854e9c2bda07a7630286419b870ecdf",
+            "pages": 1
+          }
+        ],
+        "pageErrors": [],
+        "batch": {
+          "file": "output/browser/wordpress-pro-batch.zip",
+          "sha256": "bd2f7c01a25e072dbe928dbd0ff8758c8a0d2a214309c4f55f55f23edcae16bc"
+        }
+      },
+      "customer": {
+        "checkedAt": "2026-10-03T18:31:55.416674+00:00",
+        "browser": "154.0.8037.97",
+        "browserEngine": "chrome",
+        "browserDistribution": "Google Chrome channel",
+        "playwright": "1.63.0",
+        "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+        "store": "http://127.0.0.1:9482",
+        "checks": [
+          {
+            "name": "buyer finds one PDF action on the actual account orders page",
+            "passed": true
+          },
+          {
+            "name": "native browser download has the promised filename and exact renderer bytes",
+            "passed": true
+          },
+          {
+            "name": "download contains saved brand styling and platform totals",
+            "passed": true
+          },
+          {
+            "name": "server-rendered bold heading extracts exactly once",
+            "passed": true
+          },
+          {
+            "name": "download leaves the account page usable",
+            "passed": true
+          },
+          {
+            "name": "buyer can also find the PDF on order details",
+            "passed": true
+          },
+          {
+            "name": "account PDF action remains visible within a mobile viewport",
+            "passed": true
+          },
+          {
+            "name": "merchant sees the enabled customer-download setting without the access token",
+            "passed": true
+          },
+          {
+            "name": "merchant can remove customer downloads without disabling email configuration",
+            "passed": true
+          },
+          {
+            "name": "previously issued account link fails immediately after disabling",
+            "passed": true
+          },
+          {
+            "name": "re-enabling restores the customer action",
+            "passed": true
+          },
+          {
+            "name": "packaged staff browser worker matches the customer server-rendered PDF",
+            "passed": true
+          },
+          {
+            "name": "customer and merchant pages have no JavaScript errors",
+            "passed": true
+          }
+        ],
+        "packages": [
+          {
+            "plugin": "fullbleed-commerce",
+            "version": "0.1.1",
+            "filename": "fullbleed-commerce-0.1.1.zip",
+            "bytes": 3061180,
+            "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+            "files": 39
+          },
+          {
+            "plugin": "fullbleed-commerce-pro",
+            "version": "0.1.1",
+            "filename": "fullbleed-commerce-pro-0.1.1.zip",
+            "bytes": 39012,
+            "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+            "files": 14
+          }
+        ],
+        "pdfSha256": "9bd63037208f1ddfabf7f8023ad86bb479da22075f8f8f3592ec54889f99a638",
+        "pageErrors": [],
+        "evidence": [
+          {
+            "file": "output/browser/wordpress-customer-orders.png",
+            "sha256": "7572f6923d720f626c98d3ee09c0e4e7cdda3c39aedd858892526651aea8a30a"
+          },
+          {
+            "file": "output/browser/wordpress-customer-details.png",
+            "sha256": "f5f4af806d86c96eedb0bb0c7cf64fe00843652d86bffdbce85df189c51e8ded"
+          },
+          {
+            "file": "output/browser/wordpress-customer-mobile.png",
+            "sha256": "e05da2401a92de7cbde7ec7eaa8c975a26dc1665f45363f7f57d949ba75f1944"
+          },
+          {
+            "file": "output/browser/wordpress-customer-settings.png",
+            "sha256": "6cd81cc47ee5927f88cc403f7d8b7332707b4aa40930b2e6fa090c437b53b6bb"
+          }
+        ]
+      },
+      "alerts": {
+        "checkedAt": "2026-10-03T18:33:57.539653+00:00",
+        "browser": "154.0.8037.97",
+        "browserEngine": "chrome",
+        "browserDistribution": "Google Chrome channel",
+        "playwright": "1.63.0",
+        "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+        "store": "http://127.0.0.1:9478",
+        "checks": [
+          {
+            "name": "administrator finds opt-in alerts with the scheduling and mail limits",
+            "passed": true
+          },
+          {
+            "name": "administrator enables failure alerts through the real settings form",
+            "passed": true
+          },
+          {
+            "name": "saved opt-in survives a new WordPress request",
+            "passed": true
+          },
+          {
+            "name": "alert controls do not expose renderer credentials or customer details",
+            "passed": true
+          },
+          {
+            "name": "alert settings reject an invalid administrator nonce",
+            "passed": true
+          },
+          {
+            "name": "shop manager can use automation but cannot configure administrator alerts",
+            "passed": true
+          },
+          {
+            "name": "shop manager cannot bypass the settings permission through POST",
+            "passed": true
+          },
+          {
+            "name": "mobile alert controls fit the viewport",
+            "passed": true
+          },
+          {
+            "name": "administrator can disable alerts without editing renderer settings",
+            "passed": true
+          },
+          {
+            "name": "alert settings have no JavaScript errors",
+            "passed": true
+          }
+        ],
+        "pageErrors": [],
+        "evidence": [
+          {
+            "file": "output/browser/wordpress-alerts-desktop.png",
+            "sha256": "213fad28dcd7907649910b0a4111bbf10ef59184afb7282233d8671ce19db464"
+          },
+          {
+            "file": "output/browser/wordpress-alerts-mobile.png",
+            "sha256": "0532cdf9bb2888104c34c471d00073204ed0453188d78c6def20ab01c015374d"
+          }
+        ],
+        "scope": "Synthetic administrator settings only. WP-Cron is disabled in this fixture; no email is sent by browser actions."
+      },
+      "scope": "Actual browser editing and downloads on disposable WordPress. Alert controls use the source-mounted automation fixture with captured mail. Customer renderer HTTPS transport is substituted with a fixture using real Fullbleed PDF bytes. No production network, email delivery or branded Safari claim."
+    },
+    {
+      "checkedAt": "2026-10-03T18:32:08.233Z",
+      "syntheticOnly": true,
+      "engine": "firefox",
+      "hpos": true,
+      "packages": [
+        {
+          "plugin": "fullbleed-commerce",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-0.1.1.zip",
+          "bytes": 3061180,
+          "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+          "files": 39
+        },
+        {
+          "plugin": "fullbleed-commerce-pro",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-pro-0.1.1.zip",
+          "bytes": 39012,
+          "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+          "files": 14
+        }
+      ],
+      "staff": {
+        "checkedAt": "2026-10-03T18:26:55.678014+00:00",
+        "browser": "155.0",
+        "browserEngine": "firefox",
+        "browserDistribution": "Playwright Firefox",
+        "playwright": "1.63.0",
+        "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+        "store": "http://127.0.0.1:9496",
+        "pro": true,
+        "upgradeTemplate": null,
+        "checks": [
+          {
+            "name": "real browser worker produces a complete PDF download",
+            "passed": true
+          },
+          {
+            "name": "visual editor renders the saved template",
+            "passed": true
+          },
+          {
+            "name": "editor uses WordPress dependencies without replacing shared globals",
+            "passed": true
+          },
+          {
+            "name": "dragging a block into the canvas adds real editable content",
+            "passed": true
+          },
+          {
+            "name": "visual text editing reaches exported HTML",
+            "passed": true
+          },
+          {
+            "name": "custom HTML and CSS save through authenticated editor",
+            "passed": true
+          },
+          {
+            "name": "PDF preview contains visual edits and order data",
+            "passed": true
+          },
+          {
+            "name": "custom bold heading extracts exactly once",
+            "passed": true
+          },
+          {
+            "name": "saved template survives reload and applies to ordinary downloads",
+            "passed": true
+          },
+          {
+            "name": "Pro browser download is a complete two-PDF ZIP",
+            "passed": true
+          },
+          {
+            "name": "reset restores the built-in design",
+            "passed": true
+          },
+          {
+            "name": "mobile editor fits the viewport",
+            "passed": true
+          },
+          {
+            "name": "no browser JavaScript errors",
+            "passed": true
+          }
+        ],
+        "pdfSha256": "9e31cc1373a948360b56713ea176a483c854e9c2bda07a7630286419b870ecdf",
+        "documents": [
+          {
+            "file": "output/browser/wordpress-matrix-firefox-default.pdf",
+            "sha256": "dd9a52b7bcc11a26ec63825c95fb46177d57cb560b3014337c3868e85a011289",
+            "pages": 1
+          },
+          {
+            "file": "output/browser/wordpress-matrix-firefox-custom.pdf",
+            "sha256": "9e31cc1373a948360b56713ea176a483c854e9c2bda07a7630286419b870ecdf",
+            "pages": 1
+          },
+          {
+            "file": "output/browser/wordpress-matrix-firefox-saved.pdf",
+            "sha256": "9e31cc1373a948360b56713ea176a483c854e9c2bda07a7630286419b870ecdf",
+            "pages": 1
+          }
+        ],
+        "pageErrors": [],
+        "batch": {
+          "file": "output/browser/wordpress-matrix-firefox-batch.zip",
+          "sha256": "a684b09370d5beb414c5989ea1de7808fff78cc8a3891acc0382f597a4992297"
+        }
+      },
+      "customer": {
+        "checkedAt": "2026-10-03T18:30:22.164458+00:00",
+        "browser": "155.0",
+        "browserEngine": "firefox",
+        "browserDistribution": "Playwright Firefox",
+        "playwright": "1.63.0",
+        "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+        "store": "http://127.0.0.1:9482",
+        "checks": [
+          {
+            "name": "buyer finds one PDF action on the actual account orders page",
+            "passed": true
+          },
+          {
+            "name": "native browser download has the promised filename and exact renderer bytes",
+            "passed": true
+          },
+          {
+            "name": "download contains saved brand styling and platform totals",
+            "passed": true
+          },
+          {
+            "name": "server-rendered bold heading extracts exactly once",
+            "passed": true
+          },
+          {
+            "name": "download leaves the account page usable",
+            "passed": true
+          },
+          {
+            "name": "buyer can also find the PDF on order details",
+            "passed": true
+          },
+          {
+            "name": "account PDF action remains visible within a mobile viewport",
+            "passed": true
+          },
+          {
+            "name": "merchant sees the enabled customer-download setting without the access token",
+            "passed": true
+          },
+          {
+            "name": "merchant can remove customer downloads without disabling email configuration",
+            "passed": true
+          },
+          {
+            "name": "previously issued account link fails immediately after disabling",
+            "passed": true
+          },
+          {
+            "name": "re-enabling restores the customer action",
+            "passed": true
+          },
+          {
+            "name": "packaged staff browser worker matches the customer server-rendered PDF",
+            "passed": true
+          },
+          {
+            "name": "customer and merchant pages have no JavaScript errors",
+            "passed": true
+          }
+        ],
+        "packages": [
+          {
+            "plugin": "fullbleed-commerce",
+            "version": "0.1.1",
+            "filename": "fullbleed-commerce-0.1.1.zip",
+            "bytes": 3061180,
+            "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+            "files": 39
+          },
+          {
+            "plugin": "fullbleed-commerce-pro",
+            "version": "0.1.1",
+            "filename": "fullbleed-commerce-pro-0.1.1.zip",
+            "bytes": 39012,
+            "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+            "files": 14
+          }
+        ],
+        "pdfSha256": "9bd63037208f1ddfabf7f8023ad86bb479da22075f8f8f3592ec54889f99a638",
+        "pageErrors": [],
+        "evidence": [
+          {
+            "file": "output/browser/wordpress-customer-firefox-orders.png",
+            "sha256": "b8800e2e23c185a5dbde38d0af8426ec9b8261f3a5882318f3fff0405daac133"
+          },
+          {
+            "file": "output/browser/wordpress-customer-firefox-details.png",
+            "sha256": "a568985851a7dc48e52112655a66bd0fc8ad8ea71b9f844d4d8418a6a38d4a18"
+          },
+          {
+            "file": "output/browser/wordpress-customer-firefox-mobile.png",
+            "sha256": "55ce92ed07fd8e49a9dbebe670aac6f0e3ca6059ee3f26faba7c39174a3338b7"
+          },
+          {
+            "file": "output/browser/wordpress-customer-firefox-settings.png",
+            "sha256": "62fbf3ce32f78f904326c7d724a4111b94d1e134c3ccf5a3903629c55135898d"
+          }
+        ]
+      },
+      "alerts": {
+        "checkedAt": "2026-10-03T18:32:07.864923+00:00",
+        "browser": "155.0",
+        "browserEngine": "firefox",
+        "browserDistribution": "Playwright Firefox",
+        "playwright": "1.63.0",
+        "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+        "store": "http://127.0.0.1:9478",
+        "checks": [
+          {
+            "name": "administrator finds opt-in alerts with the scheduling and mail limits",
+            "passed": true
+          },
+          {
+            "name": "administrator enables failure alerts through the real settings form",
+            "passed": true
+          },
+          {
+            "name": "saved opt-in survives a new WordPress request",
+            "passed": true
+          },
+          {
+            "name": "alert controls do not expose renderer credentials or customer details",
+            "passed": true
+          },
+          {
+            "name": "alert settings reject an invalid administrator nonce",
+            "passed": true
+          },
+          {
+            "name": "shop manager can use automation but cannot configure administrator alerts",
+            "passed": true
+          },
+          {
+            "name": "shop manager cannot bypass the settings permission through POST",
+            "passed": true
+          },
+          {
+            "name": "mobile alert controls fit the viewport",
+            "passed": true
+          },
+          {
+            "name": "administrator can disable alerts without editing renderer settings",
+            "passed": true
+          },
+          {
+            "name": "alert settings have no JavaScript errors",
+            "passed": true
+          }
+        ],
+        "pageErrors": [],
+        "evidence": [
+          {
+            "file": "output/browser/wordpress-alerts-firefox-desktop.png",
+            "sha256": "6e88a59dbbc6dbb53ab4f7d2923d5cbd1751e0ae8b65b6a7e73ed743cc18bd44"
+          },
+          {
+            "file": "output/browser/wordpress-alerts-firefox-mobile.png",
+            "sha256": "50c3f37c129a19650f37dfd5882ba72360363d461d6f1cd88828009cbd32d5ae"
+          }
+        ],
+        "scope": "Synthetic administrator settings only. WP-Cron is disabled in this fixture; no email is sent by browser actions."
+      },
+      "scope": "Actual browser editing and downloads on disposable WordPress. Alert controls use the source-mounted automation fixture with captured mail. Customer renderer HTTPS transport is substituted with a fixture using real Fullbleed PDF bytes. No production network, email delivery or branded Safari claim."
+    },
+    {
+      "checkedAt": "2026-10-03T18:32:27.044Z",
+      "syntheticOnly": true,
+      "engine": "webkit",
+      "hpos": true,
+      "packages": [
+        {
+          "plugin": "fullbleed-commerce",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-0.1.1.zip",
+          "bytes": 3061180,
+          "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+          "files": 39
+        },
+        {
+          "plugin": "fullbleed-commerce-pro",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-pro-0.1.1.zip",
+          "bytes": 39012,
+          "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+          "files": 14
+        }
+      ],
+      "staff": {
+        "checkedAt": "2026-10-03T18:27:27.385210+00:00",
+        "browser": "26.6",
+        "browserEngine": "webkit",
+        "browserDistribution": "Playwright WebKit (not branded Safari)",
+        "playwright": "1.63.0",
+        "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+        "store": "http://127.0.0.1:9496",
+        "pro": true,
+        "upgradeTemplate": null,
+        "checks": [
+          {
+            "name": "real browser worker produces a complete PDF download",
+            "passed": true
+          },
+          {
+            "name": "visual editor renders the saved template",
+            "passed": true
+          },
+          {
+            "name": "editor uses WordPress dependencies without replacing shared globals",
+            "passed": true
+          },
+          {
+            "name": "dragging a block into the canvas adds real editable content",
+            "passed": true
+          },
+          {
+            "name": "visual text editing reaches exported HTML",
+            "passed": true
+          },
+          {
+            "name": "custom HTML and CSS save through authenticated editor",
+            "passed": true
+          },
+          {
+            "name": "PDF preview contains visual edits and order data",
+            "passed": true
+          },
+          {
+            "name": "custom bold heading extracts exactly once",
+            "passed": true
+          },
+          {
+            "name": "saved template survives reload and applies to ordinary downloads",
+            "passed": true
+          },
+          {
+            "name": "Pro browser download is a complete two-PDF ZIP",
+            "passed": true
+          },
+          {
+            "name": "reset restores the built-in design",
+            "passed": true
+          },
+          {
+            "name": "mobile editor fits the viewport",
+            "passed": true
+          },
+          {
+            "name": "no browser JavaScript errors",
+            "passed": true
+          }
+        ],
+        "pdfSha256": "9e31cc1373a948360b56713ea176a483c854e9c2bda07a7630286419b870ecdf",
+        "documents": [
+          {
+            "file": "output/browser/wordpress-matrix-webkit-default.pdf",
+            "sha256": "dd9a52b7bcc11a26ec63825c95fb46177d57cb560b3014337c3868e85a011289",
+            "pages": 1
+          },
+          {
+            "file": "output/browser/wordpress-matrix-webkit-custom.pdf",
+            "sha256": "9e31cc1373a948360b56713ea176a483c854e9c2bda07a7630286419b870ecdf",
+            "pages": 1
+          },
+          {
+            "file": "output/browser/wordpress-matrix-webkit-saved.pdf",
+            "sha256": "9e31cc1373a948360b56713ea176a483c854e9c2bda07a7630286419b870ecdf",
+            "pages": 1
+          }
+        ],
+        "pageErrors": [],
+        "batch": {
+          "file": "output/browser/wordpress-matrix-webkit-batch.zip",
+          "sha256": "b6647be9d01617aa29fc6773df750839303ce882a7ab864a53ca9b5ef25c1964"
+        }
+      },
+      "customer": {
+        "checkedAt": "2026-10-03T18:30:51.333125+00:00",
+        "browser": "26.6",
+        "browserEngine": "webkit",
+        "browserDistribution": "Playwright WebKit (not branded Safari)",
+        "playwright": "1.63.0",
+        "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+        "store": "http://127.0.0.1:9482",
+        "checks": [
+          {
+            "name": "buyer finds one PDF action on the actual account orders page",
+            "passed": true
+          },
+          {
+            "name": "native browser download has the promised filename and exact renderer bytes",
+            "passed": true
+          },
+          {
+            "name": "download contains saved brand styling and platform totals",
+            "passed": true
+          },
+          {
+            "name": "server-rendered bold heading extracts exactly once",
+            "passed": true
+          },
+          {
+            "name": "download leaves the account page usable",
+            "passed": true
+          },
+          {
+            "name": "buyer can also find the PDF on order details",
+            "passed": true
+          },
+          {
+            "name": "account PDF action remains visible within a mobile viewport",
+            "passed": true
+          },
+          {
+            "name": "merchant sees the enabled customer-download setting without the access token",
+            "passed": true
+          },
+          {
+            "name": "merchant can remove customer downloads without disabling email configuration",
+            "passed": true
+          },
+          {
+            "name": "previously issued account link fails immediately after disabling",
+            "passed": true
+          },
+          {
+            "name": "re-enabling restores the customer action",
+            "passed": true
+          },
+          {
+            "name": "packaged staff browser worker matches the customer server-rendered PDF",
+            "passed": true
+          },
+          {
+            "name": "customer and merchant pages have no JavaScript errors",
+            "passed": true
+          }
+        ],
+        "packages": [
+          {
+            "plugin": "fullbleed-commerce",
+            "version": "0.1.1",
+            "filename": "fullbleed-commerce-0.1.1.zip",
+            "bytes": 3061180,
+            "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+            "files": 39
+          },
+          {
+            "plugin": "fullbleed-commerce-pro",
+            "version": "0.1.1",
+            "filename": "fullbleed-commerce-pro-0.1.1.zip",
+            "bytes": 39012,
+            "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+            "files": 14
+          }
+        ],
+        "pdfSha256": "9bd63037208f1ddfabf7f8023ad86bb479da22075f8f8f3592ec54889f99a638",
+        "pageErrors": [],
+        "evidence": [
+          {
+            "file": "output/browser/wordpress-customer-webkit-orders.png",
+            "sha256": "e92d302cefa238d476e8caa34f12923e12ce0f08269c98112c16ac8502560c71"
+          },
+          {
+            "file": "output/browser/wordpress-customer-webkit-details.png",
+            "sha256": "deacfa6f13dfee059f12da40a4680b6aeb289d8dac36f45bf3e37413087c8357"
+          },
+          {
+            "file": "output/browser/wordpress-customer-webkit-mobile.png",
+            "sha256": "24d1d16b4c857203870c6b9c1f35f2c1ec0dd18dab4bf77e6e005cd5f2f9cd93"
+          },
+          {
+            "file": "output/browser/wordpress-customer-webkit-settings.png",
+            "sha256": "175801cbba3abbf9cc838ec0ad79063fd7073cd59533b8205544b112abc2a354"
+          }
+        ]
+      },
+      "alerts": {
+        "checkedAt": "2026-10-03T18:32:26.919797+00:00",
+        "browser": "26.6",
+        "browserEngine": "webkit",
+        "browserDistribution": "Playwright WebKit (not branded Safari)",
+        "playwright": "1.63.0",
+        "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+        "store": "http://127.0.0.1:9478",
+        "checks": [
+          {
+            "name": "administrator finds opt-in alerts with the scheduling and mail limits",
+            "passed": true
+          },
+          {
+            "name": "administrator enables failure alerts through the real settings form",
+            "passed": true
+          },
+          {
+            "name": "saved opt-in survives a new WordPress request",
+            "passed": true
+          },
+          {
+            "name": "alert controls do not expose renderer credentials or customer details",
+            "passed": true
+          },
+          {
+            "name": "alert settings reject an invalid administrator nonce",
+            "passed": true
+          },
+          {
+            "name": "shop manager can use automation but cannot configure administrator alerts",
+            "passed": true
+          },
+          {
+            "name": "shop manager cannot bypass the settings permission through POST",
+            "passed": true
+          },
+          {
+            "name": "mobile alert controls fit the viewport",
+            "passed": true
+          },
+          {
+            "name": "administrator can disable alerts without editing renderer settings",
+            "passed": true
+          },
+          {
+            "name": "alert settings have no JavaScript errors",
+            "passed": true
+          }
+        ],
+        "pageErrors": [],
+        "evidence": [
+          {
+            "file": "output/browser/wordpress-alerts-webkit-desktop.png",
+            "sha256": "f2c39d6e60558458cf3c29294303cabc185943ea7c9fe85bd99bc92a388e0327"
+          },
+          {
+            "file": "output/browser/wordpress-alerts-webkit-mobile.png",
+            "sha256": "0aa8b869706104795d45a4afe3045b7b4fe2e643bdb931743801f9b85611b773"
+          }
+        ],
+        "scope": "Synthetic administrator settings only. WP-Cron is disabled in this fixture; no email is sent by browser actions."
+      },
+      "scope": "Actual browser editing and downloads on disposable WordPress. Alert controls use the source-mounted automation fixture with captured mail. Customer renderer HTTPS transport is substituted with a fixture using real Fullbleed PDF bytes. No production network, email delivery or branded Safari claim."
+    }
+  ],
+  "windows": {
+    "staff": {
+      "checkedAt": "2026-10-03T18:16:53.279665+00:00",
+      "browser": "154.0.8037.93",
+      "browserEngine": "chrome",
+      "browserDistribution": "Google Chrome channel",
+      "playwright": "1.63.0",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "store": "http://127.0.0.1:9496",
+      "pro": true,
+      "upgradeTemplate": null,
+      "checks": [
+        {
+          "name": "real browser worker produces a complete PDF download",
+          "passed": true
+        },
+        {
+          "name": "visual editor renders the saved template",
+          "passed": true
+        },
+        {
+          "name": "editor uses WordPress dependencies without replacing shared globals",
+          "passed": true
+        },
+        {
+          "name": "dragging a block into the canvas adds real editable content",
+          "passed": true
+        },
+        {
+          "name": "visual text editing reaches exported HTML",
+          "passed": true
+        },
+        {
+          "name": "custom HTML and CSS save through authenticated editor",
+          "passed": true
+        },
+        {
+          "name": "PDF preview contains visual edits and order data",
+          "passed": true
+        },
+        {
+          "name": "custom bold heading extracts exactly once",
+          "passed": true
+        },
+        {
+          "name": "saved template survives reload and applies to ordinary downloads",
+          "passed": true
+        },
+        {
+          "name": "Pro browser download is a complete two-PDF ZIP",
+          "passed": true
+        },
+        {
+          "name": "reset restores the built-in design",
+          "passed": true
+        },
+        {
+          "name": "mobile editor fits the viewport",
+          "passed": true
+        },
+        {
+          "name": "no browser JavaScript errors",
+          "passed": true
+        }
+      ],
+      "pdfSha256": "9e31cc1373a948360b56713ea176a483c854e9c2bda07a7630286419b870ecdf",
+      "documents": [
+        {
+          "file": "output/browser/wordpress-matrix-default.pdf",
+          "sha256": "dd9a52b7bcc11a26ec63825c95fb46177d57cb560b3014337c3868e85a011289",
+          "pages": 1
+        },
+        {
+          "file": "output/browser/wordpress-matrix-custom.pdf",
+          "sha256": "9e31cc1373a948360b56713ea176a483c854e9c2bda07a7630286419b870ecdf",
+          "pages": 1
+        },
+        {
+          "file": "output/browser/wordpress-matrix-saved.pdf",
+          "sha256": "9e31cc1373a948360b56713ea176a483c854e9c2bda07a7630286419b870ecdf",
+          "pages": 1
+        }
+      ],
+      "pageErrors": [],
+      "batch": {
+        "file": "output/browser/wordpress-pro-batch.zip",
+        "sha256": "9c255fa7aaa02ebe9362b066e8bb0f0210158ca096319dc0cc658fd18e8c5657"
+      }
+    },
+    "customer": {
+      "checkedAt": "2026-10-03T18:38:55.693753+00:00",
+      "browser": "154.0.8037.93",
+      "browserEngine": "chrome",
+      "browserDistribution": "Google Chrome channel",
+      "playwright": "1.63.0",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "store": "http://127.0.0.1:9482",
+      "checks": [
+        {
+          "name": "buyer finds one PDF action on the actual account orders page",
+          "passed": true
+        },
+        {
+          "name": "native browser download has the promised filename and exact renderer bytes",
+          "passed": true
+        },
+        {
+          "name": "download contains saved brand styling and platform totals",
+          "passed": true
+        },
+        {
+          "name": "server-rendered bold heading extracts exactly once",
+          "passed": true
+        },
+        {
+          "name": "download leaves the account page usable",
+          "passed": true
+        },
+        {
+          "name": "buyer can also find the PDF on order details",
+          "passed": true
+        },
+        {
+          "name": "account PDF action remains visible within a mobile viewport",
+          "passed": true
+        },
+        {
+          "name": "merchant sees the enabled customer-download setting without the access token",
+          "passed": true
+        },
+        {
+          "name": "merchant can remove customer downloads without disabling email configuration",
+          "passed": true
+        },
+        {
+          "name": "previously issued account link fails immediately after disabling",
+          "passed": true
+        },
+        {
+          "name": "re-enabling restores the customer action",
+          "passed": true
+        },
+        {
+          "name": "packaged staff browser worker matches the customer server-rendered PDF",
+          "passed": true
+        },
+        {
+          "name": "customer and merchant pages have no JavaScript errors",
+          "passed": true
+        }
+      ],
+      "packages": [
+        {
+          "plugin": "fullbleed-commerce",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-0.1.1.zip",
+          "bytes": 3061180,
+          "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+          "files": 39
+        },
+        {
+          "plugin": "fullbleed-commerce-pro",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-pro-0.1.1.zip",
+          "bytes": 39012,
+          "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+          "files": 14
+        }
+      ],
+      "pdfSha256": "9bd63037208f1ddfabf7f8023ad86bb479da22075f8f8f3592ec54889f99a638",
+      "pageErrors": [],
+      "evidence": [
+        {
+          "file": "output/browser/wordpress-customer-orders.png",
+          "sha256": "874bbffd352b79042caf831c8366cf4fa79188b07ea04e23654040392b80e32b"
+        },
+        {
+          "file": "output/browser/wordpress-customer-details.png",
+          "sha256": "cae11bc5207f7fcbe96cc95e76cb38599d586b9cb9cd5efd46dcf672d91a5cb4"
+        },
+        {
+          "file": "output/browser/wordpress-customer-mobile.png",
+          "sha256": "1d052b2c93f6ae28fdba999b586b433676dc263b26983fd2f6636d35c2e2d58a"
+        },
+        {
+          "file": "output/browser/wordpress-customer-settings.png",
+          "sha256": "01104d6c2582e4de307cc798a7ca8f11b7241ccac2a35413786289257abf7798"
+        }
+      ]
+    },
+    "upgrades": [
+      {
+        "checkedAt": "2026-10-03T18:24:20.994Z",
+        "from": "0.1.0-alpha.3",
+        "to": "0.1.1",
+        "integrationVersion": "0.1.1",
+        "pluginVersions": {
+          "fullbleed-commerce": "0.1.1",
+          "fullbleed-commerce-pro": "0.1.1"
+        },
+        "runtime": {
+          "orders": [
+            12,
+            13
+          ],
+          "refunded": 14,
+          "wordpress": "7.1.2",
+          "woocommerce": "11.1.2",
+          "php": "8.3.33"
+        },
+        "hpos": true,
+        "packages": [
+          {
+            "plugin": "fullbleed-commerce",
+            "version": "0.1.1",
+            "filename": "fullbleed-commerce-0.1.1.zip",
+            "bytes": 3061180,
+            "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+            "files": 39
+          },
+          {
+            "plugin": "fullbleed-commerce-pro",
+            "version": "0.1.1",
+            "filename": "fullbleed-commerce-pro-0.1.1.zip",
+            "bytes": 39012,
+            "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+            "files": 14
+          }
+        ],
+        "checks": [
+          {
+            "name": "numeric directory version upgrades the published alpha.3 base",
+            "passed": true
+          },
+          {
+            "name": "released alpha.3 base and Pro are active in the requested storage mode",
+            "passed": true
+          },
+          {
+            "name": "released alpha.3 has its activity schema and retention schedule",
+            "passed": true
+          },
+          {
+            "name": "released alpha.3 has no failure-alert opt-in or schedule",
+            "passed": true
+          },
+          {
+            "name": "WordPress replaces fullbleed-commerce without upgrader errors",
+            "passed": true
+          },
+          {
+            "name": "every installed fullbleed-commerce file matches its candidate ZIP",
+            "passed": true
+          },
+          {
+            "name": "WordPress removes obsolete fullbleed-commerce files",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement preserves both templates and revisions",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement preserves automation configuration",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement preserves orders and does not send mail",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement keeps both plugins active",
+            "passed": true
+          },
+          {
+            "name": "new base remains compatible with the previous Pro version during upgrade",
+            "passed": true
+          },
+          {
+            "name": "WordPress replaces fullbleed-commerce-pro without upgrader errors",
+            "passed": true
+          },
+          {
+            "name": "every installed fullbleed-commerce-pro file matches its candidate ZIP",
+            "passed": true
+          },
+          {
+            "name": "WordPress removes obsolete fullbleed-commerce-pro files",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement preserves both templates and revisions",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement preserves automation configuration",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement preserves orders and does not send mail",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement keeps both plugins active",
+            "passed": true
+          },
+          {
+            "name": "both installed plugin versions match the release candidate",
+            "passed": true
+          },
+          {
+            "name": "upgrade preserves the activity schema and retention schedule",
+            "passed": true
+          },
+          {
+            "name": "upgrade leaves administrator failure alerts disabled until explicitly enabled",
+            "passed": true
+          },
+          {
+            "name": "saved document renders identical PDF bytes after both upgrades",
+            "passed": true
+          }
+        ],
+        "pdfSha256": "662e784783327606576a023730f2110afa2b4f4009a32078254bf0816b0ae65d",
+        "templateStateSha256": "1eedbcc2cceda3d60ca95b4ba5edaddc1fcd66d41e9238ca691e163bca84e1f3",
+        "automationPreserved": true,
+        "transport": "WordPress Plugin_Upgrader ZIP replacement. Synthetic configuration only; mail blocked, renderer not contacted. PDF parity uses the real Node renderer; real browser verification is retained separately."
+      },
+      {
+        "checkedAt": "2026-10-03T18:28:11.416Z",
+        "from": "0.1.0-alpha.3",
+        "to": "0.1.1",
+        "integrationVersion": "0.1.1",
+        "pluginVersions": {
+          "fullbleed-commerce": "0.1.1",
+          "fullbleed-commerce-pro": "0.1.1"
+        },
+        "runtime": {
+          "orders": [
+            12,
+            13
+          ],
+          "refunded": 14,
+          "wordpress": "7.1.2",
+          "woocommerce": "11.1.2",
+          "php": "8.3.33"
+        },
+        "hpos": false,
+        "packages": [
+          {
+            "plugin": "fullbleed-commerce",
+            "version": "0.1.1",
+            "filename": "fullbleed-commerce-0.1.1.zip",
+            "bytes": 3061180,
+            "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+            "files": 39
+          },
+          {
+            "plugin": "fullbleed-commerce-pro",
+            "version": "0.1.1",
+            "filename": "fullbleed-commerce-pro-0.1.1.zip",
+            "bytes": 39012,
+            "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+            "files": 14
+          }
+        ],
+        "checks": [
+          {
+            "name": "numeric directory version upgrades the published alpha.3 base",
+            "passed": true
+          },
+          {
+            "name": "released alpha.3 base and Pro are active in the requested storage mode",
+            "passed": true
+          },
+          {
+            "name": "released alpha.3 has its activity schema and retention schedule",
+            "passed": true
+          },
+          {
+            "name": "released alpha.3 has no failure-alert opt-in or schedule",
+            "passed": true
+          },
+          {
+            "name": "WordPress replaces fullbleed-commerce without upgrader errors",
+            "passed": true
+          },
+          {
+            "name": "every installed fullbleed-commerce file matches its candidate ZIP",
+            "passed": true
+          },
+          {
+            "name": "WordPress removes obsolete fullbleed-commerce files",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement preserves both templates and revisions",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement preserves automation configuration",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement preserves orders and does not send mail",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce replacement keeps both plugins active",
+            "passed": true
+          },
+          {
+            "name": "new base remains compatible with the previous Pro version during upgrade",
+            "passed": true
+          },
+          {
+            "name": "WordPress replaces fullbleed-commerce-pro without upgrader errors",
+            "passed": true
+          },
+          {
+            "name": "every installed fullbleed-commerce-pro file matches its candidate ZIP",
+            "passed": true
+          },
+          {
+            "name": "WordPress removes obsolete fullbleed-commerce-pro files",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement preserves both templates and revisions",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement preserves automation configuration",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement preserves orders and does not send mail",
+            "passed": true
+          },
+          {
+            "name": "fullbleed-commerce-pro replacement keeps both plugins active",
+            "passed": true
+          },
+          {
+            "name": "both installed plugin versions match the release candidate",
+            "passed": true
+          },
+          {
+            "name": "upgrade preserves the activity schema and retention schedule",
+            "passed": true
+          },
+          {
+            "name": "upgrade leaves administrator failure alerts disabled until explicitly enabled",
+            "passed": true
+          },
+          {
+            "name": "saved document renders identical PDF bytes after both upgrades",
+            "passed": true
+          }
+        ],
+        "pdfSha256": "662e784783327606576a023730f2110afa2b4f4009a32078254bf0816b0ae65d",
+        "templateStateSha256": "1eedbcc2cceda3d60ca95b4ba5edaddc1fcd66d41e9238ca691e163bca84e1f3",
+        "automationPreserved": true,
+        "transport": "WordPress Plugin_Upgrader ZIP replacement. Synthetic configuration only; mail blocked, renderer not contacted. PDF parity uses the real Node renderer; real browser verification is retained separately."
+      }
+    ]
+  },
+  "nativeWordPressBrowser": {
+    "checkedAt": "2026-10-03T18:26:59.753706+00:00",
+    "browser": "154.0.8037.97",
+    "browserEngine": "chrome",
+    "browserDistribution": "Google Chrome channel",
+    "playwright": "1.63.0",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "store": "http://127.0.0.1:8888",
+    "pro": false,
+    "upgradeTemplate": null,
+    "checks": [
+      {
+        "name": "real browser worker produces a complete PDF download",
+        "passed": true
+      },
+      {
+        "name": "visual editor renders the saved template",
+        "passed": true
+      },
+      {
+        "name": "editor uses WordPress dependencies without replacing shared globals",
+        "passed": true
+      },
+      {
+        "name": "dragging a block into the canvas adds real editable content",
+        "passed": true
+      },
+      {
+        "name": "visual text editing reaches exported HTML",
+        "passed": true
+      },
+      {
+        "name": "custom HTML and CSS save through authenticated editor",
+        "passed": true
+      },
+      {
+        "name": "PDF preview contains visual edits and order data",
+        "passed": true
+      },
+      {
+        "name": "custom bold heading extracts exactly once",
+        "passed": true
+      },
+      {
+        "name": "saved template survives reload and applies to ordinary downloads",
+        "passed": true
+      },
+      {
+        "name": "reset restores the built-in design",
+        "passed": true
+      },
+      {
+        "name": "mobile editor fits the viewport",
+        "passed": true
+      },
+      {
+        "name": "no browser JavaScript errors",
+        "passed": true
+      }
+    ],
+    "pdfSha256": "9e31cc1373a948360b56713ea176a483c854e9c2bda07a7630286419b870ecdf",
+    "documents": [
+      {
+        "file": "output/browser/wordpress-directory-default.pdf",
+        "sha256": "dd9a52b7bcc11a26ec63825c95fb46177d57cb560b3014337c3868e85a011289",
+        "pages": 1
+      },
+      {
+        "file": "output/browser/wordpress-directory-custom.pdf",
+        "sha256": "9e31cc1373a948360b56713ea176a483c854e9c2bda07a7630286419b870ecdf",
+        "pages": 1
+      },
+      {
+        "file": "output/browser/wordpress-directory-saved.pdf",
+        "sha256": "9e31cc1373a948360b56713ea176a483c854e9c2bda07a7630286419b870ecdf",
+        "pages": 1
+      }
+    ],
+    "pageErrors": []
+  },
+  "upgrades": [
+    {
+      "checkedAt": "2026-10-03T18:25:40.203Z",
+      "from": "0.1.0-alpha.3",
+      "to": "0.1.1",
+      "integrationVersion": "0.1.1",
+      "pluginVersions": {
+        "fullbleed-commerce": "0.1.1",
+        "fullbleed-commerce-pro": "0.1.1"
+      },
+      "runtime": {
+        "orders": [
+          12,
+          13
+        ],
+        "refunded": 14,
+        "wordpress": "7.1.2",
+        "woocommerce": "11.1.2",
+        "php": "8.3.33"
+      },
+      "hpos": true,
+      "packages": [
+        {
+          "plugin": "fullbleed-commerce",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-0.1.1.zip",
+          "bytes": 3061180,
+          "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+          "files": 39
+        },
+        {
+          "plugin": "fullbleed-commerce-pro",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-pro-0.1.1.zip",
+          "bytes": 39012,
+          "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+          "files": 14
+        }
+      ],
+      "checks": [
+        {
+          "name": "numeric directory version upgrades the published alpha.3 base",
+          "passed": true
+        },
+        {
+          "name": "released alpha.3 base and Pro are active in the requested storage mode",
+          "passed": true
+        },
+        {
+          "name": "released alpha.3 has its activity schema and retention schedule",
+          "passed": true
+        },
+        {
+          "name": "released alpha.3 has no failure-alert opt-in or schedule",
+          "passed": true
+        },
+        {
+          "name": "WordPress replaces fullbleed-commerce without upgrader errors",
+          "passed": true
+        },
+        {
+          "name": "every installed fullbleed-commerce file matches its candidate ZIP",
+          "passed": true
+        },
+        {
+          "name": "WordPress removes obsolete fullbleed-commerce files",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce replacement preserves both templates and revisions",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce replacement preserves automation configuration",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce replacement preserves orders and does not send mail",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce replacement keeps both plugins active",
+          "passed": true
+        },
+        {
+          "name": "new base remains compatible with the previous Pro version during upgrade",
+          "passed": true
+        },
+        {
+          "name": "WordPress replaces fullbleed-commerce-pro without upgrader errors",
+          "passed": true
+        },
+        {
+          "name": "every installed fullbleed-commerce-pro file matches its candidate ZIP",
+          "passed": true
+        },
+        {
+          "name": "WordPress removes obsolete fullbleed-commerce-pro files",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce-pro replacement preserves both templates and revisions",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce-pro replacement preserves automation configuration",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce-pro replacement preserves orders and does not send mail",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce-pro replacement keeps both plugins active",
+          "passed": true
+        },
+        {
+          "name": "both installed plugin versions match the release candidate",
+          "passed": true
+        },
+        {
+          "name": "upgrade preserves the activity schema and retention schedule",
+          "passed": true
+        },
+        {
+          "name": "upgrade leaves administrator failure alerts disabled until explicitly enabled",
+          "passed": true
+        },
+        {
+          "name": "saved document renders identical PDF bytes after both upgrades",
+          "passed": true
+        }
+      ],
+      "pdfSha256": "662e784783327606576a023730f2110afa2b4f4009a32078254bf0816b0ae65d",
+      "templateStateSha256": "1eedbcc2cceda3d60ca95b4ba5edaddc1fcd66d41e9238ca691e163bca84e1f3",
+      "automationPreserved": true,
+      "transport": "WordPress Plugin_Upgrader ZIP replacement. Synthetic configuration only; mail blocked, renderer not contacted. PDF parity uses the real Node renderer; real browser verification is retained separately."
+    },
+    {
+      "checkedAt": "2026-10-03T18:26:27.663Z",
+      "from": "0.1.0-alpha.3",
+      "to": "0.1.1",
+      "integrationVersion": "0.1.1",
+      "pluginVersions": {
+        "fullbleed-commerce": "0.1.1",
+        "fullbleed-commerce-pro": "0.1.1"
+      },
+      "runtime": {
+        "orders": [
+          12,
+          13
+        ],
+        "refunded": 14,
+        "wordpress": "7.1.2",
+        "woocommerce": "11.1.2",
+        "php": "8.3.33"
+      },
+      "hpos": false,
+      "packages": [
+        {
+          "plugin": "fullbleed-commerce",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-0.1.1.zip",
+          "bytes": 3061180,
+          "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+          "files": 39
+        },
+        {
+          "plugin": "fullbleed-commerce-pro",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-pro-0.1.1.zip",
+          "bytes": 39012,
+          "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+          "files": 14
+        }
+      ],
+      "checks": [
+        {
+          "name": "numeric directory version upgrades the published alpha.3 base",
+          "passed": true
+        },
+        {
+          "name": "released alpha.3 base and Pro are active in the requested storage mode",
+          "passed": true
+        },
+        {
+          "name": "released alpha.3 has its activity schema and retention schedule",
+          "passed": true
+        },
+        {
+          "name": "released alpha.3 has no failure-alert opt-in or schedule",
+          "passed": true
+        },
+        {
+          "name": "WordPress replaces fullbleed-commerce without upgrader errors",
+          "passed": true
+        },
+        {
+          "name": "every installed fullbleed-commerce file matches its candidate ZIP",
+          "passed": true
+        },
+        {
+          "name": "WordPress removes obsolete fullbleed-commerce files",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce replacement preserves both templates and revisions",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce replacement preserves automation configuration",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce replacement preserves orders and does not send mail",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce replacement keeps both plugins active",
+          "passed": true
+        },
+        {
+          "name": "new base remains compatible with the previous Pro version during upgrade",
+          "passed": true
+        },
+        {
+          "name": "WordPress replaces fullbleed-commerce-pro without upgrader errors",
+          "passed": true
+        },
+        {
+          "name": "every installed fullbleed-commerce-pro file matches its candidate ZIP",
+          "passed": true
+        },
+        {
+          "name": "WordPress removes obsolete fullbleed-commerce-pro files",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce-pro replacement preserves both templates and revisions",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce-pro replacement preserves automation configuration",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce-pro replacement preserves orders and does not send mail",
+          "passed": true
+        },
+        {
+          "name": "fullbleed-commerce-pro replacement keeps both plugins active",
+          "passed": true
+        },
+        {
+          "name": "both installed plugin versions match the release candidate",
+          "passed": true
+        },
+        {
+          "name": "upgrade preserves the activity schema and retention schedule",
+          "passed": true
+        },
+        {
+          "name": "upgrade leaves administrator failure alerts disabled until explicitly enabled",
+          "passed": true
+        },
+        {
+          "name": "saved document renders identical PDF bytes after both upgrades",
+          "passed": true
+        }
+      ],
+      "pdfSha256": "662e784783327606576a023730f2110afa2b4f4009a32078254bf0816b0ae65d",
+      "templateStateSha256": "1eedbcc2cceda3d60ca95b4ba5edaddc1fcd66d41e9238ca691e163bca84e1f3",
+      "automationPreserved": true,
+      "transport": "WordPress Plugin_Upgrader ZIP replacement. Synthetic configuration only; mail blocked, renderer not contacted. PDF parity uses the real Node renderer; real browser verification is retained separately."
+    }
+  ],
+  "woocommerceEmailActivityAlerts": [
+    {
+      "checkedAt": "2026-10-03T18:26:14.103Z",
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.33",
+      "checks": [
+        {
+          "name": "attachments remain unchanged before opt-in",
+          "passed": true
+        },
+        {
+          "name": "unselected emails cause no rendering",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "existing transactional email gets one PDF with a useful filename",
+          "passed": true
+        },
+        {
+          "name": "attachment is outside the web root",
+          "passed": true
+        },
+        {
+          "name": "attachment matches actual renderer bytes",
+          "passed": true
+        },
+        {
+          "name": "attachment uses private permissions",
+          "passed": true
+        },
+        {
+          "name": "enabled attachments request WooCommerce background emails",
+          "passed": true
+        },
+        {
+          "name": "wp_mail accepts the prepared attachment",
+          "passed": true
+        },
+        {
+          "name": "captured MIME names the PDF attachment",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce queued-email handler renders the attachment",
+          "passed": true
+        },
+        {
+          "name": "real WooCommerce email MIME contains the branded PDF",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "renderer outage preserves all existing email attachments",
+          "passed": true
+        },
+        {
+          "name": "renderer outage records a safe recoverable status",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "truncated or mismatched PDF never reaches an email",
+          "passed": true
+        },
+        {
+          "name": "refunded orders never call the renderer",
+          "passed": true
+        },
+        {
+          "name": "renderer credentials are absent from admin HTML",
+          "passed": true
+        },
+        {
+          "name": "automation does not alter order state",
+          "passed": true
+        },
+        {
+          "name": "activity records actual attachment-hook failures",
+          "passed": true
+        },
+        {
+          "name": "activity cleanup is scheduled once",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "a real recovery replaces stale failure without duplicating the workflow",
+          "passed": true
+        },
+        {
+          "name": "different email workflows retain separate results",
+          "passed": true
+        },
+        {
+          "name": "customer response readiness is distinct from mail preparation",
+          "passed": true
+        },
+        {
+          "name": "unknown workflows and unsupported states are rejected",
+          "passed": true
+        },
+        {
+          "name": "activity stores only references and allowlisted error codes",
+          "passed": true
+        },
+        {
+          "name": "activity view is unavailable to anonymous visitors",
+          "passed": true
+        },
+        {
+          "name": "customer role cannot read merchant activity",
+          "passed": true
+        },
+        {
+          "name": "failed filter excludes recovered workflow and supplies specific guidance",
+          "passed": true
+        },
+        {
+          "name": "activity links use the authorized WooCommerce order edit URL",
+          "passed": true
+        },
+        {
+          "name": "activity HTML excludes tokens, customer names, addresses and remote bodies",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce screens surface unresolved PDF failures",
+          "passed": true
+        },
+        {
+          "name": "failure notice is scoped to WooCommerce screens",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce order deletion removes activity",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce order trash also removes activity",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce anonymization removes activity and prevents new records",
+          "passed": true
+        },
+        {
+          "name": "schema upgrade preserves existing workflow results",
+          "passed": true
+        },
+        {
+          "name": "scheduled retention removes results older than 30 days",
+          "passed": true
+        },
+        {
+          "name": "activity storage retains at most 1000 latest workflow results",
+          "passed": true
+        },
+        {
+          "name": "cursor pagination moves to older results without repeating the first page",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "activity storage failure preserves actual PDF preparation without leaking SQL",
+          "passed": true
+        },
+        {
+          "name": "missing activity storage shows an honest incomplete-record warning",
+          "passed": true
+        },
+        {
+          "name": "successful storage recovery clears the warning and resumes results",
+          "passed": true
+        },
+        {
+          "name": "successful recovery clears the WooCommerce failure notice",
+          "passed": true
+        },
+        {
+          "name": "failure alerts default off with no scheduled job or outgoing mail",
+          "passed": true
+        },
+        {
+          "name": "opt-in schedules exactly one recurring hourly alert check",
+          "passed": true
+        },
+        {
+          "name": "healthy activity sends no alert and records the scheduled check",
+          "passed": true
+        },
+        {
+          "name": "scheduled failures produce one administrator alert despite an overlapping worker",
+          "passed": true
+        },
+        {
+          "name": "alert summarizes workflows and links to authenticated recovery",
+          "passed": true
+        },
+        {
+          "name": "alert excludes customer details, order IDs, credentials and attachments",
+          "passed": true
+        },
+        {
+          "name": "real PHPMailer prepares only a plain-text administrator alert",
+          "passed": true
+        },
+        {
+          "name": "a persisted reservation prevents repeat alerts after cache loss",
+          "passed": true
+        },
+        {
+          "name": "an unresolved failure receives a reminder after the daily cooldown",
+          "passed": true
+        },
+        {
+          "name": "successful workflow recovery stops reminders",
+          "passed": true
+        },
+        {
+          "name": "expired activity is excluded even before physical cleanup",
+          "passed": true
+        },
+        {
+          "name": "missing activity storage sends an incomplete-data alert without leaking SQL",
+          "passed": true
+        },
+        {
+          "name": "a rejected mail handoff is visible and does not trigger a retry storm",
+          "passed": true
+        },
+        {
+          "name": "administrator sees a rejected mail handoff without a delivery claim",
+          "passed": true
+        },
+        {
+          "name": "mailer exceptions are contained without persisting raw error details",
+          "passed": true
+        },
+        {
+          "name": "an interrupted send remains reserved across later checks",
+          "passed": true
+        },
+        {
+          "name": "a stale worker cannot replace a newer reservation",
+          "passed": true
+        },
+        {
+          "name": "corrupt reservation fails closed without duplicate mail",
+          "passed": true
+        },
+        {
+          "name": "invalid administrator address never reaches the mailer",
+          "passed": true
+        },
+        {
+          "name": "disabling alerts removes the recurring job and blocks later queued calls",
+          "passed": true
+        },
+        {
+          "name": "shop managers cannot view administrator alert controls or destination",
+          "passed": true
+        },
+        {
+          "name": "administrator sees mail status and scheduling limitations",
+          "passed": true
+        },
+        {
+          "name": "deactivation disables alerts and stops their scheduled task",
+          "passed": true
+        },
+        {
+          "name": "deactivation clears temporary activity and its scheduled task",
+          "passed": true
+        },
+        {
+          "name": "uninstall removes alert settings, status and reservations",
+          "passed": true
+        },
+        {
+          "name": "WordPress uninstall removes the activity table and schema options",
+          "passed": true
+        },
+        {
+          "name": "reactivation restores cleanup without changing automation settings",
+          "passed": true
+        },
+        {
+          "name": "private attachments are deleted after the mail request",
+          "passed": true
+        },
+        {
+          "name": "next request wires order transitions to the WooCommerce email queue",
+          "passed": true
+        },
+        {
+          "name": "captured WooCommerce email contains exact complete renderer PDF bytes",
+          "passed": true
+        }
+      ],
+      "hpos": true,
+      "unixPermissionsChecked": true,
+      "pdfSha256": "dd9a52b7bcc11a26ec63825c95fb46177d57cb560b3014337c3868e85a011289",
+      "transport": "Real WooCommerce hooks and PHPMailer MIME with outbound mail captured. HTTPS response supplied through the WordPress HTTP test filter using actual Fullbleed output from this exact order. No production network or delivery claim."
+    },
+    {
+      "checkedAt": "2026-10-03T18:26:53.073Z",
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.33",
+      "checks": [
+        {
+          "name": "attachments remain unchanged before opt-in",
+          "passed": true
+        },
+        {
+          "name": "unselected emails cause no rendering",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "existing transactional email gets one PDF with a useful filename",
+          "passed": true
+        },
+        {
+          "name": "attachment is outside the web root",
+          "passed": true
+        },
+        {
+          "name": "attachment matches actual renderer bytes",
+          "passed": true
+        },
+        {
+          "name": "attachment uses private permissions",
+          "passed": true
+        },
+        {
+          "name": "enabled attachments request WooCommerce background emails",
+          "passed": true
+        },
+        {
+          "name": "wp_mail accepts the prepared attachment",
+          "passed": true
+        },
+        {
+          "name": "captured MIME names the PDF attachment",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce queued-email handler renders the attachment",
+          "passed": true
+        },
+        {
+          "name": "real WooCommerce email MIME contains the branded PDF",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "renderer outage preserves all existing email attachments",
+          "passed": true
+        },
+        {
+          "name": "renderer outage records a safe recoverable status",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "truncated or mismatched PDF never reaches an email",
+          "passed": true
+        },
+        {
+          "name": "refunded orders never call the renderer",
+          "passed": true
+        },
+        {
+          "name": "renderer credentials are absent from admin HTML",
+          "passed": true
+        },
+        {
+          "name": "automation does not alter order state",
+          "passed": true
+        },
+        {
+          "name": "activity records actual attachment-hook failures",
+          "passed": true
+        },
+        {
+          "name": "activity cleanup is scheduled once",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "a real recovery replaces stale failure without duplicating the workflow",
+          "passed": true
+        },
+        {
+          "name": "different email workflows retain separate results",
+          "passed": true
+        },
+        {
+          "name": "customer response readiness is distinct from mail preparation",
+          "passed": true
+        },
+        {
+          "name": "unknown workflows and unsupported states are rejected",
+          "passed": true
+        },
+        {
+          "name": "activity stores only references and allowlisted error codes",
+          "passed": true
+        },
+        {
+          "name": "activity view is unavailable to anonymous visitors",
+          "passed": true
+        },
+        {
+          "name": "customer role cannot read merchant activity",
+          "passed": true
+        },
+        {
+          "name": "failed filter excludes recovered workflow and supplies specific guidance",
+          "passed": true
+        },
+        {
+          "name": "activity links use the authorized WooCommerce order edit URL",
+          "passed": true
+        },
+        {
+          "name": "activity HTML excludes tokens, customer names, addresses and remote bodies",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce screens surface unresolved PDF failures",
+          "passed": true
+        },
+        {
+          "name": "failure notice is scoped to WooCommerce screens",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce order deletion removes activity",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce order trash also removes activity",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce anonymization removes activity and prevents new records",
+          "passed": true
+        },
+        {
+          "name": "schema upgrade preserves existing workflow results",
+          "passed": true
+        },
+        {
+          "name": "scheduled retention removes results older than 30 days",
+          "passed": true
+        },
+        {
+          "name": "activity storage retains at most 1000 latest workflow results",
+          "passed": true
+        },
+        {
+          "name": "cursor pagination moves to older results without repeating the first page",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "activity storage failure preserves actual PDF preparation without leaking SQL",
+          "passed": true
+        },
+        {
+          "name": "missing activity storage shows an honest incomplete-record warning",
+          "passed": true
+        },
+        {
+          "name": "successful storage recovery clears the warning and resumes results",
+          "passed": true
+        },
+        {
+          "name": "successful recovery clears the WooCommerce failure notice",
+          "passed": true
+        },
+        {
+          "name": "failure alerts default off with no scheduled job or outgoing mail",
+          "passed": true
+        },
+        {
+          "name": "opt-in schedules exactly one recurring hourly alert check",
+          "passed": true
+        },
+        {
+          "name": "healthy activity sends no alert and records the scheduled check",
+          "passed": true
+        },
+        {
+          "name": "scheduled failures produce one administrator alert despite an overlapping worker",
+          "passed": true
+        },
+        {
+          "name": "alert summarizes workflows and links to authenticated recovery",
+          "passed": true
+        },
+        {
+          "name": "alert excludes customer details, order IDs, credentials and attachments",
+          "passed": true
+        },
+        {
+          "name": "real PHPMailer prepares only a plain-text administrator alert",
+          "passed": true
+        },
+        {
+          "name": "a persisted reservation prevents repeat alerts after cache loss",
+          "passed": true
+        },
+        {
+          "name": "an unresolved failure receives a reminder after the daily cooldown",
+          "passed": true
+        },
+        {
+          "name": "successful workflow recovery stops reminders",
+          "passed": true
+        },
+        {
+          "name": "expired activity is excluded even before physical cleanup",
+          "passed": true
+        },
+        {
+          "name": "missing activity storage sends an incomplete-data alert without leaking SQL",
+          "passed": true
+        },
+        {
+          "name": "a rejected mail handoff is visible and does not trigger a retry storm",
+          "passed": true
+        },
+        {
+          "name": "administrator sees a rejected mail handoff without a delivery claim",
+          "passed": true
+        },
+        {
+          "name": "mailer exceptions are contained without persisting raw error details",
+          "passed": true
+        },
+        {
+          "name": "an interrupted send remains reserved across later checks",
+          "passed": true
+        },
+        {
+          "name": "a stale worker cannot replace a newer reservation",
+          "passed": true
+        },
+        {
+          "name": "corrupt reservation fails closed without duplicate mail",
+          "passed": true
+        },
+        {
+          "name": "invalid administrator address never reaches the mailer",
+          "passed": true
+        },
+        {
+          "name": "disabling alerts removes the recurring job and blocks later queued calls",
+          "passed": true
+        },
+        {
+          "name": "shop managers cannot view administrator alert controls or destination",
+          "passed": true
+        },
+        {
+          "name": "administrator sees mail status and scheduling limitations",
+          "passed": true
+        },
+        {
+          "name": "deactivation disables alerts and stops their scheduled task",
+          "passed": true
+        },
+        {
+          "name": "deactivation clears temporary activity and its scheduled task",
+          "passed": true
+        },
+        {
+          "name": "uninstall removes alert settings, status and reservations",
+          "passed": true
+        },
+        {
+          "name": "WordPress uninstall removes the activity table and schema options",
+          "passed": true
+        },
+        {
+          "name": "reactivation restores cleanup without changing automation settings",
+          "passed": true
+        },
+        {
+          "name": "private attachments are deleted after the mail request",
+          "passed": true
+        },
+        {
+          "name": "next request wires order transitions to the WooCommerce email queue",
+          "passed": true
+        },
+        {
+          "name": "captured WooCommerce email contains exact complete renderer PDF bytes",
+          "passed": true
+        }
+      ],
+      "hpos": false,
+      "unixPermissionsChecked": true,
+      "pdfSha256": "dd9a52b7bcc11a26ec63825c95fb46177d57cb560b3014337c3868e85a011289",
+      "transport": "Real WooCommerce hooks and PHPMailer MIME with outbound mail captured. HTTPS response supplied through the WordPress HTTP test filter using actual Fullbleed output from this exact order. No production network or delivery claim."
+    }
+  ],
+  "customerAuthorization": [
+    {
+      "checkedAt": "2026-10-03T18:30:06.270Z",
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.33",
+      "hpos": true,
+      "ordersUrl": "http://127.0.0.1:9482/my-account/orders/",
+      "viewUrl": "http://127.0.0.1:9482/my-account/view-order/12/",
+      "guest": 16,
+      "partial": 17,
+      "packages": [
+        {
+          "plugin": "fullbleed-commerce",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-0.1.1.zip",
+          "bytes": 3061180,
+          "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+          "files": 39
+        },
+        {
+          "plugin": "fullbleed-commerce-pro",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-pro-0.1.1.zip",
+          "bytes": 39012,
+          "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+          "files": 14
+        }
+      ],
+      "checks": [
+        {
+          "name": "every installed plugin entry matches the final ZIP",
+          "passed": true
+        },
+        {
+          "name": "customer downloads start disabled",
+          "passed": true
+        },
+        {
+          "name": "My Account lists one PDF action for the eligible owned order",
+          "passed": true
+        },
+        {
+          "name": "order details also expose one native PDF action",
+          "passed": true
+        },
+        {
+          "name": "account page does not expose renderer credentials or endpoints",
+          "passed": true
+        },
+        {
+          "name": "anonymous replay of an owner link is forbidden",
+          "passed": true
+        },
+        {
+          "name": "another customer cannot reuse the owner nonce",
+          "passed": true
+        },
+        {
+          "name": "another customer order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "guest order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "refunded order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "partially refunded order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "missing order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "staff capabilities do not bypass customer ownership",
+          "passed": true
+        },
+        {
+          "name": "missing or malformed nonce is rejected",
+          "passed": true
+        },
+        {
+          "name": "negative, overflowing and array order IDs fail closed",
+          "passed": true
+        },
+        {
+          "name": "unsupported request method is rejected",
+          "passed": true
+        },
+        {
+          "name": "ineligible status changes hide the action and revoke old links",
+          "passed": true
+        },
+        {
+          "name": "completed orders remain eligible",
+          "passed": true
+        },
+        {
+          "name": "all denied requests avoid the renderer",
+          "passed": true
+        },
+        {
+          "name": "owner HTTP download equals actual Fullbleed PDF bytes",
+          "passed": true
+        },
+        {
+          "name": "PDF response is private and cannot be cached or sniffed",
+          "passed": true
+        },
+        {
+          "name": "PDF has a useful filename, correct type and complete length",
+          "passed": true
+        },
+        {
+          "name": "customer PDF uses the exact saved merchant template and Woo order data",
+          "passed": true
+        },
+        {
+          "name": "repeat clicks receive a retry delay without another render",
+          "passed": true
+        },
+        {
+          "name": "offline renderer produces a private recoverable error with no remote details",
+          "passed": true
+        },
+        {
+          "name": "remote-error renderer produces a private recoverable error with no remote details",
+          "passed": true
+        },
+        {
+          "name": "corrupt renderer produces a private recoverable error with no remote details",
+          "passed": true
+        },
+        {
+          "name": "renderer failure records a safe merchant recovery status",
+          "passed": true
+        },
+        {
+          "name": "actual customer-download failures appear in merchant activity",
+          "passed": true
+        },
+        {
+          "name": "customer cannot open the merchant activity HTTP page",
+          "passed": true
+        },
+        {
+          "name": "reassign during rendering prevents PDF bytes from leaving WordPress",
+          "passed": true
+        },
+        {
+          "name": "cancel during rendering prevents PDF bytes from leaving WordPress",
+          "passed": true
+        },
+        {
+          "name": "disconnect during rendering prevents PDF bytes from leaving WordPress",
+          "passed": true
+        },
+        {
+          "name": "disabled portal, withdrawn processing consent or missing credentials revoke old links",
+          "passed": true
+        },
+        {
+          "name": "a later customer retry succeeds after renderer recovery",
+          "passed": true
+        },
+        {
+          "name": "successful recovery clears the failed merchant status",
+          "passed": true
+        },
+        {
+          "name": "actual customer recovery replaces failure with response readiness",
+          "passed": true
+        },
+        {
+          "name": "download leaves order totals, addresses and status intact",
+          "passed": true
+        }
+      ],
+      "pdfSha256": "9bd63037208f1ddfabf7f8023ad86bb479da22075f8f8f3592ec54889f99a638",
+      "transport": "Real WordPress login, WooCommerce My Account pages and admin-post HTTP. Renderer HTTPS response substituted by a test-only WordPress filter using actual Fullbleed bytes for the exact order and saved template. No email, payment or production service."
+    },
+    {
+      "checkedAt": "2026-10-03T18:33:18.833Z",
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.33",
+      "hpos": false,
+      "ordersUrl": "http://127.0.0.1:9483/my-account/orders/",
+      "viewUrl": "http://127.0.0.1:9483/my-account/view-order/12/",
+      "guest": 16,
+      "partial": 17,
+      "packages": [
+        {
+          "plugin": "fullbleed-commerce",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-0.1.1.zip",
+          "bytes": 3061180,
+          "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+          "files": 39
+        },
+        {
+          "plugin": "fullbleed-commerce-pro",
+          "version": "0.1.1",
+          "filename": "fullbleed-commerce-pro-0.1.1.zip",
+          "bytes": 39012,
+          "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+          "files": 14
+        }
+      ],
+      "checks": [
+        {
+          "name": "every installed plugin entry matches the final ZIP",
+          "passed": true
+        },
+        {
+          "name": "customer downloads start disabled",
+          "passed": true
+        },
+        {
+          "name": "My Account lists one PDF action for the eligible owned order",
+          "passed": true
+        },
+        {
+          "name": "order details also expose one native PDF action",
+          "passed": true
+        },
+        {
+          "name": "account page does not expose renderer credentials or endpoints",
+          "passed": true
+        },
+        {
+          "name": "anonymous replay of an owner link is forbidden",
+          "passed": true
+        },
+        {
+          "name": "another customer cannot reuse the owner nonce",
+          "passed": true
+        },
+        {
+          "name": "another customer order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "guest order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "refunded order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "partially refunded order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "missing order denied even with a valid customer nonce",
+          "passed": true
+        },
+        {
+          "name": "staff capabilities do not bypass customer ownership",
+          "passed": true
+        },
+        {
+          "name": "missing or malformed nonce is rejected",
+          "passed": true
+        },
+        {
+          "name": "negative, overflowing and array order IDs fail closed",
+          "passed": true
+        },
+        {
+          "name": "unsupported request method is rejected",
+          "passed": true
+        },
+        {
+          "name": "ineligible status changes hide the action and revoke old links",
+          "passed": true
+        },
+        {
+          "name": "completed orders remain eligible",
+          "passed": true
+        },
+        {
+          "name": "all denied requests avoid the renderer",
+          "passed": true
+        },
+        {
+          "name": "owner HTTP download equals actual Fullbleed PDF bytes",
+          "passed": true
+        },
+        {
+          "name": "PDF response is private and cannot be cached or sniffed",
+          "passed": true
+        },
+        {
+          "name": "PDF has a useful filename, correct type and complete length",
+          "passed": true
+        },
+        {
+          "name": "customer PDF uses the exact saved merchant template and Woo order data",
+          "passed": true
+        },
+        {
+          "name": "repeat clicks receive a retry delay without another render",
+          "passed": true
+        },
+        {
+          "name": "offline renderer produces a private recoverable error with no remote details",
+          "passed": true
+        },
+        {
+          "name": "remote-error renderer produces a private recoverable error with no remote details",
+          "passed": true
+        },
+        {
+          "name": "corrupt renderer produces a private recoverable error with no remote details",
+          "passed": true
+        },
+        {
+          "name": "renderer failure records a safe merchant recovery status",
+          "passed": true
+        },
+        {
+          "name": "actual customer-download failures appear in merchant activity",
+          "passed": true
+        },
+        {
+          "name": "customer cannot open the merchant activity HTTP page",
+          "passed": true
+        },
+        {
+          "name": "reassign during rendering prevents PDF bytes from leaving WordPress",
+          "passed": true
+        },
+        {
+          "name": "cancel during rendering prevents PDF bytes from leaving WordPress",
+          "passed": true
+        },
+        {
+          "name": "disconnect during rendering prevents PDF bytes from leaving WordPress",
+          "passed": true
+        },
+        {
+          "name": "disabled portal, withdrawn processing consent or missing credentials revoke old links",
+          "passed": true
+        },
+        {
+          "name": "a later customer retry succeeds after renderer recovery",
+          "passed": true
+        },
+        {
+          "name": "successful recovery clears the failed merchant status",
+          "passed": true
+        },
+        {
+          "name": "actual customer recovery replaces failure with response readiness",
+          "passed": true
+        },
+        {
+          "name": "download leaves order totals, addresses and status intact",
+          "passed": true
+        }
+      ],
+      "pdfSha256": "9bd63037208f1ddfabf7f8023ad86bb479da22075f8f8f3592ec54889f99a638",
+      "transport": "Real WordPress login, WooCommerce My Account pages and admin-post HTTP. Renderer HTTPS response substituted by a test-only WordPress filter using actual Fullbleed bytes for the exact order and saved template. No email, payment or production service."
+    }
+  ],
+  "nativeRendererAndPrivateSmtp": {
+    "checkedAt": "2026-10-03T18:26:25.975Z",
+    "syntheticOnly": true,
+    "transport": "Native WordPress/PHP cURL over real TLS to Caddy and the unmodified renderer container. Local fixture CA trusted explicitly; private Docker hostname permitted only in the fixture. No pre_http_request response substitution. Initial phases capture PHPMailer MIME. The separate SMTP phase uses the unmodified WordPress mailer, WooCommerce Action Scheduler, wp-cron.php and a private Mailpit inbox with no external relay.",
+    "packages": [
+      {
+        "plugin": "fullbleed-commerce",
+        "version": "0.1.1",
+        "filename": "fullbleed-commerce-0.1.1.zip",
+        "bytes": 3061180,
+        "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+        "files": 39
+      },
+      {
+        "plugin": "fullbleed-commerce-pro",
+        "version": "0.1.1",
+        "filename": "fullbleed-commerce-pro-0.1.1.zip",
+        "bytes": 39012,
+        "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+        "files": 14
+      }
+    ],
+    "images": {
+      "wordpress": "wordpress:7.1.2-php8.3-apache@sha256:4abf7a450ee477dde967584f8174d7e03221d224c4971a0c38d84e7254426e64",
+      "database": "mariadb:11.8@sha256:6422478cb8e159f080fb1d8ccf65101e26fe51385787fde7d16c3b165a331f15",
+      "proxy": "fullbleed-renderer-check-2415-1791051892619:proxy",
+      "rendererImageId": "sha256:408ae1893948b682e0134470771c746933885c85904f5b99532265c4886195af"
+    },
+    "woocommerceArchive": {
+      "url": "https://downloads.wordpress.org/plugin/woocommerce.11.1.2.zip",
+      "sha256": "9de9350a1cf5671b9960afb3151f40f7980e223217a441bf2ea5921b5fce8e9e"
+    },
+    "checks": [
+      {
+        "name": "deployment configuration publishes only the TLS proxy and isolates renderer egress",
+        "passed": true
+      },
+      {
+        "name": "renderer starts as an unprivileged user with read-only files, health checks and enforced resource limits",
+        "passed": true
+      },
+      {
+        "name": "running renderer cannot write into its application directory",
+        "passed": true
+      },
+      {
+        "name": "public-certificate Caddy configuration validates without requesting a certificate",
+        "passed": true
+      },
+      {
+        "name": "fresh native WordPress and WooCommerce install every exact base and Pro ZIP entry",
+        "passed": true
+      },
+      {
+        "name": "render: native PHP has a real cURL transport",
+        "passed": true
+      },
+      {
+        "name": "render: WooCommerce uses HPOS",
+        "passed": true
+      },
+      {
+        "name": "render: WordPress rejects the untrusted local TLS issuer",
+        "passed": true
+      },
+      {
+        "name": "render: native PHP can read the explicitly trusted public CA certificate",
+        "passed": true
+      },
+      {
+        "name": "render: trusted HTTPS renderer returns a real verified PDF",
+        "passed": true
+      },
+      {
+        "name": "render: WordPress verifies TLS and does not follow redirects",
+        "passed": true
+      },
+      {
+        "name": "render: real HTTPS service rejects a revoked or incorrect token",
+        "passed": true
+      },
+      {
+        "name": "render: same HTTPS service generates a packing slip",
+        "passed": true
+      },
+      {
+        "name": "render: WooCommerce serializes the original transactional email without outbound mail",
+        "passed": true
+      },
+      {
+        "name": "render: native database retains one latest result for the actual email workflow",
+        "passed": true
+      },
+      {
+        "name": "render: native activity contains no customer fields or renderer credentials",
+        "passed": true
+      },
+      {
+        "name": "render: native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+        "passed": true
+      },
+      {
+        "name": "render: attachment bytes match the direct HTTPS PDF",
+        "passed": true
+      },
+      {
+        "name": "render: attachment uses private temporary storage outside the public root",
+        "passed": true
+      },
+      {
+        "name": "render: successful preparation clears a previous failure",
+        "passed": true
+      },
+      {
+        "name": "render: native recovery clears failed activity without duplicating a workflow",
+        "passed": true
+      },
+      {
+        "name": "render: independently decoded MIME has the expected attachment filename and exact PDF bytes",
+        "passed": true
+      },
+      {
+        "name": "TLS PDFs match direct Node rendering and complete summary bytes reach the captured email",
+        "passed": true
+      },
+      {
+        "name": "request-owned private attachment files are removed after mail processing",
+        "passed": true
+      },
+      {
+        "name": "outage: WooCommerce serializes the original transactional email without outbound mail",
+        "passed": true
+      },
+      {
+        "name": "outage: native database retains one latest result for the actual email workflow",
+        "passed": true
+      },
+      {
+        "name": "outage: native activity contains no customer fields or renderer credentials",
+        "passed": true
+      },
+      {
+        "name": "outage: renderer outage preserves the email without an invalid attachment",
+        "passed": true
+      },
+      {
+        "name": "outage: renderer outage records a safe merchant-visible failure",
+        "passed": true
+      },
+      {
+        "name": "outage: real renderer outage appears in the failed activity view",
+        "passed": true
+      },
+      {
+        "name": "outage: independently decoded MIME has the expected attachment filename and exact PDF bytes",
+        "passed": true
+      },
+      {
+        "name": "recovery: WooCommerce serializes the original transactional email without outbound mail",
+        "passed": true
+      },
+      {
+        "name": "recovery: native database retains one latest result for the actual email workflow",
+        "passed": true
+      },
+      {
+        "name": "recovery: native activity contains no customer fields or renderer credentials",
+        "passed": true
+      },
+      {
+        "name": "recovery: native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+        "passed": true
+      },
+      {
+        "name": "recovery: attachment bytes match the direct HTTPS PDF",
+        "passed": true
+      },
+      {
+        "name": "recovery: attachment uses private temporary storage outside the public root",
+        "passed": true
+      },
+      {
+        "name": "recovery: successful preparation clears a previous failure",
+        "passed": true
+      },
+      {
+        "name": "recovery: native recovery clears failed activity without duplicating a workflow",
+        "passed": true
+      },
+      {
+        "name": "recovery: independently decoded MIME has the expected attachment filename and exact PDF bytes",
+        "passed": true
+      },
+      {
+        "name": "revoked: previous token is rejected after connection rotation",
+        "passed": true
+      },
+      {
+        "name": "rotated: WooCommerce serializes the original transactional email without outbound mail",
+        "passed": true
+      },
+      {
+        "name": "rotated: native database retains one latest result for the actual email workflow",
+        "passed": true
+      },
+      {
+        "name": "rotated: native activity contains no customer fields or renderer credentials",
+        "passed": true
+      },
+      {
+        "name": "rotated: native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+        "passed": true
+      },
+      {
+        "name": "rotated: attachment bytes match the direct HTTPS PDF",
+        "passed": true
+      },
+      {
+        "name": "rotated: attachment uses private temporary storage outside the public root",
+        "passed": true
+      },
+      {
+        "name": "rotated: successful preparation clears a previous failure",
+        "passed": true
+      },
+      {
+        "name": "rotated: native recovery clears failed activity without duplicating a workflow",
+        "passed": true
+      },
+      {
+        "name": "rotated: independently decoded MIME has the expected attachment filename and exact PDF bytes",
+        "passed": true
+      },
+      {
+        "name": "SMTP: SMTP and mailbox API expose no host ports and have no external relay",
+        "passed": true
+      },
+      {
+        "name": "SMTP: alerts retain an hourly WordPress schedule and the order has 36 distinct lines",
+        "passed": true
+      },
+      {
+        "name": "SMTP: order transition queues work without rendering or sending during the transition",
+        "passed": true
+      },
+      {
+        "name": "SMTP: wp-cron processes the persisted WooCommerce queue in a different PHP process",
+        "passed": true
+      },
+      {
+        "name": "SMTP: queued reaches the expected synthetic recipient over real SMTP",
+        "passed": true
+      },
+      {
+        "name": "SMTP: queued inbox attachment matches every byte of the saved-design, multi-page PDF",
+        "passed": true
+      },
+      {
+        "name": "SMTP: repeated cron execution does not duplicate a completed customer email",
+        "passed": true
+      },
+      {
+        "name": "SMTP: second order transition persists its email job before the next worker",
+        "passed": true
+      },
+      {
+        "name": "SMTP: renderer outage preserves the queued email and records a recoverable failure",
+        "passed": true
+      },
+      {
+        "name": "SMTP: outage reaches the expected synthetic recipient over real SMTP",
+        "passed": true
+      },
+      {
+        "name": "SMTP: the real WordPress schedule hands the failure summary to SMTP",
+        "passed": true
+      },
+      {
+        "name": "SMTP: alert reaches the expected synthetic recipient over real SMTP",
+        "passed": true
+      },
+      {
+        "name": "SMTP: administrator alert contains recovery guidance without customer data or PDFs",
+        "passed": true
+      },
+      {
+        "name": "SMTP: a fresh WordPress container process preserves the alert cooldown",
+        "passed": true
+      },
+      {
+        "name": "SMTP: restoring the renderer never automatically resends a customer email",
+        "passed": true
+      },
+      {
+        "name": "SMTP: recovery reaches the expected synthetic recipient over real SMTP",
+        "passed": true
+      },
+      {
+        "name": "SMTP: recovery inbox attachment matches every byte of the saved-design, multi-page PDF",
+        "passed": true
+      },
+      {
+        "name": "SMTP: explicit WooCommerce resend clears the failed workflow",
+        "passed": true
+      },
+      {
+        "name": "SMTP: later scheduler runs send neither a stale alert nor duplicate customer mail",
+        "passed": true
+      },
+      {
+        "name": "SMTP: both actual SMTP attachments were private and outside the public root",
+        "passed": true
+      },
+      {
+        "name": "SMTP: temporary PDFs are removed after their SMTP sending requests exit",
+        "passed": true
+      },
+      {
+        "name": "deployment logs contain neither raw renderer tokens nor synthetic order fields",
+        "passed": true
+      }
+    ],
+    "phases": [
+      {
+        "mode": "render",
+        "wordpress": "7.1.2",
+        "woocommerce": "11.1.2",
+        "php": "8.3.35",
+        "checks": [
+          {
+            "name": "native PHP has a real cURL transport",
+            "passed": true
+          },
+          {
+            "name": "WooCommerce uses HPOS",
+            "passed": true
+          },
+          {
+            "name": "WordPress rejects the untrusted local TLS issuer",
+            "passed": true
+          },
+          {
+            "name": "native PHP can read the explicitly trusted public CA certificate",
+            "passed": true
+          },
+          {
+            "name": "trusted HTTPS renderer returns a real verified PDF",
+            "passed": true
+          },
+          {
+            "name": "WordPress verifies TLS and does not follow redirects",
+            "passed": true
+          },
+          {
+            "name": "real HTTPS service rejects a revoked or incorrect token",
+            "passed": true
+          },
+          {
+            "name": "same HTTPS service generates a packing slip",
+            "passed": true
+          },
+          {
+            "name": "WooCommerce serializes the original transactional email without outbound mail",
+            "passed": true
+          },
+          {
+            "name": "native database retains one latest result for the actual email workflow",
+            "passed": true
+          },
+          {
+            "name": "native activity contains no customer fields or renderer credentials",
+            "passed": true
+          },
+          {
+            "name": "native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+            "passed": true
+          },
+          {
+            "name": "attachment bytes match the direct HTTPS PDF",
+            "passed": true
+          },
+          {
+            "name": "attachment uses private temporary storage outside the public root",
+            "passed": true
+          },
+          {
+            "name": "successful preparation clears a previous failure",
+            "passed": true
+          },
+          {
+            "name": "native recovery clears failed activity without duplicating a workflow",
+            "passed": true
+          }
+        ],
+        "filename": "fullbleed-order-summary-11.pdf",
+        "pdfSha256": "49a016324c1d9cf4cb1bb5763d764852797592289b978398b894021d8ccc7755",
+        "mail": {
+          "attachments": [
+            {
+              "filename": "fullbleed-order-summary-11.pdf",
+              "contentType": "application/octet-stream",
+              "disposition": "attachment",
+              "bytes": 122310,
+              "pdfSignature": true,
+              "sha256": "49a016324c1d9cf4cb1bb5763d764852797592289b978398b894021d8ccc7755"
+            }
+          ],
+          "to": [
+            "alex@example.test"
+          ],
+          "subject": "Your Cedar & Form order has been received!",
+          "received": []
+        }
+      },
+      {
+        "mode": "outage",
+        "wordpress": "7.1.2",
+        "woocommerce": "11.1.2",
+        "php": "8.3.35",
+        "checks": [
+          {
+            "name": "WooCommerce serializes the original transactional email without outbound mail",
+            "passed": true
+          },
+          {
+            "name": "native database retains one latest result for the actual email workflow",
+            "passed": true
+          },
+          {
+            "name": "native activity contains no customer fields or renderer credentials",
+            "passed": true
+          },
+          {
+            "name": "renderer outage preserves the email without an invalid attachment",
+            "passed": true
+          },
+          {
+            "name": "renderer outage records a safe merchant-visible failure",
+            "passed": true
+          },
+          {
+            "name": "real renderer outage appears in the failed activity view",
+            "passed": true
+          }
+        ],
+        "filename": "fullbleed-order-summary-11.pdf",
+        "pdfSha256": "49a016324c1d9cf4cb1bb5763d764852797592289b978398b894021d8ccc7755",
+        "mail": {
+          "attachments": [],
+          "to": [
+            "alex@example.test"
+          ],
+          "subject": "Your Cedar & Form order has been received!",
+          "received": []
+        }
+      },
+      {
+        "mode": "recovery",
+        "wordpress": "7.1.2",
+        "woocommerce": "11.1.2",
+        "php": "8.3.35",
+        "checks": [
+          {
+            "name": "WooCommerce serializes the original transactional email without outbound mail",
+            "passed": true
+          },
+          {
+            "name": "native database retains one latest result for the actual email workflow",
+            "passed": true
+          },
+          {
+            "name": "native activity contains no customer fields or renderer credentials",
+            "passed": true
+          },
+          {
+            "name": "native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+            "passed": true
+          },
+          {
+            "name": "attachment bytes match the direct HTTPS PDF",
+            "passed": true
+          },
+          {
+            "name": "attachment uses private temporary storage outside the public root",
+            "passed": true
+          },
+          {
+            "name": "successful preparation clears a previous failure",
+            "passed": true
+          },
+          {
+            "name": "native recovery clears failed activity without duplicating a workflow",
+            "passed": true
+          }
+        ],
+        "filename": "fullbleed-order-summary-11.pdf",
+        "pdfSha256": "49a016324c1d9cf4cb1bb5763d764852797592289b978398b894021d8ccc7755",
+        "mail": {
+          "attachments": [
+            {
+              "filename": "fullbleed-order-summary-11.pdf",
+              "contentType": "application/octet-stream",
+              "disposition": "attachment",
+              "bytes": 122310,
+              "pdfSignature": true,
+              "sha256": "49a016324c1d9cf4cb1bb5763d764852797592289b978398b894021d8ccc7755"
+            }
+          ],
+          "to": [
+            "alex@example.test"
+          ],
+          "subject": "Your Cedar & Form order has been received!",
+          "received": []
+        }
+      },
+      {
+        "mode": "revoked",
+        "checks": [
+          {
+            "name": "previous token is rejected after connection rotation",
+            "passed": true
+          }
+        ]
+      },
+      {
+        "mode": "rotated",
+        "wordpress": "7.1.2",
+        "woocommerce": "11.1.2",
+        "php": "8.3.35",
+        "checks": [
+          {
+            "name": "WooCommerce serializes the original transactional email without outbound mail",
+            "passed": true
+          },
+          {
+            "name": "native database retains one latest result for the actual email workflow",
+            "passed": true
+          },
+          {
+            "name": "native activity contains no customer fields or renderer credentials",
+            "passed": true
+          },
+          {
+            "name": "native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+            "passed": true
+          },
+          {
+            "name": "attachment bytes match the direct HTTPS PDF",
+            "passed": true
+          },
+          {
+            "name": "attachment uses private temporary storage outside the public root",
+            "passed": true
+          },
+          {
+            "name": "successful preparation clears a previous failure",
+            "passed": true
+          },
+          {
+            "name": "native recovery clears failed activity without duplicating a workflow",
+            "passed": true
+          }
+        ],
+        "filename": "fullbleed-order-summary-11.pdf",
+        "pdfSha256": "49a016324c1d9cf4cb1bb5763d764852797592289b978398b894021d8ccc7755",
+        "mail": {
+          "attachments": [
+            {
+              "filename": "fullbleed-order-summary-11.pdf",
+              "contentType": "application/octet-stream",
+              "disposition": "attachment",
+              "bytes": 122310,
+              "pdfSignature": true,
+              "sha256": "49a016324c1d9cf4cb1bb5763d764852797592289b978398b894021d8ccc7755"
+            }
+          ],
+          "to": [
+            "alex@example.test"
+          ],
+          "subject": "Your Cedar & Form order has been received!",
+          "received": []
+        }
+      }
+    ],
+    "documents": [
+      {
+        "filename": "https-summary.pdf",
+        "sha256": "49a016324c1d9cf4cb1bb5763d764852797592289b978398b894021d8ccc7755",
+        "bytes": 122310,
+        "pages": 1,
+        "missingGlyphs": 0,
+        "matchesDirectNodeRenderer": true
+      },
+      {
+        "filename": "https-packing.pdf",
+        "sha256": "799837540cec634aed42a5091867f67ef78aad25ab1806ca5c517f459dee1e5e",
+        "bytes": 123796,
+        "pages": 1,
+        "missingGlyphs": 0,
+        "matchesDirectNodeRenderer": true
+      }
+    ],
+    "smtp": {
+      "image": "axllent/mailpit:v1.31.4@sha256:b68349e3a014b90c5610bfb26b2ae36f3892d7b8cf25ee140c6c71c98d2fcf48",
+      "transport": "Unmodified WordPress PHPMailer SMTP to private Mailpit; native Action Scheduler through wp-cron.php. No relay, public ports, injected render responses, or send-method overrides.",
+      "scheduler": "Host-driven wp-cron.php; fixture advances due times without calling the delivery hooks itself.",
+      "syntheticOnly": true,
+      "receipts": [
+        {
+          "phase": "queued",
+          "messageId": "2p2U9yY8fCNrAkQ16XgA7z",
+          "mimeSha256": "99bc5bc8147efbcab2dc11b3b7d4faf506f98a2378a2be4e27c44596b4f19c32",
+          "attachments": [
+            {
+              "filename": "fullbleed-order-summary-12.pdf",
+              "contentType": "application/octet-stream",
+              "disposition": "attachment",
+              "bytes": 128044,
+              "pdfSignature": true,
+              "sha256": "ecd30a489bf2233794ec93ccbd0196d47f9cc6ec366731b110785a458eee48d1"
+            }
+          ],
+          "to": [
+            "alex@example.test"
+          ],
+          "subject": "Your Cedar & Form order has been received!",
+          "received": [
+            "from 99617a579dd0 (fullbleed-renderer-check-2415-1791051892619-wordpress.fullbleed-renderer-check-2415-1791051892619_renderer_private. [172.18.0.5])        by c6caf9862dbb (Mailpit) with SMTP        for <alex@example.test>; Sat, 3 Oct 2026 18:25:59 +0000 (UTC)"
+          ]
+        },
+        {
+          "phase": "outage",
+          "messageId": "4g1uhEI86Zuu41Pzv6cqQu",
+          "mimeSha256": "5320aafcc5074137cd8fc1deecf6e5250c5f727ddfa8667971772b2ab3a68bed",
+          "attachments": [],
+          "to": [
+            "alex@example.test"
+          ],
+          "subject": "Your Cedar & Form order is now complete",
+          "received": [
+            "from 99617a579dd0 (fullbleed-renderer-check-2415-1791051892619-wordpress.fullbleed-renderer-check-2415-1791051892619_renderer_private. [172.18.0.5])        by c6caf9862dbb (Mailpit) with SMTP        for <alex@example.test>; Sat, 3 Oct 2026 18:26:05 +0000 (UTC)"
+          ]
+        },
+        {
+          "phase": "alert",
+          "messageId": "1iKuoFZtDmF6YfVEQrVpFT",
+          "mimeSha256": "81a26b8fd3f25dea4babdc4292e8be7a6b1286939fdf7529bc24b3e578386c64",
+          "attachments": [],
+          "to": [
+            "admin@example.test"
+          ],
+          "subject": "[Fullbleed] PDF workflows need attention",
+          "received": [
+            "from 99617a579dd0 (fullbleed-renderer-check-2415-1791051892619-wordpress.fullbleed-renderer-check-2415-1791051892619_renderer_private. [172.18.0.5])        by c6caf9862dbb (Mailpit) with SMTP        for <admin@example.test>; Sat, 3 Oct 2026 18:26:07 +0000 (UTC)"
+          ]
+        },
+        {
+          "phase": "recovery",
+          "messageId": "0cL135OOtplqCk0W1pu89c",
+          "mimeSha256": "87926ddf90b06ee97f006f576dc0dc9fd57db8bfa8e9dccb4734b9b846e4ff01",
+          "attachments": [
+            {
+              "filename": "fullbleed-order-summary-12.pdf",
+              "contentType": "application/octet-stream",
+              "disposition": "attachment",
+              "bytes": 128024,
+              "pdfSignature": true,
+              "sha256": "027753a5c587c7818743db5f44147ae78bb0c8fec6673f2e95698acf55d7bba5"
+            }
+          ],
+          "to": [
+            "alex@example.test"
+          ],
+          "subject": "Your Cedar & Form order is now complete",
+          "received": [
+            "from 99617a579dd0 (fullbleed-renderer-check-2415-1791051892619-wordpress.fullbleed-renderer-check-2415-1791051892619_renderer_private. [172.18.0.2])        by c6caf9862dbb (Mailpit) with SMTP        for <alex@example.test>; Sat, 3 Oct 2026 18:26:20 +0000 (UTC)"
+          ]
+        }
+      ],
+      "documents": [
+        {
+          "phase": "queued",
+          "pages": 3,
+          "missingGlyphs": 0,
+          "sha256": "ecd30a489bf2233794ec93ccbd0196d47f9cc6ec366731b110785a458eee48d1",
+          "bytes": 128044,
+          "savedTemplateSha256": "c86732846919a451243267944635da48ddcd280530d4280e46a190d2fb33c24d"
+        },
+        {
+          "phase": "recovery",
+          "pages": 3,
+          "missingGlyphs": 0,
+          "sha256": "027753a5c587c7818743db5f44147ae78bb0c8fec6673f2e95698acf55d7bba5",
+          "bytes": 128024,
+          "savedTemplateSha256": "c86732846919a451243267944635da48ddcd280530d4280e46a190d2fb33c24d"
+        }
+      ],
+      "evidence": [
+        {
+          "file": "output/renderer-deployment/smtp-queued.pdf",
+          "sha256": "ecd30a489bf2233794ec93ccbd0196d47f9cc6ec366731b110785a458eee48d1"
+        },
+        {
+          "file": "output/renderer-deployment/smtp-queued.eml",
+          "sha256": "99bc5bc8147efbcab2dc11b3b7d4faf506f98a2378a2be4e27c44596b4f19c32"
+        },
+        {
+          "file": "output/renderer-deployment/smtp-outage.eml",
+          "sha256": "5320aafcc5074137cd8fc1deecf6e5250c5f727ddfa8667971772b2ab3a68bed"
+        },
+        {
+          "file": "output/renderer-deployment/smtp-alert.eml",
+          "sha256": "81a26b8fd3f25dea4babdc4292e8be7a6b1286939fdf7529bc24b3e578386c64"
+        },
+        {
+          "file": "output/renderer-deployment/smtp-recovery.pdf",
+          "sha256": "027753a5c587c7818743db5f44147ae78bb0c8fec6673f2e95698acf55d7bba5"
+        },
+        {
+          "file": "output/renderer-deployment/smtp-recovery.eml",
+          "sha256": "87926ddf90b06ee97f006f576dc0dc9fd57db8bfa8e9dccb4734b9b846e4ff01"
+        }
+      ],
+      "mailCount": 4,
+      "pendingEmailJobs": 0,
+      "alertAfterRestart": {
+        "attempted_at": 1791051966,
+        "status": "accepted"
+      },
+      "limitations": [
+        "This verifies private SMTP inbox receipt, not external-provider deliverability or a merchant scheduler.",
+        "The deployment fixture uses HPOS; separate captured-mail checks cover legacy storage.",
+        "Only synthetic orders and example.test recipients are used."
+      ]
+    },
+    "evidence": [
+      {
+        "file": "output/renderer-deployment/https-summary.pdf",
+        "sha256": "49a016324c1d9cf4cb1bb5763d764852797592289b978398b894021d8ccc7755"
+      },
+      {
+        "file": "output/renderer-deployment/https-packing.pdf",
+        "sha256": "799837540cec634aed42a5091867f67ef78aad25ab1806ca5c517f459dee1e5e"
+      },
+      {
+        "file": "output/renderer-deployment/render.eml",
+        "sha256": "47ea2b2aec1c9f91cd079dfeb832413cf3127fd38aefc5c85c0d9d8652be79a9"
+      },
+      {
+        "file": "output/renderer-deployment/outage.eml",
+        "sha256": "15493696ee7a85331d81ce271daf963fe6dcfe81e763e1338ec310bd018da146"
+      },
+      {
+        "file": "output/renderer-deployment/recovery.eml",
+        "sha256": "d4c6f89e78e1d797a0b7c4352e9d46fb885ce4b375e7c41fd6fc58828d9f0985"
+      },
+      {
+        "file": "output/renderer-deployment/rotated.eml",
+        "sha256": "7ecba9662fb0d65009550fb14a49aff2cb856351bf8c0c39a781e39c6531d9fb"
+      },
+      {
+        "file": "output/renderer-deployment/smtp-queued.pdf",
+        "sha256": "ecd30a489bf2233794ec93ccbd0196d47f9cc6ec366731b110785a458eee48d1"
+      },
+      {
+        "file": "output/renderer-deployment/smtp-queued.eml",
+        "sha256": "99bc5bc8147efbcab2dc11b3b7d4faf506f98a2378a2be4e27c44596b4f19c32"
+      },
+      {
+        "file": "output/renderer-deployment/smtp-outage.eml",
+        "sha256": "5320aafcc5074137cd8fc1deecf6e5250c5f727ddfa8667971772b2ab3a68bed"
+      },
+      {
+        "file": "output/renderer-deployment/smtp-alert.eml",
+        "sha256": "81a26b8fd3f25dea4babdc4292e8be7a6b1286939fdf7529bc24b3e578386c64"
+      },
+      {
+        "file": "output/renderer-deployment/smtp-recovery.pdf",
+        "sha256": "027753a5c587c7818743db5f44147ae78bb0c8fec6673f2e95698acf55d7bba5"
+      },
+      {
+        "file": "output/renderer-deployment/smtp-recovery.eml",
+        "sha256": "87926ddf90b06ee97f006f576dc0dc9fd57db8bfa8e9dccb4734b9b846e4ff01"
+      }
+    ],
+    "limitations": [
+      "Local TLS issuer only; public DNS, ACME issuance and a merchant host remain deployment checks.",
+      "PHPMailer identifies extensionless private temporary attachments as application/octet-stream; the .pdf display filename and complete decoded PDF bytes are verified separately.",
+      "SMTP receipt is verified only inside the disposable network; no external provider, recipient domain, SPF/DKIM/DMARC, managed hosting, paid entitlement or merchant data is used.",
+      "The renderer remains one process with in-memory capacity limits; this is not metered SaaS or a high-availability claim."
+    ]
+  },
+  "localBlueprintExecution": {
+    "checkedAt": "2026-10-03T18:25:35.121Z",
+    "source": "Disposable local execution of public Blueprint with exact local candidate ZIP bytes",
+    "base": "http://127.0.0.1:9488",
+    "blueprintSha256": "8612e251444dba89f3deedf8b8bfea358dbb4d17b73ba4aaa9799f850bbbf378",
+    "archive": {
+      "plugin": "fullbleed-commerce",
+      "version": "0.1.1",
+      "filename": "fullbleed-commerce-0.1.1.zip",
+      "bytes": 3061180,
+      "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+      "files": 39
+    },
+    "runtime": {
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.33",
+      "orders": [
+        {
+          "id": 12,
+          "items": 2,
+          "status": "pending",
+          "paid": false,
+          "total": "282.00"
+        },
+        {
+          "id": 13,
+          "items": 32,
+          "status": "pending",
+          "paid": false,
+          "total": "4332.00"
+        }
+      ],
+      "hpos": true,
+      "mailSuppressed": true,
+      "externalRequestBlocked": true,
+      "cronDisabled": true,
+      "trackingDisabled": true,
+      "freePluginActive": true,
+      "proPluginActive": false
+    },
+    "checks": [
+      {
+        "name": "exact candidate plugin archive installed",
+        "passed": true
+      },
+      {
+        "name": "two synthetic unpaid orders with short and long item lists",
+        "passed": true
+      },
+      {
+        "name": "sample platform totals retained",
+        "passed": true
+      },
+      {
+        "name": "HPOS order storage enabled",
+        "passed": true
+      },
+      {
+        "name": "actual WordPress mail call short-circuited before transport",
+        "passed": true
+      },
+      {
+        "name": "WordPress external request blocked",
+        "passed": true
+      },
+      {
+        "name": "cron and WooCommerce tracking disabled",
+        "passed": true
+      }
+    ]
+  },
+  "sharedTests": {
+    "passed": 45,
+    "failed": 0,
+    "retainedLog": "windows/node-tests-011.log"
+  },
+  "examples": [
+    {
+      "stem": "studio-order-summary",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.6",
+      "sha256": "ebf3dbeb8805a75c465269ad773451ae4c09e648358abeb34b5f67ab34a4cfcd"
+    },
+    {
+      "stem": "studio-packing-slip",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.6",
+      "sha256": "b53badb78078460b0a70ccaf9542d73e32e92857f798d67ee8f5f35fe88b4f6c"
+    },
+    {
+      "stem": "contrast-order-summary",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.6",
+      "sha256": "ee980d7ab9d16f94ad560583d5c5be90c8c234fcdabbf2bec578bc88941ae5cf"
+    },
+    {
+      "stem": "contrast-packing-slip",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.6",
+      "sha256": "db5d092e552a66ae622836307dcf57f1a77ae68b475d38f6155e66b2634c22d1"
+    },
+    {
+      "stem": "quiet-order-summary",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.6",
+      "sha256": "5825edaf4a8a77d4a08bda425037e5f26696cb267f5b905e7a4875f29679cee9"
+    },
+    {
+      "stem": "quiet-packing-slip",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.6",
+      "sha256": "8d4289ea79eefddd3eacef1043d734ffd84e5ed465c1140ef8a57556a9e7c068"
+    }
+  ],
+  "visuallyInspected": [
+    {
+      "path": "output/examples/contrast-order-summary-1.png",
+      "sha256": "2519daab3dfbdf04bd0837508d014fa107b4cb672551ba2aa12fd7d50ec4bc8a"
+    },
+    {
+      "path": "output/examples/contrast-packing-slip-1.png",
+      "sha256": "8f194da8f6823d2eef5f1d16e22fa4d6231337fef2e3953b33ee23bd338a06ee"
+    },
+    {
+      "path": "output/examples/quiet-order-summary-1.png",
+      "sha256": "a90699c0c161ea0063dbd1961aeaad2d36f0a7df94e863fb173c9027df9d6c83"
+    },
+    {
+      "path": "output/examples/quiet-packing-slip-1.png",
+      "sha256": "5d9f23c8251fc990f2440040596f9d39504e9c93bdfbb61719764087d5e5dd6e"
+    },
+    {
+      "path": "output/examples/studio-order-summary-1.png",
+      "sha256": "f260a65552b27bfbfa319add032c5d682674a4a89e34a9a8693fc4b10a1dc491"
+    },
+    {
+      "path": "output/examples/studio-packing-slip-1.png",
+      "sha256": "6b0a9709f9f79d0d957c3028a0a5b1c7316906715639abdfb3e5a9d3075ea63d"
+    },
+    {
+      "path": "output/release-011/previews/wordpress-matrix-default_page1.png",
+      "sha256": "b0dec14e68df58007706499ce26df0ecd9d2a86d03e4dc41e6b2905c0108b25b"
+    },
+    {
+      "path": "output/release-011/previews/wordpress-matrix-custom_page1.png",
+      "sha256": "90dc38209d33ef144fe05c04bd80e5549d735a9f4c6911530b85693fe3b283ab"
+    },
+    {
+      "path": "output/release-011/previews/wordpress-customer-summary_page1.png",
+      "sha256": "dd2ff26743c5ab64177a552bd9c05af1635aae12f2000087f5effe06fb9c899f"
+    },
+    {
+      "path": "target/ci-011/renderer-deployment/smtp-queued-1.png",
+      "sha256": "aa57ee2d764219be1887c2072c27c339c58f974fbfaa3a04eca0904466f9a65c"
+    },
+    {
+      "path": "target/ci-011/renderer-deployment/smtp-queued-2.png",
+      "sha256": "b3bba5aadbf5e5080b92b3d25a3f33c94d4c2dfa05af8d5ff51ec2fc24bfda5e"
+    },
+    {
+      "path": "target/ci-011/renderer-deployment/smtp-queued-3.png",
+      "sha256": "84f996e3e8b3347e475b8920960764b2c607b439c75c30488a054236fad24a9c"
+    },
+    {
+      "path": "target/ci-011/renderer-deployment/smtp-recovery-1.png",
+      "sha256": "c85429f94691cee204652c7538c2990dfdeb495b4fac888ec1e687e0d456bea5"
+    }
+  ],
+  "initialWindowsAttempt": {
+    "result": "customer fixture exceeded the orchestrator ten-minute readiness cap before the customer browser launched",
+    "resolution": "The same standalone fixture subsequently passed all 38 HTTP checks; its customer browser passed 13 checks. The completed staff journey was not rerun.",
+    "retainedLog": "windows/initial-customer-store.log"
+  },
+  "limits": [
+    "Evaluation preview: no paid checkout, automatic updater, marketplace approval or merchant pilot is claimed.",
+    "SMTP receipt is in a private disposable inbox; external deliverability and merchant scheduling remain deployment checks.",
+    "Playwright WebKit is not branded Safari or physical-device coverage.",
+    "The previous main Chrome alert-page error was not reproduced; failure diagnostics improved, but its original cause remains unknown.",
+    "The free package renders locally. Pro automated delivery needs an operator-managed private renderer."
+  ]
+}

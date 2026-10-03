@@ -30,8 +30,14 @@ def wait_for_fixture_page(page):
 
 def login_to(page, base, user, destination):
     page.goto(base + '/wp-login.php?' + urlencode({'redirect_to': destination}))
+    # WordPress schedules username focus 200 ms after loading. Let this fixture's
+    # startup settle before Playwright fills the password, or Firefox can insert
+    # it into the field that the delayed focus action selected instead.
+    wait_for_fixture_page(page)
     page.locator('#user_login').fill(user)
     page.locator('#user_pass').fill('fullbleed-local-test')
+    assert page.locator('#user_login').input_value() == user, 'Fixture username changed before submission.'
+    assert page.locator('#user_pass').input_value() == 'fullbleed-local-test', 'Fixture password was not filled.'
     page.locator('#wp-submit').click()
     # A newly activated WooCommerce can redirect the first administrator visit
     # to its home screen even when login requested another protected page.

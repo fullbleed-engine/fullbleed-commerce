@@ -45,6 +45,7 @@ with sync_playwright() as pw:
         check('native browser download has the promised filename and exact renderer bytes', event.value.suggested_filename == 'order-summary-12.pdf' and sha256(pdf.read_bytes()).hexdigest() == fixture['pdfSha256'])
         text = '\n'.join(item.extract_text() for item in PdfReader(pdf).pages)
         check('download contains saved brand styling and platform totals', 'YOUR CEDAR ORDER' in text and '282.00' in text and 'Alex Morgan' in text)
+        check('server-rendered bold heading extracts exactly once', ' '.join(text.split()).count('YOUR CEDAR ORDER') == 1)
         check('download leaves the account page usable', page.url == fixture['ordersUrl'] and link.is_visible())
         page.screenshot(path=str(out / f'{label}-orders.png'), full_page=True)
         page.goto(fixture['viewUrl'])

@@ -1,10 +1,64 @@
 # Preview verification
 
-The current WordPress release is **0.1.0-alpha.3**, published October 3, 2026.
+The current WordPress release is **0.1.1**, published October 3, 2026.
 All checks use synthetic order data. This is an evaluation preview, not
 marketplace approval or a live paid service.
 
-## Unreleased administrator failure alerts
+## 0.1.1 release verification
+
+The release pins the public Fullbleed Node 0.1.2 package, containing engine
+2.5.6. Build metadata and the copied WebAssembly checksum are checked against
+the installed package. Browser PDF checks independently extract custom bold
+headings and require each heading exactly once. The upgrade fixture starts from
+the actual alpha.3 archives and requires the new failure alerts to remain off.
+
+The [retained release record](release-011-verification.json) identifies the exact
+source and package hashes. Both ZIPs match Windows and Linux builds, and all six
+[release assets](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.1)
+were downloaded without authentication and compared with the verified local files.
+The release includes a permanent evidence ZIP with synthetic PDFs, previews and
+machine-readable reports.
+
+All 45 shared tests pass. Each of Chrome, Playwright Firefox and Playwright WebKit
+passes 13 staff, 13 customer and 10 alert checks on Linux, with no page errors.
+Windows Chrome passes the 26 staff/customer checks with identical fixture PDFs.
+Both order-storage modes pass 23 real ZIP-upgrade checks, 84 email/activity/alert
+checks and 38 customer authorization checks on Linux. Native WordPress passes
+strict Plugin Check and 12 Chrome checks. The private renderer/TLS/SMTP deployment
+passes 72 checks, including queued delivery and explicit recovery. The six design
+examples, customized browser PDFs and distinct SMTP PDF pages were visually
+inspected. These results cover this release; older records below retain their
+original source and renderer versions.
+
+The first Windows browser runner completed the staff journey, then reached its
+ten-minute customer-fixture readiness cap before launching that browser. The same
+standalone customer fixture subsequently passed all 38 HTTP checks and 13 browser
+checks. The original log and recovery evidence are retained.
+
+The [public demo](public-demo-011-verification.json) passes 13 checks in the
+authorized Chrome session: the ordinary PDF, all 32 items across long summaries
+and packing slips, visual/source edits, preview/save/reload, reset and mobile
+layout. Its saved custom heading extracts once, and the subsequent download
+matches the actual editor preview bytes. The [WordPress.org update](wordpress-update-011.json)
+was accepted into the existing review; the uploaded free ZIP matches this release.
+Its status remains **Awaiting Review**. Visual inspection also found a pagination
+limitation: the 32-item Studio summary leaves only its closing note on page 4.
+All items and amounts are present; grouping the closing content is follow-up work.
+
+A subsequent documentation-commit Firefox run stopped on WordPress's login form,
+before any plugin check. Its screenshot shows the synthetic password in the
+username field and an empty password. The retained trace contains WordPress's
+200 ms delayed username-focus action. The fixture helper now waits for its
+existing startup readiness condition and asserts both fields before submission.
+This changes test synchronization only; the released ZIPs are unchanged.
+
+The previous main-branch Chrome run failed its strict JavaScript-error check in
+the alert journey after the other nine checks passed. That failure did not retain
+the error text. A local baseline rerun passed; its cause has not been established.
+The checker now retains the exception, browser metadata, page-error stacks and
+console details on failure. The zero-page-errors requirement remains unchanged.
+
+## Administrator failure alerts added after alpha.3
 
 Current source adds opt-in administrator summaries for unresolved WooCommerce
 document failures. [Retained verification](failure-alert-verification.json)
@@ -48,7 +102,7 @@ replace the public alpha.3 ZIP. Follow the
 [staging acceptance sequence](../automation/DEPLOYMENT.md#check-the-complete-staging-workflow)
 before enabling a merchant workflow.
 
-## Current release and upgrade path
+## Historical alpha.3 release and upgrade path
 
 [Alpha.3](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.3)
 packages the merchant activity view and the editor built with WordPress's shared

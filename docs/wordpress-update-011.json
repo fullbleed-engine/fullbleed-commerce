@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-10-03T18:49:58.401334+00:00",
+  "version": "0.1.1",
+  "slug": "fullbleed-commerce",
+  "submissionUrl": "https://wordpress.org/plugins/developers/add/",
+  "confirmation": "New version of Fullbleed Commerce uploaded for review.",
+  "status": "Awaiting Review",
+  "reviewApproved": false,
+  "uploadedZipUrl": "https://wordpress.org/plugins/files/2026/10/03_18-47-50_fullbleed-commerce-0.1.1.zip",
+  "bytes": 3061180,
+  "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+  "matchesVerifiedRelease": true,
+  "verification": "Existing WordPress.org upload form, confirmation page and unauthenticated download from its Plugin Check blueprint."
+}

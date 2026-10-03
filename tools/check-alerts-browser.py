@@ -11,7 +11,7 @@ destination = base + '/wp-admin/admin.php?page=fullbleed-automation'
 out = Path('output/browser')
 out.mkdir(parents=True, exist_ok=True)
 label = browser_label('wordpress-alerts')
-checks, errors = [], []
+checks, errors, error_details, console_errors = [], [], [], []
 
 
 def check(name, condition):
@@ -27,7 +27,11 @@ with sync_playwright() as pw:
     admin, staff = admin_context.new_page(), staff_context.new_page()
     for page in [admin, staff]:
         page.set_default_timeout(45000)
-        page.on('pageerror', lambda error: errors.append(str(error)))
+        def capture_error(error, source=page):
+            errors.append(str(error))
+            error_details.append({'error': str(error), 'stack': error.stack, 'url': source.url})
+        page.on('pageerror', capture_error)
+        page.on('console', lambda message, source=page: console_errors.append({'text': message.text, 'location': message.location, 'url': source.url}) if message.type == 'error' else None)
     try:
         login_to(admin, base, 'admin', destination)
         panel = admin.locator('#fullbleed-failure-alerts')
@@ -67,8 +71,16 @@ with sync_playwright() as pw:
         check('alert settings have no JavaScript errors', not errors)
         evidence = [{'file': path.as_posix(), 'sha256': sha256(path.read_bytes()).hexdigest()} for path in [out / f'{label}-desktop.png', out / f'{label}-mobile.png']]
         (out / f'{label}-verification.json').write_text(json.dumps({'checkedAt': datetime.now(timezone.utc).isoformat(), **browser_metadata(browser), 'store': base, 'checks': checks, 'pageErrors': errors, 'evidence': evidence, 'scope': 'Synthetic administrator settings only. WP-Cron is disabled in this fixture; no email is sent by browser actions.'}, indent=2), encoding='utf-8')
-    except Exception:
-        admin.screenshot(path=str(out / f'{label}-failure.png'), full_page=True)
+    except Exception as error:
+        failure = {**browser_metadata(browser), 'error': str(error), 'checks': checks, 'errors': errors,
+                   'errorDetails': error_details, 'consoleErrors': console_errors, 'url': admin.url, 'staffUrl': staff.url}
+        failure_file = out / f'{label}-failure.json'
+        failure_file.write_text(json.dumps(failure, indent=2), encoding='utf-8')
+        try:
+            admin.screenshot(path=str(out / f'{label}-failure.png'), full_page=True, timeout=5000)
+        except Exception as inspection_error:
+            failure['inspectionError'] = str(inspection_error)
+            failure_file.write_text(json.dumps(failure, indent=2), encoding='utf-8')
         raise
     finally:
         admin_context.close()

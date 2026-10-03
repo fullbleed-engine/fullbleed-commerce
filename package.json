@@ -1,6 +1,6 @@
 {
   "name": "@fullbleed/commerce",
-  "version": "0.1.0-alpha.3",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "engines": {
@@ -17,7 +17,7 @@
     "@bjorn3/browser_wasi_shim": "0.4.2",
     "css-tree": "3.2.1",
     "fflate": "0.8.3",
-    "fullbleed": "https://github.com/fullbleed-engine/fullbleed-node/releases/download/v0.1.1/fullbleed-0.1.1.tgz",
+    "fullbleed": "0.1.2",
     "grapesjs": "0.23.6",
     "htmlparser2": "12.0.0"
   },

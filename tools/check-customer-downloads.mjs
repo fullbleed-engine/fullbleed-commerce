@@ -98,6 +98,7 @@ try {
   const order = await phpJson(`(function () { $r = new WP_REST_Request(); $r['id'] = 12; return \\Fullbleed\\Commerce\\get_order($r)->get_data(); })()`);
   const template = starterTemplate({ kind: 'order-summary' });
   template.html = template.html.replace('{{document.title}}', 'YOUR CEDAR ORDER');
+  template.css += '\nh1 { font-family: Inter; font-weight: 700; font-size: 28pt; }';
   await php(`update_option('fullbleed_template_order-summary', array('template' => ${phpValue(template)}, 'revision' => 'synthetic-customer-v1'), false);`);
   const render = createRenderer({ clients: [{ site: config.site, tokenSha256: hash(config.token) }] });
   const result = await render(new Request('https://renderer.example.test/v1/render', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${config.token}`, 'X-Fullbleed-Site': config.site }, body: JSON.stringify({ order, options: { kind: 'order-summary', design: 'studio', template } }) }));

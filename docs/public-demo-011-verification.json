@@ -1,0 +1,127 @@
+{
+  "checkedAt": "2026-10-03T18:59:41.024770+00:00",
+  "release": "0.1.1",
+  "sourceCommit": "e9732f8d73ea63349451b6ad982dfc66c95e3ae8",
+  "browser": "Google Chrome 154.0.8037.93",
+  "syntheticOnly": true,
+  "url": "https://playground.wordpress.net/?storage=temp&blueprint-url=https%3A%2F%2Fraw.githubusercontent.com%2Ffullbleed-engine%2Ffullbleed-commerce%2Fv0.1.1%2Fplayground%2Fblueprint.json",
+  "checks": [
+    {
+      "name": "public browser worker downloads the one-page branded summary",
+      "passed": true
+    },
+    {
+      "name": "long-order-summary preserves all 32 items",
+      "passed": true
+    },
+    {
+      "name": "long-order-summary paginates",
+      "passed": true
+    },
+    {
+      "name": "long-order-summary preserves its price policy",
+      "passed": true
+    },
+    {
+      "name": "long-packing-slip preserves all 32 items",
+      "passed": true
+    },
+    {
+      "name": "long-packing-slip paginates",
+      "passed": true
+    },
+    {
+      "name": "long-packing-slip preserves its price policy",
+      "passed": true
+    },
+    {
+      "name": "saved visual heading extracts exactly once",
+      "passed": true
+    },
+    {
+      "name": "ordinary download after reload matches the actual editor PDF preview",
+      "passed": true
+    },
+    {
+      "name": "public demo uses temporary storage",
+      "passed": true
+    },
+    {
+      "name": "reset restores the built-in design",
+      "passed": true
+    },
+    {
+      "name": "document page fits a 390px viewport",
+      "passed": true
+    },
+    {
+      "name": "no JavaScript page errors during public customization and downloads",
+      "passed": true
+    }
+  ],
+  "documents": [
+    {
+      "file": "output/public-demo-011/public-summary.pdf",
+      "sha256": "3af9fcc4cf935c4b79a013e5217d4cff57a34daaa6b7a917f93ef938ccf17e3a",
+      "pages": 1,
+      "bytes": 125001
+    },
+    {
+      "file": "output/public-demo-011/public-long-order-summary.pdf",
+      "sha256": "17b4c0c177992cce8ee05b02f52c8577796b5b18b23668aeeb91eac31854e8c1",
+      "pages": 4,
+      "bytes": 130975
+    },
+    {
+      "file": "output/public-demo-011/public-long-packing-slip.pdf",
+      "sha256": "3b81caf1e8cbfb9fd93d055281bb02fe513c4eb00c07fd7958dba89fcb43d891",
+      "pages": 3,
+      "bytes": 132017
+    },
+    {
+      "file": "output/public-demo-011/public-saved-summary.pdf",
+      "sha256": "f693f0801895db3bd476de75b18214730ec7cc30e169cdd8b7f82852a8ee937b",
+      "pages": 1,
+      "bytes": 124825
+    }
+  ],
+  "browserState": {
+    "url": "https://playground.wordpress.net/?storage=temp&blueprint-url=https%3A%2F%2Fraw.githubusercontent.com%2Ffullbleed-engine%2Ffullbleed-commerce%2Fv0.1.1%2Fplayground%2Fblueprint.json",
+    "download": "order-summary-12.pdf",
+    "custom": {
+      "visualEditInSource": true,
+      "preview": {
+        "bytes": 124825,
+        "sha256": "f693f0801895db3bd476de75b18214730ec7cc30e169cdd8b7f82852a8ee937b"
+      }
+    },
+    "reset": true,
+    "mobile": {
+      "scrollWidth": 375,
+      "viewport": 390,
+      "fits": true
+    },
+    "storage": {
+      "slug": "funny-peaceful-river",
+      "name": "Funny Peaceful River",
+      "storage": "temporary",
+      "isActive": true
+    },
+    "pageErrors": []
+  },
+  "screenshots": [
+    {
+      "file": "output/public-demo-011/public-documents.png",
+      "sha256": "b6fca7008310bb0b8d299e6ddf1e142b44eead9e5eb22b9464454d43951a3be6"
+    },
+    {
+      "file": "output/public-demo-011/public-editor.png",
+      "sha256": "0e623d0d6e1ad4f1a6e8bea2987b095ce69e151e70785417f413824f0b9977fd"
+    },
+    {
+      "file": "output/public-demo-011/public-mobile.png",
+      "sha256": "d31efc20289fee8cbfe7371ab9280e9ba416a4ff3ff0129a0d02a9af0693d675"
+    }
+  ],
+  "scope": "Public temporary WordPress Playground, authorized existing browser. Actual worker downloads, visual edit, static CSS, preview/save/reload/reset and mobile viewport. No Pro automation enabled. An initial long-order probe clicked before Playground navigation settled; the completed journey waited for the new order field."
+}

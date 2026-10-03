@@ -8,7 +8,7 @@ Fullbleed engine. **Developer preview; paid sales and marketplace listings are n
 | Package | What is implemented | Distribution direction |
 | --- | --- | --- |
 | Fullbleed Commerce for WooCommerce | Order summaries and packing slips, visual and HTML/CSS template editor, embedded logos, PDF previews, Studio design, local browser generation | Free entry plugin; no account, quota, watermark, or telemetry |
-| Fullbleed Commerce Pro | Contrast and Quiet designs, up to 25 orders as a ZIP, automatic email attachments and customer account downloads through an optional server renderer | Separate paid download, updates and support; proposed $79/year for one store, hosting separate |
+| Fullbleed Commerce Pro | Contrast and Quiet designs, up to 25 orders as a ZIP, automatic email attachments, customer account downloads, activity history and optional administrator failure alerts through a private renderer | Separate paid download, updates and support; proposed $79/year for one store, hosting separate |
 | Fullbleed Commerce for Shopify | Visual and HTML/CSS template editor, three designs, native Flow actions, expiring document links, persistent activity/retry/revoke controls, authenticated previews and subscription checks | App subscription; proposed $12/month starting tier, subject to operating-cost and merchant validation |
 
 Prices are hypotheses, not live offers. Checkout, paid subscriptions and marketplace
@@ -31,9 +31,9 @@ template to keep it. The [walkthrough](https://docs.fullbleed.dev/guides/woocomm
 includes an actual sample PDF and explains the automated workflows.
 
 Download the free plugin from the
-[WooCommerce preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.3).
+[WooCommerce preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.1).
 Use a staging store. Install WooCommerce, then upload
-`fullbleed-commerce-0.1.0-alpha.3.zip` in WordPress Plugins. Open
+`fullbleed-commerce-0.1.1.zip` in WordPress Plugins. Open
 **WooCommerce → Fullbleed documents**, enter a numeric order ID, and generate a
 PDF. An order edit screen also has a **Create Fullbleed PDF** link.
 
@@ -95,15 +95,14 @@ Store operators and agencies can use the
 credential provisioning, bounded container resources, maintenance and rotation.
 It runs on infrastructure the operator controls; it is not a hosted plan.
 
-Alpha.3 adds **Fullbleed activity**: the latest email-attachment and
+**Fullbleed activity** shows the latest email-attachment and
 customer-download results, a failure filter, recovery guidance and native order
 links. Successful retries clear stale failures. It reports PDF preparation,
 not customer receipt. See the
 [activity and retention details](automation/README.md#merchant-activity-and-recovery).
 
-Current source also includes opt-in administrator failure summaries, with hourly
-checks, one mail attempt per 24 hours and a link to recovery guidance. These alerts
-are not in the published alpha.3 ZIP. They need working WordPress scheduling and
+The 0.1.1 Pro preview includes opt-in administrator failure summaries, with hourly
+checks, one mail attempt per 24 hours and a link to recovery guidance. They need working WordPress scheduling and
 email; they never resend customer mail. See [failure alerts](automation/README.md#administrator-failure-alerts).
 
 Shopify adds **Create order summary link** and **Create packing slip link** to
@@ -137,8 +136,8 @@ For a private inquiry, [contact Fullbleed](https://www.fullbleed.dev/contact).
 ## Development
 
 The development toolchain requires Node.js 24.18+ because of WordPress Playground.
-The rendering integration itself uses the published Fullbleed Node 0.1.1 package,
-containing engine 2.5.5, pinned to its GitHub release tarball and npm lock integrity.
+The rendering integration itself uses the published Fullbleed Node 0.1.2 package,
+containing engine 2.5.6, pinned to its npm version and lockfile integrity.
 
 ```sh
 npm ci --ignore-scripts
@@ -166,12 +165,12 @@ site. Omit `--pro --hpos` to test the free package with legacy order storage.
 
 ## Current verification and limits
 
-The free WordPress directory candidate uses numeric version `0.1.0`, as required
-by WordPress.org, and retains the staging-preview limitations below. It contains
-the alpha.3 free workflow with corrected contributor and version metadata.
+The 0.1.1 preview uses numeric plugin versions and retains the
+staging-preview limitations below. It includes the Fullbleed 2.5.6 text-extraction
+correction for customized bold type and packages the opt-in Pro failure alerts.
 Plugin archives use the version in each plugin's PHP header and matching readme;
-the private integration package and published Playground demo remain separately
-versioned. `npm run pack` rejects invalid directory versions or mismatched
+the private integration package and this Playground demo use the same version.
+`npm run pack` rejects invalid directory versions or mismatched
 metadata. Directory submission and approval are separate from automated checks.
 
 See [docs/verification.md](docs/verification.md) for checks and gaps. Node generation,
@@ -179,21 +178,18 @@ the browser-worker runtime, DOM workflows, WordPress authentication, and actual
 WooCommerce order reads are checked separately. DOM simulation is not a real
 Chrome/Safari test or Shopify approval.
 
-Alpha.3 packages the merchant activity view and WordPress editor fixes. All 45
-shared tests pass. Upgrades from the actual alpha.2 ZIPs preserve templates,
-revisions and automation settings in HPOS and legacy storage. Real Chrome checks
-cover the upgraded Pro store, free sample store and native WordPress installation.
-Both released ZIPs match Windows and Linux builds. See the
-[alpha.3 release evidence](docs/alpha3-release-verification.json) for exact source,
-archive hashes, automation checks and browser results. Historical release checks
-remain separately identified in the verification guide.
+The [0.1.1 release evidence](docs/release-011-verification.json) records identical
+Windows/Linux archives, 45 shared tests and six visually inspected designs.
+Chrome, Playwright Firefox and Playwright WebKit each pass 36 staff, customer and
+alert checks on Linux. Windows Chrome passes 26 staff/customer checks with matching
+PDFs. Native WordPress passes strict Plugin Check and 12 Chrome checks.
 
-The unchanged alpha.3 base and Pro ZIPs also pass merchant editing and customer
-account-download journeys in Chrome, Playwright Firefox and Playwright WebKit
-on Windows and Linux. Each combination passes 24 checks and produces identical
-PDF bytes for the fixtures. See the [browser workflow matrix](docs/verification.md#browser-workflow-matrix)
-for exact versions, reproducible CI and limits; this is not branded Safari or
-physical-device coverage.
+Upgrades from the published alpha.3 ZIPs preserve templates, revisions and enabled
+automation in both order-storage modes, while new alerts stay disabled. The native
+renderer and private SMTP inbox pass 72 checks, including queued delivery, failure
+alerts and explicit recovery. The release includes the detailed evidence archive.
+External mail deliverability and merchant-host scheduling still require staging
+acceptance. Historical alpha.3 results remain separately identified.
 
 This preview produces order summaries, not fiscal invoices. It preserves store
 display amounts and does not calculate tax, create invoice numbers, or reconcile
