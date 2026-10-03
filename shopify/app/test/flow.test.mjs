@@ -17,7 +17,7 @@ const primary = 'synthetic-primary.myshopify.com';
 const other = 'synthetic-other.myshopify.com';
 const secret = process.env.SHOPIFY_API_SECRET;
 const baseOrder = JSON.parse(readFileSync(new URL('../../../fixtures/order.json', import.meta.url), 'utf8'));
-let time, inputOrder, renderCalls, orderReads, unavailable, slowRender, paid;
+let time, inputOrder, renderCalls, orderReads, unavailable, slowRender, paid, catalogPriceActive;
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const payload = (run = randomUUID(), extra = {}) => ({ shop_id: '1', shopify_domain: primary, action_run_id: run, handle: 'create-order-summary-link', properties: { order_id: 'gid://shopify/Order/1' }, ...extra });
 const parsed = p => parseFlowPayload(p || payload(), primary, 'gid://shopify/Shop/1');
@@ -52,7 +52,7 @@ globalThis.fetch = async (resource, init) => {
   const request = new Request(resource, init);
   const url = new URL(request.url);
   const body = await request.json();
-  if (url.origin === 'https://partners.shopify.com') return Response.json({ data: { activeSubscription: paid ? { shop: { id: 'gid://shopify/Shop/1', myshopifyDomain: primary }, items: [{ handle: 'automation', price: { active: true } }] } : null } });
+  if (url.origin === 'https://partners.shopify.com') return Response.json({ data: { activeSubscription: paid ? { shop: { id: 'gid://shopify/Shop/1', myshopifyDomain: primary }, items: [{ handle: 'automation', price: { active: catalogPriceActive } }] } : null } });
   assert.equal(url.origin, `https://${primary}`, 'Tests must never reach a real store.');
   assert.equal(request.headers.get('X-Shopify-Access-Token'), 'synthetic-token');
   if (body.query.includes('FullbleedShop')) return Response.json({ data: { shop: { id: 'gid://shopify/Shop/1', name: 'Synthetic Cedar Studio', myshopifyDomain: primary, ianaTimezone: 'America/Chicago', plan: { partnerDevelopment: true } } } });
@@ -83,7 +83,7 @@ const linkToken = async job => new URL((await service.status(job).json()).return
 test.beforeEach(async () => {
   await db.automationSettings.deleteMany(); await db.session.deleteMany(); await db.brand.deleteMany(); await db.documentTemplate.deleteMany();
   await db.session.createMany({ data: [primary, other].map(shop => ({ id: `offline_${shop}`, shop, state: '', isOnline: false, accessToken: 'synthetic-token', scope: 'read_orders' })) });
-  time = Date.now(); inputOrder = structuredClone(baseOrder); renderCalls = 0; orderReads = 0; unavailable = false; slowRender = null; paid = true;
+  time = Date.now(); inputOrder = structuredClone(baseOrder); renderCalls = 0; orderReads = 0; unavailable = false; slowRender = null; paid = true; catalogPriceActive = true;
   service = serviceFor(db);
 });
 
@@ -248,7 +248,7 @@ test('retry bounds stop unattended work and explicit retry preserves original hi
   assert.equal(retried.status, 'ready'); assert.equal(retried.createdAt.valueOf(), job.createdAt.valueOf());
 });
 
-test('real request handler verifies Flow HMAC, paid access, persistent preparation and PDF download', async () => {
+test('real request handler verifies Flow HMAC, retained-price access, preparation and PDF download', async () => {
   const body = payload();
   assert.equal((await signedRequest('/api/flow/documents', body, false)).status, 400);
   assert.equal(await db.automationJob.count(), 0); assert.equal(orderReads, 0);
@@ -257,6 +257,7 @@ test('real request handler verifies Flow HMAC, paid access, persistent preparati
   assert.equal((await signedRequest('/api/flow/documents', body)).status, 402);
   assert.equal(await db.automationJob.count(), 0); assert.equal(orderReads, 0);
   paid = true;
+  catalogPriceActive = false; // Existing subscription remains active at its original price.
   assert.equal((await signedRequest('/api/flow/documents', body)).status, 202);
   let job;
   for (let i = 0; i < 200; i++) {

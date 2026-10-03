@@ -22,6 +22,18 @@ test('subscription verification uses the authenticated store and current state o
   assert.throws(() => pricingUrl('attacker.invalid', 'app'));
 });
 
+test('a current contract keeps access after a catalog price change until Shopify ends it', async () => {
+  // Price.active describes the catalog price, not the merchant's subscription.
+  // https://shopify.dev/docs/api/partner/2026-07/interfaces/Price
+  const grandfathered = { ...active, items: [{ handle: 'documents', price: { active: false } }] };
+  const scheduledCancellation = { ...grandfathered, cancelAtEndOfCycle: true };
+  const states = [grandfathered, scheduledCancellation, null];
+  const check = createSubscriptionCheck({ ...config, fetchImpl: async () => reply(states.shift()) });
+  assert.equal(await check(identity), true);
+  assert.equal(await check(identity), true);
+  assert.equal(await check(identity), false);
+});
+
 test('a different shop, unavailable service and missing configuration cannot grant access', async () => {
   const mismatch = structuredClone(active); mismatch.shop.myshopifyDomain = 'another.myshopify.com';
   const check = createSubscriptionCheck({ ...config, fetchImpl: async () => reply(mismatch) });
@@ -32,7 +44,7 @@ test('a different shop, unavailable service and missing configuration cannot gra
   }
   const missing = createSubscriptionCheck({ ...config, accessToken: '', fetchImpl: async () => { throw new Error('Must not call'); } });
   await assert.rejects(missing(identity), error => error.status === 503);
-  for (const value of [{ ...active, items: [] }, { ...active, items: [{ handle: 'unknown', price: { active: true } }] }, { ...active, items: [{ handle: 'documents', price: { active: false } }] }]) {
+  for (const value of [{ ...active, items: [] }, { ...active, items: [{ handle: 'unknown', price: { active: true } }] }]) {
     assert.equal(await createSubscriptionCheck({ ...config, fetchImpl: async () => reply(value) })(identity), false);
   }
 });
