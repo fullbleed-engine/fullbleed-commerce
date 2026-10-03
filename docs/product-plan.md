@@ -144,7 +144,7 @@ works. Production deployment and billing remain separate launch gates.
 
 ## Current implementation status
 
-The alpha.2 WordPress preview is downloadable, and a
+The alpha.3 WordPress preview is downloadable, and a
 [temporary sample store](https://playground.wordpress.net/?storage=temp&blueprint-url=https://raw.githubusercontent.com/fullbleed-engine/fullbleed-commerce/main/playground/blueprint.json)
 lets merchants try the free visual/source editor and real PDF downloads before
 installing anything. The [public walkthrough](https://docs.fullbleed.dev/guides/woocommerce/)
@@ -154,7 +154,7 @@ fictional orders and does not enable Pro automation or any paid service.
 Directory preparation now includes an installed-ZIP gate using the official
 WordPress Plugin Check action plus native WordPress/Chrome editing and PDF checks.
 The free editor uses WordPress's shared libraries, and all generated assets can
-be rebuilt from the source included in its ZIP. These changes are unreleased;
+be rebuilt from the source included in its ZIP. These changes ship in alpha.3;
 WordPress.org account ownership, submission and manual approval are still pending.
 See [directory verification](verification.md#unreleased-wordpress-directory-preparation).
 
@@ -191,7 +191,7 @@ WooCommerce's current source also adds a merchant activity view across email and
 customer-download workflows, with failure filtering, native order links and
 specific recovery guidance. It keeps bounded recent status references, replaces
 stale failures after successful retries, and distinguishes preparation from
-delivery. The published alpha.2 ZIPs predate this view. It supplies attended
+delivery. This view ships in alpha.3. It supplies attended
 failure visibility; automatic alerting and duplicate-safe email recovery remain
 separate work.
 

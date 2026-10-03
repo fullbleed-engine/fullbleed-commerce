@@ -30,7 +30,7 @@ workflows and remaining paid-launch requirements.
 ## Install the preview on your staging store
 
 Download the free plugin ZIP from the
-[preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.2).
+[preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.3).
 With WooCommerce active, use **Plugins → Add New → Upload Plugin**, activate
 Fullbleed, then open **WooCommerce → Fullbleed documents**. No Node or PDF service
 is needed for the free plugin. Use staging data while evaluating this alpha.
