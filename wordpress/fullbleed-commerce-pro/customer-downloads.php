@@ -77,6 +77,7 @@ function download() {
     if ( ! eligible( $order ) ) unavailable( 404, __( 'This order document is unavailable.', 'fullbleed-commerce-pro' ) );
     $order->update_meta_data( '_fullbleed_customer_download_result', array( 'state' => is_wp_error( $pdf ) ? 'failed' : 'prepared', 'code' => is_wp_error( $pdf ) ? sanitize_key( $pdf->get_error_code() ) : 'pdf_prepared', 'time' => gmdate( 'c' ) ) );
     $order->save_meta_data();
+    \Fullbleed\CommercePro\Activity\record( $order, 'customer', 'my-account', 'order-summary', is_wp_error( $pdf ) ? 'failed' : 'ready', is_wp_error( $pdf ) ? $pdf->get_error_code() : 'pdf_prepared' );
     if ( is_wp_error( $pdf ) ) {
         header( 'Retry-After: ' . RETRY_SECONDS );
         unavailable( 503, __( 'Your PDF is temporarily unavailable. Please try again shortly.', 'fullbleed-commerce-pro' ) );

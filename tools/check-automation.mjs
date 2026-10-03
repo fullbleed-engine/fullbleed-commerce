@@ -8,6 +8,7 @@ import assert from 'node:assert/strict';
 import { createRenderer } from '../automation/renderer.js';
 
 const hpos = process.argv.includes('--hpos');
+const serve = process.argv.includes('--serve');
 const port = hpos ? 9478 : 9479;
 const token = 'synthetic-renderer-token-not-for-production';
 const site = await runCLI({
@@ -34,6 +35,7 @@ try {
   const pdf = Buffer.from(await response.arrayBuffer());
   await site.playground.writeFile('/tmp/fullbleed-test.pdf', new Uint8Array(pdf));
   const phpChecks = (await readFile('tools/check-automation.php', 'utf8')).replace('<?php', `<?php define('FULLBLEED_TEST_UNIX_PERMISSIONS', ${process.platform !== 'win32' ? 'true' : 'false'});`);
+  await site.playground.writeFile('/tmp/fullbleed-check-activity.php', new Uint8Array(await readFile('tools/check-activity.php')));
   const result = await site.playground.run({ code: phpChecks });
   assert.equal(result.exitCode, 0, result.errors);
   const record = JSON.parse(result.text);
@@ -55,4 +57,9 @@ try {
   console.log(`${stem}: ${record.checks.length} automation checks passed; no email sent.`);
 } catch (error) {
   console.error(error.message || String(error)); process.exitCode = 1;
-} finally { await site[Symbol.asyncDispose](); }
+} finally {
+  if (serve && !process.exitCode) {
+    console.log(`FULLBLEED_ACTIVITY_PREVIEW_READY http://127.0.0.1:${port}`);
+    process.on('SIGINT', async () => { await site[Symbol.asyncDispose](); process.exit(0); });
+  } else await site[Symbol.asyncDispose]();
+}

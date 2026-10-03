@@ -180,6 +180,14 @@ and refunds, reuses the saved template, streams private downloads and provides
 outage recovery without staff generation. It is a live summary, not an immutable
 issued invoice or a guest-access link.
 
+WooCommerce's current source also adds a merchant activity view across email and
+customer-download workflows, with failure filtering, native order links and
+specific recovery guidance. It keeps bounded recent status references, replaces
+stale failures after successful retries, and distinguishes preparation from
+delivery. The published alpha.2 ZIPs predate this view. It supplies attended
+failure visibility; automatic alerting and duplicate-safe email recovery remain
+separate work.
+
 The optional WooCommerce renderer now has a
 [Docker deployment recipe](../automation/DEPLOYMENT.md) with HTTPS termination,
 private credential setup, resource limits and an operator guide. It provides a

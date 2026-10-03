@@ -18,6 +18,9 @@ defined( 'ABSPATH' ) || exit;
 
 require_once __DIR__ . '/automation.php';
 require_once __DIR__ . '/customer-downloads.php';
+require_once __DIR__ . '/activity.php';
+register_activation_hook( __FILE__, '\Fullbleed\CommercePro\Activity\install' );
+register_deactivation_hook( __FILE__, '\Fullbleed\CommercePro\Activity\deactivate' );
 
 add_action( 'admin_enqueue_scripts', function ( $hook ) {
     if ( 'woocommerce_page_fullbleed-commerce' === $hook ) {

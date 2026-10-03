@@ -31,6 +31,7 @@ jobs:
       - run: node tools/build-playground.mjs --check
       - run: node tools/check-playground.mjs
       - run: node tools/check-automation.mjs --hpos
+      - run: node tools/check-automation.mjs
       - run: node tools/check-customer-downloads.mjs --hpos --packages
       - run: node tools/check-customer-downloads.mjs --packages
       - run: npm ci --ignore-scripts
