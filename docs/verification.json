@@ -1,9 +1,9 @@
 {
-  "checkedAt": "2026-10-03T01:06:43.871Z",
+  "checkedAt": "2026-10-03T02:27:53.611Z",
   "previewVersion": "0.1.0-alpha.1",
   "sourceLocks": {
     "root": "1a9f225f14867ca8a82402accfdce87f2c590f31b80a67a6014c4527bf3258b1",
-    "shopify": "1c0374462e3e1b6d476ad2ece2128c0e49258d318d854c585bba0ea5bae9013b"
+    "shopify": "757b5134c727243dd70fecab8e20258c83c27505157577006e310f54909d2f7b"
   },
   "packages": [
     {
@@ -1523,7 +1523,7 @@
   ],
   "shopify": {
     "app": {
-      "checkedAt": "2026-10-03T00:45:57.678Z",
+      "checkedAt": "2026-10-03T02:05:14.784Z",
       "node": "v24.21.0",
       "checks": [
         {
@@ -1533,6 +1533,11 @@
         },
         {
           "name": "migrations",
+          "exitCode": 0,
+          "passed": true
+        },
+        {
+          "name": "recovery-fixture",
           "exitCode": 0,
           "passed": true
         },
@@ -1580,36 +1585,41 @@
           "name": "monitor",
           "exitCode": 0,
           "passed": true
+        },
+        {
+          "name": "recovery",
+          "exitCode": 0,
+          "passed": true
         }
       ],
       "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
-      "lockSha256": "1c0374462e3e1b6d476ad2ece2128c0e49258d318d854c585bba0ea5bae9013b",
-      "serverBuildSha256": "7fe89dc595e8c2352c71f53f00ad4ea75cf5d9978887ee733b8f17fdf3bbe0a3",
+      "lockSha256": "757b5134c727243dd70fecab8e20258c83c27505157577006e310f54909d2f7b",
+      "serverBuildSha256": "a2fa2d19a29eecc6867c368eb536c6b2c88d50a296aa83df99cd1ad6d2e154f5",
       "browserTested": false,
       "liveBillingTested": false
     },
     "requestHandlerTests": {
       "passed": 4,
       "failed": 0,
-      "logSha256": "d6a560968612a49536c1f8e397157f2f44e2141761aeb6aa08b69d3d92e1fb5f"
+      "logSha256": "bff0773f71f2793e62da3d7f63c994a336b3bbdb89fc57c29540d514c05a1136"
     },
     "flowTests": {
       "passed": 8,
       "failed": 0,
-      "logSha256": "55d7a2a1f4a6e56d1584a3eec7dd6c650864f2f07c6780c0011f5afd614c3aca"
+      "logSha256": "be61540146abd981724613da74ddc55444ae39c2e552c92eae0a5e63f4d0e134"
     },
     "privacyTests": {
-      "passed": 15,
+      "passed": 16,
       "failed": 0,
-      "logSha256": "c9d4ad0a24d3c26ee85db4de87bcefb8bc7bc5fd2ad520fa02bc76c105e38a2f"
+      "logSha256": "ca74ba0ca3631b4e3a21a1b2237c69842601cceb188d8bd49d4b809648b49cd7"
     },
     "privacyBrowser": {
-      "checkedAt": "2026-10-03T00:57:08Z",
+      "checkedAt": "2026-10-03T02:14:16Z",
       "browser": "154.0.8037.93",
       "syntheticOnly": true,
       "shopifyAdminShellStubbed": true,
       "realSdkAuthentication": true,
-      "productionBuildSha256": "7fe89dc595e8c2352c71f53f00ad4ea75cf5d9978887ee733b8f17fdf3bbe0a3",
+      "productionBuildSha256": "a2fa2d19a29eecc6867c368eb536c6b2c88d50a296aa83df99cd1ad6d2e154f5",
       "checks": [
         {
           "name": "authenticated merchant page with no paid-plan or Admin API call",
@@ -1675,7 +1685,7 @@
         },
         {
           "file": "output/browser/shopify-privacy-export.json",
-          "sha256": "4ddb333ecade350c6edaa3a3839e2d21854530b2d67abf4f50c0aed75301d3b5"
+          "sha256": "5a991ed1b9300402bc3ae62032f02cb93ab8b005afe47d9e399a8a25a2b21aea"
         }
       ]
     },
@@ -2053,12 +2063,289 @@
   },
   "monitoring": {
     "requestHandlerTests": {
-      "passed": 5,
+      "passed": 6,
       "failed": 0,
-      "logSha256": "d4651b7fa1ae0c78aa5802be407f54670707a27c5b8e3809278ac3d816e68918"
+      "logSha256": "b8b4c47b9d43fe9bca3d37233987892c426a0355141305ad9c4fc9ba4dd89dee"
     },
     "notificationDeliveryVerified": false,
     "scheduledEnabled": false
+  },
+  "recovery": {
+    "tests": {
+      "passed": 7,
+      "failed": 0,
+      "logSha256": "568c690ca2371b0e57342e389f2a45c318c69867e0d19fe2557d53aad6ecec0e"
+    },
+    "hosted": {
+      "checkedAt": "2026-10-03T02:27:25.761925+00:00",
+      "sourceCommit": "5af74d7ceb3884156f6fd431eb45e1e7dbca887b",
+      "ci": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37088673610",
+      "deployments": [
+        {
+          "phase": "source",
+          "id": "e5058eac-4a9b-4838-9f3e-d5bb2e915bf4",
+          "createdAt": "2026-10-03T02:13:40.464Z",
+          "sourceCommit": "5af74d7ceb3884156f6fd431eb45e1e7dbca887b",
+          "imageDigest": "sha256:614af691e019fa67dfc886cea7ce325cdb2c354f7170dbca989d85159e793156",
+          "currentStatus": "REMOVED",
+          "successfulHttpVerifiedBeforeStop": true
+        },
+        {
+          "phase": "promoted",
+          "id": "0d56d8f0-d924-4728-b67a-c26c1df97889",
+          "createdAt": "2026-10-03T02:20:10.397Z",
+          "sourceCommit": "5af74d7ceb3884156f6fd431eb45e1e7dbca887b",
+          "imageDigest": "sha256:614af691e019fa67dfc886cea7ce325cdb2c354f7170dbca989d85159e793156",
+          "currentStatus": "REMOVED",
+          "successfulHttpVerifiedBeforeStop": true
+        },
+        {
+          "phase": "cleanup",
+          "id": "986587be-f60d-4c52-b30b-f533454b2b11",
+          "createdAt": "2026-10-03T02:23:30.258Z",
+          "sourceCommit": "5af74d7ceb3884156f6fd431eb45e1e7dbca887b",
+          "imageDigest": "sha256:614af691e019fa67dfc886cea7ce325cdb2c354f7170dbca989d85159e793156",
+          "currentStatus": "REMOVED",
+          "successfulHttpVerifiedBeforeStop": true
+        }
+      ],
+      "storage": {
+        "checkedAt": "2026-10-03T01:51:48.151Z",
+        "region": "sjc",
+        "checks": [
+          "Repeated initialization preserves the original encrypted dataset marker.",
+          "Actual S3 conditional writes reject overwrites and reads preserve exact encrypted bytes.",
+          "Actual S3 listing finds the authenticated probe object.",
+          "Unauthenticated requests cannot read a known existing bucket object."
+        ],
+        "elapsedMilliseconds": 974,
+        "markerSha256": "fefefa999cfc992ee3e53663e92cc62b81fc044098dc2e140583bde17e4a7790",
+        "syntheticProbeRemoved": true
+      },
+      "drill": [
+        {
+          "checkedAt": "2026-10-03T02:18:29.083949+00:00",
+          "phase": "exercise",
+          "syntheticOnly": true,
+          "sourceCommit": "5af74d7ceb3884156f6fd431eb45e1e7dbca887b",
+          "backup": {
+            "id": "1790993917634-c2c98b0b-2eb1-403c-95f6-79ec13ce0736",
+            "createdAt": "2026-10-03T02:18:37.634Z",
+            "bytes": 2580480,
+            "parts": 3,
+            "sha256": "2bb71e8589b0e2179a873b510eae3c7ff3e821747103c89a04eba3f81c0e710d",
+            "retentionDays": 7
+          },
+          "restore": {
+            "format": "fullbleed-recovery-ready-v1",
+            "dataset": "bf98613f-bc54-478f-bdbf-4de53d74b22a",
+            "backupId": "1790993917634-c2c98b0b-2eb1-403c-95f6-79ec13ce0736",
+            "restoredAt": "2026-10-03T02:18:41.218Z",
+            "replay": {
+              "checked": 3,
+              "applied": 3
+            },
+            "sourceSha256": "2bb71e8589b0e2179a873b510eae3c7ff3e821747103c89a04eba3f81c0e710d",
+            "restoredSha256": "9f9209165fb3a7366e8e3ea49221bd5707c590a7e21f1bab5bcbbb7e4a3d91f4",
+            "integrityChecked": true,
+            "sessionsCleared": true,
+            "automationPaused": true,
+            "oldActiveLinksRevoked": true,
+            "outstandingPrivacyRequests": 1,
+            "authenticatedPrivacySnapshots": 1
+          },
+          "backupMilliseconds": 1373,
+          "restoreMilliseconds": 1453,
+          "webhooks": [
+            {
+              "topic": "customers/redact",
+              "status": 204,
+              "milliseconds": 124
+            },
+            {
+              "topic": "app/uninstalled",
+              "status": 204,
+              "milliseconds": 156
+            },
+            {
+              "topic": "shop/redact",
+              "status": 204,
+              "milliseconds": 165
+            }
+          ],
+          "checks": [
+            {
+              "name": "guarded empty staging seeded with four synthetic stores and encrypted privacy exports",
+              "passed": true
+            },
+            {
+              "name": "deployed recovery CLI uploads a consistent multipart encrypted backup to independent S3",
+              "passed": true
+            },
+            {
+              "name": "real HTTPS customer-redaction and uninstall webhooks plus explicit completion persist independent recovery intents",
+              "passed": true
+            },
+            {
+              "name": "stored backup and journal objects contain authenticated envelopes without fixture plaintext",
+              "passed": true
+            },
+            {
+              "name": "offline restored database replays erasures, retains valid templates/exports, clears sessions and revokes jobs",
+              "passed": true
+            },
+            {
+              "name": "late erasure deliberately remains absent from quarantine to test startup reconciliation before HTTP",
+              "passed": true
+            }
+          ],
+          "cpuLimit": 0.5,
+          "memoryBytes": 536870912,
+          "developmentBracesAbsent": true
+        },
+        {
+          "checkedAt": "2026-10-03T02:20:40.456604+00:00",
+          "phase": "promoted",
+          "syntheticOnly": true,
+          "sourceCommit": "5af74d7ceb3884156f6fd431eb45e1e7dbca887b",
+          "checks": [
+            {
+              "name": "replacement service starts on the recovered database and applies the late erasure before serving HTTP",
+              "passed": true
+            },
+            {
+              "name": "public readiness and authenticated private monitor verify the promoted database and independent storage",
+              "passed": true
+            }
+          ],
+          "publicReadiness": 200,
+          "privateMonitoring": 200,
+          "remainingAuthenticatedExports": 1,
+          "sessions": 0,
+          "enabledAutomation": 0
+        },
+        {
+          "checkedAt": "2026-10-03T02:21:14.589791+00:00",
+          "phase": "cleanup",
+          "syntheticOnly": true,
+          "sourceCommit": "5af74d7ceb3884156f6fd431eb45e1e7dbca887b",
+          "checks": [
+            {
+              "name": "exact synthetic fixtures erased through durable journal and replayed into both active and original databases",
+              "passed": true
+            }
+          ],
+          "originalReplay": {
+            "checked": 8,
+            "applied": 4
+          },
+          "syntheticRecordsRemaining": 0
+        },
+        {
+          "checkedAt": "2026-10-03T02:24:27.591175+00:00",
+          "phase": "dispose",
+          "syntheticOnly": true,
+          "sourceCommit": "5af74d7ceb3884156f6fd431eb45e1e7dbca887b",
+          "checks": [
+            {
+              "name": "original database restored to service with no synthetic records and healthy HTTP monitoring",
+              "passed": true
+            },
+            {
+              "name": "only the owned quarantine directory and synthetic backup objects removed; current erasure journal preserved",
+              "passed": true
+            }
+          ],
+          "quarantineRemoved": true,
+          "syntheticBackupObjectsRemoved": 4,
+          "journalPreserved": true,
+          "publicReadiness": 200,
+          "privateMonitoring": 200
+        }
+      ],
+      "currentState": {
+        "checkedAt": "2026-10-03T02:27:25.761925+00:00",
+        "computeStopped": true,
+        "activeDeployments": 0,
+        "persistentVolumeRetained": true,
+        "privateRecoveryBucketRetained": true,
+        "scheduledEnabled": false,
+        "project": {
+          "deletedAt": null,
+          "id": "ee2c5784-260b-44d7-aff3-ef46714687bc",
+          "name": "fullbleed-commerce-staging"
+        },
+        "billingPeriod": {
+          "end": "2026-10-24T18:42:11+00:00",
+          "start": "2026-09-24T18:42:11+00:00"
+        },
+        "meteredUsageDollars": 0.0006133850781133558,
+        "serviceUsage": [
+          {
+            "backupDollars": 0,
+            "cpuDollars": 0.0001363990663580247,
+            "egressDollars": 0.00001105515,
+            "id": "bcd8801b-e89c-4c4c-baf3-b8e1d0fe8b59",
+            "memoryDollars": 0.00042240505679012343,
+            "name": "shopify-app",
+            "totalDollars": 0.0006133850781133558,
+            "volumeDollars": 0.00004352580496520763
+          }
+        ],
+        "recoveryBucket": {
+          "environment": "production",
+          "environmentId": "b3892972-504b-493b-8fc4-a6fb26b14d90",
+          "id": "bf913690-c271-4932-8984-2168db8cc96d",
+          "name": "privacy-recovery",
+          "objects": 9,
+          "region": "sjc",
+          "storage": "2.0 KB",
+          "storageBytes": 2002
+        },
+        "usageCaveat": "Reported project metering is not an invoice, may lag, and does not itemize bucket charges."
+      },
+      "limits": {
+        "syntheticDataOnly": true,
+        "productionMerchantInstalled": false,
+        "dailyBackupScheduleEnabled": false,
+        "backupFreshnessAlertsConfigured": false,
+        "independentKeyRecoveryVerified": false,
+        "merchantPilotVerified": false,
+        "recoveryTimeSlaClaimed": false
+      },
+      "artifacts": [
+        {
+          "file": "output/recovery/deployments.json",
+          "sha256": "dbdf19aea099a947cf20a8b0c25bb1fa46a134d3d65223d3ca5638f72dcc533c"
+        },
+        {
+          "file": "output/recovery/hosted-cleanup.json",
+          "sha256": "39e207b2a704c6422006b6f35623829a9095ac4830ab731a8000f516e4a00ccc"
+        },
+        {
+          "file": "output/recovery/hosted-dispose.json",
+          "sha256": "9806a77910916ec3c0bd1c42d8c4281c1a2414847eb2a88f3736c8f98816d3ea"
+        },
+        {
+          "file": "output/recovery/hosted-exercise.json",
+          "sha256": "d3d3232b4942304e0b19c72b3c254e11d34f3b98da0cf0cc091f17ff88f0c219"
+        },
+        {
+          "file": "output/recovery/hosted-promoted.json",
+          "sha256": "11b099c8abfe8e65847325b3dfa27f1b54d63de127d3d9064a26b88c90f3b914"
+        },
+        {
+          "file": "output/recovery/stopped-state.json",
+          "sha256": "c0f731f470d45842011119ff674bb507af09e675874f36735afb1464c507de9c"
+        },
+        {
+          "file": "output/recovery/storage-verification.json",
+          "sha256": "af1e30e6d3f07df4a96a09cf04f7c6deaca68f602829bedc742a4561d83a6fb7"
+        }
+      ]
+    },
+    "backupScheduleEnabled": false,
+    "independentKeyRecoveryVerified": false
   },
   "dependencyAudit": {
     "root": {
@@ -2070,6 +2357,14 @@
       "total": 0
     },
     "shopify": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 11,
+      "critical": 0,
+      "total": 11
+    },
+    "shopifyProduction": {
       "info": 0,
       "low": 0,
       "moderate": 0,
@@ -2130,11 +2425,13 @@
       "projectId": "ee2c5784-260b-44d7-aff3-ef46714687bc",
       "existingWorkspacePlan": "Hobby",
       "newSubscriptionPurchased": false,
-      "meteredUsageDollars": 0.0004532243349037509,
-      "usageCheckedAt": "2026-10-03T01:06:12.842628+00:00",
+      "meteredUsageDollars": 0.0006133850781133558,
+      "usageCheckedAt": "2026-10-03T02:27:25.761925+00:00",
       "computeStopped": true,
       "persistentVolumeRetained": true,
-      "notes": "Metered resource usage before plan credits, not an invoice or confirmed card charge. Usage can lag; retained volume storage remains metered. Reconcile actual launch charges against the $50 total cap."
+      "notes": "Metered resource usage before plan credits, not an invoice or confirmed card charge. Usage can lag; the project report does not itemize bucket charges. Retained volume and private bucket storage remain metered. The synthetic backup was removed; only the dataset marker and eight encrypted synthetic erasure instructions remain. Reconcile actual launch charges against the $50 total cap.",
+      "privateRecoveryBucketRetained": true,
+      "recoveryBucketBytes": 2002
     }
   }
 }

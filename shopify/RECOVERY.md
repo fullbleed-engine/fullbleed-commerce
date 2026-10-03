@@ -136,8 +136,17 @@ also verify that a storage outage cannot acknowledge erasure/completion and is
 reported by private monitoring. The Linux container check exercises the CLI,
 signed erasure and restoration under the staging resource limits.
 
-Independent key recovery, scheduled backup/freshness alerts, an attended full
-service promotion drill and a representative merchant pilot remain launch work.
+The attended hosted drill used the private S3 bucket and the deployed CLI to
+restore a three-part synthetic snapshot after customer erasure, completion and
+uninstall. The replacement service then started on that recovered database and
+applied an additional erasure received after the offline restore. Retained
+templates and the outstanding export remained usable; authorization sessions
+and active links stayed disabled. Readiness and private monitoring passed.
+The [retained recovery evidence](../docs/recovery-verification.json) identifies
+the exact source, deployments, hashes and cleanup.
+
+Independent key recovery, scheduled backup/freshness alerts and a representative
+merchant pilot remain launch work.
 These checks do not claim legal compliance, a recovery-time SLA or marketplace
 approval.
 

@@ -157,10 +157,11 @@
     "scope": "Sequential synthetic rendering through the deployed Fullbleed module. This is not an end-to-end Shopify billing/Flow test, concurrency benchmark or sustained capacity promise."
   },
   "currentState": {
-    "checkedAt": "2026-10-03T01:06:12.842628+00:00",
+    "checkedAt": "2026-10-03T02:27:25.761925+00:00",
     "computeStopped": true,
     "activeDeployments": 0,
     "persistentVolumeRetained": true,
+    "privateRecoveryBucketRetained": true,
     "scheduledEnabled": false,
     "project": {
       "deletedAt": null,
@@ -171,25 +172,36 @@
       "end": "2026-10-24T18:42:11+00:00",
       "start": "2026-09-24T18:42:11+00:00"
     },
-    "meteredUsageDollars": 0.0004532243349037509,
+    "meteredUsageDollars": 0.0006133850781133558,
     "serviceUsage": [
       {
         "backupDollars": 0.0,
-        "cpuDollars": 8.104733796296297e-05,
-        "egressDollars": 2.3684e-06,
+        "cpuDollars": 0.0001363990663580247,
+        "egressDollars": 1.105515e-05,
         "id": "bcd8801b-e89c-4c4c-baf3-b8e1d0fe8b59",
-        "memoryDollars": 0.0003501568948148148,
+        "memoryDollars": 0.00042240505679012343,
         "name": "shopify-app",
-        "totalDollars": 0.0004532243349037509,
-        "volumeDollars": 1.9651702125973104e-05
+        "totalDollars": 0.0006133850781133558,
+        "volumeDollars": 4.352580496520763e-05
       }
-    ]
+    ],
+    "recoveryBucket": {
+      "environment": "production",
+      "environmentId": "b3892972-504b-493b-8fc4-a6fb26b14d90",
+      "id": "bf913690-c271-4932-8984-2168db8cc96d",
+      "name": "privacy-recovery",
+      "objects": 9,
+      "region": "sjc",
+      "storage": "2.0 KB",
+      "storageBytes": 2002
+    },
+    "usageCaveat": "Reported project metering is not an invoice, may lag, and does not itemize bucket charges."
   },
   "limits": {
     "productionMerchantInstalled": false,
     "shopifyBillingLifecycleVerified": false,
     "continuousMonitoringConfigured": false,
-    "backupRestoreAndErasureReplayVerified": false,
+    "backupRestoreAndErasureReplayVerified": true,
     "marketplaceApproved": false
   },
   "artifacts": [
@@ -215,5 +227,13 @@
     "healthyFailureRecoveryDrillVerified": true,
     "scheduledEnabled": false,
     "operatorNotificationReceiptVerified": false
+  },
+  "recovery": {
+    "evidence": "docs/recovery-verification.json",
+    "hostedOfflineRestoreVerified": true,
+    "hostedPromotionVerified": true,
+    "lateErasureReplayedBeforeHttp": true,
+    "scheduledBackupsEnabled": false,
+    "independentKeyRecoveryVerified": false
   }
 }

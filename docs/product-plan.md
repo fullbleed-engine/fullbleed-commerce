@@ -180,8 +180,9 @@ Encrypted database backups and an independent erasure journal now support
 offline recovery without reviving cleared exports or old active document links.
 Restoration preserves retained templates and outstanding requests, clears
 authorization sessions and requires merchants to resume automation explicitly.
-Daily backup scheduling, freshness alerts, independent key recovery and the
-complete hosted promotion drill still need verification. See
+The hosted promotion drill also passed, including a late erasure applied before
+the replacement service opened HTTP. Daily backup scheduling, freshness alerts
+and independent key recovery still need verification. See
 [recovery operation](../shopify/RECOVERY.md).
 
 Fulfillment batches, automatic missing-attachment recovery, webhook monitoring

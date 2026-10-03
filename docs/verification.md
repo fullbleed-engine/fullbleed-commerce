@@ -13,10 +13,11 @@ was synthetic. No merchant store was changed and no customer PDF was retained.
 | WordPress/WooCommerce, installed base and Pro ZIPs with HPOS | 46 HTTP checks passed; HPOS enabled in runtime | `output/wordpress/packaged-hpos-pro-verification.json`, `packaged-hpos-pro-runtime.json` |
 | Six designed sample PDFs | Each one page, zero reported missing glyphs | `output/examples/verification.json` and matching PDFs/PNGs |
 | Sixty-item long order summary and packing slip | Eight pages each; every SKU retained; text bounds inside pages | `output/pdf-text-verification.json`, `output/layout/` |
-| Shopify application migrations, route types, TypeScript, lint, production build and request-handler tests | All checks passed; two readiness, four application, eight Flow, 15 privacy and five monitoring tests passed | `output/shopify/verification.json` and matching test logs |
-| Linux production container | Seven checks: unprivileged server, missing-volume refusal, fresh root-owned mount, private files, authentication, persistence through replacement and privacy monitor | [CI record](ci-verification.json) |
+| Shopify application migrations, route types, TypeScript, lint, production build and request-handler tests | All checks passed; two readiness, four application, eight Flow, 16 privacy, six monitoring and seven recovery tests passed | `output/shopify/verification.json` and matching test logs |
+| Linux production container | Nine checks: unprivileged server, missing-volume and recovery-configuration refusal, private files, authentication, persistence, CLI backup/erasure/restore and privacy monitor | [CI record](ci-verification.json) |
 | Railway staging | HTTPS/authentication checks, eight byte-identical commerce PDFs, enforced 0.5 CPU / 512 MiB limits and persistent branding/jobs through replacement | [Hosted evidence](staging-verification.json) |
 | Hosted monitoring drill | GitHub healthy check, expected synthetic privacy-deadline failure and healthy recovery; private endpoint rejects missing/wrong tokens; public logs contain no credential or queue payload | [Monitoring evidence](monitoring-verification.json) |
+| Hosted encrypted recovery and promotion | Three-part S3 backup; replay of erasure, completion and uninstall; restored service applies a later erasure before HTTP; templates and valid exports retained; sessions cleared and automation paused | [Recovery evidence](recovery-verification.json) |
 | Privacy requests in real Chrome with synthetic Shopify sessions | 13 browser checks: encrypted snapshot download, exact large IDs, explicit completion, erasure, overdue notice and 390px layout | `output/browser/shopify-privacy-verification.json`, JSON download and screenshots |
 | Shopify Flow extensions | CLI validates both native actions and output schemas | `output/shopify/flow-config-validation.json` |
 | Actual Shopify Flow execution and browser downloads | 19 retained checks; both actions and the downstream step completed; downloaded PDFs match returned SHA-256 values; revoke and pause return HTTP 410 | `output/browser/shopify-flow-verification.json`, matching PDFs/PNGs |
@@ -37,7 +38,8 @@ The October 2 audit refresh reports [GHSA-vfj7-8cjw-p6xm](https://github.com/adv
 through the optional GraphQL code-generation development tools. No patched
 `braces` version is published at this check. Its patterns here are repository
 configuration, not merchant input. The production dependency audit is clear;
-the runtime image removes development dependencies. Keep this development-tool
+the runtime image removes development dependencies. The hosted recovery probe
+also confirmed that `braces` cannot resolve in the deployed image. Keep this development-tool
 finding visible until an upstream fix or suitable replacement is verified.
 The renderer was the published Fullbleed Node 0.1.1 package, with engine 2.5.5.
 The engine, fonts and compiled JavaScript served by the installed WordPress ZIPs
@@ -94,6 +96,17 @@ through the privacy warning. The public workflow log was checked for accidental
 credential or queue disclosure. Scheduling remains disabled while compute is
 stopped; operator notification receipt and missed-check detection are unverified.
 See [monitoring operation](../shopify/MONITORING.md).
+
+Recovery tests authenticate multipart SQLite snapshots and replay independent
+erasure instructions. They cover failed database commits, unavailable storage,
+wrong keys/datasets, damaged ciphertext, expired backups, damaged encrypted
+exports, deduplication and retention. The hosted drill exercised real private S3
+storage and signed HTTPS erasure/uninstall webhooks, then promoted the verified
+restored database into a replacement service. A later erasure was applied at
+startup before HTTP opened. Merchant sessions were cleared, automation paused,
+old links revoked, and valid retained templates/exports verified. All fixtures
+were synthetic. Daily backup creation, freshness alerts and independent key
+recovery remain operational launch gates. See [recovery operation](../shopify/RECOVERY.md).
 
 The privacy browser fixture uses the production build and official SDK JWT
 verification with synthetic sessions. Only the external Shopify admin/App Bridge
@@ -204,8 +217,8 @@ workflow measurement or production capacity promise.
 
 The final infrastructure plan matched the live service. After testing, compute
 was stopped and the persistent volume retained. The host is not currently
-serving merchants. Billing, full installation, automatic Flow delivery, alert receipt
-and backup/erasure recovery remain separate gates. See
+serving merchants. Billing, full installation, automatic Flow delivery, alert receipt,
+scheduled backups and independent key recovery remain separate gates. See
 [deployment operation](../shopify/DEPLOYMENT.md) and the
 [retained hosted record](staging-verification.json).
 
@@ -227,7 +240,7 @@ and backup/erasure recovery remain separate gates. See
   access to the synthetic order are verified. Billing configuration and
   production merchant rollout are not complete. The isolated staging container
   deployment and persistent storage have now been verified.
-- Shopify webhook monitoring, privacy-alert receipt, backup erasure and secure support-delivery setup,
+- Shopify webhook monitoring, privacy-alert receipt, backup scheduling/key recovery and secure support-delivery setup,
   automatic new-order trigger testing,
   and a real configured delivery destination remain required. Native Flow actions
   have been tested through manual replay on the synthetic store. Public
@@ -237,11 +250,11 @@ and backup/erasure recovery remain separate gates. See
   component. The app's installed Polaris types pass TypeScript and production
   build checks; this does not substitute for real-browser QA.
 
-The final [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37084217014)
+The final [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37088673610)
 passed clean dependency installation, all 41 shared tests, plugin packaging,
 28 WooCommerce email automation checks, 35 customer-download checks in each
 order-storage mode, two readiness tests, four Shopify application tests, eight
-Flow tests, 15 privacy tests, five monitoring tests and all seven production-container checks. Linux
+Flow tests, 16 privacy tests, six monitoring tests, seven recovery tests and all nine production-container checks. Linux
 also verified restrictive attachment
 file permissions. Both plugin archives are byte-identical to the Windows packages
 installed for browser checks. Both customer-summary PDFs and the Flow fixture
