@@ -23,6 +23,8 @@ Fullbleed activity shows the latest email-attachment and customer-download resul
 
 The plugin is GPL-compatible. Purchasing distribution, updates and support does not restrict rights granted by the GPL. No automatic disabling on subscription expiry is implemented.
 
+Current source adds optional administrator failure alerts, not included in the published alpha.3 ZIP. An administrator can opt into hourly checks and at most one summary attempt every 24 hours to the WordPress administration email. The message contains failure counts and a recovery link, with no order IDs, customer details or PDFs. Checks require functioning WordPress scheduled jobs and site mail. A mail handoff is not proof of delivery. A persistent reservation prevents immediate repeats after overlapping jobs, failed sends or interruptions. Recovery clears the failed status; no customer email is automatically resent. Deactivation disables alerts; uninstall removes alert settings and safe timestamps/status.
+
 Requires the separate Fullbleed Commerce base plugin and WooCommerce. This package is not intended for submission to the free WordPress.org plugin directory.
 
 

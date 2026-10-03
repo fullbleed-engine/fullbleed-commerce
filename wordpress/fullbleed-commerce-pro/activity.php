@@ -63,6 +63,7 @@ function deactivate( $network_wide = false ) {
         return;
     }
     wp_clear_scheduled_hook( CLEANUP_HOOK );
+    \Fullbleed\CommercePro\Alerts\deactivate();
     // Deactivation stops retention jobs, so remove the short-lived results now.
     global $wpdb;
     $previous = $wpdb->suppress_errors( true );

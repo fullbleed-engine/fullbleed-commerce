@@ -172,6 +172,7 @@ function page() {
     <hr><h2>Test with an order</h2><p>Download a PDF through the connected renderer. This test sends no email and changes no order status.</p>
     <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="fullbleed_automation_test"><?php wp_nonce_field( 'fullbleed_automation_test' ); ?><label>Order ID <input type="number" name="order_id" min="1" required></label> <?php submit_button( 'Test PDF connection', 'secondary', 'submit', false ); ?></form>
     <p>Use a private PHP temporary directory outside the web root. Standard WooCommerce mail is supported; third-party mail queues that defer reading attachment files need separate staging verification. Attachment preparation does not confirm delivery.</p>
+    <?php do_action( 'fullbleed_automation_after_settings' ); ?>
     </div>
     <?php
 }

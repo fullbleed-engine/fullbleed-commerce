@@ -139,12 +139,49 @@ Protect database backups separately and apply the store's backup retention polic
 Activity storage is independent of document generation: a failed activity write
 must not suppress the original email or PDF response. An incomplete-record warning
 appears when storage fails; after repair, a successful write resumes recording.
-This page is an attended operational view, not alerting or a monitoring service.
+The activity page is an attended operational view. The optional alerts below help
+administrators notice unresolved failures without keeping that page open.
 
 The table uses WordPress's [plugin schema lifecycle](https://developer.wordpress.org/plugins/creating-tables-with-plugins/)
 and [atomic row replacement](https://developer.wordpress.org/reference/classes/wpdb/replace/).
 WooCommerce's [order privacy hook](https://woocommerce.github.io/code-reference/files/woocommerce-includes-class-wc-privacy-erasers.html)
 connects anonymization to activity cleanup.
+
+## Administrator failure alerts
+
+**Current source; not included in the published alpha.3 ZIP.** A site administrator
+can open **WooCommerce > Fullbleed automation > Failure alerts** and enable email
+summaries. They go to the existing WordPress administration address in
+**Settings > General**. This opt-in is separate from renderer and customer-mail
+settings; shop managers cannot change it.
+
+An hourly WordPress scheduled check counts unresolved email-attachment and
+customer-download failures in the retained activity. A summary contains those
+counts and an authenticated admin-page link. It includes no order IDs, customer
+fields, documents, renderer URLs or tokens. Missing activity storage produces an
+incomplete-data warning. Recovered or expired results stop contributing to alerts.
+
+At most one mail handoff is attempted in 24 hours. A database reservation is made
+before calling WordPress mail, so overlapping workers, cache loss or an interrupted
+send do not immediately repeat an alert. Failed and uncertain attempts also keep
+the cooldown. A later daily reminder requires unresolved failures. The settings
+panel shows the last check and whether WordPress accepted the last handoff; this
+is not confirmation of recipient delivery. Check the site's mail logs when a
+handoff fails or has no confirmed result.
+
+Disabling alerts cancels future checks without changing document automation.
+Deactivation turns alerts off and clears the check time; the last reservation
+survives reactivation to prevent an immediate duplicate. Uninstall removes these
+settings and status records. They retain only enablement, timestamps and a safe
+handoff state, not recipient details or mail bodies.
+
+WordPress must be online with working scheduled jobs and mail transport. Page-load
+WP-Cron can run late on a quiet store; use the host's regular scheduler for
+production. This feature cannot detect a stopped WordPress installation or
+prove that mail reached an inbox. Verify actual administrator receipt and a failed
+renderer/recovery drill on merchant staging before relying on it. See the official
+[WP-Cron behavior](https://developer.wordpress.org/plugins/cron/) and
+[wp_mail return-value contract](https://developer.wordpress.org/reference/functions/wp_mail/).
 
 ## Verification and remaining work
 
@@ -159,6 +196,10 @@ The same fixture checks the activity view, retention, storage failure, upgrade,
 uninstall and WooCommerce order deletion/anonymization. `--serve` leaves the HPOS
 fixture available for `python tools/check-activity-browser.py`, which checks real
 Chrome filtering, order navigation, mobile layout and a browser-worker PDF.
+It also captures an administrator alert and exercises scheduler opt-in, concurrent
+reservations, recovery, mail rejection/interruption and activity storage failure.
+`python tools/check-alerts-browser.py` checks administrator settings, persistence,
+mobile layout, nonce protection and shop-manager denial on the retained fixture.
 
 `node tools/check-customer-downloads.mjs --hpos` tests real customer logins,
 My Account pages and the download endpoint, including ownership, nonce replay,
