@@ -1,0 +1,809 @@
+{
+  "schema": "fullbleed.wordpress-directory-verification.v1",
+  "checkedAt": "2026-10-03T08:23:15.328005+00:00",
+  "sourceCommit": "4d708626b8acbc1428e1063a167162e2d0f6dbd5",
+  "releaseStatus": "Unreleased source. Published alpha.2 assets are unchanged. Not WordPress.org approval.",
+  "syntheticOnly": true,
+  "ci": {
+    "directory": {
+      "conclusion": "success",
+      "headSha": "4d708626b8acbc1428e1063a167162e2d0f6dbd5",
+      "jobs": [
+        {
+          "completedAt": "2026-10-03T08:15:38Z",
+          "conclusion": "success",
+          "databaseId": 111162802042,
+          "name": "plugin-check",
+          "startedAt": "2026-10-03T08:12:50Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-03T08:12:53Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-03T08:12:51Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:54Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 2,
+              "startedAt": "2026-10-03T08:12:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:58Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v6",
+              "number": 3,
+              "startedAt": "2026-10-03T08:12:54Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:13:04Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 4,
+              "startedAt": "2026-10-03T08:12:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:13:07Z",
+              "conclusion": "success",
+              "name": "Run npm run build",
+              "number": 5,
+              "startedAt": "2026-10-03T08:13:04Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:13:08Z",
+              "conclusion": "success",
+              "name": "Run npm run pack",
+              "number": 6,
+              "startedAt": "2026-10-03T08:13:07Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:13:08Z",
+              "conclusion": "success",
+              "name": "Extract the exact free plugin archive",
+              "number": 7,
+              "startedAt": "2026-10-03T08:13:08Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:14:42Z",
+              "conclusion": "success",
+              "name": "Run WordPress/plugin-check-action@005058d6dbd2942b6a58610836b981c2ee3cc19d",
+              "number": 8,
+              "startedAt": "2026-10-03T08:13:08Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:14:43Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-python@v6",
+              "number": 9,
+              "startedAt": "2026-10-03T08:14:42Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:15:32Z",
+              "conclusion": "success",
+              "name": "Verify the packaged editor in native WordPress",
+              "number": 10,
+              "startedAt": "2026-10-03T08:14:43Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:15:34Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+              "number": 11,
+              "startedAt": "2026-10-03T08:15:32Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:15:35Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@v6",
+              "number": 19,
+              "startedAt": "2026-10-03T08:15:34Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:15:35Z",
+              "conclusion": "success",
+              "name": "Post Run WordPress/plugin-check-action@005058d6dbd2942b6a58610836b981c2ee3cc19d",
+              "number": 20,
+              "startedAt": "2026-10-03T08:15:35Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:15:35Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v6",
+              "number": 21,
+              "startedAt": "2026-10-03T08:15:35Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:15:35Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 22,
+              "startedAt": "2026-10-03T08:15:35Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:15:35Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 23,
+              "startedAt": "2026-10-03T08:15:35Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37108889980/job/111162802042"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37108889980"
+    },
+    "integration": {
+      "conclusion": "success",
+      "headSha": "4d708626b8acbc1428e1063a167162e2d0f6dbd5",
+      "jobs": [
+        {
+          "completedAt": "2026-10-03T08:14:55Z",
+          "conclusion": "success",
+          "databaseId": 111162802480,
+          "name": "container",
+          "startedAt": "2026-10-03T08:12:14Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-03T08:12:16Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-03T08:12:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:16Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 2,
+              "startedAt": "2026-10-03T08:12:16Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:17Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v6",
+              "number": 3,
+              "startedAt": "2026-10-03T08:12:16Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:13:11Z",
+              "conclusion": "success",
+              "name": "Run docker build -f shopify/app/Dockerfile -t fullbleed-commerce:check .",
+              "number": 4,
+              "startedAt": "2026-10-03T08:12:17Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:14:52Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-container.mjs",
+              "number": 5,
+              "startedAt": "2026-10-03T08:13:11Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:14:53Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+              "number": 6,
+              "startedAt": "2026-10-03T08:14:52Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:14:53Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v6",
+              "number": 11,
+              "startedAt": "2026-10-03T08:14:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:14:53Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 12,
+              "startedAt": "2026-10-03T08:14:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:14:54Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 13,
+              "startedAt": "2026-10-03T08:14:53Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37108889978/job/111162802480"
+        },
+        {
+          "completedAt": "2026-10-03T08:13:49Z",
+          "conclusion": "success",
+          "databaseId": 111162802669,
+          "name": "renderer-deployment",
+          "startedAt": "2026-10-03T08:12:14Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-03T08:12:16Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-03T08:12:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:17Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 2,
+              "startedAt": "2026-10-03T08:12:16Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:24Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v6",
+              "number": 3,
+              "startedAt": "2026-10-03T08:12:17Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:30Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 4,
+              "startedAt": "2026-10-03T08:12:24Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:33Z",
+              "conclusion": "success",
+              "name": "Run npm run build",
+              "number": 5,
+              "startedAt": "2026-10-03T08:12:30Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:34Z",
+              "conclusion": "success",
+              "name": "Run npm run pack",
+              "number": 6,
+              "startedAt": "2026-10-03T08:12:33Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:13:46Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-renderer-deployment.mjs",
+              "number": 7,
+              "startedAt": "2026-10-03T08:12:34Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:13:47Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+              "number": 8,
+              "startedAt": "2026-10-03T08:13:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:13:47Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v6",
+              "number": 15,
+              "startedAt": "2026-10-03T08:13:47Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:13:48Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 16,
+              "startedAt": "2026-10-03T08:13:47Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:13:48Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 17,
+              "startedAt": "2026-10-03T08:13:48Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37108889978/job/111162802669"
+        },
+        {
+          "completedAt": "2026-10-03T08:22:04Z",
+          "conclusion": "success",
+          "databaseId": 111162802681,
+          "name": "integration",
+          "startedAt": "2026-10-03T08:12:14Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-03T08:12:18Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-03T08:12:17Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:19Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 2,
+              "startedAt": "2026-10-03T08:12:18Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:23Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v6",
+              "number": 3,
+              "startedAt": "2026-10-03T08:12:19Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:32Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 4,
+              "startedAt": "2026-10-03T08:12:23Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:36Z",
+              "conclusion": "success",
+              "name": "Run npm run build",
+              "number": 5,
+              "startedAt": "2026-10-03T08:12:32Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:42Z",
+              "conclusion": "success",
+              "name": "Run npm test",
+              "number": 6,
+              "startedAt": "2026-10-03T08:12:36Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:45Z",
+              "conclusion": "success",
+              "name": "Run npm run examples",
+              "number": 7,
+              "startedAt": "2026-10-03T08:12:42Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:46Z",
+              "conclusion": "success",
+              "name": "Run npm run pack",
+              "number": 8,
+              "startedAt": "2026-10-03T08:12:45Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:12:46Z",
+              "conclusion": "success",
+              "name": "Run node tools/build-playground.mjs --check",
+              "number": 9,
+              "startedAt": "2026-10-03T08:12:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:13:16Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-playground.mjs",
+              "number": 10,
+              "startedAt": "2026-10-03T08:12:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:13:55Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-automation.mjs --hpos",
+              "number": 11,
+              "startedAt": "2026-10-03T08:13:16Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:14:35Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-automation.mjs",
+              "number": 12,
+              "startedAt": "2026-10-03T08:13:55Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:17:53Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-customer-downloads.mjs --hpos --packages",
+              "number": 13,
+              "startedAt": "2026-10-03T08:14:35Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:21:07Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-customer-downloads.mjs --packages",
+              "number": 14,
+              "startedAt": "2026-10-03T08:17:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:21:24Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 15,
+              "startedAt": "2026-10-03T08:21:07Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:21:55Z",
+              "conclusion": "success",
+              "name": "Run node tools/check-shopify.mjs",
+              "number": 16,
+              "startedAt": "2026-10-03T08:21:24Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:21:57Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+              "number": 17,
+              "startedAt": "2026-10-03T08:21:55Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:22:02Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v6",
+              "number": 33,
+              "startedAt": "2026-10-03T08:21:57Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:22:02Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "number": 34,
+              "startedAt": "2026-10-03T08:22:02Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-03T08:22:02Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 35,
+              "startedAt": "2026-10-03T08:22:02Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37108889978/job/111162802681"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37108889978"
+    }
+  },
+  "runtime": {
+    "wordpress": "7.1.2",
+    "woocommerce": "11.1.2",
+    "php": "8.3.35",
+    "pluginCheck": "2.1.0"
+  },
+  "pluginCheck": {
+    "result": "Success: Checks complete. No errors found.",
+    "strict": true,
+    "experimentalChecks": false,
+    "excludedChecks": [],
+    "reviewedInlineExceptions": [
+      {
+        "code": "WordPress.DB.DirectDatabaseQuery.DirectQuery",
+        "reason": "Prepared compare-and-swap update is required for atomic template revision checks; the option cache is invalidated."
+      },
+      {
+        "code": "WordPress.Security.NonceVerification.Recommended",
+        "reason": "Read-only order-ID prefill has no side effect. Each render requires an explicit merchant action and nonce/capability-checked REST request."
+      }
+    ]
+  },
+  "packages": [
+    {
+      "filename": "fullbleed-commerce-0.1.0-alpha.2.zip",
+      "bytes": 3058228,
+      "sha256": "1809dbe9fec413d07efc55605e2f2106eadc045ec16cd75592e1af0cbd73816f",
+      "files": 39
+    },
+    {
+      "filename": "fullbleed-commerce-pro-0.1.0-alpha.2.zip",
+      "bytes": 35137,
+      "sha256": "f5a64260e3d527ed6a40beb57a64635c6b741477b7a843eafb5ceee0b4cf619f",
+      "files": 13
+    }
+  ],
+  "build": {
+    "engine": "2.5.5",
+    "nodePackage": "0.1.1",
+    "wordpressCoreScripts": [
+      "jquery",
+      "backbone",
+      "underscore",
+      "wp-codemirror"
+    ],
+    "grapesjsSourceMapSha256": "4f0bf04d1e75018b51fa1878868b5ee637572e8a5502998be2c6f8d3615af905",
+    "files": {
+      "admin.js": {
+        "bytes": 521008,
+        "sha256": "56c07ba37fd9c3f3432671d4e1801e851cb57294f3d8d36c7b2ed242e5b17015"
+      },
+      "editor.js": {
+        "bytes": 2337747,
+        "sha256": "096c5dd8781d88d1b8a261d192339a88a2603ba31231b38845658ebe08d3d732"
+      },
+      "editor.css": {
+        "bytes": 64864,
+        "sha256": "5f74864064d4e4f11e9dab9f26ddf896fd93d3f72be33c7ce732c56941561415"
+      },
+      "worker.js": {
+        "bytes": 51742,
+        "sha256": "73a3f65c8262bb13a2ad1e2cf35f7e77a1cb25fe9f84450a04785cf3f472ae33"
+      },
+      "engine.wasm": {
+        "bytes": 5047938,
+        "sha256": "60f06871dcd0109f919581f21ba5dac716c2c160094f380d5dba58ec96f0d5ee"
+      }
+    }
+  },
+  "sourceRebuild": {
+    "source": "fullbleed-commerce-0.1.0-alpha.2.zip/source",
+    "archiveSha256": "1809dbe9fec413d07efc55605e2f2106eadc045ec16cd75592e1af0cbd73816f",
+    "allGeneratedFilesMatch": true,
+    "files": [
+      {
+        "path": "admin.js",
+        "sha256": "56c07ba37fd9c3f3432671d4e1801e851cb57294f3d8d36c7b2ed242e5b17015"
+      },
+      {
+        "path": "build.json",
+        "sha256": "781e7471c24b36fd1d209f3af0801693ed7db8cafe1548b63055ccd8283a3557"
+      },
+      {
+        "path": "EDITOR-THIRD-PARTY-NOTICES.txt",
+        "sha256": "03ff6d87cef7b5c0d501facdd0d002324d36c4c3f74530bb1077108567bd8b9e"
+      },
+      {
+        "path": "editor.css",
+        "sha256": "5f74864064d4e4f11e9dab9f26ddf896fd93d3f72be33c7ce732c56941561415"
+      },
+      {
+        "path": "editor.js",
+        "sha256": "096c5dd8781d88d1b8a261d192339a88a2603ba31231b38845658ebe08d3d732"
+      },
+      {
+        "path": "engine-build.json",
+        "sha256": "902d2d9592064d56b8832c09b1b98d7f903d82efff309a8fe8f3355081643939"
+      },
+      {
+        "path": "engine.wasm",
+        "sha256": "60f06871dcd0109f919581f21ba5dac716c2c160094f380d5dba58ec96f0d5ee"
+      },
+      {
+        "path": "fonts/BebasNeue-OFL.txt",
+        "sha256": "72082f6cb4d04be2ecf7cc7d9e1e7d73787f0af8a5a278a47cade70c16b78341"
+      },
+      {
+        "path": "fonts/BebasNeue-Regular.ttf",
+        "sha256": "08e4623805102d819f58601e46e345648846075e363b2ceb23313c2d1c83ec73"
+      },
+      {
+        "path": "fonts/DMSerifDisplay-Italic.ttf",
+        "sha256": "df74c0ac387baeaeb0fe4f2324e1668e6a3ed8c09cd9796fe162c71753e19e45"
+      },
+      {
+        "path": "fonts/DMSerifDisplay-OFL.txt",
+        "sha256": "aa49c876a28d8c0b0a3027d6c25b9c607eee8c0fb96165011d42a6ace1408fe1"
+      },
+      {
+        "path": "fonts/DMSerifDisplay-Regular.ttf",
+        "sha256": "8cc3643535edf039aa5d95440a8542735e9197e4f4b8d9303e980fefbf5ab616"
+      },
+      {
+        "path": "fonts/Inter-OFL.txt",
+        "sha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57"
+      },
+      {
+        "path": "fonts/Inter-Variable.ttf",
+        "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+      },
+      {
+        "path": "FULLBLEED-LICENSE.txt",
+        "sha256": "36a2115938f6e68cf0d87eccff7a6a3e57c17017e909cbd640d51aff1fa0c5a9"
+      },
+      {
+        "path": "THIRD_PARTY_NOTICES.txt",
+        "sha256": "f369b7da5c0d54fb0be0917475e5964cfa276cfe3c7c830f7853213592d41ab8"
+      },
+      {
+        "path": "WASI-LICENSE.txt",
+        "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+      },
+      {
+        "path": "worker.js",
+        "sha256": "73a3f65c8262bb13a2ad1e2cf35f7e77a1cb25fe9f84450a04785cf3f472ae33"
+      }
+    ]
+  },
+  "nativeBrowser": {
+    "checkedAt": "2026-10-03T08:15:32.440105+00:00",
+    "browser": "154.0.8037.97",
+    "store": "http://127.0.0.1:8888",
+    "pro": false,
+    "checks": [
+      {
+        "name": "real browser worker produces a complete PDF download",
+        "passed": true
+      },
+      {
+        "name": "visual editor renders its order fields",
+        "passed": true
+      },
+      {
+        "name": "editor uses WordPress dependencies without replacing shared globals",
+        "passed": true
+      },
+      {
+        "name": "dragging a block into the canvas adds real editable content",
+        "passed": true
+      },
+      {
+        "name": "visual text editing reaches exported HTML",
+        "passed": true
+      },
+      {
+        "name": "custom HTML and CSS save through authenticated editor",
+        "passed": true
+      },
+      {
+        "name": "PDF preview contains visual edits and order data",
+        "passed": true
+      },
+      {
+        "name": "saved template survives reload and applies to ordinary downloads",
+        "passed": true
+      },
+      {
+        "name": "reset restores the built-in design",
+        "passed": true
+      },
+      {
+        "name": "mobile editor fits the viewport",
+        "passed": true
+      },
+      {
+        "name": "no browser JavaScript errors",
+        "passed": true
+      }
+    ],
+    "pdfSha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+    "pageErrors": []
+  },
+  "localBrowserWithPro": {
+    "checkedAt": "2026-10-03T08:04:28.944038+00:00",
+    "browser": "154.0.8037.93",
+    "store": "http://127.0.0.1:9492",
+    "pro": true,
+    "checks": [
+      {
+        "name": "real browser worker produces a complete PDF download",
+        "passed": true
+      },
+      {
+        "name": "visual editor renders its order fields",
+        "passed": true
+      },
+      {
+        "name": "editor uses WordPress dependencies without replacing shared globals",
+        "passed": true
+      },
+      {
+        "name": "dragging a block into the canvas adds real editable content",
+        "passed": true
+      },
+      {
+        "name": "visual text editing reaches exported HTML",
+        "passed": true
+      },
+      {
+        "name": "custom HTML and CSS save through authenticated editor",
+        "passed": true
+      },
+      {
+        "name": "PDF preview contains visual edits and order data",
+        "passed": true
+      },
+      {
+        "name": "saved template survives reload and applies to ordinary downloads",
+        "passed": true
+      },
+      {
+        "name": "Pro browser download is a complete two-PDF ZIP",
+        "passed": true
+      },
+      {
+        "name": "reset restores the built-in design",
+        "passed": true
+      },
+      {
+        "name": "mobile editor fits the viewport",
+        "passed": true
+      },
+      {
+        "name": "no browser JavaScript errors",
+        "passed": true
+      }
+    ],
+    "pdfSha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+    "pageErrors": []
+  },
+  "documents": [
+    {
+      "fixture": "default",
+      "bytes": 135816,
+      "sha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+      "identicalAcrossLinuxAndWindows": true
+    },
+    {
+      "fixture": "custom",
+      "bytes": 135963,
+      "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+      "identicalAcrossLinuxAndWindows": true
+    },
+    {
+      "fixture": "saved",
+      "bytes": 135963,
+      "sha256": "fdc477cc5bbe72c94aabcbda715e37e531b5b20ec02d652eb7bfc011c69f51a9",
+      "identicalAcrossLinuxAndWindows": true
+    }
+  ],
+  "evidence": [
+    {
+      "path": "docs/previews/woocommerce-wordpress-default.png",
+      "sha256": "4d452c4cb90ece4722084d0f0e35dc08baf9fa3ef90752e381d9b2dea6bcdeef",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/previews/woocommerce-wordpress-custom.png",
+      "sha256": "5dd12cea86494262995394fede84d819944773f281f3582655b34859b2b0995b",
+      "visuallyInspected": true
+    }
+  ]
+}

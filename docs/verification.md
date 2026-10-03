@@ -49,12 +49,50 @@ To refresh this delta after executing its checks and downloading the matching CI
 artifact, run `node tools/retain-preview-verification.mjs alpha2 target/alpha2-ci`.
 Keep the historical whole-product records below separate from this release delta.
 
+## Unreleased WordPress directory preparation
+
+The free editor now uses WordPress's Backbone, Underscore and CodeMirror instead
+of the copies embedded in the upstream GrapesJS bundle. GrapesJS is rebuilt from
+the source map in its locked npm release. A private Backbone View adapter keeps
+its Cash DOM handling and undo registration from changing WordPress's shared
+constructors or jQuery adapter. Required source, build instructions and additional
+dependency notices are included in the ZIP.
+
+The [native directory job](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37108889980)
+passes WordPress Plugin Check 2.1.0 in strict mode with no reported errors or
+warnings, followed by **11 real Chrome checks** on the installed free ZIP.
+WordPress 7.1.2, WooCommerce 11.1.2 and PHP 8.3 are used. Experimental Plugin Check
+checks are not enabled. Two narrow inline exceptions are documented: a prepared
+atomic template revision update, and read-only order-ID prefilling whose later
+REST request is independently authorized.
+
+The Windows Pro fixture passes **12 Chrome checks**, including an actual two-PDF
+ZIP. Both browser runs exercise drag-and-drop, visual text editing, HTML/CSS,
+save/reload, real PDF preview, reset and mobile width without JavaScript errors.
+The default, customized and saved PDF downloads match byte for byte across the
+two operating systems. The [default PDF preview](previews/woocommerce-wordpress-default.png)
+and [customized PDF preview](previews/woocommerce-wordpress-custom.png) were
+visually inspected and contain only synthetic data.
+
+All **18 generated files** rebuild byte for byte from the source included in the
+free ZIP. Linux and Windows produce identical candidate archives. The exact
+packages, checks, build metadata, source rebuild and CI results are retained in
+[the directory verification record](wordpress-directory-verification.json).
+The [full integration run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37108889978)
+also passes all three jobs, including 45 shared tests, both WooCommerce storage
+modes, Shopify checks, the container and the native renderer deployment.
+
+These source changes are not in the published alpha.2 downloads or public demo.
+Plugin Check is an automated review aid, not WordPress.org approval. Account
+ownership, submission, manual review and a versioned release remain separate
+publication steps. The product's production and paid-service gates remain open.
+
 ## Unreleased WooCommerce activity view
 
 The current source adds **Fullbleed activity**, plus a notice on WooCommerce
 screens for failed PDF workflows. The published alpha.2 downloads predate this
-change. The free plugin archive remains identical; the Pro candidate is retained
-by hash and has not replaced a published release asset.
+change. The free plugin archive for that activity change matched the release;
+the Pro candidate is retained by hash and has not replaced a published asset.
 
 The view shows the latest result per order/email or customer-download workflow,
 with failure filtering, specific recovery guidance, and native authorized order
