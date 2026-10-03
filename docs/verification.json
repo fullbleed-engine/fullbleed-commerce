@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-03T03:00:09.725Z",
+  "checkedAt": "2026-10-03T03:54:27.965Z",
   "previewVersion": "0.1.0-alpha.1",
   "sourceLocks": {
     "root": "1a9f225f14867ca8a82402accfdce87f2c590f31b80a67a6014c4527bf3258b1",
@@ -1426,6 +1426,422 @@
         }
       ]
     }
+  },
+  "orderTrigger": {
+    "checkedAt": "2026-10-03T03:54:27.849072+00:00",
+    "runtimeSourceCommit": "05bc5a586fd04a5668e26685fb0fec4a07ca3a93",
+    "apiVersion": "2026-10",
+    "syntheticOnly": true,
+    "shop": "fullbleed-commerce-test.myshopify.com",
+    "orderId": "gid://shopify/Order/18919736803486",
+    "orderName": "#1002",
+    "workflowId": "01a0fe46-037a-7441-a300-878f89fc9a50",
+    "workflowRunId": "01M3ZXABC0A6Q0KQPV829SEPXJ:01a0fe46-037a-7441-a300-878f89fc9a50:v2",
+    "trigger": "Order created: automatic trigger event on a new synthetic unpaid order",
+    "destination": "Four merchant-owned Shopify order metafields populated by native Flow actions",
+    "environment": "Official Shopify CLI development preview and HTTPS tunnel; isolated local database/recovery journal; development-store entitlement",
+    "browser": "Chrome 154.0.8037.93 through CLI Playwright",
+    "checks": [
+      {
+        "name": "order-summary: browser strips credential from location",
+        "passed": true
+      },
+      {
+        "name": "order-summary: private landing response",
+        "passed": true
+      },
+      {
+        "name": "order-summary: native browser download completed",
+        "passed": true
+      },
+      {
+        "name": "order-summary: PDF response is private",
+        "passed": true
+      },
+      {
+        "name": "order-summary: download matches prepared PDF SHA-256",
+        "passed": true
+      },
+      {
+        "name": "order-summary: synthetic order items complete",
+        "passed": true
+      },
+      {
+        "name": "order-summary: appropriate address shown",
+        "passed": true
+      },
+      {
+        "name": "order-summary: one page",
+        "passed": true
+      },
+      {
+        "name": "order-summary: summary total preserved or packing prices omitted",
+        "passed": true
+      },
+      {
+        "name": "order-summary: all text lies inside page",
+        "passed": true
+      },
+      {
+        "name": "order-summary: download page fits mobile viewport",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: browser strips credential from location",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: private landing response",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: native browser download completed",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: PDF response is private",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: download matches prepared PDF SHA-256",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: synthetic order items complete",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: appropriate address shown",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: one page",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: summary total preserved or packing prices omitted",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: all text lies inside page",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: download page fits mobile viewport",
+        "passed": true
+      },
+      {
+        "name": "no JavaScript errors on download pages",
+        "passed": true
+      },
+      {
+        "name": "exactly one preparation per document",
+        "passed": true
+      },
+      {
+        "name": "order-summary: browser strips credential from location",
+        "passed": true
+      },
+      {
+        "name": "order-summary: private landing response",
+        "passed": true
+      },
+      {
+        "name": "order-summary: saved order link is unusable after pause",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: browser strips credential from location",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: private landing response",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: saved order link is unusable after pause",
+        "passed": true
+      },
+      {
+        "name": "no JavaScript errors on download pages",
+        "passed": true
+      },
+      {
+        "name": "exactly one preparation per document",
+        "passed": true
+      },
+      {
+        "name": "synthetic order remains unpaid and unfulfilled",
+        "passed": true
+      },
+      {
+        "name": "order-summary: saved URL matches actual browser link",
+        "passed": true
+      },
+      {
+        "name": "order-summary: stored expiry matches ledger to the second",
+        "passed": true
+      },
+      {
+        "name": "order-summary: typed definitions exist",
+        "passed": true
+      },
+      {
+        "name": "fullbleed_summary_link: storefront and customer account access disabled",
+        "passed": true
+      },
+      {
+        "name": "fullbleed_summary_expiry: storefront and customer account access disabled",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: saved URL matches actual browser link",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: stored expiry matches ledger to the second",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: typed definitions exist",
+        "passed": true
+      },
+      {
+        "name": "fullbleed_packing_link: storefront and customer account access disabled",
+        "passed": true
+      },
+      {
+        "name": "fullbleed_packing_expiry: storefront and customer account access disabled",
+        "passed": true
+      },
+      {
+        "name": "new order ran through an automatic trigger, not manual replay",
+        "passed": true
+      },
+      {
+        "name": "both Fullbleed actions and four native field updates completed",
+        "passed": true
+      },
+      {
+        "name": "test workflow left inactive",
+        "passed": true
+      },
+      {
+        "name": "Fullbleed automation left paused",
+        "passed": true
+      },
+      {
+        "name": "both synthetic jobs revoked",
+        "passed": true
+      },
+      {
+        "name": "revoked requests did not increment completed response counts",
+        "passed": true
+      },
+      {
+        "name": "installed Fullbleed app still uses read_orders only",
+        "passed": true
+      },
+      {
+        "name": "both PDF previews visually inspected",
+        "passed": true
+      }
+    ],
+    "documents": [
+      {
+        "kind": "order-summary",
+        "jobId": "5d3feb10-6572-4bb3-8ca6-67280d3c5277",
+        "pdfSha256": "12f32e3db0b2350c1208a84d2b224e79c4f06a17d5c94e4ef47f79f48b8ae12f",
+        "linkSha256": "e86a248b3e1d10193517649b44059ad7c0310f366519aa99504a1b9e2c4b554d",
+        "bytes": 137151,
+        "pages": 1,
+        "filename": "order-summary-1002.pdf",
+        "preparedAt": "2026-10-03T03:35:46.489000+00:00",
+        "expiresAt": "2026-10-04T03:35:47.050000+00:00",
+        "preparationAttempts": 1,
+        "templateRevision": "64c08228-085e-4cfe-96f7-9f9a1e5b79f3"
+      },
+      {
+        "kind": "packing-slip",
+        "jobId": "a6d3dacb-f0ac-4f3b-b9df-3d98a19561d7",
+        "pdfSha256": "d5fab2d0d37fe7e1e16e5f7f3d5d2219898923a9ddd07afb080ca59ae7eab367",
+        "linkSha256": "0cafd7c45d24d2fdd3941bec5b015d0a9985a930dc71436759b1364bedc499d5",
+        "bytes": 137827,
+        "pages": 1,
+        "filename": "packing-slip-1002.pdf",
+        "preparedAt": "2026-10-03T03:35:52.278000+00:00",
+        "expiresAt": "2026-10-04T03:35:52.685000+00:00",
+        "preparationAttempts": 1,
+        "templateRevision": ""
+      }
+    ],
+    "metafields": [
+      {
+        "namespace": "custom",
+        "key": "fullbleed_summary_link",
+        "type": "url",
+        "access": {
+          "storefront": "NONE",
+          "customerAccount": "NONE"
+        },
+        "valueSha256": "e86a248b3e1d10193517649b44059ad7c0310f366519aa99504a1b9e2c4b554d"
+      },
+      {
+        "namespace": "custom",
+        "key": "fullbleed_summary_expiry",
+        "type": "date_time",
+        "access": {
+          "storefront": "NONE",
+          "customerAccount": "NONE"
+        },
+        "valueSha256": "64b887be6b95c5a757b5f53791f841f686db884d10e2d47d3e6c12d63ea79d1b"
+      },
+      {
+        "namespace": "custom",
+        "key": "fullbleed_packing_link",
+        "type": "url",
+        "access": {
+          "storefront": "NONE",
+          "customerAccount": "NONE"
+        },
+        "valueSha256": "0cafd7c45d24d2fdd3941bec5b015d0a9985a930dc71436759b1364bedc499d5"
+      },
+      {
+        "namespace": "custom",
+        "key": "fullbleed_packing_expiry",
+        "type": "date_time",
+        "access": {
+          "storefront": "NONE",
+          "customerAccount": "NONE"
+        },
+        "valueSha256": "55ca83c081853a74e8c7eccd9b4ff324dcde754b1dd40dc7ca730727e0db61eb"
+      }
+    ],
+    "finalJobs": [
+      {
+        "id": "5d3feb10-6572-4bb3-8ca6-67280d3c5277",
+        "kind": "order-summary",
+        "status": "revoked",
+        "attempts": 1,
+        "downloads": 4
+      },
+      {
+        "id": "a6d3dacb-f0ac-4f3b-b9df-3d98a19561d7",
+        "kind": "packing-slip",
+        "status": "revoked",
+        "attempts": 1,
+        "downloads": 1
+      }
+    ],
+    "privacy": {
+      "storefrontAccess": "NONE",
+      "customerAccountAccess": "NONE",
+      "completeLinksRetainedInPublicEvidence": false,
+      "pdfData": "Synthetic only",
+      "appAccessScopes": [
+        "read_orders"
+      ]
+    },
+    "testNotes": [
+      "Shopify CLI completed the unpaid draft but could not read the order field in its response under write_draft_orders alone. The mutation was not repeated. The order, automatic trigger and read-back were verified with Shopify Admin and the installed app existing read_orders scope.",
+      "Local Windows time lagged Shopify token not-before by about 12 seconds; Windows Time was stopped and starting it required unavailable OS privilege. Merchant-browser requests temporarily waited until tokens were valid. Credentials and validation were unchanged, and the timing route was removed after testing.",
+      "The browser connector lost its context on native file download. An independently owned CLI Playwright Chrome completed both downloads from the exact links displayed in Shopify order fields. Four summary PDF responses reflect connector attempts and text-assertion correction plus the final successful download; document preparation occurred once.",
+      "The summary correctly shows that no billing address was supplied; the packing slip includes the separate synthetic shipping address. Summary amounts are formatted as USD, and packing output omits prices.",
+      "Workflow left inactive, Fullbleed paused, both links revoked, order unpaid/unfulfilled. Dead link values remain in the synthetic Shopify order fields."
+    ],
+    "limitations": [
+      "Development-store internal staff workflow. Repeat on the stable hosted origin with production installation and paid entitlement before merchant use.",
+      "No customer email, external delivery service, automatic printing or fulfillment action was configured or tested.",
+      "The four metafield updates are separate native actions, not an atomic write; partial Flow failures require reviewing the run and fields.",
+      "App Store approval, paid lifecycle, production capacity, operator alert receipt and independent key recovery remain release gates.",
+      "Local clock synchronization still needs repair before interactive development without the timing workaround."
+    ],
+    "evidence": [
+      {
+        "file": "output/browser/shopify-order-trigger-activity.png",
+        "sha256": "2d3403341c694caa942a4c2b1be111216c25806a09e1f20148d1620914e6b724"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-downloads.json",
+        "sha256": "aa1dc44f6de796676bdccee4b9d01a5f1e1e72667f7969e840ca50320f9d9288"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-order-summary-download.png",
+        "sha256": "e6d2298f982988cca89655fd565cd4d073465da62816e78c329b209146a0d781"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-order-summary-mobile.png",
+        "sha256": "d778c65421001a898ff3f1ed862d274012ccf040f5585e5c5a2b1c32ebf75f93"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-order-summary-revoked.png",
+        "sha256": "56ec90dfb7a88d8f313e83d396671f9b083c0de025ef1424bdd30593aca6121c"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-order-summary.pdf",
+        "sha256": "12f32e3db0b2350c1208a84d2b224e79c4f06a17d5c94e4ef47f79f48b8ae12f"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-order-summary.png",
+        "sha256": "ab8639861a7c83d32d2c3b0e9fca6536523446e1c018bd3d5939e51bfded269e"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-order.png",
+        "sha256": "9bf40b73ec963599e10998f1ec165454e38ab6166b41d6bfdb6b0704d92f0ba7"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-packing-slip-download.png",
+        "sha256": "e6d2298f982988cca89655fd565cd4d073465da62816e78c329b209146a0d781"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-packing-slip-mobile.png",
+        "sha256": "d778c65421001a898ff3f1ed862d274012ccf040f5585e5c5a2b1c32ebf75f93"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-packing-slip-revoked.png",
+        "sha256": "56ec90dfb7a88d8f313e83d396671f9b083c0de025ef1424bdd30593aca6121c"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-packing-slip.pdf",
+        "sha256": "d5fab2d0d37fe7e1e16e5f7f3d5d2219898923a9ddd07afb080ca59ae7eab367"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-packing-slip.png",
+        "sha256": "00dfcc2fc1097ad8902fb532a7a87746de5b83dd1850849f9431ffac09f0824a"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-paused.png",
+        "sha256": "f7ddab15b7baf70cb0afdec10fb52d6b8dfc3402831ce9bfdf1d8351352c0246"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-revoked.json",
+        "sha256": "04877c12c03ce20690ec62af92fac3473e1078c31f2dc8f3083fa21550fe0dd8"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-runs.png",
+        "sha256": "17b21cb7d97f092b5d41ce183e50f02ca5d2ca82157936d71b0940e272faa452"
+      },
+      {
+        "file": "output/browser/shopify-order-trigger-workflow.json",
+        "sha256": "c8422b4aeffd7ae7e9d0af34e8e03cb5dac9f2b456eddcd3b72372d7dfd184ec"
+      },
+      {
+        "file": "output/shopify/order-trigger/metafield-verification.json",
+        "sha256": "10329d73b7fdd2da6b39de9f3db9e116dc449dcf0431bb2591dcac7fca466407"
+      },
+      {
+        "file": "output/shopify/order-trigger/complete-validation.json",
+        "sha256": "9e1bf954f44c61312345d86b8fcb2da92e1b7d7fd462e67d7cbda91edec7c62e"
+      },
+      {
+        "file": "output/shopify/order-trigger/create-validation.json",
+        "sha256": "41dffbf76b3e3e70b0c68c4ae6585cf8176ae1ca9233e201af0986680d9caab7"
+      },
+      {
+        "file": "output/shopify/order-trigger/read-metafields-validation.json",
+        "sha256": "8c5af6cea88a90f46e427c4a7b57aa47cf1d9fc9e8f8b8269d42d639b6ed2091"
+      }
+    ]
   },
   "examples": [
     {

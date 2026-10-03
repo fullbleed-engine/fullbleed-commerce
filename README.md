@@ -75,6 +75,9 @@ link in your next workflow step. Jobs survive restarts, duplicate events reuse
 the same job, and transient failures have bounded retries. Review activity,
 retry preparation, revoke one link, or pause all automation in the app.
 See the [Flow setup and reliability contract](shopify/FLOW.md).
+The [order-arrival recipe](shopify/recipes/order-documents.md) automatically
+prepares both PDFs and saves private links and expiry times on the Shopify order.
+It is verified with an actual synthetic order trigger and browser downloads.
 
 These are development integrations. Customer delivery, production hosting,
 privacy operations and paid lifecycle validation remain launch gates. The

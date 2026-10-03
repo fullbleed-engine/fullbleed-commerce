@@ -20,6 +20,8 @@ use those saved templates automatically. The app retains a persistent job ledger
 recovers expired preparation leases, retries transient failures and returns
 expiring private links. Merchants can inspect activity, retry, revoke or pause.
 See [Flow setup and reliability](FLOW.md) for the data and delivery contract.
+The verified [order-arrival recipe](recipes/order-documents.md) leaves summary
+and packing-slip links on the order automatically, ready for staff to download.
 
 ## Access and data flow
 
@@ -65,6 +67,11 @@ produce fiscal invoices.
 - Registered app and installed offline `read_orders` session, verified against
   the exact Shopify development store.
 - One synthetic draft completed as unpaid; no payment or email action was used.
+- A second synthetic unpaid order triggered Flow automatically. Both documents
+  and four private order-field updates completed, browser downloads matched the
+  prepared hashes, and pause revoked the saved links. See the
+  [order-trigger evidence](../docs/order-trigger-verification.json). The test
+  used the development tunnel; hosted installation and paid operation remain gates.
 - Type generation, TypeScript, lint, production build, migrations and real
   request-handler tests pass. Tests cover forged webhooks, shop isolation,
   deletion/replay, and unauthenticated PDF requests.

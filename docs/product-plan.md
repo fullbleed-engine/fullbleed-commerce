@@ -38,8 +38,9 @@ Keep the first offer specific enough to finish and support:
   resend. Automatic recovery must not risk duplicate customer emails.
 - **Shopify Commerce:** saved templates and native Flow actions returning
   expiring summary/packing-slip links, with persistent activity, bounded retries,
-  pause and revocation. Validate a real order trigger and a merchant-selected
-  downstream destination before advertising automatic customer delivery.
+  pause and revocation. The internal order-field recipe has passed a real
+  synthetic order trigger. Validate customer delivery separately before
+  advertising that capability.
 
 The remaining v1 gates are production hosting and monitoring, measured render
 cost/capacity, installation and upgrade checks, paid lifecycle/purchase and
@@ -154,6 +155,11 @@ job ledger, signed request verification, bounded retries, expiring private links
 and merchant pause/retry/revoke controls. The synthetic development store has
 executed both actions. The ledger records preparation and download responses;
 it does not claim email delivery. See [the Flow contract](../shopify/FLOW.md).
+The [order-arrival recipe](../shopify/recipes/order-documents.md) now passes an
+automatic new-order trigger, four native updates of private order fields and
+actual browser downloads. Staff find the prepared documents on the order.
+This test uses the development tunnel; repeat it on the stable production
+origin with real installation and paid entitlement before merchant rollout.
 
 WooCommerce Pro now includes an opt-in customer portal action for current order
 summaries. It checks the signed-in owner's access, processing/completed status

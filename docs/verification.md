@@ -22,6 +22,7 @@ was synthetic. No merchant store was changed and no customer PDF was retained.
 | Privacy requests in real Chrome with synthetic Shopify sessions | 13 browser checks: encrypted snapshot download, exact large IDs, explicit completion, erasure, overdue notice and 390px layout | `output/browser/shopify-privacy-verification.json`, JSON download and screenshots |
 | Shopify Flow extensions | CLI validates both native actions and output schemas | `output/shopify/flow-config-validation.json` |
 | Actual Shopify Flow execution and browser downloads | 19 retained checks; both actions and the downstream step completed; downloaded PDFs match returned SHA-256 values; revoke and pause return HTTP 410 | `output/browser/shopify-flow-verification.json`, matching PDFs/PNGs |
+| Automatic Shopify order trigger and staff destination | A new unpaid order triggered both actions and four native order-metafield updates; real Chrome downloads match preparation hashes; private field access and revoked links verified | [Order-trigger evidence](order-trigger-verification.json) |
 | Visual and source template editing in real Chrome 154 | Free editor saves, previews, reloads and resets; Pro also downloads a two-PDF ZIP and fits a 390px viewport | `output/browser/*-verification.json`, PDFs and screenshots |
 | Shopify real-browser editing and downloads | Summary/packing-slip downloads, visual edit, HTML/CSS save, actual preview, persisted template and reset passed | `output/browser/shopify-verification.json` |
 | Custom template rendering | Summary and packing slip: one page, zero missing glyphs, deterministic output; embedded PNG verified | `output/templates/verification.json` |
@@ -222,7 +223,7 @@ workflow measurement or production capacity promise.
 
 The final infrastructure plan matched the live service. After testing, compute
 was stopped and the persistent volume retained. The host is not currently
-serving merchants. Billing, full installation, automatic Flow delivery, alert receipt,
+serving merchants. Billing, full hosted installation and Flow verification, alert receipt,
 independent key recovery and merchant rollout remain separate gates. See
 [deployment operation](../shopify/DEPLOYMENT.md) and the
 [retained hosted record](staging-verification.json).
@@ -245,10 +246,12 @@ independent key recovery and merchant rollout remain separate gates. See
   access to the synthetic order are verified. Billing configuration and
   production merchant rollout are not complete. The isolated staging container
   deployment and persistent storage have now been verified.
-- Shopify webhook monitoring, operator alert receipt, independent key recovery and secure support-delivery setup,
-  automatic new-order trigger testing,
-  and a real configured delivery destination remain required. Native Flow actions
-  have been tested through manual replay on the synthetic store. Public
+- Shopify webhook monitoring, operator alert receipt, independent key recovery and secure support-delivery setup
+  remain required. A real automatic new-order trigger now prepares both PDFs and
+  saves links and expiry times in private Shopify order fields. Actual browser
+  downloads and revocation passed. Repeat that complete workflow on the stable
+  hosted origin with production configuration; the current check uses the
+  development tunnel. Customer email delivery is not covered. Public
   distribution is selected; that is not App Store approval or publication.
 - The Shopify toolkit's Polaris validator could not resolve its own
   `preact/jsx-runtime` and JSX types after three attempts, including a minimal

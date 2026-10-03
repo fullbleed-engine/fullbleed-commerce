@@ -49,6 +49,14 @@ Railway pre-deploy command: the persistent volume is unavailable there.
 Do not copy the development SQLite database or its sessions to staging.
 Install the app through Shopify to obtain fresh authorized sessions.
 
+Keep the machine clock synchronized on local and hosted environments. During
+the real development-store test, the Windows Time service was stopped and the
+clock lagged Shopify by about 12 seconds. Session tokens then failed their
+not-before check and the embedded page showed "Handling response". Restore
+operating-system time synchronization; do not disable token verification or
+weaken its checks. The retained browser test waited until tokens became valid;
+that temporary test adjustment is not an application fix or production setup.
+
 ## Verification and operation
 
 `node tools/check-shopify.mjs` verifies that the public health route returns

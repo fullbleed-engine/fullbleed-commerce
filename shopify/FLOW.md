@@ -20,6 +20,12 @@ lifecycle testing and marketplace review remain launch work.
    enabling delivery to customers.
 5. Review Fullbleed activity for preparation state and download responses.
 
+Start with [Prepare documents when an order arrives](recipes/order-documents.md):
+both documents are prepared automatically and their private links and expiry
+times appear on the Shopify order. The recipe uses native Flow metafield actions
+and keeps Fullbleed's existing `read_orders` scope. It has passed a real automatic
+order trigger and browser download check on the development store.
+
 **Pause and revoke active links** stops unfinished jobs and invalidates active
 links. Re-enabling accepts new workflow runs; it does not resurrect revoked links.
 An individual job can also be revoked. **Retry preparation** retries a failed
