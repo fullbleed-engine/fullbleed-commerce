@@ -33,7 +33,7 @@ with sync_playwright() as pw:
         page.locator('#user_login').fill('admin')
         page.locator('#user_pass').fill('fullbleed-local-test')
         page.locator('#wp-submit').click()
-        page.wait_for_url('**/wp-admin/**')
+        page.wait_for_url('**/wp-admin/**', wait_until='domcontentloaded', timeout=45000)
         page.goto(base + '/wp-admin/admin.php?page=fullbleed-commerce')
         page.locator('#fb-orders').fill('12')
         page.locator('[data-render]').click()

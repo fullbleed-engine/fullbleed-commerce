@@ -55,7 +55,7 @@ with sync_playwright() as pw:
             page.locator('#user_login').fill('admin')
             page.locator('#user_pass').fill('password')
             page.locator('#wp-submit').click()
-            page.wait_for_url('**/wp-admin/**')
+            page.wait_for_url('**/wp-admin/**', wait_until='domcontentloaded', timeout=45000)
             page.goto(args.url + '/wp-admin/admin.php?page=fullbleed-commerce')
         deadline = time.monotonic() + 240
         frame = None
