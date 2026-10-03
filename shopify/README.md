@@ -43,6 +43,12 @@ failures deny access. There is no manual charge creation. The only development
 exception requires all three conditions: `NODE_ENV=development`, an exact
 configured test-store domain, and Shopify's `partnerDevelopment=true` response.
 
+Access follows the current contract's allowed plan handle. An existing merchant
+keeps access when the plan's catalog price changes or cancellation is scheduled
+for the end of the cycle; access ends when Shopify no longer returns an allowed
+active subscription. A catalog price's `active` flag does not describe the
+merchant's subscription. See the [Partner price field](https://shopify.dev/docs/api/partner/2026-07/interfaces/Price).
+
 PDFs are generated in memory and returned with `Cache-Control: no-store`.
 Orders and PDFs are not stored. SQLite stores authorization sessions and
 merchant-entered brand settings and document templates, plus automation job

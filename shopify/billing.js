@@ -2,7 +2,7 @@
 export const subscriptionQuery = `query FullbleedSubscription($appId: ID!, $shopId: ID!) {
   activeSubscription(appId: $appId, shopId: $shopId) {
     shop { id myshopifyDomain }
-    items { handle price { active } }
+    items { handle }
   }
 }`;
 
@@ -35,7 +35,9 @@ export function createSubscriptionCheck({ organizationId, appId, accessToken, al
     const subscription = result.data.activeSubscription;
     if (subscription === null) return false;
     if (subscription?.shop?.id !== shopId || subscription?.shop?.myshopifyDomain !== shop) throw new Response('Subscription shop identity did not match.', { status: 503 });
-    return Array.isArray(subscription.items) && subscription.items.some(item => allowedHandles.includes(item.handle) && item.price?.active === true);
+    // activeSubscription is the live contract. A replaced catalog price may be
+    // inactive while an existing merchant remains subscribed at that price.
+    return Array.isArray(subscription.items) && subscription.items.some(item => allowedHandles.includes(item.handle));
   };
 }
 
