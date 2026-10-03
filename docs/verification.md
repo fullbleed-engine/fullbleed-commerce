@@ -186,6 +186,31 @@ Keep the historical whole-product records below separate from this release delta
 
 ## WordPress directory preparation
 
+### WordPress directory submission
+
+The free **0.1.0** directory preview was submitted October 3, 2026 by maintainer
+`kfinkelstein`, with assigned slug `fullbleed-commerce`. WordPress.org accepted
+the archive and reported that its automated scan passed. The submission is
+**Awaiting Review**; it is not approved or listed. The
+[submission record](wordpress-submission.json) retains the archive hash, native
+directory check, upgrade evidence and confirmation image.
+
+WordPress requires numeric versions. This candidate changes the alpha.3 free
+ZIP's PHP header/asset version and readme contributor/version/changelog; the
+other 37 entries are byte-identical. The Windows build, Linux CI package and
+archive downloaded back from WordPress.org are byte-identical. Existing
+staging-preview limitations remain. Pro and the public GitHub alpha.3 release
+are separate from this directory submission.
+
+The final candidate passes strict Plugin Check and 11 native WordPress/Chrome
+editor and PDF checks. Both HPOS and legacy upgrade fixtures pass 21 checks,
+including retained templates/settings and WordPress's version ordering from
+alpha.3 to 0.1.0. Default and custom PDF hashes match the previously inspected
+release output. These checks do not establish merchant production operation,
+paid purchasing or WordPress.org approval.
+
+### Source and native verification
+
 The free editor now uses WordPress's Backbone, Underscore and CodeMirror instead
 of the copies embedded in the upstream GrapesJS bundle. GrapesJS is rebuilt from
 the source map in its locked npm release. A private Backbone View adapter keeps
@@ -218,8 +243,9 @@ also passes all three jobs, including 45 shared tests, both WooCommerce storage
 modes, Shopify checks, the container and the native renderer deployment.
 
 These changes ship in alpha.3; the alpha.2 downloads predate them.
-Plugin Check is an automated review aid, not WordPress.org approval. Account
-ownership, submission and manual review remain separate publication steps. The product's production and paid-service gates remain open.
+Plugin Check is an automated review aid, not WordPress.org approval. The submitted
+directory preview is awaiting human review. The product's production and
+paid-service gates remain open.
 
 <a id="unreleased-woocommerce-activity-view"></a>
 

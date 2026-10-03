@@ -7,6 +7,7 @@ import assert from 'node:assert/strict';
 import { unzipSync } from 'fflate';
 import { starterTemplate } from '../src/documents.js';
 import { renderOrder } from '../src/node.js';
+import { pluginMetadata } from './plugin-metadata.mjs';
 
 const oldVersion = '0.1.0-alpha.2';
 const version = JSON.parse(await readFile('package.json', 'utf8')).version;
@@ -22,6 +23,8 @@ const previous = [
   { name: 'fullbleed-commerce', sha256: 'b1141910948e038e1ee8565c44708d304f0ee78967442cc26c0a68162985a5fe' },
   { name: 'fullbleed-commerce-pro', sha256: '3a309bec70c90ed9f1127c86e496ae80946eb615ddf2212d85ccc60835545728' },
 ];
+const candidates = await Promise.all(previous.map(entry => pluginMetadata(entry.name)));
+const pluginVersions = candidates.map(entry => entry.version);
 await mkdir('target/upgrade-input', { recursive: true });
 await mkdir('output/upgrade', { recursive: true });
 for (const entry of previous) {
@@ -90,12 +93,13 @@ try {
     update_option('fullbleed_template_packing-slip', array('template' => ${value(packing)}, 'revision' => 'synthetic-packing-before-upgrade'), false);
     update_option('fullbleed_automation', ${value(config)}, false);`);
   const before = await state();
+  check('numeric directory version upgrades the published alpha.3 base', await php(`echo version_compare('${pluginVersions[0]}', '0.1.0-alpha.3', '>') ? 'yes' : 'no';`) === 'yes');
   check('released alpha.2 base and Pro are active in the requested storage mode', before.versions.every(v => v === oldVersion) && before.active.every(Boolean) && before.hpos === hpos);
   check('alpha.2 has no new activity schema', before.activitySchema === null);
   const beforePdf = await renderOrder(before.order, { kind: 'order-summary', template: before.templates[0].template });
   await writeFile(`output/upgrade/${stem}-before.pdf`, beforePdf.pdf);
   for (const [index, entry] of previous.entries()) {
-    const manifest = packages.find(p => p.filename === `${entry.name}-${version}.zip`);
+    const manifest = packages.find(p => p.filename === candidates[index].filename);
     assert.ok(manifest, 'Candidate archive is in packages.json');
     const bytes = await readFile(`dist/${manifest.filename}`);
     assert.equal(hash(bytes), manifest.sha256);
@@ -122,7 +126,7 @@ try {
     check(`${entry.name} replacement preserves automation configuration`, JSON.stringify(current.automation) === JSON.stringify(before.automation));
     check(`${entry.name} replacement preserves orders and does not send mail`, JSON.stringify(current.order) === JSON.stringify(before.order) && current.mailAttempts === before.mailAttempts);
     check(`${entry.name} replacement keeps both plugins active`, current.active.every(Boolean));
-    assert.deepEqual(current.versions, index === 0 ? [version, oldVersion] : [version, version]);
+    assert.deepEqual(current.versions, index === 0 ? [pluginVersions[0], oldVersion] : pluginVersions);
     check(index === 0 ? 'new base remains compatible with the previous Pro version during upgrade' : 'both installed plugin versions match the release candidate', current.batchLimit === 25);
   }
   const after = await state();
@@ -130,7 +134,7 @@ try {
   const afterPdf = await renderOrder(after.order, { kind: 'order-summary', template: after.templates[0].template });
   await writeFile(`output/upgrade/${stem}-after.pdf`, afterPdf.pdf);
   check('saved document renders identical PDF bytes after both upgrades', hash(beforePdf.pdf) === hash(afterPdf.pdf));
-  const record = { checkedAt: new Date().toISOString(), from: oldVersion, to: version, runtime: after.runtime, hpos, packages, checks, pdfSha256: hash(afterPdf.pdf), templateStateSha256: hash(JSON.stringify(after.templates)), automationPreserved: true, transport: 'WordPress Plugin_Upgrader ZIP replacement. Synthetic configuration only; mail blocked, renderer not contacted. PDF parity uses the real Node renderer; real browser verification is retained separately.' };
+  const record = { checkedAt: new Date().toISOString(), from: oldVersion, to: pluginVersions[0], integrationVersion: version, pluginVersions: Object.fromEntries(candidates.map(item => [item.plugin, item.version])), runtime: after.runtime, hpos, packages, checks, pdfSha256: hash(afterPdf.pdf), templateStateSha256: hash(JSON.stringify(after.templates)), automationPreserved: true, transport: 'WordPress Plugin_Upgrader ZIP replacement. Synthetic configuration only; mail blocked, renderer not contacted. PDF parity uses the real Node renderer; real browser verification is retained separately.' };
   await writeFile(`output/upgrade/${stem}.json`, JSON.stringify(record, null, 2) + '\n');
   succeeded = true;
   console.log(`${stem}: ${checks.length} checks passed.`);
