@@ -51,6 +51,26 @@ jobs:
             output/shopify/*.log
             output/shopify/flow/
           retention-days: 14
+  upgrade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.21.0
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - run: npm run pack
+      - run: node tools/check-upgrade.mjs --hpos
+      - run: node tools/check-upgrade.mjs
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        if: always()
+        with:
+          name: upgrade-verification
+          path: output/upgrade/
+          retention-days: 14
   container:
     runs-on: ubuntu-latest
     timeout-minutes: 15

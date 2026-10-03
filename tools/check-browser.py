@@ -17,6 +17,7 @@ with urlopen(base + '/fullbleed-fixture.json', timeout=30) as fixture_response:
 order_id = str(fixture['orders'][0])
 batch_ids = ','.join(str(value) for value in fixture['orders'])
 pro = os.environ.get('FULLBLEED_TEST_PRO') == '1'
+saved_title = os.environ.get('FULLBLEED_TEST_SAVED_TITLE')
 label = os.environ.get('FULLBLEED_TEST_LABEL', 'wordpress-pro' if pro else 'wordpress-free')
 out = Path('output/browser')
 out.mkdir(parents=True, exist_ok=True)
@@ -48,6 +49,9 @@ with sync_playwright() as pw:
         pdf = out / f'{label}-default.pdf'
         download.value.save_as(pdf)
         check('real browser worker produces a complete PDF download', len(PdfReader(pdf).pages) >= 1)
+        if saved_title:
+            check('template saved before the plugin upgrade survives in the browser PDF', saved_title in '\n'.join(p.extract_text() for p in PdfReader(pdf).pages))
+            check('upgraded Pro exposes the merchant activity screen', not pro or page.get_by_role('link', name='Fullbleed activity', exact=True).count() == 1)
 
         page.evaluate("""() => {
             window.fullbleedCoreBefore = {
@@ -61,7 +65,7 @@ with sync_playwright() as pw:
         page.locator('[data-visual] iframe.gjs-frame').wait_for(state='visible')
         canvas = page.frame_locator('[data-visual] iframe.gjs-frame')
         canvas.locator('h1').wait_for(state='visible')
-        check('visual editor renders its order fields', '{{document.title}}' in canvas.locator('h1').inner_text())
+        check('visual editor renders the saved template', (saved_title or '{{document.title}}') in canvas.locator('h1').inner_text())
         check('editor uses WordPress dependencies without replacing shared globals', page.evaluate("""() => {
             const before = window.fullbleedCoreBefore;
             return before.backbone === window.Backbone && before.dollar === window.Backbone.$
@@ -127,7 +131,7 @@ with sync_playwright() as pw:
         check('mobile editor fits the viewport', page.evaluate('document.documentElement.scrollWidth <= innerWidth'))
         page.screenshot(path=str(out / f'{label}-mobile.png'), full_page=True)
         check('no browser JavaScript errors', not errors)
-        record = {'checkedAt': datetime.now(timezone.utc).isoformat(), 'browser': browser.version, 'store': base, 'pro': pro, 'checks': checks, 'pdfSha256': sha256(custom.read_bytes()).hexdigest(), 'pageErrors': errors}
+        record = {'checkedAt': datetime.now(timezone.utc).isoformat(), 'browser': browser.version, 'store': base, 'pro': pro, 'upgradeTemplate': saved_title, 'checks': checks, 'pdfSha256': sha256(custom.read_bytes()).hexdigest(), 'pageErrors': errors}
         (out / f'{label}-verification.json').write_text(json.dumps(record, indent=2), encoding='utf-8')
     except Exception:
         page.screenshot(path=str(out / f'{label}-failure.png'), full_page=True)
