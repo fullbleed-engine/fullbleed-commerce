@@ -144,6 +144,13 @@ works. Production deployment and billing remain separate launch gates.
 
 ## Current implementation status
 
+The alpha.2 WordPress preview is downloadable, and a
+[temporary sample store](https://playground.wordpress.net/?storage=temp&blueprint-url=https://raw.githubusercontent.com/fullbleed-engine/fullbleed-commerce/main/playground/blueprint.json)
+lets merchants try the free visual/source editor and real PDF downloads before
+installing anything. The [public walkthrough](https://docs.fullbleed.dev/guides/woocommerce/)
+connects that first document to the Pro automation offer. The demo contains only
+fictional orders and does not enable Pro automation or any paid service.
+
 The editor foundation is complete in the development preview: both platforms
 passed real Chrome editing and download checks. The first automation slice is
 also implemented: an optional authenticated renderer and opt-in WooCommerce Pro

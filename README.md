@@ -24,6 +24,12 @@ PDFs locally with `npm run examples`.
 
 ## Try the WooCommerce preview
 
+[Open a sample store in your browser](https://playground.wordpress.net/?storage=temp&blueprint-url=https://raw.githubusercontent.com/fullbleed-engine/fullbleed-commerce/main/playground/blueprint.json).
+Try the free editor and download real PDFs from two fictional orders without an
+account, payment or store connection. The sample store is temporary; export your
+template to keep it. The [walkthrough](https://docs.fullbleed.dev/guides/woocommerce/)
+includes an actual sample PDF and explains the automated workflows.
+
 Download the free plugin from the
 [WooCommerce preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.2).
 Use a staging store. Install WooCommerce, then upload
@@ -122,6 +128,13 @@ See [docs/verification.md](docs/verification.md) for checks and gaps. Node gener
 the browser-worker runtime, DOM workflows, WordPress authentication, and actual
 WooCommerce order reads are checked separately. DOM simulation is not a real
 Chrome/Safari test or Shopify approval.
+
+The alpha.2 release fixes controls becoming usable before their scripts or add-ons
+are ready. Its public demo, delayed-script checks, saved templates and Pro batch
+downloads pass in real Chrome. All 44 shared tests and the Linux integration and
+container jobs pass; released ZIPs match Windows and Linux builds. See the
+[release evidence](docs/preview-release-verification.json) for exact source commits,
+archive hashes and the scope of each check.
 
 This preview produces order summaries, not fiscal invoices. It preserves store
 display amounts and does not calculate tax, create invoice numbers, or reconcile

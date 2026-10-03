@@ -1,10 +1,61 @@
 # Preview verification
 
-Checked locally on October 2, 2026. This evidence covers the 0.1.0-alpha.1
-preview, not marketplace approval or a live paid service. All order data used
-was synthetic. No merchant store was changed and no customer PDF was retained.
+The current WordPress release is **0.1.0-alpha.2**, published October 3, 2026.
+All checks use synthetic order data. This is an evaluation preview, not
+marketplace approval or a live paid service.
 
-## Executed checks
+## Current release and public demo
+
+The [release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.2)
+and [browser demo](https://playground.wordpress.net/?storage=temp&blueprint-url=https://raw.githubusercontent.com/fullbleed-engine/fullbleed-commerce/main/playground/blueprint.json)
+are public. The [merchant guide](https://docs.fullbleed.dev/guides/woocommerce/)
+includes an actual PDF downloaded from the demo. The free plugin's editor and
+browser PDFs run there; Pro automation is not enabled in the sample store.
+
+Public testing exposed a startup race: controls could be used before their
+scripts initialized, causing an ordinary form submission. Alpha.2 keeps them
+disabled, explains the loading state and waits for installed add-ons as well as
+the base tools. Deliberately delayed base and Pro requests now pass real Chrome
+checks, including Enter during startup and a PDF download after initialization.
+
+| Surface | Result |
+| --- | --- |
+| Shared Node tests | 44 passed, including delayed add-on registration |
+| Released packages | Both ZIPs and metadata downloaded without authentication; checksums match local files and the Linux build |
+| Synthetic demo runtime | Seven checks on Windows and Linux: exact ZIP, HPOS, fictional unpaid orders, preserved amounts, blocked mail/networking and disabled cron/tracking |
+| Public Chrome demo | 13 checks: temporary storage, real downloads, 32-item summary and packing slip, visual/source editing, saved templates, reset and 390px layout |
+| Local Chrome demo | 12 checks; all five PDF downloads match the public demo byte for byte |
+| Delayed script loading | 11 real Chrome checks covering the base plugin and Pro |
+| Pro Chrome workflow | 11 checks, including persistent templates and an actual two-PDF ZIP |
+| Linux WooCommerce automation | 28 email checks and 35 customer-download checks in each of HPOS and legacy storage; exact installed ZIP entries and private temporary permissions checked |
+| Linux Shopify and container jobs | Both jobs passed; this does not re-run the historical hosted or installed-store drills |
+| Public guide | Deployment passed; canonical/demo/release links, homepage discovery and published sample asset hashes verified |
+
+The [retained release record](preview-release-verification.json) ties these checks
+to release commit `2cdb283` and [Linux CI](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37100093017)
+at `7276f8e`. The only intervening changes are navigation waits in three browser
+test scripts, subsequently exercised locally. Runtime and packaged source did
+not change after that CI run. The record includes archive and document hashes,
+the exact browser checks and the guide deployment.
+
+The 32-item summary preserves all items and amounts across four pages, but its
+closing section occupies the final page by itself. This check establishes content
+retention for that fixture, not perfect pagination for every merchant template.
+Safari, other hosting policies, merchant fixtures and paid lifecycle checks
+remain open. Mail/customer automation still uses a test transport around actual
+WordPress hooks and Fullbleed PDF output; no production email delivery is claimed.
+
+To refresh this delta after executing its checks and downloading the matching CI
+artifact, run `node tools/retain-preview-verification.mjs alpha2 target/alpha2-ci`.
+Keep the historical whole-product records below separate from this release delta.
+
+## Earlier product and operational evidence
+
+The following checks were retained for the alpha.1 baseline on October 2–3, 2026.
+They describe the original observed runs; their archive hashes are not alpha.2
+hashes. No merchant store was changed and no customer PDF was retained.
+
+### Executed checks
 
 | Surface | Result | Retained evidence |
 | --- | --- | --- |
