@@ -177,6 +177,19 @@ try {
   const monitor = JSON.parse(run(['exec', '--user', 'node', name, 'node', 'scripts/privacy-status.mjs']));
   assert.equal(monitor.pending, 0);
   passed('privacy operator command runs in the production image');
+  // The workload harness is copied only into this disposable test container.
+  // It exercises the source renderer/service against an isolated database,
+  // while the actual production HTTP server shares the same resource ceiling.
+  for (const directory of ['src', 'pro', 'fixtures']) run(['cp', directory, `${name}:/commerce/${directory}`]);
+  run(['cp', 'shopify/render-limit.js', `${name}:/commerce/shopify/render-limit.js`]);
+  run(['exec', '--user', '0', name, 'mkdir', '-p', '/commerce/tools']);
+  run(['cp', 'tools/check-flow-capacity.mjs', `${name}:/commerce/tools/check-flow-capacity.mjs`]);
+  const capacityEnvironment = ['-e', 'DATABASE_URL=file:/data/capacity-test.sqlite', '-e', 'FULLBLEED_CAPACITY_OUTPUT=/data/capacity'];
+  run(['exec', '--user', 'node', ...capacityEnvironment, name, 'node', 'node_modules/prisma/build/index.js', 'migrate', 'deploy']);
+  console.log(run(['exec', '--user', 'node', ...capacityEnvironment, name, 'node', '/commerce/tools/check-flow-capacity.mjs', '--container'], { timeout: 180000 }));
+  mkdirSync('output/container/capacity', { recursive: true });
+  run(['cp', `${name}:/data/capacity/.`, 'output/container/capacity']);
+  passed('synthetic order burst completes under production resource limits with responsive HTTP readiness');
   mkdirSync('output/container', { recursive: true });
   writeFileSync('output/container/verification.json', JSON.stringify({ checkedAt: new Date().toISOString(),
     imageId: run(['image', 'inspect', image, '--format', '{{.Id}}']), cpuLimit: 0.5, memoryBytes: 536870912,

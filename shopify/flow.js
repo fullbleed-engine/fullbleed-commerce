@@ -106,34 +106,47 @@ export function createFlowService({ db, loadDocument, render, limit, secret, app
       await db.automationJob.updateMany({ where: { id, status: job.status, leaseId: job.leaseId }, data: { status: 'failed', lastError: 'retry_limit', leaseId: null, leaseUntil: null } });
       return;
     }
-    // A compare-and-set lease prevents duplicate renders in different processes.
-    const leaseId = randomUUID();
-    const claimed = await db.automationJob.updateMany({ where: { id, status: job.status, leaseId: job.leaseId, attempts: job.attempts }, data: {
-      status: 'running', leaseId, leaseUntil: new Date(at.valueOf() + 90000), attempts: { increment: 1 }, nextAttemptAt: null,
-    } });
-    if (!claimed.count) return;
-    job = { ...job, attempts: job.attempts + 1 };
-    const owned = { id, status: 'running', leaseId };
     try {
       await limit(job.shop, async () => {
-        const setting = await db.automationSettings.findUnique({ where: { shop: job.shop } });
-        if (!setting?.enabled) throw reject('Automation is paused.', 409);
-        const signal = AbortSignal.timeout(60000);
-        const document = await loadDocument(job, signal);
-        const result = await render(document.order, { ...document.options, signal });
-        if (result.pdf.length > 8 * 1024 * 1024 || Buffer.from(result.pdf).subarray(0, 5).toString() !== '%PDF-') throw new TypeError('Invalid document output.');
-        await db.automationJob.updateMany({ where: owned, data: {
-          status: 'ready', fingerprint: fingerprint(document), templateRevision: document.revision,
-          pdfSha256: hash(result.pdf), expiresAt: new Date(now().valueOf() + job.ttlHours * 3600000),
-          leaseId: null, leaseUntil: null, lastError: null,
+        // Reserve local capacity before spending an attempt. The durable lease
+        // still prevents duplicate preparation by another service/process.
+        const leaseId = randomUUID();
+        const claimed = await db.automationJob.updateMany({ where: { id, status: job.status, leaseId: job.leaseId, attempts: job.attempts }, data: {
+          status: 'running', leaseId, leaseUntil: new Date(now().valueOf() + 90000), attempts: { increment: 1 }, nextAttemptAt: null,
         } });
+        if (!claimed.count) return;
+        job = { ...job, attempts: job.attempts + 1 };
+        const owned = { id, status: 'running', leaseId };
+        try {
+          const setting = await db.automationSettings.findUnique({ where: { shop: job.shop } });
+          if (!setting?.enabled) throw reject('Automation is paused.', 409);
+          const signal = AbortSignal.timeout(60000);
+          const document = await loadDocument(job, signal);
+          const result = await render(document.order, { ...document.options, signal });
+          if (result.pdf.length > 8 * 1024 * 1024 || Buffer.from(result.pdf).subarray(0, 5).toString() !== '%PDF-') throw new TypeError('Invalid document output.');
+          await db.automationJob.updateMany({ where: owned, data: {
+            status: 'ready', fingerprint: fingerprint(document), templateRevision: document.revision,
+            pdfSha256: hash(result.pdf), expiresAt: new Date(now().valueOf() + job.ttlHours * 3600000),
+            leaseId: null, leaseUntil: null, lastError: null,
+          } });
+        } catch (error) {
+          const terminal = error instanceof TypeError || (error instanceof Response && error.status >= 400 && error.status < 500 && error.status !== 429);
+          await db.automationJob.updateMany({ where: owned, data: {
+            status: terminal || job.attempts >= MAX_ATTEMPTS ? 'failed' : 'retry-wait',
+            lastError: terminal ? 'order_or_access' : 'temporarily_unavailable', leaseId: null, leaseUntil: null,
+            nextAttemptAt: terminal ? null : new Date(now().valueOf() + Math.min(3600, 15 * 2 ** (job.attempts - 1)) * 1000),
+          } });
+        }
       });
     } catch (error) {
-      const terminal = error instanceof TypeError || (error instanceof Response && error.status >= 400 && error.status < 500 && error.status !== 429);
-      await db.automationJob.updateMany({ where: owned, data: {
-        status: terminal || job.attempts >= MAX_ATTEMPTS ? 'failed' : 'retry-wait',
-        lastError: terminal ? 'order_or_access' : 'temporarily_unavailable', leaseId: null, leaseUntil: null,
-        nextAttemptAt: terminal ? null : new Date(now().valueOf() + Math.min(3600, 15 * 2 ** (job.attempts - 1)) * 1000),
+      if (!(error instanceof Response) || error.status !== 429) throw error;
+      // A capacity wait reads no order and starts no render. Keep the retry
+      // budget intact and never overwrite a competing lease, pause or erasure.
+      await db.automationJob.updateMany({ where: {
+        id, status: job.status, leaseId: job.leaseId, attempts: job.attempts, nextAttemptAt: job.nextAttemptAt,
+      }, data: {
+        status: 'retry-wait', lastError: 'capacity_wait', leaseId: null, leaseUntil: null,
+        nextAttemptAt: new Date(Math.min(job.retryDeadline.valueOf(), now().valueOf() + 5000)),
       } });
     }
   }

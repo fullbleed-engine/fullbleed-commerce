@@ -45,6 +45,10 @@ workflow in Shopify Flow to continue its following steps.
   If the app process exits, Flow's next delivery can recover a lease after 90 seconds.
 - Transient failures back off, with at most eight preparation attempts and a
   36-hour retry window. Invalid or unsupported orders require merchant action.
+  Waiting for local render capacity does not spend a preparation attempt: the
+  job remains durable and asks Flow to retry after five seconds. The same
+  36-hour deadline still applies. Upstream failures after admission consume
+  an attempt and retain exponential backoff.
   Jobs survive restarts; the app still requires a persistent database and a
   persistent Node process. It is not a serverless background-task implementation.
 - `200` means the document was verified and its link is ready. It is not proof of

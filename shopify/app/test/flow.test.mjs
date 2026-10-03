@@ -131,6 +131,80 @@ test('expired process lease resumes after restart and transient failures back of
   assert.equal(record.status, 'ready'); assert.equal(record.attempts, 3);
 });
 
+test('local capacity waits do not spend preparation attempts and survive restart', async () => {
+  const limit = createRenderLimit({ maxTotal: 1 });
+  const makeService = () => createFlowService({ db, loadDocument, render, secret, appUrl: 'https://fullbleed-test.invalid', limit, now: () => new Date(time) });
+  let queued = makeService();
+  await queued.setEnabled(primary, true);
+  const job = await queued.accept(parsed());
+  let release;
+  const occupied = limit(other, () => new Promise(resolve => { release = resolve; }));
+  try {
+    for (let i = 0; i < 10; i++) {
+      await queued.start(job.id);
+      const waiting = await db.automationJob.findUniqueOrThrow({ where: { id: job.id } });
+      assert.equal(waiting.status, 'retry-wait');
+      assert.equal(waiting.attempts, 0, 'Admission waits must not exhaust actual preparation attempts.');
+      assert.equal(waiting.lastError, 'capacity_wait');
+      assert.equal(waiting.leaseId, null);
+      assert.equal(waiting.leaseUntil, null);
+      assert.equal(queued.status(waiting).status, 429);
+      assert.equal(renderCalls, 0); assert.equal(orderReads, 0);
+      time = waiting.nextAttemptAt.valueOf() + 1;
+      if (i === 4) queued = makeService();
+    }
+  } finally { release(); await occupied; }
+  await queued.start(job.id);
+  const ready = await db.automationJob.findUniqueOrThrow({ where: { id: job.id } });
+  assert.equal(ready.status, 'ready'); assert.equal(ready.attempts, 1);
+  assert.equal(renderCalls, 1); assert.equal(ready.lastError, null);
+});
+
+test('capacity deferral preserves pause and competing leases and still respects the deadline', async () => {
+  const makeService = limit => createFlowService({ db, loadDocument, render, secret, appUrl: 'https://fullbleed-test.invalid', limit, now: () => new Date(time) });
+  await service.setEnabled(primary, true);
+  const paused = await service.accept(parsed());
+  await makeService(async () => {
+    await service.setEnabled(primary, false);
+    throw new Response(null, { status: 429 });
+  }).start(paused.id);
+  assert.equal((await db.automationJob.findUniqueOrThrow({ where: { id: paused.id } })).status, 'revoked');
+
+  await service.setEnabled(primary, true);
+  const competing = await service.accept(parsed());
+  const competingLease = randomUUID();
+  await makeService(async () => {
+    await db.automationJob.update({ where: { id: competing.id }, data: { status: 'running', attempts: 1, leaseId: competingLease, leaseUntil: new Date(time + 90000) } });
+    throw new Response(null, { status: 429 });
+  }).start(competing.id);
+  assert.equal((await db.automationJob.findUniqueOrThrow({ where: { id: competing.id } })).leaseId, competingLease);
+
+  const expired = await service.accept(parsed());
+  const busy = makeService(async () => { throw new Response(null, { status: 429 }); });
+  time = expired.retryDeadline.valueOf() - 1000;
+  await busy.start(expired.id);
+  const waiting = await db.automationJob.findUniqueOrThrow({ where: { id: expired.id } });
+  assert.equal(waiting.nextAttemptAt.valueOf(), expired.retryDeadline.valueOf());
+  time = expired.retryDeadline.valueOf();
+  await busy.start(expired.id);
+  const ended = await db.automationJob.findUniqueOrThrow({ where: { id: expired.id } });
+  assert.equal(ended.status, 'failed'); assert.equal(ended.attempts, 0);
+  assert.equal(ended.lastError, 'retry_limit'); assert.equal(orderReads, 0); assert.equal(renderCalls, 0);
+});
+
+test('upstream throttling still counts as an attempted preparation', async () => {
+  const throttled = createFlowService({ db, render, secret, appUrl: 'https://fullbleed-test.invalid', limit: createRenderLimit(), now: () => new Date(time),
+    loadDocument: async () => { throw new Response(null, { status: 429 }); },
+  });
+  await throttled.setEnabled(primary, true);
+  const job = await throttled.accept(parsed());
+  await throttled.start(job.id);
+  const waiting = await db.automationJob.findUniqueOrThrow({ where: { id: job.id } });
+  assert.equal(waiting.status, 'retry-wait'); assert.equal(waiting.attempts, 1);
+  assert.equal(waiting.lastError, 'temporarily_unavailable');
+  assert.equal(waiting.nextAttemptAt.valueOf(), time + 15000);
+});
+
 test('verified downloads use exact bytes, reject forged/expired links and invalidate changed content', async () => {
   const job = await readyJob(); const token = await linkToken(job);
   const reads = orderReads;
