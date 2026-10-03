@@ -76,6 +76,10 @@ orders without staff assistance. Both features start disabled and reuse the save
 template. Failed rendering preserves the original email or account page and
 records a merchant-visible error. See the
 [WooCommerce automation guide](automation/README.md).
+Store operators and agencies can use the
+[private renderer deployment](automation/DEPLOYMENT.md) for an HTTPS proxy,
+credential provisioning, bounded container resources, maintenance and rotation.
+It runs on infrastructure the operator controls; it is not a hosted plan.
 
 Shopify adds **Create order summary link** and **Create packing slip link** to
 Flow. Enable automation, connect an order trigger, and use the returned private

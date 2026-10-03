@@ -10,6 +10,11 @@ Node runtime, validation, fonts and print styles as the existing integrations.
 
 ## Configure a private instance
 
+The [Docker deployment guide](DEPLOYMENT.md) provides a pinned renderer image,
+HTTPS proxy, private credential setup, maintenance and rotation instructions.
+It is intended for a store operator or agency with a Linux Docker host. The
+direct Node configuration below remains available for other supervised hosts.
+
 Install the repository's locked dependencies with Node 24.18 or later. Create a
 random token of at least 32 bytes with a credential manager. Give the token to
 the authorized store administrator. Keep only its SHA-256 hash in a private JSON

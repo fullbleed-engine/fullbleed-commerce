@@ -1,0 +1,11 @@
+{
+    email {$FULLBLEED_ACME_EMAIL}
+}
+
+{$FULLBLEED_RENDERER_HOST} {
+    # Access logging is deliberately not enabled: requests contain order data.
+    request_body {
+        max_size 786432
+    }
+    reverse_proxy renderer:9480
+}

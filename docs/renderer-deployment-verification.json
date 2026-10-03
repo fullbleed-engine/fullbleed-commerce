@@ -1,0 +1,547 @@
+{
+  "checkedAt": "2026-10-03T06:37:22.969Z",
+  "syntheticOnly": true,
+  "transport": "Native WordPress/PHP cURL over real TLS to Caddy and the unmodified renderer container. Local fixture CA trusted explicitly; private Docker hostname permitted only in the fixture. No pre_http_request response substitution. PHPMailer MIME is captured without sending and decoded with an independent standard MIME parser.",
+  "packages": [
+    {
+      "filename": "fullbleed-commerce-0.1.0-alpha.2.zip",
+      "bytes": 3174709,
+      "sha256": "b1141910948e038e1ee8565c44708d304f0ee78967442cc26c0a68162985a5fe",
+      "files": 35
+    },
+    {
+      "filename": "fullbleed-commerce-pro-0.1.0-alpha.2.zip",
+      "bytes": 28369,
+      "sha256": "3a309bec70c90ed9f1127c86e496ae80946eb615ddf2212d85ccc60835545728",
+      "files": 10
+    }
+  ],
+  "images": {
+    "wordpress": "wordpress:7.1.2-php8.3-apache@sha256:4abf7a450ee477dde967584f8174d7e03221d224c4971a0c38d84e7254426e64",
+    "database": "mariadb:11.8@sha256:6422478cb8e159f080fb1d8ccf65101e26fe51385787fde7d16c3b165a331f15",
+    "proxy": "fullbleed-renderer-check-2442-1791009380087:proxy",
+    "rendererImageId": "sha256:c7c60186808c0fb9214a400feadff89d074fab581a234d3ccab87db1f94f82ba"
+  },
+  "woocommerceArchive": {
+    "url": "https://downloads.wordpress.org/plugin/woocommerce.11.1.2.zip",
+    "sha256": "9de9350a1cf5671b9960afb3151f40f7980e223217a441bf2ea5921b5fce8e9e"
+  },
+  "checks": [
+    {
+      "name": "deployment configuration publishes only the TLS proxy and isolates renderer egress",
+      "passed": true
+    },
+    {
+      "name": "renderer starts as an unprivileged user with read-only files, health checks and enforced resource limits",
+      "passed": true
+    },
+    {
+      "name": "running renderer cannot write into its application directory",
+      "passed": true
+    },
+    {
+      "name": "public-certificate Caddy configuration validates without requesting a certificate",
+      "passed": true
+    },
+    {
+      "name": "fresh native WordPress and WooCommerce install every exact base and Pro ZIP entry",
+      "passed": true
+    },
+    {
+      "name": "render: native PHP has a real cURL transport",
+      "passed": true
+    },
+    {
+      "name": "render: WooCommerce uses HPOS",
+      "passed": true
+    },
+    {
+      "name": "render: WordPress rejects the untrusted local TLS issuer",
+      "passed": true
+    },
+    {
+      "name": "render: native PHP can read the explicitly trusted public CA certificate",
+      "passed": true
+    },
+    {
+      "name": "render: trusted HTTPS renderer returns a real verified PDF",
+      "passed": true
+    },
+    {
+      "name": "render: WordPress verifies TLS and does not follow redirects",
+      "passed": true
+    },
+    {
+      "name": "render: real HTTPS service rejects a revoked or incorrect token",
+      "passed": true
+    },
+    {
+      "name": "render: same HTTPS service generates a packing slip",
+      "passed": true
+    },
+    {
+      "name": "render: WooCommerce serializes the original transactional email without outbound mail",
+      "passed": true
+    },
+    {
+      "name": "render: native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+      "passed": true
+    },
+    {
+      "name": "render: attachment bytes match the direct HTTPS PDF",
+      "passed": true
+    },
+    {
+      "name": "render: attachment uses private temporary storage outside the public root",
+      "passed": true
+    },
+    {
+      "name": "render: successful preparation clears a previous failure",
+      "passed": true
+    },
+    {
+      "name": "render: independently decoded MIME has the expected attachment filename and exact PDF bytes",
+      "passed": true
+    },
+    {
+      "name": "TLS PDFs match direct Node rendering and complete summary bytes reach the captured email",
+      "passed": true
+    },
+    {
+      "name": "request-owned private attachment files are removed after mail processing",
+      "passed": true
+    },
+    {
+      "name": "outage: WooCommerce serializes the original transactional email without outbound mail",
+      "passed": true
+    },
+    {
+      "name": "outage: renderer outage preserves the email without an invalid attachment",
+      "passed": true
+    },
+    {
+      "name": "outage: renderer outage records a safe merchant-visible failure",
+      "passed": true
+    },
+    {
+      "name": "outage: independently decoded MIME has the expected attachment filename and exact PDF bytes",
+      "passed": true
+    },
+    {
+      "name": "recovery: WooCommerce serializes the original transactional email without outbound mail",
+      "passed": true
+    },
+    {
+      "name": "recovery: native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+      "passed": true
+    },
+    {
+      "name": "recovery: attachment bytes match the direct HTTPS PDF",
+      "passed": true
+    },
+    {
+      "name": "recovery: attachment uses private temporary storage outside the public root",
+      "passed": true
+    },
+    {
+      "name": "recovery: successful preparation clears a previous failure",
+      "passed": true
+    },
+    {
+      "name": "recovery: independently decoded MIME has the expected attachment filename and exact PDF bytes",
+      "passed": true
+    },
+    {
+      "name": "revoked: previous token is rejected after connection rotation",
+      "passed": true
+    },
+    {
+      "name": "rotated: WooCommerce serializes the original transactional email without outbound mail",
+      "passed": true
+    },
+    {
+      "name": "rotated: native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+      "passed": true
+    },
+    {
+      "name": "rotated: attachment bytes match the direct HTTPS PDF",
+      "passed": true
+    },
+    {
+      "name": "rotated: attachment uses private temporary storage outside the public root",
+      "passed": true
+    },
+    {
+      "name": "rotated: successful preparation clears a previous failure",
+      "passed": true
+    },
+    {
+      "name": "rotated: independently decoded MIME has the expected attachment filename and exact PDF bytes",
+      "passed": true
+    },
+    {
+      "name": "deployment logs contain neither raw renderer tokens nor synthetic order fields",
+      "passed": true
+    }
+  ],
+  "phases": [
+    {
+      "mode": "render",
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.35",
+      "checks": [
+        {
+          "name": "native PHP has a real cURL transport",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce uses HPOS",
+          "passed": true
+        },
+        {
+          "name": "WordPress rejects the untrusted local TLS issuer",
+          "passed": true
+        },
+        {
+          "name": "native PHP can read the explicitly trusted public CA certificate",
+          "passed": true
+        },
+        {
+          "name": "trusted HTTPS renderer returns a real verified PDF",
+          "passed": true
+        },
+        {
+          "name": "WordPress verifies TLS and does not follow redirects",
+          "passed": true
+        },
+        {
+          "name": "real HTTPS service rejects a revoked or incorrect token",
+          "passed": true
+        },
+        {
+          "name": "same HTTPS service generates a packing slip",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce serializes the original transactional email without outbound mail",
+          "passed": true
+        },
+        {
+          "name": "native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+          "passed": true
+        },
+        {
+          "name": "attachment bytes match the direct HTTPS PDF",
+          "passed": true
+        },
+        {
+          "name": "attachment uses private temporary storage outside the public root",
+          "passed": true
+        },
+        {
+          "name": "successful preparation clears a previous failure",
+          "passed": true
+        }
+      ],
+      "filename": "fullbleed-order-summary-11.pdf",
+      "pdfSha256": "47e33b12b9c9c8318e823874fde93cfe0f27dd04d89bdb010687b1d4a9131411",
+      "mail": {
+        "attachments": [
+          {
+            "filename": "fullbleed-order-summary-11.pdf",
+            "contentType": "application/octet-stream",
+            "disposition": "attachment",
+            "bytes": 133152,
+            "pdfSignature": true,
+            "sha256": "47e33b12b9c9c8318e823874fde93cfe0f27dd04d89bdb010687b1d4a9131411"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "outage",
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.35",
+      "checks": [
+        {
+          "name": "WooCommerce serializes the original transactional email without outbound mail",
+          "passed": true
+        },
+        {
+          "name": "renderer outage preserves the email without an invalid attachment",
+          "passed": true
+        },
+        {
+          "name": "renderer outage records a safe merchant-visible failure",
+          "passed": true
+        }
+      ],
+      "filename": "fullbleed-order-summary-11.pdf",
+      "pdfSha256": "47e33b12b9c9c8318e823874fde93cfe0f27dd04d89bdb010687b1d4a9131411",
+      "mail": {
+        "attachments": []
+      }
+    },
+    {
+      "mode": "recovery",
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.35",
+      "checks": [
+        {
+          "name": "WooCommerce serializes the original transactional email without outbound mail",
+          "passed": true
+        },
+        {
+          "name": "native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+          "passed": true
+        },
+        {
+          "name": "attachment bytes match the direct HTTPS PDF",
+          "passed": true
+        },
+        {
+          "name": "attachment uses private temporary storage outside the public root",
+          "passed": true
+        },
+        {
+          "name": "successful preparation clears a previous failure",
+          "passed": true
+        }
+      ],
+      "filename": "fullbleed-order-summary-11.pdf",
+      "pdfSha256": "47e33b12b9c9c8318e823874fde93cfe0f27dd04d89bdb010687b1d4a9131411",
+      "mail": {
+        "attachments": [
+          {
+            "filename": "fullbleed-order-summary-11.pdf",
+            "contentType": "application/octet-stream",
+            "disposition": "attachment",
+            "bytes": 133152,
+            "pdfSignature": true,
+            "sha256": "47e33b12b9c9c8318e823874fde93cfe0f27dd04d89bdb010687b1d4a9131411"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "revoked",
+      "checks": [
+        {
+          "name": "previous token is rejected after connection rotation",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "mode": "rotated",
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.35",
+      "checks": [
+        {
+          "name": "WooCommerce serializes the original transactional email without outbound mail",
+          "passed": true
+        },
+        {
+          "name": "native WooCommerce email attaches an HTTPS-generated PDF with its display filename",
+          "passed": true
+        },
+        {
+          "name": "attachment bytes match the direct HTTPS PDF",
+          "passed": true
+        },
+        {
+          "name": "attachment uses private temporary storage outside the public root",
+          "passed": true
+        },
+        {
+          "name": "successful preparation clears a previous failure",
+          "passed": true
+        }
+      ],
+      "filename": "fullbleed-order-summary-11.pdf",
+      "pdfSha256": "47e33b12b9c9c8318e823874fde93cfe0f27dd04d89bdb010687b1d4a9131411",
+      "mail": {
+        "attachments": [
+          {
+            "filename": "fullbleed-order-summary-11.pdf",
+            "contentType": "application/octet-stream",
+            "disposition": "attachment",
+            "bytes": 133152,
+            "pdfSignature": true,
+            "sha256": "47e33b12b9c9c8318e823874fde93cfe0f27dd04d89bdb010687b1d4a9131411"
+          }
+        ]
+      }
+    }
+  ],
+  "documents": [
+    {
+      "filename": "https-summary.pdf",
+      "sha256": "47e33b12b9c9c8318e823874fde93cfe0f27dd04d89bdb010687b1d4a9131411",
+      "bytes": 133152,
+      "pages": 1,
+      "missingGlyphs": 0,
+      "matchesDirectNodeRenderer": true
+    },
+    {
+      "filename": "https-packing.pdf",
+      "sha256": "6f0c03254128f0265790c668ad94baaa5f955cc788eff6094346c8ed61aa5ead",
+      "bytes": 133878,
+      "pages": 1,
+      "missingGlyphs": 0,
+      "matchesDirectNodeRenderer": true
+    }
+  ],
+  "evidence": [
+    {
+      "file": "output/renderer-deployment/https-summary.pdf",
+      "sha256": "47e33b12b9c9c8318e823874fde93cfe0f27dd04d89bdb010687b1d4a9131411"
+    },
+    {
+      "file": "output/renderer-deployment/https-packing.pdf",
+      "sha256": "6f0c03254128f0265790c668ad94baaa5f955cc788eff6094346c8ed61aa5ead"
+    },
+    {
+      "file": "output/renderer-deployment/render.eml",
+      "sha256": "27a8bb0c0d4cb28fdc37327050a04b27aab46f580e351c95109e66d4e2ece9ca"
+    },
+    {
+      "file": "output/renderer-deployment/outage.eml",
+      "sha256": "e4fdf6cb32c1c107520a4ad6df3fe1c56a722cd5a34548bb2f4b3c1c7da5cf14"
+    },
+    {
+      "file": "output/renderer-deployment/recovery.eml",
+      "sha256": "e4e95042516c88ea59da694cb26cedc00a52c7fc365622ee2f712c450d6dbdd9"
+    },
+    {
+      "file": "output/renderer-deployment/rotated.eml",
+      "sha256": "5870d3c8460dd8b1100b867377f32a92d12899477cb141471201553d9701d798"
+    }
+  ],
+  "limitations": [
+    "Local TLS issuer only; public DNS, ACME issuance and a merchant host remain deployment checks.",
+    "PHPMailer identifies extensionless private temporary attachments as application/octet-stream; the .pdf display filename and complete decoded PDF bytes are verified separately.",
+    "No production email provider, managed hosting, paid entitlements or merchant data used.",
+    "The renderer remains one process with in-memory capacity limits; this is not metered SaaS or a high-availability claim."
+  ],
+  "retainedAt": "2026-10-03T06:49:22.514513+00:00",
+  "ci": {
+    "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37103581003",
+    "commit": "061f28be7dab54eb5b0679a3a83404add57cdfc4",
+    "conclusion": "success",
+    "updatedAt": "2026-10-03T06:44:45Z",
+    "jobs": [
+      {
+        "name": "container",
+        "conclusion": "success",
+        "completedAt": "2026-10-03T06:38:23Z",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37103581003/job/111147727816"
+      },
+      {
+        "name": "renderer-deployment",
+        "conclusion": "success",
+        "completedAt": "2026-10-03T06:37:32Z",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37103581003/job/111147727949"
+      },
+      {
+        "name": "integration",
+        "conclusion": "success",
+        "completedAt": "2026-10-03T06:44:44Z",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37103581003/job/111147727997"
+      }
+    ],
+    "sharedTests": {
+      "passed": 45,
+      "failed": 0,
+      "logSha256": "551465d3fc2ee9abe98835688da255a6d134ff687331e30a92dc66a17f4d11f4"
+    }
+  },
+  "checkedSources": [
+    {
+      "file": ".github/workflows/verify.yml",
+      "sha256": "4e0f6680b7d14597dd2145edb3bb5f4cbbcb8c0ae44e35bab9110413684c9f6b"
+    },
+    {
+      "file": "automation/Caddyfile",
+      "sha256": "72832eb09d7e7d1a91226e88cde4c2e5b598a36a957600a0d69fb32708ec28fd"
+    },
+    {
+      "file": "automation/Dockerfile",
+      "sha256": "1d4c0ac15c43aed6a9a6a578b632309eba13dd7f5aaf51653bad5d945d39ab79"
+    },
+    {
+      "file": "automation/proxy.Dockerfile",
+      "sha256": "81227bd0001660c7df836c4628b538be21437e1dccdb0b4fed2e07ce0ed6a176"
+    },
+    {
+      "file": "automation/compose.yaml",
+      "sha256": "5b71ae75d9b671ea41d32114972f1d1651cde8b9c887a0bd3798c2db4c166c59"
+    },
+    {
+      "file": "automation/create-client.mjs",
+      "sha256": "d63f2f5f10ae7b088f44af80c7b1bd0e695a33caa9f39b5a1747419c6920a39b"
+    },
+    {
+      "file": "automation/renderer.js",
+      "sha256": "ce32ac6d2afaad02a79233afedcbab980b8410af8f16496e0305aadb1550b4a1"
+    },
+    {
+      "file": "automation/server.mjs",
+      "sha256": "7bfc5dbb30eb8dd7bc75a25f4e0eac123a7497f05b5edb72058e6ce4119d9dd6"
+    },
+    {
+      "file": "test/renderer-client.test.mjs",
+      "sha256": "124ecfd8edbb7c580012a48c23402f6064663f151d1b5ae1b6cde66b73ac4e1d"
+    },
+    {
+      "file": "tools/check-renderer-deployment.mjs",
+      "sha256": "266f224377f25bbda431f2223c98cc5e6fd846127de53e21758c23c47e291347"
+    },
+    {
+      "file": "tools/renderer-fixture/Caddyfile",
+      "sha256": "13ea37b910ce840585728ec0e8bfb9908917ad5fa572776846bdc16f2d0928cc"
+    },
+    {
+      "file": "tools/renderer-fixture/bootstrap.php",
+      "sha256": "a6113331ff48c1e7cf69ff58878f364d75ce1eb3570d3600eb8c84eddfda7c92"
+    },
+    {
+      "file": "tools/renderer-fixture/check.php",
+      "sha256": "c666be37fa05325a91a9874caf1434499768085112502284719bf7674678c854"
+    },
+    {
+      "file": "tools/renderer-fixture/inspect-mail.py",
+      "sha256": "b4e3e6a6a6f82b5b66d265933f95834c674eea5c58ee1199f637b5cd61e65992"
+    }
+  ],
+  "artifactRecordSha256": "c48421bfe50de6410e83131c65305c3fdbbadfbbd95b393ffe6dbc27c814e5eb",
+  "visualInspection": {
+    "deliveredSummaryAndPackingPdfInspected": true,
+    "independentPdfRenderer": "PyMuPDF 1.26.5",
+    "ciAndWindowsPackingPreviewIdentical": true,
+    "packingPreviewSha256": "645f21d5a1bde4744686adb75e3b5a55260e9f7ba74fbb6b12d9ac1f7cc9728e",
+    "dateTextPresent": true,
+    "evidence": [
+      {
+        "file": "order-summary-1.png",
+        "sha256": "2c60c40c67987b7989fe65ae47b06cbf84a274f71f14959f77e5a585117bf127"
+      },
+      {
+        "file": "packing-slip-1.png",
+        "sha256": "645f21d5a1bde4744686adb75e3b5a55260e9f7ba74fbb6b12d9ac1f7cc9728e"
+      },
+      {
+        "file": "https-summary-pdf-view.png",
+        "sha256": "9826c66ce6874b8bc62218cb9b787ff69f0ffc43a034e25842f960d3cd36d94a"
+      },
+      {
+        "file": "https-packing-pdf-view.png",
+        "sha256": "4a09a01b63e8af57ddc92a1f705c1a77f484dca2d04e871f4115b592d2cc7125"
+      }
+    ]
+  }
+}

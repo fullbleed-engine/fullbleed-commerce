@@ -1,0 +1,63 @@
+# One renderer instance for a self-hosted store. Run from a pinned source checkout.
+services:
+  renderer:
+    image: ${FULLBLEED_RENDERER_IMAGE:-fullbleed-renderer:local}
+    build:
+      context: ..
+      dockerfile: automation/Dockerfile
+    init: true
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 512m
+    cpus: 0.5
+    pids_limit: 64
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=64m,mode=1777
+    environment:
+      FULLBLEED_RENDER_CLIENTS_FILE: /run/secrets/renderer_clients
+    secrets: [renderer_clients]
+    networks: [renderer_private]
+    stop_grace_period: 40s
+
+  proxy:
+    image: ${FULLBLEED_PROXY_IMAGE:-fullbleed-renderer-proxy:local}
+    build:
+      context: ..
+      dockerfile: automation/proxy.Dockerfile
+    restart: unless-stopped
+    read_only: true
+    security_opt: [no-new-privileges:true]
+    mem_limit: 128m
+    pids_limit: 64
+    environment:
+      FULLBLEED_RENDERER_HOST: ${FULLBLEED_RENDERER_HOST:?Set the public renderer hostname}
+      FULLBLEED_ACME_EMAIL: ${FULLBLEED_ACME_EMAIL:?Set the certificate contact email}
+    ports:
+      - ${FULLBLEED_LISTEN_ADDRESS:-0.0.0.0}:${FULLBLEED_HTTP_PORT:-80}:80
+      - ${FULLBLEED_LISTEN_ADDRESS:-0.0.0.0}:${FULLBLEED_HTTPS_PORT:-443}:443
+    volumes:
+      - ${FULLBLEED_CADDYFILE:-./Caddyfile}:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=16m,mode=1777
+    networks:
+      renderer_private:
+        aliases: ["${FULLBLEED_RENDERER_HOST}"]
+      public:
+    depends_on:
+      renderer:
+        condition: service_healthy
+
+secrets:
+  renderer_clients:
+    file: ${FULLBLEED_CLIENTS_FILE:?Set the absolute path to clients.json}
+volumes:
+  caddy_data:
+  caddy_config:
+networks:
+  renderer_private:
+    internal: true
+  public:
