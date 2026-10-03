@@ -39,9 +39,10 @@ jobs:
       - name: Extract the exact free plugin archive
         run: |
           mkdir -p target/directory-package
-          unzip -q dist/fullbleed-commerce-*.zip -d target/directory-package
+          version=$(node -p 'require("./package.json").version')
+          unzip -q "dist/fullbleed-commerce-${version}.zip" -d target/directory-package
           node -e 'require("fs").writeFileSync(".wp-env.json", JSON.stringify({core:"https://wordpress.org/wordpress-7.1.2.zip",config:{WP_DEBUG:true,WP_DEBUG_LOG:true,WP_DEBUG_DISPLAY:false,DISABLE_WP_CRON:true}}))'
-      - uses: WordPress/plugin-check-action@10857da14b6c2246d15402b3e69f777edcf8c12e # v1
+      - uses: WordPress/plugin-check-action@005058d6dbd2942b6a58610836b981c2ee3cc19d # reviewed main; preserves wp-env configuration
         with:
           build-dir: target/directory-package/fullbleed-commerce
           slug: fullbleed-commerce
