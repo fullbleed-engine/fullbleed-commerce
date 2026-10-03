@@ -137,7 +137,7 @@ They reset on restart and are not paid usage metering or a durable work queue.
 The shared renderer also bounds request/PDF size and render duration. The store
 must run its WooCommerce queue; this service does not receive or schedule orders.
 
-To reproduce the deployment check on Linux with Docker:
+To reproduce the deployment check on Linux with Docker, Node and Python 3:
 
 ```sh
 npm ci --ignore-scripts

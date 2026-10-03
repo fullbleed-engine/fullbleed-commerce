@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Real Linux containers and native WordPress HTTP/TLS. Synthetic data only.
-// Requires built ZIPs, root dependencies, Docker Engine and Docker Compose v2.
+// Requires built ZIPs, root dependencies, Python 3, Docker Engine and Compose v2.
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -159,6 +159,18 @@ try {
     if (mode !== 'revoked') {
       assert.equal(run(['exec', wordpress, 'php', '-r', "$paths=json_decode(file_get_contents('/tmp/fullbleed-native-attachment-paths.json'),true);foreach($paths as $path)if(file_exists($path))exit(1);echo 'removed';"]), 'removed');
       copyOut(wordpress, '/tmp/fullbleed-native-mail.eml', join(output, `${mode}.eml`));
+      const parsed = spawnSync(process.env.PYTHON_BIN || 'python3', ['tools/renderer-fixture/inspect-mail.py', join(output, `${mode}.eml`)], { encoding: 'utf8', windowsHide: true });
+      assert.equal(parsed.status, 0, parsed.stderr);
+      record.mail = JSON.parse(parsed.stdout);
+      assert.equal(record.mail.attachments.length, mode === 'outage' ? 0 : 1);
+      for (const attachment of record.mail.attachments) {
+        assert.equal(attachment.filename, record.filename);
+        assert.equal(attachment.disposition, 'attachment');
+        assert.equal(attachment.pdfSignature, true);
+        assert.ok(['application/pdf', 'application/octet-stream'].includes(attachment.contentType));
+        assert.equal(attachment.sha256, record.pdfSha256);
+      }
+      passed(`${mode}: independently decoded MIME has the expected attachment filename and exact PDF bytes`);
     }
   }
   phase('render');
@@ -196,7 +208,7 @@ try {
   for (const value of ['Alex', 'Morgan', '42 Example Street', 'LIN-MOSS']) assert.ok(!logs.includes(value));
   passed('deployment logs contain neither raw renderer tokens nor synthetic order fields');
   const evidence = ['https-summary.pdf', 'https-packing.pdf', 'render.eml', 'outage.eml', 'recovery.eml', 'rotated.eml'].map(filename => ({ file: `output/renderer-deployment/${filename}`, sha256: hash(readFileSync(join(output, filename))) }));
-  const result = { checkedAt: new Date().toISOString(), syntheticOnly: true, transport: 'Native WordPress/PHP cURL over real TLS to Caddy and the unmodified renderer container. Local fixture CA trusted explicitly; private Docker hostname permitted only in the fixture. No pre_http_request response substitution. PHPMailer MIME is captured without sending.', packages, images: { ...images, proxy: configuration.services.proxy.image, rendererImageId: inspect(compose(['ps', '-q', 'renderer'])).Image }, woocommerceArchive: { url: wooUrl, sha256: hash(wooBytes) }, checks, phases, documents, evidence, limitations: ['Local TLS issuer only; public DNS, ACME issuance and a merchant host remain deployment checks.', 'No production email provider, managed hosting, paid entitlements or merchant data used.', 'The renderer remains one process with in-memory capacity limits; this is not metered SaaS or a high-availability claim.'] };
+  const result = { checkedAt: new Date().toISOString(), syntheticOnly: true, transport: 'Native WordPress/PHP cURL over real TLS to Caddy and the unmodified renderer container. Local fixture CA trusted explicitly; private Docker hostname permitted only in the fixture. No pre_http_request response substitution. PHPMailer MIME is captured without sending and decoded with an independent standard MIME parser.', packages, images: { ...images, proxy: configuration.services.proxy.image, rendererImageId: inspect(compose(['ps', '-q', 'renderer'])).Image }, woocommerceArchive: { url: wooUrl, sha256: hash(wooBytes) }, checks, phases, documents, evidence, limitations: ['Local TLS issuer only; public DNS, ACME issuance and a merchant host remain deployment checks.', 'PHPMailer identifies extensionless private temporary attachments as application/octet-stream; the .pdf display filename and complete decoded PDF bytes are verified separately.', 'No production email provider, managed hosting, paid entitlements or merchant data used.', 'The renderer remains one process with in-memory capacity limits; this is not metered SaaS or a high-availability claim.'] };
   writeFileSync(join(output, 'verification.json'), `${JSON.stringify(result, null, 2)}\n`);
   console.log(JSON.stringify({ passed: checks.length, record: 'output/renderer-deployment/verification.json' }));
 } catch (error) {
