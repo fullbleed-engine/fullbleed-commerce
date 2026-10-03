@@ -165,12 +165,14 @@ the browser-worker runtime, DOM workflows, WordPress authentication, and actual
 WooCommerce order reads are checked separately. DOM simulation is not a real
 Chrome/Safari test or Shopify approval.
 
-The alpha.2 release fixed controls becoming usable before their scripts or add-ons
-are ready. Its public demo, delayed-script checks, saved templates and Pro batch
-downloads pass in real Chrome. All 44 shared tests and the Linux integration and
-container jobs pass; released ZIPs match Windows and Linux builds. See the
-[release evidence](docs/preview-release-verification.json) for exact source commits,
-archive hashes and the scope of each check.
+Alpha.3 packages the merchant activity view and WordPress editor fixes. All 45
+shared tests pass. Upgrades from the actual alpha.2 ZIPs preserve templates,
+revisions and automation settings in HPOS and legacy storage. Real Chrome checks
+cover the upgraded Pro store, free sample store and native WordPress installation.
+Both released ZIPs match Windows and Linux builds. See the
+[alpha.3 release evidence](docs/alpha3-release-verification.json) for exact source,
+archive hashes, automation checks and browser results. Historical release checks
+remain separately identified in the verification guide.
 
 This preview produces order summaries, not fiscal invoices. It preserves store
 display amounts and does not calculate tax, create invoice numbers, or reconcile

@@ -1,10 +1,51 @@
 # Preview verification
 
-The current WordPress release is **0.1.0-alpha.2**, published October 3, 2026.
+The current WordPress release is **0.1.0-alpha.3**, published October 3, 2026.
 All checks use synthetic order data. This is an evaluation preview, not
 marketplace approval or a live paid service.
 
-## Current release and public demo
+## Current release and upgrade path
+
+[Alpha.3](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.3)
+packages the merchant activity view and the editor built with WordPress's shared
+libraries. The [browser demo](https://playground.wordpress.net/?storage=temp&blueprint-url=https://raw.githubusercontent.com/fullbleed-engine/fullbleed-commerce/main/playground/blueprint.json)
+uses the free package. The separate Pro ZIP includes automation activity; the
+demo does not enable automatic emails, customer downloads or a hosted service.
+
+The upgrade check downloads the real alpha.2 archives with pinned checksums,
+installs them in a disposable store, saves both templates and their revisions,
+and enables synthetic automation settings. WordPress's `Plugin_Upgrader`
+replaces the base ZIP first, then Pro. Twenty checks pass in each of HPOS and
+legacy storage: installed files match the new archives, obsolete files are
+removed, both plugins remain active, settings and order data survive, no mail
+is sent, and the activity schema and retention job initialize on the next
+request. The same saved input produces identical Node-rendered PDF bytes.
+
+Real Chrome separately checks the saved design after upgrade, editing and PDF
+preview, ordinary and batch downloads, WordPress's shared libraries, reset and
+mobile layout. The [alpha.3 verification record](alpha3-release-verification.json)
+retains exact source, archive hashes, CI and browser results. Historical runs
+below cover their original source commits and are not automatically reclassified
+as alpha.3 results.
+
+The release's public sample store passes 13 checks in the existing authorized
+Chrome session. All five PDF artifacts match the local demo byte for byte.
+A separate fresh headless browser stopped at Playground's human-verification
+page; that attempt is retained as blocked and no challenge was automated.
+
+Linux CI passes 45 shared tests, 60 email/activity checks and 38 customer-download
+checks in each storage mode, plus the renderer, Shopify and container jobs.
+The native WordPress job passes strict Plugin Check and 11 Chrome checks.
+Both public ZIPs and metadata download without authentication and match the
+Windows and Linux archives. These checks do not establish merchant production
+email delivery, a paid lifecycle or marketplace approval.
+
+Upgrade on staging by uploading the base ZIP and choosing **Replace current
+with uploaded**, then repeat for Pro if installed. Export templates and back up
+the store first. Existing enabled workflows stay enabled; check the connection
+and a synthetic order after updating. There is no automatic updater in this preview.
+
+## Alpha.2 release evidence (historical)
 
 The [release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.2)
 and [browser demo](https://playground.wordpress.net/?storage=temp&blueprint-url=https://raw.githubusercontent.com/fullbleed-engine/fullbleed-commerce/main/playground/blueprint.json)
@@ -49,7 +90,9 @@ To refresh this delta after executing its checks and downloading the matching CI
 artifact, run `node tools/retain-preview-verification.mjs alpha2 target/alpha2-ci`.
 Keep the historical whole-product records below separate from this release delta.
 
-## Unreleased WordPress directory preparation
+<a id="unreleased-wordpress-directory-preparation"></a>
+
+## WordPress directory preparation
 
 The free editor now uses WordPress's Backbone, Underscore and CodeMirror instead
 of the copies embedded in the upstream GrapesJS bundle. GrapesJS is rebuilt from
@@ -82,17 +125,18 @@ The [full integration run](https://github.com/fullbleed-engine/fullbleed-commerc
 also passes all three jobs, including 45 shared tests, both WooCommerce storage
 modes, Shopify checks, the container and the native renderer deployment.
 
-These source changes are not in the published alpha.2 downloads or public demo.
+These changes ship in alpha.3; the alpha.2 downloads predate them.
 Plugin Check is an automated review aid, not WordPress.org approval. Account
-ownership, submission, manual review and a versioned release remain separate
-publication steps. The product's production and paid-service gates remain open.
+ownership, submission and manual review remain separate publication steps. The product's production and paid-service gates remain open.
 
-## Unreleased WooCommerce activity view
+<a id="unreleased-woocommerce-activity-view"></a>
 
-The current source adds **Fullbleed activity**, plus a notice on WooCommerce
-screens for failed PDF workflows. The published alpha.2 downloads predate this
-change. The free plugin archive for that activity change matched the release;
-the Pro candidate is retained by hash and has not replaced a published asset.
+## WooCommerce activity view
+
+Alpha.3 adds **Fullbleed activity**, plus a notice on WooCommerce screens for
+failed PDF workflows. The alpha.2 downloads predate this change. The following
+activity-specific evidence was retained before the alpha.3 package release;
+the current release record above identifies the published archives.
 
 The view shows the latest result per order/email or customer-download workflow,
 with failure filtering, specific recovery guidance, and native authorized order
