@@ -2,18 +2,18 @@
 from datetime import datetime, timezone
 from hashlib import sha256
 from pathlib import Path
-from urllib.parse import urlencode, urlparse
+from urllib.parse import urlparse
 import json
 from playwright.sync_api import sync_playwright
 from pypdf import PdfReader
-from browser_runtime import browser_label, browser_metadata, launch_browser
+from browser_runtime import browser_label, browser_metadata, launch_browser, login_to, wait_for_fixture_page
 
 fixture = json.loads(Path('target/wordpress/customer-browser.json').read_text())
 base = fixture['base']
 assert urlparse(base).hostname == '127.0.0.1'
 out = Path('output/browser')
 out.mkdir(parents=True, exist_ok=True)
-checks, errors, error_details = [], [], []
+checks, errors, error_details, failed_requests = [], [], [], []
 label = browser_label('wordpress-customer')
 
 def check(name, condition):
@@ -32,14 +32,9 @@ with sync_playwright() as pw:
     for current in [page, admin]:
         current.set_default_timeout(45000)
         current.on('pageerror', lambda error, source=current: page_error(error, source))
-    def login(current, user, destination):
-        current.goto(base + '/wp-login.php?' + urlencode({'redirect_to': destination}))
-        current.locator('#user_login').fill(user)
-        current.locator('#user_pass').fill('fullbleed-local-test')
-        current.locator('#wp-submit').click()
-        current.wait_for_url(destination, wait_until='domcontentloaded')
+        current.on('requestfailed', lambda request: failed_requests.append({'url': request.url, 'type': request.resource_type, 'failure': request.failure}))
     try:
-        login(page, 'fb-buyer-one', fixture['ordersUrl'])
+        login_to(page, base, 'fb-buyer-one', fixture['ordersUrl'])
         link = page.get_by_role('link', name='Download order summary PDF for order 12', exact=True)
         check('buyer finds one PDF action on the actual account orders page', link.count() == 1)
         old_url = link.get_attribute('href')
@@ -53,25 +48,31 @@ with sync_playwright() as pw:
         check('download leaves the account page usable', page.url == fixture['ordersUrl'] and link.is_visible())
         page.screenshot(path=str(out / f'{label}-orders.png'), full_page=True)
         page.goto(fixture['viewUrl'])
+        wait_for_fixture_page(page)
         check('buyer can also find the PDF on order details', page.get_by_role('link', name='Download order summary PDF for order 12', exact=True).count() == 1)
         page.screenshot(path=str(out / f'{label}-details.png'), full_page=True)
         page.set_viewport_size({'width': 390, 'height': 844})
         page.goto(fixture['ordersUrl'])
+        wait_for_fixture_page(page)
         check('account PDF action remains visible within a mobile viewport', link.is_visible() and page.evaluate('document.documentElement.scrollWidth <= innerWidth'))
         page.screenshot(path=str(out / f'{label}-mobile.png'), full_page=True)
 
-        login(admin, 'admin', base + '/wp-admin/admin.php?page=fullbleed-automation')
+        login_to(admin, base, 'admin', base + '/wp-admin/admin.php?page=fullbleed-automation')
         toggle = admin.get_by_role('checkbox', name='Show Order summary PDF in My Account.')
         check('merchant sees the enabled customer-download setting without the access token', toggle.is_checked() and admin.locator('#fb-renderer-token').input_value() == '')
         toggle.uncheck()
         admin.get_by_role('button', name='Save automation settings', exact=True).click()
+        wait_for_fixture_page(admin)
         page.reload()
+        wait_for_fixture_page(page)
         check('merchant can remove customer downloads without disabling email configuration', page.locator('a.fullbleed-summary').count() == 0)
         response = buyer.request.get(old_url)
         check('previously issued account link fails immediately after disabling', response.status == 404 and 'no-store' in response.headers['cache-control'])
         toggle.check()
         admin.get_by_role('button', name='Save automation settings', exact=True).click()
+        wait_for_fixture_page(admin)
         page.reload()
+        wait_for_fixture_page(page)
         check('re-enabling restores the customer action', link.is_visible())
         admin.screenshot(path=str(out / f'{label}-settings.png'), full_page=True)
 
@@ -92,9 +93,21 @@ with sync_playwright() as pw:
             file = out / f'{label}-{name}.png'
             evidence.append({'file': file.as_posix(), 'sha256': sha256(file.read_bytes()).hexdigest()})
         (out / f'{label}-verification.json').write_text(json.dumps({'checkedAt': datetime.now(timezone.utc).isoformat(), **browser_metadata(browser), 'store': base, 'checks': checks, 'packages': fixture['packages'], 'pdfSha256': fixture['pdfSha256'], 'pageErrors': errors, 'evidence': evidence}, indent=2), encoding='utf-8')
-    except Exception:
-        page.screenshot(path=str(out / f'{label}-failure.png'), full_page=True)
-        (out / f'{label}-failure.json').write_text(json.dumps({**browser_metadata(browser), 'checks': checks, 'pageErrors': errors, 'errorDetails': error_details, 'url': page.url, 'text': page.locator('body').inner_text()[-12000:]}, indent=2), encoding='utf-8')
+    except Exception as error:
+        # Keep the original failure even if a browser cannot take its screenshot.
+        failure = {**browser_metadata(browser), 'error': str(error), 'checks': checks, 'pageErrors': errors, 'errorDetails': error_details, 'failedRequests': failed_requests, 'url': page.url}
+        try:
+            failure['text'] = page.locator('body').inner_text(timeout=5000)[-12000:]
+            failure['fonts'] = page.evaluate("({status: document.fonts.status, faces: Array.from(document.fonts).map(f => ({family:f.family,status:f.status}))})")
+        except Exception as detail_error:
+            failure['inspectionError'] = str(detail_error)
+        failure_file = out / f'{label}-failure.json'
+        failure_file.write_text(json.dumps(failure, indent=2), encoding='utf-8')
+        try:
+            page.screenshot(path=str(out / f'{label}-failure.png'), full_page=True, timeout=5000)
+        except Exception as screenshot_error:
+            failure['screenshotError'] = str(screenshot_error)
+            failure_file.write_text(json.dumps(failure, indent=2), encoding='utf-8')
         raise
     finally:
         buyer.close()
