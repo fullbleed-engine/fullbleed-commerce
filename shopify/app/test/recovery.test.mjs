@@ -2,14 +2,15 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { DatabaseSync, backup } from 'node:sqlite';
-import { mkdtemp, rm, readFile, writeFile, stat } from 'node:fs/promises';
+import { mkdtemp, rm, readFile, writeFile, stat, mkdir, utimes, readdir } from 'node:fs/promises';
 import { resolve, join, sep } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { PrismaClient } from '@prisma/client';
 import { createRecoveryJournal } from '../../recovery-journal.js';
 import { createPrivacyService, completePrivacyRequest, erasePrivacyShop, parsePrivacyPayload, applyRecoveryEvent } from '../../privacy.js';
 import { fileRecoveryStore } from '../scripts/recovery-store.mjs';
-import { configuredDatabasePath, databaseUrl, createDatabaseBackup, restoreDatabaseBackup, pruneRecoveryStorage } from '../scripts/recovery-operations.mjs';
+import { configuredDatabasePath, databaseUrl, createDatabaseBackup, restoreDatabaseBackup, pruneRecoveryStorage, pruneAbandonedSnapshots } from '../scripts/recovery-operations.mjs';
+import { backupsEnabled, backupStatus, maintainBackups } from '../scripts/backup-maintenance.mjs';
 
 if (!process.env.DATABASE_URL?.includes('webhook-test.sqlite') || process.env.SHOPIFY_API_SECRET !== 'synthetic-webhook-test-secret') throw new Error('Use the isolated test runner.');
 const privacyKey = 'ab'.repeat(32), key = 'ef'.repeat(32);
@@ -175,4 +176,101 @@ test('a valid SQLite backup with a damaged privacy snapshot remains unpublishabl
   await assert.rejects(restoreDatabaseBackup({ journal: f.journal, id: saved.id, outputDirectory: output, privacyKey }));
   await assert.rejects(stat(output), error => error.code === 'ENOENT');
   assert.equal((await f.db.privacyRequest.findUniqueOrThrow({ where: { id: row.id } })).exports, 0);
+});
+
+test('scheduled backups survive restarts, renew at 24 hours and catch up after downtime', async t => {
+  let at = Date.now();
+  const f = await fixture(t, () => new Date(at));
+  const run = () => maintainBackups({ db: f.db, databasePath: f.path, journal: f.journal, enabled: true, now: () => new Date(at) });
+  assert.equal((await backupStatus({ journal: f.journal, enabled: true, now: new Date(at) })).status, 'missing');
+  const first = await run();
+  assert.equal(first.backupCreated, true); assert.ok(first.backup.verifiedAt);
+  assert.equal(first.backups.status, 'fresh');
+  // A new caller has no in-memory clock or cached backup state.
+  assert.equal((await run()).backupCreated, false);
+  at += 24 * 3600000 - 1000;
+  assert.equal((await run()).backupCreated, false);
+  at += 1000;
+  const daily = await run(); assert.equal(daily.backupCreated, true); assert.notEqual(daily.backup.id, first.backup.id);
+  at += 27 * 3600000;
+  assert.equal((await backupStatus({ journal: f.journal, enabled: true, now: new Date(at) })).status, 'stale');
+  const recovered = await run(); assert.equal(recovered.backupCreated, true); assert.equal(recovered.backups.status, 'fresh');
+  at += 9 * 86400000;
+  const afterDowntime = await run();
+  assert.equal(afterDowntime.backupCreated, true);
+  assert.equal(afterDowntime.retention.removedBackupObjects, first.backup.parts + daily.backup.parts + recovered.backup.parts + 3);
+});
+
+test('disabled or invalid schedule configuration cannot report a healthy backup', async t => {
+  const f = await fixture(t);
+  for (const value of [undefined, '', '1', 'TRUE']) assert.throws(() => backupsEnabled({ FULLBLEED_BACKUPS_ENABLED: value }));
+  assert.equal(backupsEnabled({ FULLBLEED_BACKUPS_ENABLED: 'true' }), true);
+  assert.equal(backupsEnabled({ FULLBLEED_BACKUPS_ENABLED: 'false' }), false);
+  const result = await maintainBackups({ db: f.db, databasePath: f.path, journal: f.journal, enabled: false });
+  assert.equal(result.backupCreated, false); assert.deepEqual(result.backups, { status: 'disabled', snapshotAt: null, ageSeconds: null });
+  assert.deepEqual(await f.store.list('backups/'), []);
+});
+
+test('a failed upload or corrupted readback cannot publish a new verified snapshot and the next attempt recovers', async t => {
+  let at = Date.now();
+  const f = await fixture(t, () => new Date(at));
+  const first = await createDatabaseBackup({ db: f.db, databasePath: f.path, journal: f.journal, now: () => new Date(at) });
+  at += 27 * 3600000;
+  for (const mode of ['failed-put', 'damaged-readback']) {
+    const badStore = { ...f.store,
+      write: async (path, ...args) => { if (mode === 'failed-put' && path.startsWith('backups/')) throw new Error('Synthetic outage.'); return f.store.write(path, ...args); },
+      read: async (path, ...args) => { const bytes = await f.store.read(path, ...args); if (mode === 'damaged-readback' && /^backups\/.*\/0000\.bin$/.test(path)) bytes[32] ^= 1; return bytes; },
+    };
+    const journal = createRecoveryJournal({ store: badStore, key, dataset: f.dataset, now: () => new Date(at) });
+    await assert.rejects(maintainBackups({ db: f.db, databasePath: f.path, journal, enabled: true, now: () => new Date(at) }));
+    assert.deepEqual((await f.store.list('backups/')).filter(path => path.endsWith('/manifest.bin')), [`backups/${first.id}/manifest.bin`]);
+    assert.equal((await backupStatus({ journal: f.journal, enabled: true, now: new Date(at) })).status, 'stale');
+  }
+  assert.equal((await maintainBackups({ db: f.db, databasePath: f.path, journal: f.journal, enabled: true, now: () => new Date(at) })).backups.status, 'fresh');
+});
+
+test('freshness inspection is read-only and rejects missing parts or corrupted manifests', async t => {
+  const f = await fixture(t);
+  const saved = await createDatabaseBackup({ db: f.db, databasePath: f.path, journal: f.journal });
+  const readonly = createRecoveryJournal({ store: { ...f.store, write: () => assert.fail('No write permitted.'), remove: () => assert.fail('No removal permitted.') }, key, dataset: f.dataset });
+  assert.equal((await backupStatus({ journal: readonly, enabled: true })).status, 'fresh');
+  const part = `backups/${saved.id}/0000.bin`, bytes = await f.store.read(part, 2 * 1024 * 1024);
+  await f.store.remove(part);
+  await assert.rejects(backupStatus({ journal: readonly, enabled: true }));
+  await f.store.write(part, bytes);
+  const manifest = join(f.storeDirectory, `backups/${saved.id}/manifest.bin`);
+  const content = await readFile(manifest); content[32] ^= 1; await writeFile(manifest, content);
+  await assert.rejects(backupStatus({ journal: readonly, enabled: true }));
+});
+
+test('old manifests remain restorable but do not satisfy verified-backup monitoring', async t => {
+  const f = await fixture(t);
+  const saved = await createDatabaseBackup({ db: f.db, databasePath: f.path, journal: f.journal });
+  const path = `backups/${saved.id}/manifest.bin`;
+  const manifest = JSON.parse(f.journal.codec.open(path, await f.store.read(path, 128 * 1024)));
+  delete manifest.verifiedAt;
+  await writeFile(join(f.storeDirectory, path), f.journal.codec.seal(path, Buffer.from(JSON.stringify(manifest))));
+  assert.equal((await backupStatus({ journal: f.journal, enabled: true })).status, 'unverified');
+  assert.equal((await restoreDatabaseBackup({ journal: f.journal, id: saved.id, outputDirectory: join(f.directory, 'legacy'), privacyKey })).integrityChecked, true);
+  const result = await maintainBackups({ db: f.db, databasePath: f.path, journal: f.journal, enabled: true });
+  assert.equal(result.backupCreated, true); assert.equal(result.backups.status, 'fresh');
+});
+
+test('interrupted snapshot cleanup removes only old owned copies and preserves active or unrelated files', async t => {
+  const f = await fixture(t);
+  const old = new Date(Date.now() - 25 * 3600000);
+  const abandoned = join(f.directory, '.fullbleed-backup-old001');
+  const active = join(f.directory, '.fullbleed-backup-new001');
+  const unrelated = join(f.directory, 'another-backup');
+  for (const directory of [abandoned, active, unrelated]) {
+    await mkdir(directory, { mode: 0o700 });
+    const path = join(directory, 'snapshot.sqlite');
+    await writeFile(path, 'Synthetic interrupted private snapshot.', { mode: 0o600 });
+    if (directory !== active) await utimes(path, old, old);
+    await utimes(directory, old, old);
+  }
+  assert.equal(await pruneAbandonedSnapshots(f.path), 1);
+  assert.ok((await readdir(f.directory)).includes('another-backup'));
+  assert.ok((await readdir(f.directory)).includes('.fullbleed-backup-new001'));
+  assert.equal(await f.db.brand.count(), 4);
 });

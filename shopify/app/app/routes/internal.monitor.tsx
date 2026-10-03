@@ -2,6 +2,7 @@ import { timingSafeEqual } from 'node:crypto';
 import type { LoaderFunctionArgs } from 'react-router';
 import { privacyService } from '../privacy.server';
 import { recoveryJournal } from '../recovery.server';
+import { backupsEnabled, backupStatus } from '../../scripts/backup-maintenance.mjs';
 
 const headers = {
   'Cache-Control': 'no-store, private, max-age=0',
@@ -22,13 +23,14 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     });
   }
   try {
-    await (await recoveryJournal()).verify();
+    const checkedAt = new Date();
+    const backups = await backupStatus({ journal: await recoveryJournal(), enabled: backupsEnabled(), now: checkedAt });
     const { pending, overdue, dueWithin48Hours, keyMismatch } = await privacyService().status();
-    const attention = dueWithin48Hours > 0 || keyMismatch > 0;
+    const attention = dueWithin48Hours > 0 || keyMismatch > 0 || backups.status !== 'fresh';
     // Operator aggregates only. Never expose shop, customer, request or order IDs,
     // export contents, URLs, credentials or underlying database errors.
     return Response.json({
-      status: attention ? 'attention' : 'ok', checkedAt: new Date().toISOString(),
+      status: attention ? 'attention' : 'ok', checkedAt: checkedAt.toISOString(), backups,
       privacy: { pending, overdue, dueWithin48Hours, keyMismatch },
     }, { status: attention ? 503 : 200, headers });
   } catch {

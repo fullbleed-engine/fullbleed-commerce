@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24.21.0
-      - name: Probe readiness and privacy deadlines
+      - name: Probe readiness, privacy deadlines and backup freshness
         run: node tools/check-monitor.mjs
         env:
           FULLBLEED_MONITOR_URL: ${{ vars.FULLBLEED_MONITOR_URL }}

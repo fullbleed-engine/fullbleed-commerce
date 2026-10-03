@@ -29,6 +29,8 @@ source files or logs. Set:
   configured as described in [MONITORING.md](MONITORING.md).
 - The independent bucket, stable dataset ID and separate recovery key in
   [RECOVERY.md](RECOVERY.md). Initialize the bucket before starting the app.
+- `FULLBLEED_BACKUPS_ENABLED=true` for startup/hourly checks and verified daily
+  snapshots. A disabled or missing setting keeps the private monitor unhealthy.
 - `SHOPIFY_APP_URL` to the service's HTTPS origin, `SCOPES=read_orders`,
   `NODE_ENV=production`, `PORT=3000`, and
   `DATABASE_URL=file:/data/commerce.sqlite`.
@@ -67,14 +69,14 @@ destination with synthetic data before enabling merchant workflows. Complete
 the App Pricing lifecycle separately; a healthy server is not billing evidence.
 
 Railway readiness is checked during deployment, not continuously. The
-[GitHub monitoring workflow](MONITORING.md) checks availability and privacy
-deadlines. Enable it for continuous operation, verify operator notification
+[GitHub monitoring workflow](MONITORING.md) checks availability, privacy
+deadlines and backup freshness. Enable it for continuous operation, verify operator notification
 delivery, and arrange detection of missed checks before launch. It does not
 replace signed webhook delivery monitoring or the private
 `node scripts/privacy-status.mjs` diagnostic command.
 Use the [encrypted backup and recovery commands](RECOVERY.md); keep both keys
-separate from backups. Verify scheduled backup creation, freshness alerts and
-full service recovery before launch, and keep the public privacy description accurate.
+separate from backups. Verify operator alert receipt and independent key recovery
+before launch, and keep the public privacy description accurate.
 
 The launch authorization is **$50 total**. Track project-attributed usage and
 actual charges in [the budget](../docs/launch-budget.json). The existing Railway

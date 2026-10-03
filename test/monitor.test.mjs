@@ -5,7 +5,7 @@ import { checkMonitor } from '../tools/check-monitor.mjs';
 const token = 'cd'.repeat(32);
 const url = 'https://synthetic-monitor.invalid/internal/monitor';
 const now = Date.now();
-const healthy = () => ({ status: 'ok', checkedAt: new Date(now).toISOString(), privacy: { pending: 1, overdue: 0, dueWithin48Hours: 0, keyMismatch: 0 } });
+const healthy = () => ({ status: 'ok', checkedAt: new Date(now).toISOString(), privacy: { pending: 1, overdue: 0, dueWithin48Hours: 0, keyMismatch: 0 }, backups: { status: 'fresh', snapshotAt: new Date(now - 3600000).toISOString(), ageSeconds: 3600 } });
 const json = (body, status = 200) => Response.json(body, { status, headers: { 'Cache-Control': 'no-store' } });
 const transport = (body, status = 200) => async target => target.pathname === '/health' ? json({ status: 'ok' }) : json(body, status);
 const expected = code => error => error.code === code && !error.message.includes(token) && !error.message.includes('private@example.invalid');
@@ -63,4 +63,27 @@ test('outage, authorization and transport failures expose only safe operational 
   await assert.rejects(checkMonitor({ url, token, fetcher: async () => json({ status: 'unavailable' }, 503) }), expected('unavailable'));
   await assert.rejects(checkMonitor({ url, token, fetcher: transport({ status: 'unauthorized', detail: 'private@example.invalid' }, 401) }), expected('unavailable'));
   await assert.rejects(checkMonitor({ url, token, fetcher: async () => { throw new Error(`Connection failed: ${token} private@example.invalid`); } }), expected('unavailable'));
+});
+
+test('missing, unverified, disabled and stale backups fail regardless of the server health label', async () => {
+  for (const status of [200, 503]) {
+    for (const [backupStatus, code] of [['disabled', 'backup_disabled'], ['missing', 'backup_missing'], ['unverified', 'backup_missing'], ['stale', 'backup_stale']]) {
+      const body = healthy();
+      body.status = status === 200 ? 'ok' : 'attention';
+      body.backups = ['disabled', 'missing'].includes(backupStatus)
+        ? { status: backupStatus, snapshotAt: null, ageSeconds: null }
+        : { status: backupStatus, snapshotAt: new Date(now - 27 * 3600000).toISOString(), ageSeconds: 27 * 3600 };
+      await assert.rejects(checkMonitor({ url, token, now: () => now, fetcher: transport(body, status) }), expected(code));
+    }
+  }
+  const body = healthy(); body.backups.snapshotAt = new Date(now - 27 * 3600000).toISOString(); body.backups.ageSeconds = 27 * 3600;
+  await assert.rejects(checkMonitor({ url, token, now: () => now, fetcher: transport(body) }), expected('backup_stale'));
+});
+
+test('missing or contradictory backup evidence cannot produce a successful probe', async () => {
+  for (const backups of [undefined, {}, { ...healthy().backups, ageSeconds: '3600' },
+    { ...healthy().backups, ageSeconds: 0 }, { ...healthy().backups, snapshotAt: new Date(now + 10 * 60000).toISOString(), ageSeconds: 0 },
+    { ...healthy().backups, status: 'disabled' }, { ...healthy().backups, status: 'stale' }]) {
+    await assert.rejects(checkMonitor({ url, token, now: () => now, fetcher: transport({ ...healthy(), backups }) }), expected('invalid'));
+  }
 });

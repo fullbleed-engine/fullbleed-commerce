@@ -50,8 +50,9 @@ online backup API takes a consistent snapshot, including committed WAL content;
 the application can continue using its database. A private temporary directory
 holds the snapshot and is removed when the operation finishes.
 
-Snapshots upload as separately authenticated 1 MiB parts. The encrypted manifest,
-including part and whole-file hashes, publishes last. An interrupted upload is
+Snapshots upload as separately authenticated 1 MiB parts. Every part is read back,
+decrypted and compared before the encrypted manifest publishes last. The manifest
+contains part and whole-file hashes and the verification time. An interrupted upload is
 not a usable backup. The command bounds snapshot copying to 60 seconds, a database
 to 512 MiB, and recovery reads to 100,000 journal objects / 64 MiB of encrypted
 journal content. Exceeding a bound fails for operator review rather than silently
@@ -64,11 +65,39 @@ commit. Completed instruction receipts then expire too; the dataset binding stay
 Cleanup runs at startup and hourly while the server is online. Downtime delays
 physical removal, but does not extend the seven-day restore limit.
 
-Backup creation is currently an operator command. **Configure daily creation,
-freshness alerts and a responsible operator before continuous production use.**
-An empty bucket, successful deployment or green privacy monitor does not prove a
-recent usable backup. The launch budget keeps staging compute stopped between
-attended tests; no recurring backup schedule is enabled yet.
+## Automatic backups and freshness
+
+Set `FULLBLEED_BACKUPS_ENABLED=true` for hosted operation. The single app replica
+checks at startup and hourly, creating a snapshot when none is verified or the
+latest snapshot is at least 24 hours old. It reads that time from independent
+storage, so process replacement cannot reset the schedule. Manual backups remain
+available; a concurrent manual operation can create an additional valid snapshot.
+
+The worker runs as a separate unprivileged Node process with a ten-minute limit,
+leaving the HTTP event loop available. A failed attempt logs a fixed operational
+message and retries on the next hourly check. A hard-killed process can leave a
+private temporary snapshot; the next maintenance/prune run removes owned copies
+older than 24 hours while preserving active writers and unrelated files.
+
+```sh
+node scripts/recovery.mjs maintain
+node scripts/recovery.mjs status
+```
+
+`maintain` runs the same retention and due-backup decision as the worker. `status`
+is read-only and exits nonzero unless a verified snapshot is fresh. The private
+HTTP monitor also fails for disabled scheduling, no verified backup, missing
+parts, unreadable storage/manifest or a snapshot over 26 hours old. Its normal
+probe authenticates the manifest and checks part presence; it does not download
+and reauthenticate every part on each request. Full authentication runs during
+creation and restore. Older manifests without verification timestamps remain
+restorable but trigger a new verified backup.
+
+Backups only run while compute is online. The first startup after downtime catches
+up automatically. Staging remains stopped between attended tests to preserve the
+launch budget. Continuous production use still requires an always-running service,
+an enabled external monitor and a responsible operator with verified alert receipt.
+Backup freshness does not replace periodic full restore/key-recovery drills.
 
 ## Why erasure survives rollback
 
@@ -145,12 +174,13 @@ and active links stayed disabled. Readiness and private monitoring passed.
 The [retained recovery evidence](../docs/recovery-verification.json) identifies
 the exact source, deployments, hashes and cleanup.
 
-Independent key recovery, scheduled backup/freshness alerts and a representative
-merchant pilot remain launch work.
+Independent key recovery, operator alert receipt and a representative merchant
+pilot remain launch work.
 These checks do not claim legal compliance, a recovery-time SLA or marketplace
 approval.
 
 Sources checked October 2, 2026: [SQLite's online backup API](https://www.sqlite.org/backup.html),
 [Node SQLite backup](https://nodejs.org/download/release/latest-v24.x/docs/api/sqlite.html),
+[Node child processes](https://nodejs.org/download/release/latest-v24.x/docs/api/child_process.html),
 [Railway bucket capabilities](https://docs.railway.com/storage-buckets), and
 [Shopify privacy webhooks](https://shopify.dev/docs/apps/build/compliance/privacy-law-compliance).

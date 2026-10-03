@@ -1,10 +1,10 @@
-# Availability and privacy monitoring
+# Availability, privacy and backup monitoring
 
 The staging monitor checks HTTPS `/health`, then the authenticated
 `/internal/monitor` endpoint. The private endpoint also verifies that independent
-recovery storage and its encrypted dataset marker are accessible. It needs no Shopify, billing, SSH or Railway account
+recovery storage, its encrypted dataset marker and verified backup freshness. It needs no Shopify, billing, SSH or Railway account
 credential. The endpoint is read-only and does not require a paid subscription.
-It reports aggregate privacy queue counts, never shop/customer/request IDs,
+It reports aggregate privacy queue counts and backup status/age, never shop/customer/request IDs,
 exports, order data or document links. The CLI emits static operational messages
 without those counts so its output can be retained in this public repository.
 
@@ -42,6 +42,15 @@ A production operator must detect missed checks as well as failed checks.
   export does not fulfill a request; mark it handled only after responding.
 - **Privacy key mismatch:** restore the correct existing privacy key. Do not
   generate a replacement or clear records to make the check green.
+- **Backups disabled:** set `FULLBLEED_BACKUPS_ENABLED=true` on the service and
+  verify its startup worker. Do not suppress this warning for continuous use.
+- **Backup missing or unverified:** inspect the worker's safe error message and
+  private recovery storage. Run `node scripts/recovery.mjs maintain` in the
+  deployed environment, then require a fresh status. It creates a snapshot only
+  when due; it never changes the independent erasure history to clear a warning.
+- **Backup over 26 hours old:** check worker failures, storage capacity/access,
+  resource limits and process uptime. Preserve the last good snapshot while
+  repairing the failure, then verify a fresh snapshot and restore eligibility.
 - **Invalid/stale response:** investigate endpoint version, proxy caching and
   clock synchronization. A malformed response must not look healthy.
 
@@ -60,8 +69,11 @@ Keep a private incident record with receipt and response times; do not publish
 customer information. Account notification settings and receipt are not yet
 verified for this deployment.
 
-This probe does not verify signed webhook delivery, a new-order Flow trigger,
-email delivery, billing, backups or renderer capacity. Those remain separate
+The backup probe authenticates the manifest and checks part presence. Creation
+and restore verify full part contents; normal monitoring does not repeat a full
+restore or prove independent key recovery. This probe also does not verify
+signed webhook delivery, a new-order Flow trigger, email delivery, billing or
+renderer capacity. Those remain separate
 launch checks. Keep scheduling disabled and compute stopped between attended
 staging tests under the [total launch budget](../docs/launch-budget.json).
 

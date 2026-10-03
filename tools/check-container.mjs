@@ -11,7 +11,7 @@ const docker = process.env.DOCKER_BIN || 'docker';
 const name = `fullbleed-check-${process.pid}-${Date.now()}`;
 const volume = `${name}-data`;
 const recoveryVolume = `${name}-recovery`;
-const recoveryEnv = ['-e', 'FULLBLEED_RECOVERY_DIRECTORY=/recovery', '-e', `FULLBLEED_RECOVERY_KEY=${'ef'.repeat(32)}`, '-e', `FULLBLEED_RECOVERY_DATASET=${randomUUID()}`];
+const recoveryEnv = ['-e', 'FULLBLEED_BACKUPS_ENABLED=true', '-e', `FULLBLEED_MONITOR_TOKEN=${'cd'.repeat(32)}`, '-e', 'FULLBLEED_RECOVERY_DIRECTORY=/recovery', '-e', `FULLBLEED_RECOVERY_KEY=${'ef'.repeat(32)}`, '-e', `FULLBLEED_RECOVERY_DATASET=${randomUUID()}`];
 const checks = [];
 let containerCreated = false;
 let volumeCreated = false;
@@ -39,6 +39,10 @@ async function start() {
     try {
       const response = await fetch(`${origin}/health`, { signal: AbortSignal.timeout(2000) });
       ready = response.status === 200 && (await response.json()).status === 'ok';
+      if (ready) {
+        const monitor = await fetch(`${origin}/internal/monitor`, { headers: { Authorization: `Bearer ${'cd'.repeat(32)}` }, signal: AbortSignal.timeout(2000) });
+        ready = monitor.status === 200 && (await monitor.json()).backups?.status === 'fresh';
+      }
     } catch { /* Wait for migrations and the server to start. */ }
     if (ready) break;
     await setTimeout(500);
@@ -66,6 +70,10 @@ try {
     `type=volume,src=${volume},dst=/data,volume-nocopy`, image, '-c', '%u', '/data']), '0');
   let origin = await start();
   passed('fresh root-owned volume migrates and passes HTTP readiness under resource limits');
+  const automatic = JSON.parse(run(['exec', '--user', 'node', name, 'node', 'scripts/recovery.mjs', 'list'])).result;
+  assert.equal(automatic.length, 1);
+  assert.equal(JSON.parse(run(['exec', '--user', 'node', name, 'node', 'scripts/recovery.mjs', 'status'])).result.status, 'fresh');
+  passed('startup worker creates a verified encrypted backup without an operator backup command');
   script(String.raw`
     import assert from 'node:assert/strict';
     import { statSync, readdirSync, readFileSync } from 'node:fs';
@@ -118,6 +126,8 @@ try {
   run(['stop', '--time', '10', name]);
   run(['rm', name]); containerCreated = false;
   origin = await start();
+  assert.deepEqual(JSON.parse(run(['exec', '--user', 'node', name, 'node', 'scripts/recovery.mjs', 'list'])).result, automatic);
+  passed('replacement process observes the stored backup clock without creating a duplicate');
   script(`
     import assert from 'node:assert/strict';
     import { PrismaClient } from '@prisma/client';

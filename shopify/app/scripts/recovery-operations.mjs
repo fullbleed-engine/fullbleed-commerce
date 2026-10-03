@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { DatabaseSync, backup } from 'node:sqlite';
 import { createReadStream } from 'node:fs';
-import { mkdtemp, mkdir, open, lstat, chmod, unlink, rmdir } from 'node:fs/promises';
+import { mkdtemp, mkdir, open, lstat, chmod, unlink, rmdir, readdir } from 'node:fs/promises';
 import { dirname, isAbsolute, join } from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
 import { PrismaClient } from '@prisma/client';
@@ -69,13 +69,18 @@ export async function createDatabaseBackup({ db, databasePath, journal, now = ()
       hash.update(chunk); observedBytes += chunk.length;
       parts.push({ bytes: chunk.length, sha256: sha256(chunk) });
       await journal.store.write(path, journal.codec.seal(path, chunk), { exclusive: true });
+      // Authenticate and compare stored bytes before publishing the manifest.
+      const stored = journal.codec.open(path, await journal.store.read(path, PART_SIZE + 32));
+      if (stored.length !== chunk.length || sha256(stored) !== parts.at(-1).sha256) throw recoveryFailure();
     }
     if (observedBytes !== bytes) throw recoveryFailure();
-    const manifest = { format: 'fullbleed-sqlite-backup-v1', dataset: journal.dataset, id, createdAt: at.toISOString(), bytes, sha256: hash.digest('hex'), parts };
+    const manifest = { format: 'fullbleed-sqlite-backup-v1', dataset: journal.dataset, id, createdAt: at.toISOString(), verifiedAt: now().toISOString(), bytes, sha256: hash.digest('hex'), parts };
     const path = `backups/${id}/manifest.bin`;
     // Publish last. An interrupted upload never becomes a listed usable backup.
     await journal.store.write(path, journal.codec.seal(path, Buffer.from(JSON.stringify(manifest))), { exclusive: true });
-    return { id, createdAt: manifest.createdAt, bytes, parts: parts.length, sha256: manifest.sha256, retentionDays: BACKUP_RETENTION_DAYS };
+    const storedManifest = await readBackupManifest(journal, id, now());
+    if (JSON.stringify(storedManifest) !== JSON.stringify(manifest)) throw recoveryFailure();
+    return { id, createdAt: manifest.createdAt, verifiedAt: manifest.verifiedAt, bytes, parts: parts.length, sha256: manifest.sha256, retentionDays: BACKUP_RETENTION_DAYS };
   } finally {
     if (source.isOpen) source.close();
     for (const suffix of ['', '-wal', '-shm', '-journal']) await unlink(snapshot + suffix).catch(error => { if (error.code !== 'ENOENT') throw error; });
@@ -92,6 +97,7 @@ export async function readBackupManifest(journal, id, now = new Date(), allowExp
   const created = Date.parse(manifest.createdAt);
   if (manifest.format !== 'fullbleed-sqlite-backup-v1' || manifest.dataset !== journal.dataset || manifest.id !== id ||
       created !== Number(id.slice(0, 13)) || created > now.valueOf() + 300000 || (!allowExpired && created < now.valueOf() - BACKUP_RETENTION_DAYS * DAY) ||
+      (manifest.verifiedAt !== undefined && (!Number.isFinite(Date.parse(manifest.verifiedAt)) || Date.parse(manifest.verifiedAt) < created || Date.parse(manifest.verifiedAt) > now.valueOf() + 300000)) ||
       !Number.isSafeInteger(manifest.bytes) || manifest.bytes <= 0 || manifest.bytes > MAX_DATABASE_BYTES || !/^[a-f0-9]{64}$/.test(manifest.sha256 || '') ||
       !Array.isArray(manifest.parts) || manifest.parts.length !== Math.ceil(manifest.bytes / PART_SIZE) ||
       !manifest.parts.every((part, index) => part.bytes === Math.min(PART_SIZE, manifest.bytes - index * PART_SIZE) && /^[a-f0-9]{64}$/.test(part.sha256 || ''))) throw recoveryFailure();
@@ -173,4 +179,27 @@ export async function pruneRecoveryStorage({ journal, db, now = new Date() }) {
   }
   await db.recoveryReceipt.deleteMany({ where: { id: { not: { startsWith: 'dataset:' } }, recordedAt: { lt: new Date(now.valueOf() - RECOVERY_RETENTION_DAYS * DAY) } } });
   return { removedBackupObjects: removedObjects, removedEvents };
+}
+
+// A hard-killed worker cannot execute finally. Remove only old private snapshot
+// directories owned by this app, never another filename or an active writer.
+export async function pruneAbandonedSnapshots(databasePath, now = new Date()) {
+  if (!isAbsolute(databasePath)) throw recoveryFailure();
+  const root = dirname(databasePath), cutoff = now.valueOf() - DAY;
+  const allowed = new Set(['snapshot.sqlite', 'snapshot.sqlite-wal', 'snapshot.sqlite-shm', 'snapshot.sqlite-journal']);
+  let removed = 0;
+  for (const entry of await readdir(root, { withFileTypes: true })) {
+    if (!/^\.fullbleed-backup-[a-zA-Z0-9]{6}$/.test(entry.name)) continue;
+    const path = join(root, entry.name), directory = await lstat(path);
+    if (!directory.isDirectory() || directory.isSymbolicLink() || directory.mtimeMs >= cutoff) continue;
+    if (process.getuid && (directory.uid !== process.getuid() || (directory.mode & 0o077))) throw recoveryFailure();
+    const files = await readdir(path);
+    if (files.some(name => !allowed.has(name))) throw recoveryFailure();
+    const metadata = await Promise.all(files.map(name => lstat(join(path, name))));
+    if (metadata.some(item => !item.isFile() || item.isSymbolicLink())) throw recoveryFailure();
+    if (metadata.some(item => item.mtimeMs >= cutoff)) continue;
+    for (const name of files) await unlink(join(path, name));
+    await rmdir(path); removed++;
+  }
+  return removed;
 }
