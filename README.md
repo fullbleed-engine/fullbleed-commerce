@@ -100,6 +100,11 @@ links. Successful retries clear stale failures. It reports PDF preparation,
 not customer receipt. See the
 [activity and retention details](automation/README.md#merchant-activity-and-recovery).
 
+Current source also includes opt-in administrator failure summaries, with hourly
+checks, one mail attempt per 24 hours and a link to recovery guidance. These alerts
+are not in the published alpha.3 ZIP. They need working WordPress scheduling and
+email; they never resend customer mail. See [failure alerts](automation/README.md#administrator-failure-alerts).
+
 Shopify adds **Create order summary link** and **Create packing slip link** to
 Flow. Enable automation, connect an order trigger, and use the returned private
 link in your next workflow step. Jobs survive restarts, duplicate events reuse

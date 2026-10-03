@@ -1,0 +1,918 @@
+{
+  "checkedAt": "2026-10-03T12:21:00.789410+00:00",
+  "status": "unreleased-source",
+  "syntheticOnly": true,
+  "sourceFiles": {
+    "wordpress/fullbleed-commerce-pro/alerts.php": "7df9363eac57f2110189eb6bb2db0e63e3a277499d37da050c45d2fca210baea",
+    "wordpress/fullbleed-commerce-pro/activity.php": "9adc16148b2cda84393eeec15c58d217d2da8fed3fffa97e2bba8cd3a4807840",
+    "wordpress/fullbleed-commerce-pro/automation.php": "a245b38148a96352809d25239056687ead553ad0b813bf34080b78207b9d23d2",
+    "wordpress/fullbleed-commerce-pro/fullbleed-commerce-pro.php": "341fc7dd9769f5ea19b1c93322a26de4cef22cbfe7c1022a4673a1b4db53e2d5",
+    "wordpress/fullbleed-commerce-pro/uninstall.php": "de9d96a118fc9669cf87fbed67314e0ebbd52517d615520a6e1a6b9ae4df0e07"
+  },
+  "checks": {
+    "hpos": {
+      "checkedAt": "2026-10-03T12:15:39.786Z",
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.33",
+      "checks": [
+        {
+          "name": "attachments remain unchanged before opt-in",
+          "passed": true
+        },
+        {
+          "name": "unselected emails cause no rendering",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "existing transactional email gets one PDF with a useful filename",
+          "passed": true
+        },
+        {
+          "name": "attachment is outside the web root",
+          "passed": true
+        },
+        {
+          "name": "attachment matches actual renderer bytes",
+          "passed": true
+        },
+        {
+          "name": "enabled attachments request WooCommerce background emails",
+          "passed": true
+        },
+        {
+          "name": "wp_mail accepts the prepared attachment",
+          "passed": true
+        },
+        {
+          "name": "captured MIME names the PDF attachment",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce queued-email handler renders the attachment",
+          "passed": true
+        },
+        {
+          "name": "real WooCommerce email MIME contains the branded PDF",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "renderer outage preserves all existing email attachments",
+          "passed": true
+        },
+        {
+          "name": "renderer outage records a safe recoverable status",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "truncated or mismatched PDF never reaches an email",
+          "passed": true
+        },
+        {
+          "name": "refunded orders never call the renderer",
+          "passed": true
+        },
+        {
+          "name": "renderer credentials are absent from admin HTML",
+          "passed": true
+        },
+        {
+          "name": "automation does not alter order state",
+          "passed": true
+        },
+        {
+          "name": "activity records actual attachment-hook failures",
+          "passed": true
+        },
+        {
+          "name": "activity cleanup is scheduled once",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "a real recovery replaces stale failure without duplicating the workflow",
+          "passed": true
+        },
+        {
+          "name": "different email workflows retain separate results",
+          "passed": true
+        },
+        {
+          "name": "customer response readiness is distinct from mail preparation",
+          "passed": true
+        },
+        {
+          "name": "unknown workflows and unsupported states are rejected",
+          "passed": true
+        },
+        {
+          "name": "activity stores only references and allowlisted error codes",
+          "passed": true
+        },
+        {
+          "name": "activity view is unavailable to anonymous visitors",
+          "passed": true
+        },
+        {
+          "name": "customer role cannot read merchant activity",
+          "passed": true
+        },
+        {
+          "name": "failed filter excludes recovered workflow and supplies specific guidance",
+          "passed": true
+        },
+        {
+          "name": "activity links use the authorized WooCommerce order edit URL",
+          "passed": true
+        },
+        {
+          "name": "activity HTML excludes tokens, customer names, addresses and remote bodies",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce screens surface unresolved PDF failures",
+          "passed": true
+        },
+        {
+          "name": "failure notice is scoped to WooCommerce screens",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce order deletion removes activity",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce order trash also removes activity",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce anonymization removes activity and prevents new records",
+          "passed": true
+        },
+        {
+          "name": "schema upgrade preserves existing workflow results",
+          "passed": true
+        },
+        {
+          "name": "scheduled retention removes results older than 30 days",
+          "passed": true
+        },
+        {
+          "name": "activity storage retains at most 1000 latest workflow results",
+          "passed": true
+        },
+        {
+          "name": "cursor pagination moves to older results without repeating the first page",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "activity storage failure preserves actual PDF preparation without leaking SQL",
+          "passed": true
+        },
+        {
+          "name": "missing activity storage shows an honest incomplete-record warning",
+          "passed": true
+        },
+        {
+          "name": "successful storage recovery clears the warning and resumes results",
+          "passed": true
+        },
+        {
+          "name": "successful recovery clears the WooCommerce failure notice",
+          "passed": true
+        },
+        {
+          "name": "failure alerts default off with no scheduled job or outgoing mail",
+          "passed": true
+        },
+        {
+          "name": "opt-in schedules exactly one recurring hourly alert check",
+          "passed": true
+        },
+        {
+          "name": "healthy activity sends no alert and records the scheduled check",
+          "passed": true
+        },
+        {
+          "name": "scheduled failures produce one administrator alert despite an overlapping worker",
+          "passed": true
+        },
+        {
+          "name": "alert summarizes workflows and links to authenticated recovery",
+          "passed": true
+        },
+        {
+          "name": "alert excludes customer details, order IDs, credentials and attachments",
+          "passed": true
+        },
+        {
+          "name": "real PHPMailer prepares only a plain-text administrator alert",
+          "passed": true
+        },
+        {
+          "name": "a persisted reservation prevents repeat alerts after cache loss",
+          "passed": true
+        },
+        {
+          "name": "an unresolved failure receives a reminder after the daily cooldown",
+          "passed": true
+        },
+        {
+          "name": "successful workflow recovery stops reminders",
+          "passed": true
+        },
+        {
+          "name": "expired activity is excluded even before physical cleanup",
+          "passed": true
+        },
+        {
+          "name": "missing activity storage sends an incomplete-data alert without leaking SQL",
+          "passed": true
+        },
+        {
+          "name": "a rejected mail handoff is visible and does not trigger a retry storm",
+          "passed": true
+        },
+        {
+          "name": "administrator sees a rejected mail handoff without a delivery claim",
+          "passed": true
+        },
+        {
+          "name": "mailer exceptions are contained without persisting raw error details",
+          "passed": true
+        },
+        {
+          "name": "an interrupted send remains reserved across later checks",
+          "passed": true
+        },
+        {
+          "name": "a stale worker cannot replace a newer reservation",
+          "passed": true
+        },
+        {
+          "name": "corrupt reservation fails closed without duplicate mail",
+          "passed": true
+        },
+        {
+          "name": "invalid administrator address never reaches the mailer",
+          "passed": true
+        },
+        {
+          "name": "disabling alerts removes the recurring job and blocks later queued calls",
+          "passed": true
+        },
+        {
+          "name": "shop managers cannot view administrator alert controls or destination",
+          "passed": true
+        },
+        {
+          "name": "administrator sees mail status and scheduling limitations",
+          "passed": true
+        },
+        {
+          "name": "deactivation disables alerts and stops their scheduled task",
+          "passed": true
+        },
+        {
+          "name": "deactivation clears temporary activity and its scheduled task",
+          "passed": true
+        },
+        {
+          "name": "uninstall removes alert settings, status and reservations",
+          "passed": true
+        },
+        {
+          "name": "WordPress uninstall removes the activity table and schema options",
+          "passed": true
+        },
+        {
+          "name": "reactivation restores cleanup without changing automation settings",
+          "passed": true
+        },
+        {
+          "name": "private attachments are deleted after the mail request",
+          "passed": true
+        },
+        {
+          "name": "next request wires order transitions to the WooCommerce email queue",
+          "passed": true
+        },
+        {
+          "name": "captured WooCommerce email contains exact complete renderer PDF bytes",
+          "passed": true
+        }
+      ],
+      "hpos": true,
+      "unixPermissionsChecked": false,
+      "pdfSha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+      "transport": "Real WooCommerce hooks and PHPMailer MIME with outbound mail captured. HTTPS response supplied through the WordPress HTTP test filter using actual Fullbleed output from this exact order. No production network or delivery claim."
+    },
+    "legacy": {
+      "checkedAt": "2026-10-03T12:17:37.109Z",
+      "wordpress": "7.1.2",
+      "woocommerce": "11.1.2",
+      "php": "8.3.33",
+      "checks": [
+        {
+          "name": "attachments remain unchanged before opt-in",
+          "passed": true
+        },
+        {
+          "name": "unselected emails cause no rendering",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "existing transactional email gets one PDF with a useful filename",
+          "passed": true
+        },
+        {
+          "name": "attachment is outside the web root",
+          "passed": true
+        },
+        {
+          "name": "attachment matches actual renderer bytes",
+          "passed": true
+        },
+        {
+          "name": "enabled attachments request WooCommerce background emails",
+          "passed": true
+        },
+        {
+          "name": "wp_mail accepts the prepared attachment",
+          "passed": true
+        },
+        {
+          "name": "captured MIME names the PDF attachment",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce queued-email handler renders the attachment",
+          "passed": true
+        },
+        {
+          "name": "real WooCommerce email MIME contains the branded PDF",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "renderer outage preserves all existing email attachments",
+          "passed": true
+        },
+        {
+          "name": "renderer outage records a safe recoverable status",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "truncated or mismatched PDF never reaches an email",
+          "passed": true
+        },
+        {
+          "name": "refunded orders never call the renderer",
+          "passed": true
+        },
+        {
+          "name": "renderer credentials are absent from admin HTML",
+          "passed": true
+        },
+        {
+          "name": "automation does not alter order state",
+          "passed": true
+        },
+        {
+          "name": "activity records actual attachment-hook failures",
+          "passed": true
+        },
+        {
+          "name": "activity cleanup is scheduled once",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "a real recovery replaces stale failure without duplicating the workflow",
+          "passed": true
+        },
+        {
+          "name": "different email workflows retain separate results",
+          "passed": true
+        },
+        {
+          "name": "customer response readiness is distinct from mail preparation",
+          "passed": true
+        },
+        {
+          "name": "unknown workflows and unsupported states are rejected",
+          "passed": true
+        },
+        {
+          "name": "activity stores only references and allowlisted error codes",
+          "passed": true
+        },
+        {
+          "name": "activity view is unavailable to anonymous visitors",
+          "passed": true
+        },
+        {
+          "name": "customer role cannot read merchant activity",
+          "passed": true
+        },
+        {
+          "name": "failed filter excludes recovered workflow and supplies specific guidance",
+          "passed": true
+        },
+        {
+          "name": "activity links use the authorized WooCommerce order edit URL",
+          "passed": true
+        },
+        {
+          "name": "activity HTML excludes tokens, customer names, addresses and remote bodies",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce screens surface unresolved PDF failures",
+          "passed": true
+        },
+        {
+          "name": "failure notice is scoped to WooCommerce screens",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce order deletion removes activity",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce order trash also removes activity",
+          "passed": true
+        },
+        {
+          "name": "WooCommerce anonymization removes activity and prevents new records",
+          "passed": true
+        },
+        {
+          "name": "schema upgrade preserves existing workflow results",
+          "passed": true
+        },
+        {
+          "name": "scheduled retention removes results older than 30 days",
+          "passed": true
+        },
+        {
+          "name": "activity storage retains at most 1000 latest workflow results",
+          "passed": true
+        },
+        {
+          "name": "cursor pagination moves to older results without repeating the first page",
+          "passed": true
+        },
+        {
+          "name": "renderer request uses server-only credentials and disables redirects",
+          "passed": true
+        },
+        {
+          "name": "automation serializes the authorized WooCommerce order",
+          "passed": true
+        },
+        {
+          "name": "activity storage failure preserves actual PDF preparation without leaking SQL",
+          "passed": true
+        },
+        {
+          "name": "missing activity storage shows an honest incomplete-record warning",
+          "passed": true
+        },
+        {
+          "name": "successful storage recovery clears the warning and resumes results",
+          "passed": true
+        },
+        {
+          "name": "successful recovery clears the WooCommerce failure notice",
+          "passed": true
+        },
+        {
+          "name": "failure alerts default off with no scheduled job or outgoing mail",
+          "passed": true
+        },
+        {
+          "name": "opt-in schedules exactly one recurring hourly alert check",
+          "passed": true
+        },
+        {
+          "name": "healthy activity sends no alert and records the scheduled check",
+          "passed": true
+        },
+        {
+          "name": "scheduled failures produce one administrator alert despite an overlapping worker",
+          "passed": true
+        },
+        {
+          "name": "alert summarizes workflows and links to authenticated recovery",
+          "passed": true
+        },
+        {
+          "name": "alert excludes customer details, order IDs, credentials and attachments",
+          "passed": true
+        },
+        {
+          "name": "real PHPMailer prepares only a plain-text administrator alert",
+          "passed": true
+        },
+        {
+          "name": "a persisted reservation prevents repeat alerts after cache loss",
+          "passed": true
+        },
+        {
+          "name": "an unresolved failure receives a reminder after the daily cooldown",
+          "passed": true
+        },
+        {
+          "name": "successful workflow recovery stops reminders",
+          "passed": true
+        },
+        {
+          "name": "expired activity is excluded even before physical cleanup",
+          "passed": true
+        },
+        {
+          "name": "missing activity storage sends an incomplete-data alert without leaking SQL",
+          "passed": true
+        },
+        {
+          "name": "a rejected mail handoff is visible and does not trigger a retry storm",
+          "passed": true
+        },
+        {
+          "name": "administrator sees a rejected mail handoff without a delivery claim",
+          "passed": true
+        },
+        {
+          "name": "mailer exceptions are contained without persisting raw error details",
+          "passed": true
+        },
+        {
+          "name": "an interrupted send remains reserved across later checks",
+          "passed": true
+        },
+        {
+          "name": "a stale worker cannot replace a newer reservation",
+          "passed": true
+        },
+        {
+          "name": "corrupt reservation fails closed without duplicate mail",
+          "passed": true
+        },
+        {
+          "name": "invalid administrator address never reaches the mailer",
+          "passed": true
+        },
+        {
+          "name": "disabling alerts removes the recurring job and blocks later queued calls",
+          "passed": true
+        },
+        {
+          "name": "shop managers cannot view administrator alert controls or destination",
+          "passed": true
+        },
+        {
+          "name": "administrator sees mail status and scheduling limitations",
+          "passed": true
+        },
+        {
+          "name": "deactivation disables alerts and stops their scheduled task",
+          "passed": true
+        },
+        {
+          "name": "deactivation clears temporary activity and its scheduled task",
+          "passed": true
+        },
+        {
+          "name": "uninstall removes alert settings, status and reservations",
+          "passed": true
+        },
+        {
+          "name": "WordPress uninstall removes the activity table and schema options",
+          "passed": true
+        },
+        {
+          "name": "reactivation restores cleanup without changing automation settings",
+          "passed": true
+        },
+        {
+          "name": "private attachments are deleted after the mail request",
+          "passed": true
+        },
+        {
+          "name": "next request wires order transitions to the WooCommerce email queue",
+          "passed": true
+        },
+        {
+          "name": "captured WooCommerce email contains exact complete renderer PDF bytes",
+          "passed": true
+        }
+      ],
+      "hpos": false,
+      "unixPermissionsChecked": false,
+      "pdfSha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+      "transport": "Real WooCommerce hooks and PHPMailer MIME with outbound mail captured. HTTPS response supplied through the WordPress HTTP test filter using actual Fullbleed output from this exact order. No production network or delivery claim."
+    },
+    "alertsBrowser": {
+      "checkedAt": "2026-10-03T12:19:50.128539+00:00",
+      "browser": "154.0.8037.93",
+      "browserEngine": "chrome",
+      "browserDistribution": "Google Chrome channel",
+      "playwright": "1.63.0",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "store": "http://127.0.0.1:9478",
+      "checks": [
+        {
+          "name": "administrator finds opt-in alerts with the scheduling and mail limits",
+          "passed": true
+        },
+        {
+          "name": "administrator enables failure alerts through the real settings form",
+          "passed": true
+        },
+        {
+          "name": "saved opt-in survives a new WordPress request",
+          "passed": true
+        },
+        {
+          "name": "alert controls do not expose renderer credentials or customer details",
+          "passed": true
+        },
+        {
+          "name": "alert settings reject an invalid administrator nonce",
+          "passed": true
+        },
+        {
+          "name": "shop manager can use automation but cannot configure administrator alerts",
+          "passed": true
+        },
+        {
+          "name": "shop manager cannot bypass the settings permission through POST",
+          "passed": true
+        },
+        {
+          "name": "mobile alert controls fit the viewport",
+          "passed": true
+        },
+        {
+          "name": "administrator can disable alerts without editing renderer settings",
+          "passed": true
+        },
+        {
+          "name": "alert settings have no JavaScript errors",
+          "passed": true
+        }
+      ],
+      "pageErrors": [],
+      "evidence": [
+        {
+          "file": "output/browser/wordpress-alerts-desktop.png",
+          "sha256": "a4becf176c55956acdf9867a755ae1c8ba8ae2e8c9407275ccdfac1fbf09e824"
+        },
+        {
+          "file": "output/browser/wordpress-alerts-mobile.png",
+          "sha256": "d0c947f1428a973079115ba547605b696793de525c6cdc3ae2a7010cb4589a2d"
+        }
+      ],
+      "scope": "Synthetic administrator settings only. WP-Cron is disabled in this fixture; no email is sent by browser actions."
+    },
+    "activityBrowser": {
+      "checkedAt": "2026-10-03T12:19:17.617645+00:00",
+      "browser": "154.0.8037.93",
+      "store": "http://127.0.0.1:9478",
+      "checks": [
+        {
+          "name": "WooCommerce displays a failure notice without needing to open each order",
+          "passed": true
+        },
+        {
+          "name": "merchant opens activity directly from automation settings",
+          "passed": true
+        },
+        {
+          "name": "activity distinguishes failed, prepared-attachment and ready-response results",
+          "passed": true
+        },
+        {
+          "name": "activity reveals no customer fields or renderer token",
+          "passed": true
+        },
+        {
+          "name": "failed filter shows only the affected workflow",
+          "passed": true
+        },
+        {
+          "name": "failure provides connection and resend guidance without a send action",
+          "passed": true
+        },
+        {
+          "name": "order action opens the native HPOS order screen",
+          "passed": true
+        },
+        {
+          "name": "mobile activity and recovery link stay within the viewport",
+          "passed": true
+        },
+        {
+          "name": "mobile recovery guidance uses full-width labelled cells",
+          "passed": true
+        },
+        {
+          "name": "customer HTTP session is forbidden from merchant activity",
+          "passed": true
+        },
+        {
+          "name": "staff recovery still generates and downloads a real browser PDF",
+          "passed": true
+        },
+        {
+          "name": "merchant and customer pages have no JavaScript errors",
+          "passed": true
+        }
+      ],
+      "pdfSha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424",
+      "pageErrors": [],
+      "evidence": [
+        {
+          "file": "output/activity/merchant-desktop.png",
+          "sha256": "0601b4d63c9d3a49e573b79c7346fc06aedaf34f512ea47c97bc23cbbc86d007"
+        },
+        {
+          "file": "output/activity/merchant-failed.png",
+          "sha256": "845f4071bdd47a4a13535e70ee62fddf35e9b0f5876b156da61357a6a9e86406"
+        },
+        {
+          "file": "output/activity/merchant-mobile.png",
+          "sha256": "83a6443e6b4b8772b226ceba6af63bc3d2a98668234c7f2669340f6e80a9bfce"
+        }
+      ]
+    }
+  },
+  "sharedNodeTests": 45,
+  "examples": [
+    {
+      "stem": "studio-order-summary",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.5",
+      "sha256": "71b50b0bc5d89bd58a94b41f3a88b306422c96d08cec9de57edd6703405cc2df"
+    },
+    {
+      "stem": "studio-packing-slip",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.5",
+      "sha256": "8836ae03b8863ebb04706a0e36a4123c4d00dc5fcb84b36358d753c57ea30a0c"
+    },
+    {
+      "stem": "contrast-order-summary",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.5",
+      "sha256": "a956e4e98298efce78c76aed27489bdfef41c3bfbd915230b5dde9b4ab6f26ab"
+    },
+    {
+      "stem": "contrast-packing-slip",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.5",
+      "sha256": "bbf6b8232486c0be9c93c9251fa39a513be722e86c1cdb861ccb33ba72d3462d"
+    },
+    {
+      "stem": "quiet-order-summary",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.5",
+      "sha256": "9ac311b176bd220d9a49d9e6d1ab00a7499a8cc285f43a5c5a1381887127104b"
+    },
+    {
+      "stem": "quiet-packing-slip",
+      "pages": 1,
+      "missingGlyphs": 0,
+      "engineVersion": "2.5.5",
+      "sha256": "aa92c753512cc16b2065f2ee599fc198cbe9973683bcb5f03598bd9e0845e9cf"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "output/automation/woocommerce-hpos-alert.eml",
+      "sha256": "6f8f4b7916e8519cea801406da942782d00a4bbc2a8dbfe649ea5ed9f3c48951"
+    },
+    {
+      "path": "output/automation/woocommerce-legacy-alert.eml",
+      "sha256": "5efa3a2376bacd4037512fbceabd52d172a6a71464b57bc8b94115165933c46d"
+    },
+    {
+      "path": "output/automation/woocommerce-hpos.pdf",
+      "sha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424"
+    },
+    {
+      "path": "output/automation/woocommerce-legacy.pdf",
+      "sha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424"
+    },
+    {
+      "path": "output/activity/staff-summary.pdf",
+      "sha256": "2915274b1f111336b80266f3ab1fecdd568aa9d68d4d90736c05f671536c5424"
+    },
+    {
+      "path": "output/browser/wordpress-alerts-desktop.png",
+      "sha256": "a4becf176c55956acdf9867a755ae1c8ba8ae2e8c9407275ccdfac1fbf09e824"
+    },
+    {
+      "path": "output/browser/wordpress-alerts-mobile.png",
+      "sha256": "d0c947f1428a973079115ba547605b696793de525c6cdc3ae2a7010cb4589a2d"
+    }
+  ],
+  "limitations": [
+    "PHPMailer MIME is captured, with no outbound email. Merchant SMTP receipt remains a production gate.",
+    "Hourly hooks and persisted reservations are exercised directly; the fixture disables automatic WP-Cron. Merchant scheduler timing remains unverified.",
+    "The overlapping-worker check interleaves execution after reservation; it is not a multi-worker load benchmark.",
+    "Local Chrome is verified; other browser/OS combinations require the pending CI run.",
+    "Published alpha.3 ZIPs have not changed. Paid sales and marketplace listings are not live."
+  ]
+}

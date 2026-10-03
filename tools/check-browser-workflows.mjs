@@ -88,9 +88,13 @@ try {
   const customer = await server(['tools/check-customer-downloads.mjs', '--hpos', '--packages', '--serve'], 'customer-store', 'FULLBLEED_CUSTOMER_PREVIEW_READY', 9482);
   await run('tools/check-customer-browser.py', 'customer-browser');
   await stop(customer);
+  const alerts = await server(['tools/check-automation.mjs', '--hpos', '--serve'], 'alerts-store', 'FULLBLEED_ACTIVITY_PREVIEW_READY', 9478);
+  await run('tools/check-alerts-browser.py', 'alerts-browser');
+  await stop(alerts);
   const staffRecord = JSON.parse(await readFile(`output/browser/${label('wordpress-matrix')}-verification.json`, 'utf8'));
   const customerRecord = JSON.parse(await readFile(`output/browser/${label('wordpress-customer')}-verification.json`, 'utf8'));
-  for (const record of [staffRecord, customerRecord]) {
+  const alertsRecord = JSON.parse(await readFile(`output/browser/${label('wordpress-alerts')}-verification.json`, 'utf8'));
+  for (const record of [staffRecord, customerRecord, alertsRecord]) {
     assert.equal(record.browserEngine, engine);
     assert.ok(record.checks.length > 0 && record.checks.every(check => check.passed === true));
     assert.deepEqual(record.pageErrors, []);
@@ -98,7 +102,7 @@ try {
   const packages = JSON.parse(await readFile('dist/packages.json', 'utf8'));
   for (const item of packages) assert.equal(createHash('sha256').update(await readFile(`dist/${item.filename}`)).digest('hex'), item.sha256);
   assert.deepEqual(customerRecord.packages, packages);
-  await writeFile(`output/browser-workflows/${engine}.json`, JSON.stringify({ checkedAt: new Date().toISOString(), syntheticOnly: true, engine, hpos: true, packages, staff: staffRecord, customer: customerRecord, scope: 'Actual browser editing and downloads on disposable WordPress. Customer renderer HTTPS transport is substituted with a fixture using real Fullbleed PDF bytes. No production network, email delivery or branded Safari claim.' }, null, 2) + '\n');
+  await writeFile(`output/browser-workflows/${engine}.json`, JSON.stringify({ checkedAt: new Date().toISOString(), syntheticOnly: true, engine, hpos: true, packages, staff: staffRecord, customer: customerRecord, alerts: alertsRecord, scope: 'Actual browser editing and downloads on disposable WordPress. Alert controls use the source-mounted automation fixture with captured mail. Customer renderer HTTPS transport is substituted with a fixture using real Fullbleed PDF bytes. No production network, email delivery or branded Safari claim.' }, null, 2) + '\n');
 } finally {
   await Promise.allSettled([...children].map(child => new Promise(resolve => {
     child.once('close', resolve);

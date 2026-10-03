@@ -36,6 +36,7 @@ try {
   await site.playground.writeFile('/tmp/fullbleed-test.pdf', new Uint8Array(pdf));
   const phpChecks = (await readFile('tools/check-automation.php', 'utf8')).replace('<?php', `<?php define('FULLBLEED_TEST_UNIX_PERMISSIONS', ${process.platform !== 'win32' ? 'true' : 'false'});`);
   await site.playground.writeFile('/tmp/fullbleed-check-activity.php', new Uint8Array(await readFile('tools/check-activity.php')));
+  await site.playground.writeFile('/tmp/fullbleed-check-alerts.php', new Uint8Array(await readFile('tools/check-alerts.php')));
   const result = await site.playground.run({ code: phpChecks });
   assert.equal(result.exitCode, 0, result.errors);
   const record = JSON.parse(result.text);
@@ -53,6 +54,8 @@ try {
   const stem = hpos ? 'woocommerce-hpos' : 'woocommerce-legacy';
   await writeFile(`output/automation/${stem}.pdf`, pdf);
   await writeFile(`output/automation/${stem}.eml`, mime);
+  const alertMime = Buffer.from(await site.playground.readFileAsBuffer('/tmp/fullbleed-alert.eml'));
+  await writeFile(`output/automation/${stem}-alert.eml`, alertMime);
   await writeFile(`output/automation/${stem}.json`, JSON.stringify({ checkedAt: new Date().toISOString(), ...record, hpos, unixPermissionsChecked: process.platform !== 'win32', pdfSha256: createHash('sha256').update(pdf).digest('hex'), transport: 'Real WooCommerce hooks and PHPMailer MIME with outbound mail captured. HTTPS response supplied through the WordPress HTTP test filter using actual Fullbleed output from this exact order. No production network or delivery claim.' }, null, 2));
   console.log(`${stem}: ${record.checks.length} automation checks passed; no email sent.`);
 } catch (error) {

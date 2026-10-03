@@ -1,12 +1,12 @@
 # Fullbleed Commerce: production product plan
 
-Decision, October 2, 2026: sell dependable document workflows. Manual downloads
+Decision, updated October 3, 2026: sell dependable document workflows. Manual downloads
 remain a useful preview and recovery tool. The paid product must earn its place
 by removing recurring work from the merchant's day.
 
 ## Merchant promise
 
-**Your store's documents, designed once and delivered with every order.**
+**Design your order documents once. Put them to work automatically.**
 
 Start with independent retail brands and the agencies that build their stores.
 They need distinctive order summaries, packing slips, care instructions and gift
@@ -14,18 +14,33 @@ inserts, without maintaining a PDF integration. Lead with the visual and HTML/CS
 editor plus native automation. Do not market an accounting or tax-compliance
 system: the present engine adapter has no fiscal invoice ledger or credit notes.
 
+The demo must show a complete job: customize a document, enable a native recipe,
+place a synthetic order, find the PDF at its destination, then recover a failed
+run. Lead the product page and onboarding with that sequence. Use manual generation
+for the first preview and support recovery. For Shopify, the first verified
+destination is the staff order screen through Flow; customer email delivery is a
+separate integration gate.
+
 ## Product boundary and packaging
 
 | Product | Included value | Initial commercial hypothesis |
 | --- | --- | --- |
 | WooCommerce Free | Local manual PDFs, full visual and source editor, embedded logos, import/export | Free, no account, quota, watermark or hosted dependency |
-| WooCommerce Pro | Automatic attachments to selected existing transactional emails; customer downloads; status-triggered fulfillment jobs; batch export; activity and recovery; updates and support | Test $79/year for one store with a self-hosted renderer; managed rendering priced separately after cost measurements |
-| Shopify Commerce | Templates, order documents, a native Flow action, expiring document links, activity/retry controls, fulfillment batches | Test $12/month for small stores and $29/month for automation-heavy stores; specify included successful renders before publishing a price |
+| WooCommerce Pro | Automatic attachments to selected existing transactional emails; customer downloads; batch export; activity, administrator failure alerts and recovery; updates and support | Test $79/year for one store with a self-hosted renderer; managed rendering priced separately after cost measurements |
+| Shopify Commerce | Templates, order documents, native Flow actions, expiring document links, persistent activity and retry/revoke controls | Test $12/month for small stores and $29/month for automation-heavy stores; specify included successful renders before publishing a price |
 
 These are hypotheses, not offers. Avoid an unlimited hosted-rendering promise.
 Free customization helps adoption; charge for automation, delivery, operational
 reliability and support. Code licenses do not change. The paid WordPress add-on
 remains GPL-compatible and Fullbleed core remains MIT.
+
+Automation and editable templates are already available from established products.
+As checked October 3, Order Printer Pro advertises both on its free tier and paid
+tiers from $10/month. Fullbleed's proposed prices therefore require evidence that
+merchants value the combined visual/source editor, distinctive print layouts,
+private rendering and understandable recovery. Validate the complete workflow and
+willingness to pay with pilots; do not use feature count or engine speed as a proxy.
+Source: [current Shopify listing](https://apps.shopify.com/order-printer-pro).
 
 ## First paid release
 
@@ -33,7 +48,8 @@ Keep the first offer specific enough to finish and support:
 
 - **WooCommerce Pro:** branded order summaries attached to selected existing
   processing/completed emails, customer My Account downloads, saved visual and
-  HTML/CSS templates, private rendering, visible failures, updates and support.
+  HTML/CSS templates, private rendering, visible failures, optional administrator
+  alerts, updates and support.
   Rendering outages preserve order mail; recovery uses an explicit merchant
   resend. Automatic recovery must not risk duplicate customer emails.
 - **Shopify Commerce:** saved templates and native Flow actions returning
@@ -191,9 +207,12 @@ WooCommerce's current source also adds a merchant activity view across email and
 customer-download workflows, with failure filtering, native order links and
 specific recovery guidance. It keeps bounded recent status references, replaces
 stale failures after successful retries, and distinguishes preparation from
-delivery. This view ships in alpha.3. It supplies attended
-failure visibility; automatic alerting and duplicate-safe email recovery remain
-separate work.
+delivery. This view ships in alpha.3. Current source adds opt-in administrator
+failure summaries with hourly checks and a persisted 24-hour mail-attempt
+reservation. They include counts and recovery navigation, never customer data or
+documents. Alerts depend on the site's scheduler and mail service; customer-email
+recovery still requires an explicit resend. This addition is not in the published
+alpha.3 ZIP. See [failure alerts](../automation/README.md#administrator-failure-alerts).
 
 The optional WooCommerce renderer now has a
 [Docker deployment recipe](../automation/DEPLOYMENT.md) with HTTPS termination,
@@ -254,6 +273,28 @@ for the checks actually run.
   and permission design. A saved link must not bypass a revoked installation.
 
 ## Launch and budget
+
+### Release order and decisions
+
+| Priority | Merchant outcome | Gate before selling it |
+| --- | --- | --- |
+| 1. WooCommerce agency pilot | Existing order emails carry the saved design; customers can retrieve their own copies; failures reach the administrator | Real staging SMTP receipt, scheduler operation, private renderer recovery, installed upgrade and representative long orders |
+| 2. WooCommerce paid download | A buyer can purchase, install, receive updates and get support | Purchase/refund/renewal tests, integrity-checked update distribution, support and privacy terms; existing local documents keep working after entitlement expires |
+| 3. Shopify paid pilot | An installed app creates staff documents from a real Flow trigger without manual generation | Stable origin, install/uninstall, Shopify App Pricing activation/cancellation/freeze, operating cost and backup/key recovery evidence |
+| 4. Wider automation | Conditional warehouse jobs and merchant-selected external destinations | Shipment/refund semantics, durable delivery state, destination verification and retry reconciliation before adding Make, Zapier or n8n recipes |
+
+Use Shopify App Pricing's hosted plan selection and Partner API entitlement
+checks for the new public app. The current subscription checks are implemented,
+but paid activation and lifecycle have not been exercised.
+[Shopify's current pricing integration](https://shopify.dev/docs/apps/launch/billing/shopify-app-pricing)
+defines the required platform behavior.
+
+Keep the launch audience narrow: WooCommerce agencies able to operate a renderer,
+then Shopify merchants needing designed staff documents through Flow. A managed
+WooCommerce plan and customer delivery on Shopify need their own cost and delivery
+proof. Additional marketplace plugins follow a validated repeatable workflow.
+
+### Rollout
 
 Target the smallest paid release that automates a complete merchant job. Recruit
 a few WooCommerce merchants and Shopify agencies using free documentation,

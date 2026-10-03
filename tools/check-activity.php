@@ -83,11 +83,14 @@ activity_record( wc_get_order( 12 ), 'email', 'customer_processing_order', 'orde
 fb_check( 'successful storage recovery clears the warning and resumes results', ! get_option( Fullbleed\CommercePro\Activity\ERROR_OPTION ) && count( activity_rows() ) === 1 );
 set_current_screen( 'woocommerce_page_wc-orders' ); ob_start(); Fullbleed\CommercePro\Activity\notice(); $notice = ob_get_clean();
 fb_check( 'successful recovery clears the WooCommerce failure notice', '' === $notice );
+require '/tmp/fullbleed-check-alerts.php';
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 deactivate_plugins( 'fullbleed-commerce-pro/fullbleed-commerce-pro.php' );
+fb_check( 'deactivation disables alerts and stops their scheduled task', ! Fullbleed\CommercePro\Alerts\enabled() && ! wp_next_scheduled( Fullbleed\CommercePro\Alerts\HOOK ) );
 fb_check( 'deactivation clears temporary activity and its scheduled task', ! wp_next_scheduled( Fullbleed\CommercePro\Activity\CLEANUP_HOOK ) && array() === activity_rows() );
 uninstall_plugin( 'fullbleed-commerce-pro/fullbleed-commerce-pro.php' );
+fb_check( 'uninstall removes alert settings, status and reservations', false === get_option( Fullbleed\CommercePro\Alerts\OPTION ) && false === get_option( Fullbleed\CommercePro\Alerts\CHECK_OPTION ) && false === get_option( Fullbleed\CommercePro\Alerts\DELIVERY_OPTION ) );
 fb_check( 'WordPress uninstall removes the activity table and schema options', false === get_option( Fullbleed\CommercePro\Activity\VERSION_OPTION ) && is_wp_error( activity_rows() ) );
 activate_plugin( 'fullbleed-commerce-pro/fullbleed-commerce-pro.php' );
 fb_check( 'reactivation restores cleanup without changing automation settings', wp_next_scheduled( Fullbleed\CommercePro\Activity\CLEANUP_HOOK ) && Fullbleed\CommercePro\Automation\settings()['consent'] );

@@ -4,6 +4,23 @@ The current WordPress release is **0.1.0-alpha.3**, published October 3, 2026.
 All checks use synthetic order data. This is an evaluation preview, not
 marketplace approval or a live paid service.
 
+## Unreleased administrator failure alerts
+
+Current source adds opt-in administrator summaries for unresolved WooCommerce
+document failures. [Retained verification](failure-alert-verification.json)
+records the runtime source hashes, synthetic MIME/PDF hashes and each local check.
+Both HPOS and legacy stores pass 83 email/activity/alert checks on Windows,
+including interleaved reservations, lost cache, rejected and interrupted mail,
+recovery, missing storage, retention and uninstall. Mail is captured before
+transport; these tests send no email and do not prove inbox delivery.
+
+Chrome passes ten alert-control checks covering enable/save/reload/disable,
+administrator permission, CSRF protection, mobile layout and page errors. Twelve
+activity checks also pass, including the real staff browser-worker PDF download.
+The shared 45-test Node suite and all six designed examples pass. The production
+loop is still gated on a working merchant scheduler and actual mail receipt.
+These source additions do not change the published alpha.3 artifacts.
+
 ## Current release and upgrade path
 
 [Alpha.3](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.3)
