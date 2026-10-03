@@ -1,0 +1,12 @@
+{
+    admin off
+    auto_https disable_redirects
+}
+
+renderer.example.test {
+    tls internal
+    request_body {
+        max_size 768KB
+    }
+    reverse_proxy renderer:9480
+}
