@@ -188,8 +188,8 @@ function page() {
         <li><a href="<?php echo esc_url( $base ); ?>" <?php if ( ! $failed ) echo 'aria-current="page" class="current"'; ?>><?php esc_html_e( 'All results', 'fullbleed-commerce-pro' ); ?></a> | </li>
         <li><a href="<?php echo esc_url( add_query_arg( 'fb_result', 'failed', $base ) ); ?>" <?php if ( $failed ) echo 'aria-current="page" class="current"'; ?>><?php esc_html_e( 'Failed', 'fullbleed-commerce-pro' ); ?></a></li>
     </ul></nav>
-    <div class="fullbleed-activity-table" style="clear:both;overflow-x:auto"><table class="widefat striped"><caption class="screen-reader-text"><?php esc_html_e( 'Recent automated PDF results', 'fullbleed-commerce-pro' ); ?></caption>
-    <thead><tr><?php foreach ( array( __( 'Order', 'fullbleed-commerce-pro' ), __( 'Workflow', 'fullbleed-commerce-pro' ), __( 'Result', 'fullbleed-commerce-pro' ), __( 'Next step', 'fullbleed-commerce-pro' ), __( 'Time (UTC)', 'fullbleed-commerce-pro' ) ) as $heading ) echo '<th scope="col">' . esc_html( $heading ) . '</th>'; ?></tr></thead><tbody>
+    <div class="fullbleed-activity-table" style="clear:both;overflow-x:auto"><table class="widefat striped" role="table"><caption class="screen-reader-text"><?php esc_html_e( 'Recent automated PDF results', 'fullbleed-commerce-pro' ); ?></caption>
+    <thead role="rowgroup"><tr role="row"><?php foreach ( array( __( 'Order', 'fullbleed-commerce-pro' ), __( 'Workflow', 'fullbleed-commerce-pro' ), __( 'Result', 'fullbleed-commerce-pro' ), __( 'Next step', 'fullbleed-commerce-pro' ), __( 'Time (UTC)', 'fullbleed-commerce-pro' ) ) as $heading ) echo '<th scope="col" role="columnheader">' . esc_html( $heading ) . '</th>'; ?></tr></thead><tbody role="rowgroup">
     <?php $visible = is_wp_error( $results ) ? array() : array_slice( $results, 0, 25 ); ?>
     <?php foreach ( $visible as $row ) :
         $order = function_exists( 'wc_get_order' ) ? wc_get_order( $row['order_id'] ) : false;
@@ -199,11 +199,11 @@ function page() {
         $documents = array( 'order-summary' => __( 'Order summary', 'fullbleed-commerce-pro' ), 'packing-slip' => __( 'Packing slip', 'fullbleed-commerce-pro' ), 'both' => __( 'Summary and packing slip', 'fullbleed-commerce-pro' ) );
         $labels = array( 'prepared' => __( 'Attachment prepared', 'fullbleed-commerce-pro' ), 'ready' => __( 'PDF response ready', 'fullbleed-commerce-pro' ), 'failed' => __( 'Failed', 'fullbleed-commerce-pro' ) );
         ?>
-        <tr><th scope="row"><?php if ( $can_open ) : ?><a href="<?php echo esc_url( $order->get_edit_order_url() ); ?>"><?php echo esc_html( '#' . $row['order_id'] ); ?></a><?php else : ?><?php esc_html_e( 'Order unavailable', 'fullbleed-commerce-pro' ); ?><?php endif; ?></th>
-        <td><?php echo esc_html( $workflow ); ?><br><small><?php echo esc_html( $documents[ $row['documents'] ] ?? '' ); ?></small></td>
-        <td><strong><?php echo esc_html( $labels[ $row['state'] ] ?? '' ); ?></strong><?php if ( 'failed' === $row['state'] ) : ?><br><code><?php echo esc_html( safe_code( $row['code'] ) ); ?></code><?php endif; ?></td>
-        <td><?php echo esc_html( guidance( $row ) ); ?><?php if ( 'failed' === $row['state'] ) : ?><br><small><?php echo esc_html( 'email' === $row['channel'] ? __( 'After recovery, open the order and use WooCommerce to resend the email if needed.', 'fullbleed-commerce-pro' ) : __( 'After recovery, the customer can retry from My Account.', 'fullbleed-commerce-pro' ) ); ?></small><?php endif; ?></td>
-        <td><time><?php echo esc_html( $row['updated_at'] ); ?></time></td></tr>
+        <tr role="row"><th scope="row" role="rowheader" data-label="<?php esc_attr_e( 'Order', 'fullbleed-commerce-pro' ); ?>"><?php if ( $can_open ) : ?><a href="<?php echo esc_url( $order->get_edit_order_url() ); ?>"><?php echo esc_html( '#' . $row['order_id'] ); ?></a><?php else : ?><?php esc_html_e( 'Order unavailable', 'fullbleed-commerce-pro' ); ?><?php endif; ?></th>
+        <td role="cell" data-label="<?php esc_attr_e( 'Workflow', 'fullbleed-commerce-pro' ); ?>"><?php echo esc_html( $workflow ); ?><br><small><?php echo esc_html( $documents[ $row['documents'] ] ?? '' ); ?></small></td>
+        <td role="cell" data-label="<?php esc_attr_e( 'Result', 'fullbleed-commerce-pro' ); ?>"><strong><?php echo esc_html( $labels[ $row['state'] ] ?? '' ); ?></strong><?php if ( 'failed' === $row['state'] ) : ?><br><code><?php echo esc_html( safe_code( $row['code'] ) ); ?></code><?php endif; ?></td>
+        <td role="cell" data-label="<?php esc_attr_e( 'Next step', 'fullbleed-commerce-pro' ); ?>"><?php echo esc_html( guidance( $row ) ); ?><?php if ( 'failed' === $row['state'] ) : ?><br><small><?php echo esc_html( 'email' === $row['channel'] ? __( 'After recovery, open the order and use WooCommerce to resend the email if needed.', 'fullbleed-commerce-pro' ) : __( 'After recovery, the customer can retry from My Account.', 'fullbleed-commerce-pro' ) ); ?></small><?php endif; ?></td>
+        <td role="cell" data-label="<?php esc_attr_e( 'Time (UTC)', 'fullbleed-commerce-pro' ); ?>"><time><?php echo esc_html( $row['updated_at'] ); ?></time></td></tr>
     <?php endforeach; ?>
     <?php if ( ! $visible && ! is_wp_error( $results ) ) : ?><tr><td colspan="5"><?php echo esc_html( $failed ? __( 'No failed results in the retained activity.', 'fullbleed-commerce-pro' ) : __( 'No activity yet. Results appear when an enabled email attachment or customer download is attempted.', 'fullbleed-commerce-pro' ) ); ?></td></tr><?php endif; ?>
     </tbody></table></div>
@@ -225,3 +225,6 @@ add_action( 'admin_menu', function () {
     add_submenu_page( 'woocommerce', __( 'Fullbleed activity', 'fullbleed-commerce-pro' ), __( 'Fullbleed activity', 'fullbleed-commerce-pro' ), 'manage_woocommerce', 'fullbleed-activity', __NAMESPACE__ . '\page' );
 } );
 add_action( 'admin_notices', __NAMESPACE__ . '\notice' );
+add_action( 'admin_enqueue_scripts', function ( $hook ) {
+    if ( 'woocommerce_page_fullbleed-activity' === $hook ) wp_enqueue_style( 'fullbleed-activity', plugins_url( 'assets/activity.css', __FILE__ ), array(), '1' );
+} );
