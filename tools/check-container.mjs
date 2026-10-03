@@ -79,6 +79,13 @@ try {
   assert.match(authPage, /shopifycloud\/app-bridge\.js/);
   assert.doesNotMatch(authPage, /%PDF-/);
   response = await fetch(`${origin}/webhooks/privacy`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+  assert.equal(response.status, 400);
+  response = await fetch(`${origin}/webhooks/privacy`, { method: 'POST', headers: {
+    'Content-Type': 'application/json', 'X-Shopify-Topic': 'shop/redact',
+    'X-Shopify-Shop-Domain': 'synthetic-container.myshopify.com',
+    'X-Shopify-API-Version': '2026-10', 'X-Shopify-Hmac-Sha256': 'invalid',
+    'X-Shopify-Webhook-Id': '00000000-0000-4000-8000-000000000001',
+  }, body: JSON.stringify({ shop_domain: 'synthetic-container.myshopify.com', shop_id: 1 }) });
   assert.equal(response.status, 401);
   passed('public privacy page works and unauthenticated documents and webhooks are denied');
   script(`
