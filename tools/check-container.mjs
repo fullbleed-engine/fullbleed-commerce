@@ -44,6 +44,10 @@ async function start() {
 try {
   assert.equal(run(['run', '--rm', image, 'id', '-u']), '1000');
   passed('default image user is unprivileged');
+  const missingVolume = spawnSync(docker, ['run', '--rm', '-e', 'RAILWAY_ENVIRONMENT_ID=synthetic', image], { encoding: 'utf8', windowsHide: true, timeout: 15000 });
+  assert.equal(missingVolume.status, 1);
+  assert.match(missingVolume.stderr, /requires the persistent volume at \/data/);
+  passed('Railway startup refuses an absent persistent mount');
   run(['volume', 'create', volume]); volumeCreated = true;
   assert.equal(run(['run', '--rm', '--user', '0', '--entrypoint', 'stat', '--mount',
     `type=volume,src=${volume},dst=/data,volume-nocopy`, image, '-c', '%u', '/data']), '0');

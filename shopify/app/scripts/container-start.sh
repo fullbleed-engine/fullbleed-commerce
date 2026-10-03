@@ -18,6 +18,11 @@ if [ "${1:-}" != serve ]; then
   exec "$@"
 fi
 
+if [ -n "${RAILWAY_ENVIRONMENT_ID:-}" ] && [ "${RAILWAY_VOLUME_MOUNT_PATH:-}" != /data ]; then
+  echo 'Railway startup requires the persistent volume at /data.' >&2
+  exit 1
+fi
+
 # Volumes are unavailable to Railway build/pre-deploy commands. Migrate here,
 # with the actual volume mounted, and stop startup on any migration failure.
 ./node_modules/.bin/prisma migrate deploy

@@ -6,6 +6,7 @@ volume, a 0.5 CPU / 512 MiB ceiling, and `/health` readiness. These are initial
 staging limits, not a verified production capacity or monthly spending cap.
 Keep the server awake for signed webhooks. SQLite requires one instance;
 volume deployments have a short interruption while the mount changes hands.
+The container refuses Railway startup without its declared `/data` volume.
 
 Use Railway's current Infrastructure as Code plan/apply workflow. The first
 deployment accepted the older JSON build configuration but did not enforce its
@@ -13,6 +14,9 @@ runtime ceilings; a subsequent redeploy lost that build selection. Service
 settings and cgroup inspection exposed the discrepancy. The current definition
 imports the actual service and volume, preserves secrets, and requires a reviewed
 plan. Do not treat a schema-valid configuration as proof of running limits.
+The imported definition omits platform defaults; confirm `ON_FAILURE` and
+disabled sleeping in the live settings. The entrypoint enforces the mount guard
+because the current IaC importer does not retain `requiredMountPath`.
 
 ## Runtime configuration
 
