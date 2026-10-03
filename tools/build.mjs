@@ -2,7 +2,12 @@
 import { build } from 'esbuild';
 import { mkdir, cp, readFile, writeFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import assert from 'node:assert/strict';
 import { wordpressEditorPlugin } from './wordpress-editor.mjs';
+const rendererBuild = JSON.parse(await readFile('node_modules/fullbleed/dist/build.json', 'utf8'));
+const rendererPackage = JSON.parse(await readFile('node_modules/fullbleed/package.json', 'utf8'));
+assert.equal(rendererBuild.packageVersion, rendererPackage.version, 'Renderer package and build versions must match.');
+assert.equal(rendererBuild.engineVersion, rendererPackage.fullbleed.engineVersion, 'Renderer engine metadata must match.');
 const destination = 'wordpress/fullbleed-commerce/assets/generated';
 await mkdir(destination, { recursive: true });
 const outputs = [];
@@ -49,5 +54,6 @@ for (const file of ['admin.js', 'editor.js', 'editor.css', 'worker.js', 'engine.
   const bytes = await readFile(`${destination}/${file}`);
   report[file] = { bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') };
 }
-await writeFile(`${destination}/build.json`, JSON.stringify({ engine: '2.5.5', nodePackage: '0.1.1', wordpressCoreScripts: ['jquery', 'backbone', 'underscore', 'wp-codemirror'], grapesjsSourceMapSha256: createHash('sha256').update(await readFile('node_modules/grapesjs/dist/grapes.mjs.map')).digest('hex'), files: report }, null, 2) + '\n');
+assert.deepEqual(report['engine.wasm'], rendererBuild.files['dist/engine.wasm'], 'Bundled renderer must match its verified build.');
+await writeFile(`${destination}/build.json`, JSON.stringify({ engine: rendererBuild.engineVersion, nodePackage: rendererPackage.version, wordpressCoreScripts: ['jquery', 'backbone', 'underscore', 'wp-codemirror'], grapesjsSourceMapSha256: createHash('sha256').update(await readFile('node_modules/grapesjs/dist/grapes.mjs.map')).digest('hex'), files: report }, null, 2) + '\n');
 console.log(JSON.stringify(report, null, 2));

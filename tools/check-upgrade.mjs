@@ -9,7 +9,7 @@ import { starterTemplate } from '../src/documents.js';
 import { renderOrder } from '../src/node.js';
 import { pluginMetadata } from './plugin-metadata.mjs';
 
-const oldVersion = '0.1.0-alpha.2';
+const oldVersion = '0.1.0-alpha.3';
 const version = JSON.parse(await readFile('package.json', 'utf8')).version;
 assert.notEqual(version, oldVersion, 'The candidate must have a new version.');
 const hpos = process.argv.includes('--hpos');
@@ -20,8 +20,8 @@ const hash = value => createHash('sha256').update(value).digest('hex');
 const checks = [];
 const check = (name, result) => { assert.ok(result, name); checks.push({ name, passed: true }); console.log(`${name}: passed`); };
 const previous = [
-  { name: 'fullbleed-commerce', sha256: 'b1141910948e038e1ee8565c44708d304f0ee78967442cc26c0a68162985a5fe' },
-  { name: 'fullbleed-commerce-pro', sha256: '3a309bec70c90ed9f1127c86e496ae80946eb615ddf2212d85ccc60835545728' },
+  { name: 'fullbleed-commerce', sha256: '53b2a9fe3da78ac14f94e9851fcc57fe66f413c7a6b13b3e9563573b364d4f79' },
+  { name: 'fullbleed-commerce-pro', sha256: '7512e9b346afe2d13e0c7d8ca0b1f22eaec261e3144e87f12da33684680f25e1' },
 ];
 const candidates = await Promise.all(previous.map(entry => pluginMetadata(entry.name)));
 const pluginVersions = candidates.map(entry => entry.version);
@@ -78,7 +78,9 @@ const state = () => php(`
     'mailAttempts' => (int) get_option('fullbleed_upgrade_mail_attempts', 0),
     'batchLimit' => apply_filters('fullbleed_commerce_batch_limit', 1),
     'activitySchema' => get_option('fullbleed_activity_schema', null),
-    'activityCleanup' => (bool) wp_next_scheduled('fullbleed_activity_cleanup')
+    'activityCleanup' => (bool) wp_next_scheduled('fullbleed_activity_cleanup'),
+    'failureAlerts' => get_option('fullbleed_failure_alerts', null),
+    'failureAlertSchedule' => (bool) wp_next_scheduled('fullbleed_failure_alert_check')
   ));
 `).then(JSON.parse);
 let succeeded = false;
@@ -94,8 +96,9 @@ try {
     update_option('fullbleed_automation', ${value(config)}, false);`);
   const before = await state();
   check('numeric directory version upgrades the published alpha.3 base', await php(`echo version_compare('${pluginVersions[0]}', '0.1.0-alpha.3', '>') ? 'yes' : 'no';`) === 'yes');
-  check('released alpha.2 base and Pro are active in the requested storage mode', before.versions.every(v => v === oldVersion) && before.active.every(Boolean) && before.hpos === hpos);
-  check('alpha.2 has no new activity schema', before.activitySchema === null);
+  check('released alpha.3 base and Pro are active in the requested storage mode', before.versions.every(v => v === oldVersion) && before.active.every(Boolean) && before.hpos === hpos);
+  check('released alpha.3 has its activity schema and retention schedule', before.activitySchema === '1' && before.activityCleanup);
+  check('released alpha.3 has no failure-alert opt-in or schedule', before.failureAlerts === null && !before.failureAlertSchedule);
   const beforePdf = await renderOrder(before.order, { kind: 'order-summary', template: before.templates[0].template });
   await writeFile(`output/upgrade/${stem}-before.pdf`, beforePdf.pdf);
   for (const [index, entry] of previous.entries()) {
@@ -130,7 +133,8 @@ try {
     check(index === 0 ? 'new base remains compatible with the previous Pro version during upgrade' : 'both installed plugin versions match the release candidate', current.batchLimit === 25);
   }
   const after = await state();
-  check('upgrade initializes the activity schema and retention schedule on the next request', after.activitySchema === '1' && after.activityCleanup);
+  check('upgrade preserves the activity schema and retention schedule', after.activitySchema === before.activitySchema && after.activityCleanup);
+  check('upgrade leaves administrator failure alerts disabled until explicitly enabled', after.failureAlerts !== 'yes' && !after.failureAlertSchedule);
   const afterPdf = await renderOrder(after.order, { kind: 'order-summary', template: after.templates[0].template });
   await writeFile(`output/upgrade/${stem}-after.pdf`, afterPdf.pdf);
   check('saved document renders identical PDF bytes after both upgrades', hash(beforePdf.pdf) === hash(afterPdf.pdf));
