@@ -1,0 +1,64 @@
+name: Commerce browser workflows
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'wordpress/**'
+      - 'src/**'
+      - 'pro/**'
+      - 'automation/**'
+      - 'tools/**'
+      - 'package*.json'
+      - '.github/workflows/browser-workflows.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'wordpress/**'
+      - 'src/**'
+      - 'pro/**'
+      - 'automation/**'
+      - 'tools/**'
+      - 'package*.json'
+      - '.github/workflows/browser-workflows.yml'
+permissions:
+  contents: read
+concurrency:
+  group: commerce-browsers-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox, webkit]
+    env:
+      FULLBLEED_TEST_BROWSER: ${{ matrix.browser }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.21.0
+          cache: npm
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: tools/browser-requirements.txt
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - run: npm run pack
+      - run: python -m pip install -r tools/browser-requirements.txt
+      - run: python -m playwright install --with-deps ${{ matrix.browser }}
+      - run: node tools/check-browser-workflows.mjs
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        if: always()
+        with:
+          name: commerce-browser-${{ matrix.browser }}
+          path: |
+            output/browser/
+            output/browser-workflows/
+            output/automation/customer-hpos.json
+            target/browser-workflows/
+          retention-days: 14

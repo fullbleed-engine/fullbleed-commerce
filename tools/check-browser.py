@@ -9,6 +9,7 @@ from urllib.request import urlopen
 from zipfile import ZipFile
 from playwright.sync_api import sync_playwright
 from pypdf import PdfReader
+from browser_runtime import browser_label, browser_metadata, engine, launch_browser
 
 base = os.environ.get('FULLBLEED_TEST_URL', 'http://127.0.0.1:9477')
 assert urlparse(base).hostname == '127.0.0.1'
@@ -18,7 +19,7 @@ order_id = str(fixture['orders'][0])
 batch_ids = ','.join(str(value) for value in fixture['orders'])
 pro = os.environ.get('FULLBLEED_TEST_PRO') == '1'
 saved_title = os.environ.get('FULLBLEED_TEST_SAVED_TITLE')
-label = os.environ.get('FULLBLEED_TEST_LABEL', 'wordpress-pro' if pro else 'wordpress-free')
+label = browser_label(os.environ.get('FULLBLEED_TEST_LABEL', 'wordpress-pro' if pro else 'wordpress-free'))
 out = Path('output/browser')
 out.mkdir(parents=True, exist_ok=True)
 checks = []
@@ -28,19 +29,27 @@ def check(name, condition):
     print(name + ': passed', flush=True)
 
 with sync_playwright() as pw:
-    browser = pw.chromium.launch(channel='chrome', headless=True)
+    browser = launch_browser(pw)
     context = browser.new_context(viewport={'width': 1440, 'height': 1100}, accept_downloads=True)
     page = context.new_page()
     page.set_default_timeout(45000)
     errors = []
-    page.on('pageerror', lambda error: errors.append(str(error)))
+    error_details, console_errors = [], []
+    def page_error(error):
+        errors.append(str(error))
+        error_details.append({'message': error.message, 'name': error.name, 'stack': error.stack, 'url': page.url, 'completedChecks': len(checks)})
+    page.on('pageerror', page_error)
+    page.on('console', lambda message: console_errors.append({'text': message.text, 'location': message.location, 'completedChecks': len(checks)}) if message.type == 'error' else None)
     try:
-        page.goto(base + '/wp-login.php')
+        # Follow WordPress's login redirect for the actual protected document page.
+        # An intermediate dashboard starts unrelated widget requests, which can
+        # reject when the test immediately navigates away from that dashboard.
+        document_url = base + '/wp-admin/admin.php?page=fullbleed-commerce'
+        page.goto(document_url)
         page.locator('#user_login').fill('admin')
         page.locator('#user_pass').fill('fullbleed-local-test')
         page.locator('#wp-submit').click()
-        page.wait_for_url('**/wp-admin/**', wait_until='domcontentloaded', timeout=45000)
-        page.goto(base + '/wp-admin/admin.php?page=fullbleed-commerce')
+        page.wait_for_url(document_url, wait_until='domcontentloaded', timeout=45000)
         page.locator('#fb-orders').fill(order_id)
         page.locator('[data-render]').click()
         page.locator('[data-preview]').wait_for(state='visible')
@@ -118,7 +127,7 @@ with sync_playwright() as pw:
             page.locator('#fb-orders').fill(batch_ids)
             with page.expect_download() as download:
                 page.locator('[data-render]').click()
-            archive = out / 'wordpress-pro-batch.zip'
+            archive = out / ('wordpress-pro-batch.zip' if engine == 'chrome' else f'{label}-batch.zip')
             download.value.save_as(archive)
             with ZipFile(archive) as zipped:
                 check('Pro browser download is a complete two-PDF ZIP', len(zipped.namelist()) == 2 and all(zipped.read(name).startswith(b'%PDF-') for name in zipped.namelist()))
@@ -131,11 +140,14 @@ with sync_playwright() as pw:
         check('mobile editor fits the viewport', page.evaluate('document.documentElement.scrollWidth <= innerWidth'))
         page.screenshot(path=str(out / f'{label}-mobile.png'), full_page=True)
         check('no browser JavaScript errors', not errors)
-        record = {'checkedAt': datetime.now(timezone.utc).isoformat(), 'browser': browser.version, 'store': base, 'pro': pro, 'upgradeTemplate': saved_title, 'checks': checks, 'pdfSha256': sha256(custom.read_bytes()).hexdigest(), 'pageErrors': errors}
+        documents = [{'file': p.as_posix(), 'sha256': sha256(p.read_bytes()).hexdigest(), 'pages': len(PdfReader(p).pages)} for p in [pdf, custom, applied]]
+        record = {'checkedAt': datetime.now(timezone.utc).isoformat(), **browser_metadata(browser), 'store': base, 'pro': pro, 'upgradeTemplate': saved_title, 'checks': checks, 'pdfSha256': sha256(custom.read_bytes()).hexdigest(), 'documents': documents, 'pageErrors': errors}
+        if pro:
+            record['batch'] = {'file': archive.as_posix(), 'sha256': sha256(archive.read_bytes()).hexdigest()}
         (out / f'{label}-verification.json').write_text(json.dumps(record, indent=2), encoding='utf-8')
     except Exception:
         page.screenshot(path=str(out / f'{label}-failure.png'), full_page=True)
-        (out / f'{label}-failure.json').write_text(json.dumps({'checks': checks, 'errors': errors, 'url': page.url, 'text': page.locator('body').inner_text()[-12000:]}, indent=2), encoding='utf-8')
+        (out / f'{label}-failure.json').write_text(json.dumps({**browser_metadata(browser), 'checks': checks, 'errors': errors, 'errorDetails': error_details, 'consoleErrors': console_errors, 'url': page.url, 'text': page.locator('body').inner_text()[-12000:]}, indent=2), encoding='utf-8')
         raise
     finally:
         context.close()

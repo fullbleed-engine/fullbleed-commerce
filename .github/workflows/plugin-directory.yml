@@ -10,6 +10,8 @@ on:
       - 'tools/wordpress-editor.mjs'
       - 'tools/pack.mjs'
       - 'tools/check-browser.py'
+      - 'tools/browser_runtime.py'
+      - 'tools/browser-requirements.txt'
       - 'tools/seed-wordpress.php'
       - 'LICENSES/**'
       - 'package*.json'
@@ -22,6 +24,8 @@ on:
       - 'tools/wordpress-editor.mjs'
       - 'tools/pack.mjs'
       - 'tools/check-browser.py'
+      - 'tools/browser_runtime.py'
+      - 'tools/browser-requirements.txt'
       - 'tools/seed-wordpress.php'
       - 'LICENSES/**'
       - 'package*.json'
@@ -78,7 +82,7 @@ jobs:
           wp-env run cli wp eval-file wp-content/fullbleed-test-seed.php
           wp-env run cli wp core version > target/directory-runtime.txt
           wp-env run cli wp plugin list --format=json >> target/directory-runtime.txt
-          python -m pip install playwright==1.49.1 pypdf==6.1.1
+          python -m pip install -r tools/browser-requirements.txt
           python -m playwright install --with-deps chrome
           python tools/check-browser.py
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
