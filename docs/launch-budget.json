@@ -14,8 +14,8 @@
     "projectId": "ee2c5784-260b-44d7-aff3-ef46714687bc",
     "existingWorkspacePlan": "Hobby",
     "newSubscriptionPurchased": false,
-    "meteredUsageDollars": 0.00037255497569135804,
-    "usageCheckedAt": "2026-10-03T00:31:08.658422+00:00",
+    "meteredUsageDollars": 0.0004532243349037509,
+    "usageCheckedAt": "2026-10-03T01:06:12.842628+00:00",
     "computeStopped": true,
     "persistentVolumeRetained": true,
     "notes": "Metered resource usage before plan credits, not an invoice or confirmed card charge. Usage can lag; retained volume storage remains metered. Reconcile actual launch charges against the $50 total cap."

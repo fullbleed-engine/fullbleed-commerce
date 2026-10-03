@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-03T00:32:14.312Z",
+  "checkedAt": "2026-10-03T01:06:43.871Z",
   "previewVersion": "0.1.0-alpha.1",
   "sourceLocks": {
     "root": "1a9f225f14867ca8a82402accfdce87f2c590f31b80a67a6014c4527bf3258b1",
@@ -42,9 +42,9 @@
     }
   ],
   "sharedTests": {
-    "passed": 36,
+    "passed": 41,
     "failed": 0,
-    "logSha256": "d4f8f18e5769e56ec52ae5952ddfe0b32c96002647496cb2ee2909d046869843"
+    "logSha256": "3c4317a90d41bfc92998b93187bdabc00f56308a68217437e15c8d339a54b050"
   },
   "wordpress": {
     "legacyFree": {
@@ -682,7 +682,7 @@
     }
   },
   "templates": {
-    "checkedAt": "2026-10-02T23:09:59.864Z",
+    "checkedAt": "2026-10-03T00:56:33.376Z",
     "documents": [
       {
         "kind": "order-summary",
@@ -1523,7 +1523,7 @@
   ],
   "shopify": {
     "app": {
-      "checkedAt": "2026-10-03T00:18:17.675Z",
+      "checkedAt": "2026-10-03T00:45:57.678Z",
       "node": "v24.21.0",
       "checks": [
         {
@@ -1575,36 +1575,41 @@
           "name": "privacy",
           "exitCode": 0,
           "passed": true
+        },
+        {
+          "name": "monitor",
+          "exitCode": 0,
+          "passed": true
         }
       ],
       "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
       "lockSha256": "1c0374462e3e1b6d476ad2ece2128c0e49258d318d854c585bba0ea5bae9013b",
-      "serverBuildSha256": "9739789b144319e5922d04a1543ec358f88317c4eef6f6fd09046765c9c9606c",
+      "serverBuildSha256": "7fe89dc595e8c2352c71f53f00ad4ea75cf5d9978887ee733b8f17fdf3bbe0a3",
       "browserTested": false,
       "liveBillingTested": false
     },
     "requestHandlerTests": {
       "passed": 4,
       "failed": 0,
-      "logSha256": "ce2861448460ab7061bba164d1b541197e0d1ab924444e953654db55507f4cc3"
+      "logSha256": "d6a560968612a49536c1f8e397157f2f44e2141761aeb6aa08b69d3d92e1fb5f"
     },
     "flowTests": {
       "passed": 8,
       "failed": 0,
-      "logSha256": "ebf977f028e7119de61dea314bb1de8841fb326669660aae6f699f4ebec4ac17"
+      "logSha256": "55d7a2a1f4a6e56d1584a3eec7dd6c650864f2f07c6780c0011f5afd614c3aca"
     },
     "privacyTests": {
       "passed": 15,
       "failed": 0,
-      "logSha256": "24a01f0b0b52ee3487b186f76db84ea60b56a45973dc3e6d3a5e4fb88e1439ad"
+      "logSha256": "c9d4ad0a24d3c26ee85db4de87bcefb8bc7bc5fd2ad520fa02bc76c105e38a2f"
     },
     "privacyBrowser": {
-      "checkedAt": "2026-10-03T00:20:20Z",
+      "checkedAt": "2026-10-03T00:57:08Z",
       "browser": "154.0.8037.93",
       "syntheticOnly": true,
       "shopifyAdminShellStubbed": true,
       "realSdkAuthentication": true,
-      "productionBuildSha256": "9739789b144319e5922d04a1543ec358f88317c4eef6f6fd09046765c9c9606c",
+      "productionBuildSha256": "7fe89dc595e8c2352c71f53f00ad4ea75cf5d9978887ee733b8f17fdf3bbe0a3",
       "checks": [
         {
           "name": "authenticated merchant page with no paid-plan or Admin API call",
@@ -1670,7 +1675,7 @@
         },
         {
           "file": "output/browser/shopify-privacy-export.json",
-          "sha256": "28b30f238590fc9f49bc4416379fcf18dc279304057648c212dffeeb3763a5b3"
+          "sha256": "4ddb333ecade350c6edaa3a3839e2d21854530b2d67abf4f50c0aed75301d3b5"
         }
       ]
     },
@@ -2046,6 +2051,15 @@
       }
     ]
   },
+  "monitoring": {
+    "requestHandlerTests": {
+      "passed": 5,
+      "failed": 0,
+      "logSha256": "d4651b7fa1ae0c78aa5802be407f54670707a27c5b8e3809278ac3d816e68918"
+    },
+    "notificationDeliveryVerified": false,
+    "scheduledEnabled": false
+  },
   "dependencyAudit": {
     "root": {
       "info": 0,
@@ -2116,8 +2130,8 @@
       "projectId": "ee2c5784-260b-44d7-aff3-ef46714687bc",
       "existingWorkspacePlan": "Hobby",
       "newSubscriptionPurchased": false,
-      "meteredUsageDollars": 0.00037255497569135804,
-      "usageCheckedAt": "2026-10-03T00:31:08.658422+00:00",
+      "meteredUsageDollars": 0.0004532243349037509,
+      "usageCheckedAt": "2026-10-03T01:06:12.842628+00:00",
       "computeStopped": true,
       "persistentVolumeRetained": true,
       "notes": "Metered resource usage before plan credits, not an invoice or confirmed card charge. Usage can lag; retained volume storage remains metered. Reconcile actual launch charges against the $50 total cap."

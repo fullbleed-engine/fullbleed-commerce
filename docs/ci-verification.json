@@ -1,26 +1,26 @@
 {
   "conclusion": "success",
-  "createdAt": "2026-10-03T00:22:28Z",
-  "headSha": "1922ed6a50ff9ffe009982a8ae06379794efa398",
+  "createdAt": "2026-10-03T00:57:51Z",
+  "headSha": "25a769ca9bbea87f6d1accf7bfebe77d0e810a21",
   "jobs": [
-    {
-      "name": "container",
-      "conclusion": "success",
-      "startedAt": "2026-10-03T00:23:56Z",
-      "completedAt": "2026-10-03T00:25:18Z",
-      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37081796371/job/111084017932"
-    },
     {
       "name": "integration",
       "conclusion": "success",
-      "startedAt": "2026-10-03T00:23:57Z",
-      "completedAt": "2026-10-03T00:32:01Z",
-      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37081796371/job/111084018120"
+      "startedAt": "2026-10-03T00:57:54Z",
+      "completedAt": "2026-10-03T01:05:57Z",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37084217014/job/111091039812"
+    },
+    {
+      "name": "container",
+      "conclusion": "success",
+      "startedAt": "2026-10-03T00:57:54Z",
+      "completedAt": "2026-10-03T00:58:59Z",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37084217014/job/111091039994"
     }
   ],
   "status": "completed",
-  "updatedAt": "2026-10-03T00:32:02Z",
-  "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37081796371",
+  "updatedAt": "2026-10-03T01:05:58Z",
+  "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37084217014",
   "artifact": "preview-verification",
   "archives": [
     {
@@ -39,7 +39,7 @@
     }
   ],
   "woocommerceAutomationLinux": {
-    "checkedAt": "2026-10-03T00:24:59.753Z",
+    "checkedAt": "2026-10-03T00:58:51.522Z",
     "wordpress": "7.1.2",
     "woocommerce": "11.1.2",
     "php": "8.3.33",
@@ -164,7 +164,7 @@
   },
   "customerPortalLinux": {
     "hpos": {
-      "checkedAt": "2026-10-03T00:28:08.423Z",
+      "checkedAt": "2026-10-03T01:02:01.280Z",
       "wordpress": "7.1.2",
       "woocommerce": "11.1.2",
       "php": "8.3.33",
@@ -334,7 +334,7 @@
       "windowsLinuxPdfByteIdentical": true
     },
     "legacy": {
-      "checkedAt": "2026-10-03T00:31:17.247Z",
+      "checkedAt": "2026-10-03T01:05:12.260Z",
       "wordpress": "7.1.2",
       "woocommerce": "11.1.2",
       "php": "8.3.33",
@@ -505,7 +505,7 @@
     }
   },
   "shopifyApplication": {
-    "checkedAt": "2026-10-03T00:31:56.554Z",
+    "checkedAt": "2026-10-03T01:05:54.568Z",
     "node": "v24.21.0",
     "checks": [
       {
@@ -557,11 +557,16 @@
         "name": "privacy",
         "exitCode": 0,
         "passed": true
+      },
+      {
+        "name": "monitor",
+        "exitCode": 0,
+        "passed": true
       }
     ],
     "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
     "lockSha256": "1c0374462e3e1b6d476ad2ece2128c0e49258d318d854c585bba0ea5bae9013b",
-    "serverBuildSha256": "c1b7e5ca005bdc0b846b53fce2c2c6bd7fbfea9fb30d3693e4504c92954872ed",
+    "serverBuildSha256": "47292984e691c6079d13446ec813d352411e220dab982d1effc30997a348c044",
     "browserTested": false,
     "liveBillingTested": false
   },
@@ -569,22 +574,27 @@
     "health": {
       "passed": 2,
       "failed": 0,
-      "logSha256": "7393a11dbcc077e0998ae710d10e1a03237ce5411d5bd6c281f2bef32252bba4"
+      "logSha256": "c4052495b1209e5bc25ac9d011221efac9772ec4c892a3ad0085441d7313b1a5"
     },
     "webhooks": {
       "passed": 4,
       "failed": 0,
-      "logSha256": "6c1612d7e99b087026cf50906a2d63ebafde8d7e74145d8cd106ec736e6f8f58"
+      "logSha256": "f1fec3f93284edfa125c78aa5e7a331d0240d7e7d3a9daa2e7e93be1abb7ab7b"
     },
     "flow": {
       "passed": 8,
       "failed": 0,
-      "logSha256": "a24aec5bee526aa6ce1725f20b0f1372f4438ab12f3eea56e466a850f2e6f2ed"
+      "logSha256": "e4156a2ccb7354a2398ba39b92aabf09507bd61461a2d90ccdf6623c9fac0a9e"
     },
     "privacy": {
       "passed": 15,
       "failed": 0,
-      "logSha256": "bc3323d67b0be4d7bf7c4d4cc5c213172c0a18483f1e38e3030b9ed4cca24e19"
+      "logSha256": "17a7efe6cd6db7641f82f3d71d633959eca9f06ea85bf23cc40170e26b695636"
+    },
+    "monitor": {
+      "passed": 5,
+      "failed": 0,
+      "logSha256": "980c11a495770fe43f138d38632238bf7ec9d8059e7d86cc529079dfeefccd42"
     }
   },
   "flowPdf": {
@@ -592,8 +602,8 @@
     "windowsLinuxByteIdentical": true
   },
   "containerVerification": {
-    "checkedAt": "2026-10-03T00:25:15.475Z",
-    "imageId": "sha256:76ebb3220d909c3c0bd321e72c6a088d54ee752ce2d35783197f6d1124cb6f3a",
+    "checkedAt": "2026-10-03T00:58:57.412Z",
+    "imageId": "sha256:39b1eb91dc9b91543ffdde426f0270a748136754637fc02efc6e28c08faddd17",
     "cpuLimit": 0.5,
     "memoryBytes": 536870912,
     "syntheticOnly": true,
@@ -627,5 +637,11 @@
         "passed": true
       }
     ]
+  },
+  "sharedTests": {
+    "tests": 41,
+    "pass": 41,
+    "fail": 0,
+    "stepLogSha256": "6ed092a6e8d0009a83c1fc12d33b22d37afb8a9c8c4097ab8704b84ebdbfecf0"
   }
 }

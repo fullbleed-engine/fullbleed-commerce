@@ -8,14 +8,15 @@ was synthetic. No merchant store was changed and no customer PDF was retained.
 
 | Surface | Result | Retained evidence |
 | --- | --- | --- |
-| Node renderer, Shopify adapter/access/forms, browser-worker runtime, admin workflows | 36 tests passed | `output/node-tests.log` |
+| Node renderer, Shopify adapter/access/forms, browser-worker runtime, admin workflows and monitoring client | 41 tests passed | `output/node-tests.log` |
 | WordPress/WooCommerce, free plugin with legacy storage | 46 HTTP checks passed; HPOS disabled in runtime | `output/wordpress/legacy-free-verification.json`, `legacy-free-runtime.json` |
 | WordPress/WooCommerce, installed base and Pro ZIPs with HPOS | 46 HTTP checks passed; HPOS enabled in runtime | `output/wordpress/packaged-hpos-pro-verification.json`, `packaged-hpos-pro-runtime.json` |
 | Six designed sample PDFs | Each one page, zero reported missing glyphs | `output/examples/verification.json` and matching PDFs/PNGs |
 | Sixty-item long order summary and packing slip | Eight pages each; every SKU retained; text bounds inside pages | `output/pdf-text-verification.json`, `output/layout/` |
-| Shopify application migrations, route types, TypeScript, lint, production build and request-handler tests | All checks passed; two readiness, four application, eight Flow and 15 privacy tests passed | `output/shopify/verification.json` and matching test logs |
+| Shopify application migrations, route types, TypeScript, lint, production build and request-handler tests | All checks passed; two readiness, four application, eight Flow, 15 privacy and five monitoring tests passed | `output/shopify/verification.json` and matching test logs |
 | Linux production container | Seven checks: unprivileged server, missing-volume refusal, fresh root-owned mount, private files, authentication, persistence through replacement and privacy monitor | [CI record](ci-verification.json) |
 | Railway staging | HTTPS/authentication checks, eight byte-identical commerce PDFs, enforced 0.5 CPU / 512 MiB limits and persistent branding/jobs through replacement | [Hosted evidence](staging-verification.json) |
+| Hosted monitoring drill | GitHub healthy check, expected synthetic privacy-deadline failure and healthy recovery; private endpoint rejects missing/wrong tokens; public logs contain no credential or queue payload | [Monitoring evidence](monitoring-verification.json) |
 | Privacy requests in real Chrome with synthetic Shopify sessions | 13 browser checks: encrypted snapshot download, exact large IDs, explicit completion, erasure, overdue notice and 390px layout | `output/browser/shopify-privacy-verification.json`, JSON download and screenshots |
 | Shopify Flow extensions | CLI validates both native actions and output schemas | `output/shopify/flow-config-validation.json` |
 | Actual Shopify Flow execution and browser downloads | 19 retained checks; both actions and the downstream step completed; downloaded PDFs match returned SHA-256 values; revoke and pause return HTTP 410 | `output/browser/shopify-flow-verification.json`, matching PDFs/PNGs |
@@ -76,6 +77,16 @@ removes the export associations; late requests fail without recreating them.
 An aggregate-only operator command reports pending/near-due/overdue requests
 and mismatched keys. The [privacy runbook](../shopify/PRIVACY.md) describes the
 remaining deployment and response responsibilities.
+
+The read-only monitoring endpoint uses a separate scoped token. Tests reject
+bad credentials and malformed/stale responses, verify impending/overdue deadline
+and key-mismatch failures, and prohibit Shopify or billing calls. The hosted
+GitHub drill accepted an empty queue, failed for a synthetic request due in 24
+hours, and recovered after exact fixture cleanup. Public readiness stayed healthy
+through the privacy warning. The public workflow log was checked for accidental
+credential or queue disclosure. Scheduling remains disabled while compute is
+stopped; operator notification receipt and missed-check detection are unverified.
+See [monitoring operation](../shopify/MONITORING.md).
 
 The privacy browser fixture uses the production build and official SDK JWT
 verification with synthetic sessions. Only the external Shopify admin/App Bridge
@@ -186,7 +197,7 @@ workflow measurement or production capacity promise.
 
 The final infrastructure plan matched the live service. After testing, compute
 was stopped and the persistent volume retained. The host is not currently
-serving merchants. Billing, full installation, automatic Flow delivery, alerts
+serving merchants. Billing, full installation, automatic Flow delivery, alert receipt
 and backup/erasure recovery remain separate gates. See
 [deployment operation](../shopify/DEPLOYMENT.md) and the
 [retained hosted record](staging-verification.json).
@@ -209,7 +220,7 @@ and backup/erasure recovery remain separate gates. See
   access to the synthetic order are verified. Billing configuration and
   production merchant rollout are not complete. The isolated staging container
   deployment and persistent storage have now been verified.
-- Shopify privacy monitoring, backup erasure and secure support-delivery setup,
+- Shopify webhook monitoring, privacy-alert receipt, backup erasure and secure support-delivery setup,
   automatic new-order trigger testing,
   and a real configured delivery destination remain required. Native Flow actions
   have been tested through manual replay on the synthetic store. Public
@@ -219,11 +230,11 @@ and backup/erasure recovery remain separate gates. See
   component. The app's installed Polaris types pass TypeScript and production
   build checks; this does not substitute for real-browser QA.
 
-The final [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37081796371)
-passed clean dependency installation, all 36 shared tests, plugin packaging,
+The final [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37084217014)
+passed clean dependency installation, all 41 shared tests, plugin packaging,
 28 WooCommerce email automation checks, 35 customer-download checks in each
 order-storage mode, two readiness tests, four Shopify application tests, eight
-Flow tests, 15 privacy tests and all seven production-container checks. Linux
+Flow tests, 15 privacy tests, five monitoring tests and all seven production-container checks. Linux
 also verified restrictive attachment
 file permissions. Both plugin archives are byte-identical to the Windows packages
 installed for browser checks. Both customer-summary PDFs and the Flow fixture

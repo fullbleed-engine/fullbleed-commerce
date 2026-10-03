@@ -1,0 +1,196 @@
+{
+  "checkedAt": "2026-10-03T01:06:12.842628+00:00",
+  "sourceCommit": "25a769ca9bbea87f6d1accf7bfebe77d0e810a21",
+  "deployment": {
+    "id": "d972ddc2-79a1-4baa-a638-7871974c4244",
+    "status": "SUCCESS",
+    "createdAt": "2026-10-03T00:58:31.736Z",
+    "sourceCommit": "25a769ca9bbea87f6d1accf7bfebe77d0e810a21",
+    "imageDigest": "sha256:649819354952174cff058b3a7a1c8044882c7b7f02f4d28fc9ca5d6360513174",
+    "volumeMounts": [
+      "/data"
+    ]
+  },
+  "configuration": {
+    "checkedAt": "2026-10-03T00:54:40.383197+00:00",
+    "environment": "commerce-staging",
+    "branch": "main",
+    "scheduledEnabled": false,
+    "monitorUrl": "https://shopify-app-production-346e.up.railway.app/internal/monitor",
+    "githubSecretConfigured": true,
+    "railwaySecretConfigured": true,
+    "credential": "Separate read-only monitor token; value omitted."
+  },
+  "drill": [
+    {
+      "phase": "healthy",
+      "checkedAt": "2026-10-03T01:00:44.417388+00:00",
+      "runtime": {
+        "source": "25a769ca9bbea87f6d1accf7bfebe77d0e810a21",
+        "mode": "inspect",
+        "syntheticOnly": true,
+        "cpuMax": "50000 100000",
+        "memoryMax": "536870912"
+      },
+      "http": {
+        "publicReadiness": 200,
+        "privateMonitoring": 200,
+        "unauthorizedRejected": true,
+        "responseContainsOnlyAggregateFields": true,
+        "privateNoStore": true
+      },
+      "workflow": {
+        "phase": "healthy",
+        "dispatchedAt": "2026-10-03T01:00:50.615377+00:00",
+        "previousRunIds": [],
+        "conclusion": "success",
+        "createdAt": "2026-10-03T01:01:02Z",
+        "databaseId": 37084436453,
+        "event": "workflow_dispatch",
+        "headSha": "25a769ca9bbea87f6d1accf7bfebe77d0e810a21",
+        "status": "completed",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37084436453",
+        "expectedConclusionVerified": true,
+        "safeOperationalMessage": "Fullbleed availability and privacy checks passed.",
+        "noCredentialOrQueuePayloadInLog": true,
+        "logSha256": "ae7e352d30febabe3715d62e0e3a1e8387508acaa37d548c911fe3c80049baf7"
+      }
+    },
+    {
+      "phase": "deadline",
+      "checkedAt": "2026-10-03T01:01:41.628964+00:00",
+      "runtime": {
+        "source": "25a769ca9bbea87f6d1accf7bfebe77d0e810a21",
+        "mode": "seed",
+        "syntheticOnly": true,
+        "cpuMax": "50000 100000",
+        "memoryMax": "536870912"
+      },
+      "http": {
+        "publicReadiness": 200,
+        "privateMonitoring": 503,
+        "unauthorizedRejected": true,
+        "responseContainsOnlyAggregateFields": true,
+        "privateNoStore": true
+      },
+      "workflow": {
+        "phase": "deadline",
+        "dispatchedAt": "2026-10-03T01:01:48.438954+00:00",
+        "previousRunIds": [
+          37084436453
+        ],
+        "conclusion": "failure",
+        "createdAt": "2026-10-03T01:02:00Z",
+        "databaseId": 37084501384,
+        "event": "workflow_dispatch",
+        "headSha": "25a769ca9bbea87f6d1accf7bfebe77d0e810a21",
+        "status": "completed",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37084501384",
+        "expectedConclusionVerified": true,
+        "safeOperationalMessage": "A privacy response deadline needs attention. Open the app privacy queue.",
+        "noCredentialOrQueuePayloadInLog": true,
+        "logSha256": "f006b3fedb0e867720931161eeb745d41c0fde880ed7b9228d437bc4b7fa5517"
+      }
+    },
+    {
+      "phase": "recovery",
+      "checkedAt": "2026-10-03T01:02:22.754632+00:00",
+      "runtime": {
+        "source": "25a769ca9bbea87f6d1accf7bfebe77d0e810a21",
+        "mode": "cleanup",
+        "syntheticOnly": true,
+        "cpuMax": "50000 100000",
+        "memoryMax": "536870912"
+      },
+      "http": {
+        "publicReadiness": 200,
+        "privateMonitoring": 200,
+        "unauthorizedRejected": true,
+        "responseContainsOnlyAggregateFields": true,
+        "privateNoStore": true
+      },
+      "workflow": {
+        "phase": "recovery",
+        "dispatchedAt": "2026-10-03T01:02:29.511984+00:00",
+        "previousRunIds": [
+          37084501384,
+          37084436453
+        ],
+        "conclusion": "success",
+        "createdAt": "2026-10-03T01:02:41Z",
+        "databaseId": 37084548250,
+        "event": "workflow_dispatch",
+        "headSha": "25a769ca9bbea87f6d1accf7bfebe77d0e810a21",
+        "status": "completed",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37084548250",
+        "expectedConclusionVerified": true,
+        "safeOperationalMessage": "Fullbleed availability and privacy checks passed.",
+        "noCredentialOrQueuePayloadInLog": true,
+        "logSha256": "afcd4858c2bd5373a4d885c953a55de0939d3a660eb4ca3043fa222bbd8b7b11"
+      }
+    }
+  ],
+  "currentState": {
+    "checkedAt": "2026-10-03T01:06:12.842628+00:00",
+    "computeStopped": true,
+    "activeDeployments": 0,
+    "persistentVolumeRetained": true,
+    "scheduledEnabled": false,
+    "project": {
+      "deletedAt": null,
+      "id": "ee2c5784-260b-44d7-aff3-ef46714687bc",
+      "name": "fullbleed-commerce-staging"
+    },
+    "billingPeriod": {
+      "end": "2026-10-24T18:42:11+00:00",
+      "start": "2026-09-24T18:42:11+00:00"
+    },
+    "meteredUsageDollars": 0.0004532243349037509,
+    "serviceUsage": [
+      {
+        "backupDollars": 0.0,
+        "cpuDollars": 8.104733796296297e-05,
+        "egressDollars": 2.3684e-06,
+        "id": "bcd8801b-e89c-4c4c-baf3-b8e1d0fe8b59",
+        "memoryDollars": 0.0003501568948148148,
+        "name": "shopify-app",
+        "totalDollars": 0.0004532243349037509,
+        "volumeDollars": 1.9651702125973104e-05
+      }
+    ]
+  },
+  "limits": {
+    "syntheticDataOnly": true,
+    "productionMerchantInstalled": false,
+    "scheduledMonitoringEnabled": false,
+    "operatorNotificationReceiptVerified": false,
+    "missedCheckDetectionConfigured": false,
+    "webhookDeliveryMonitoringVerified": false
+  },
+  "artifacts": [
+    {
+      "file": "output/monitor/configuration.json",
+      "sha256": "145a762653b18b56c0fa969adc21a9331f928443bb0170a385125a0ea25046ac"
+    },
+    {
+      "file": "output/monitor/deadline.json",
+      "sha256": "c339463b0aa29589e1cab2111db575bb438456eff7532d53241936dec4e77265"
+    },
+    {
+      "file": "output/monitor/deployment.json",
+      "sha256": "38915f86f6354617d116f16c6a2d0a8c47a4de927f33031fafae04adbac8e5e5"
+    },
+    {
+      "file": "output/monitor/healthy.json",
+      "sha256": "474476b13dbfec057b1666aa9c533cd0833323bd3d6cc947ead1812058a912d2"
+    },
+    {
+      "file": "output/monitor/recovery.json",
+      "sha256": "90e447e39445f008c6ef29027bd93ceede5468dd8761ceace745b0300d2c85f1"
+    },
+    {
+      "file": "output/monitor/stopped-state.json",
+      "sha256": "d68688eecf4d5cd0e91cdbf52084d1993772abeb542cdb86d66437cc5f54ab31"
+    }
+  ]
+}

@@ -157,10 +157,11 @@
     "scope": "Sequential synthetic rendering through the deployed Fullbleed module. This is not an end-to-end Shopify billing/Flow test, concurrency benchmark or sustained capacity promise."
   },
   "currentState": {
-    "checkedAt": "2026-10-03T00:31:08.658422+00:00",
+    "checkedAt": "2026-10-03T01:06:12.842628+00:00",
     "computeStopped": true,
     "activeDeployments": 0,
     "persistentVolumeRetained": true,
+    "scheduledEnabled": false,
     "project": {
       "deletedAt": null,
       "id": "ee2c5784-260b-44d7-aff3-ef46714687bc",
@@ -170,17 +171,17 @@
       "end": "2026-10-24T18:42:11+00:00",
       "start": "2026-09-24T18:42:11+00:00"
     },
-    "meteredUsageDollars": 0.00037255497569135804,
+    "meteredUsageDollars": 0.0004532243349037509,
     "serviceUsage": [
       {
         "backupDollars": 0.0,
-        "cpuDollars": 6.475693672839506e-05,
-        "egressDollars": 1.3529000000000002e-06,
+        "cpuDollars": 8.104733796296297e-05,
+        "egressDollars": 2.3684e-06,
         "id": "bcd8801b-e89c-4c4c-baf3-b8e1d0fe8b59",
-        "memoryDollars": 0.00029733963851851853,
+        "memoryDollars": 0.0003501568948148148,
         "name": "shopify-app",
-        "totalDollars": 0.00037255497569135804,
-        "volumeDollars": 9.105500444444445e-06
+        "totalDollars": 0.0004532243349037509,
+        "volumeDollars": 1.9651702125973104e-05
       }
     ]
   },
@@ -208,5 +209,11 @@
       "file": "output/staging/stopped-state.json",
       "sha256": "9addb691e3504d83b329ff6b5a80a402e69b6104f5260b587dd5b77855f2f6bf"
     }
-  ]
+  ],
+  "monitoring": {
+    "evidence": "docs/monitoring-verification.json",
+    "healthyFailureRecoveryDrillVerified": true,
+    "scheduledEnabled": false,
+    "operatorNotificationReceiptVerified": false
+  }
 }
