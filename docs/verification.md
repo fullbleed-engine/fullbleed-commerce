@@ -13,8 +13,8 @@ was synthetic. No merchant store was changed and no customer PDF was retained.
 | WordPress/WooCommerce, installed base and Pro ZIPs with HPOS | 46 HTTP checks passed; HPOS enabled in runtime | `output/wordpress/packaged-hpos-pro-verification.json`, `packaged-hpos-pro-runtime.json` |
 | Six designed sample PDFs | Each one page, zero reported missing glyphs | `output/examples/verification.json` and matching PDFs/PNGs |
 | Sixty-item long order summary and packing slip | Eight pages each; every SKU retained; text bounds inside pages | `output/pdf-text-verification.json`, `output/layout/` |
-| Shopify application migrations, route types, TypeScript, lint, production build and request-handler tests | All checks passed; two readiness, four application, eight Flow, 16 privacy, eight monitoring and 13 recovery tests passed | `output/shopify/verification.json` and matching test logs |
-| Linux production container | 11 checks: unprivileged server, missing-volume and recovery-configuration refusal, private files, authentication, persistence, automatic backup/restart, CLI backup/erasure/restore and privacy monitor | [CI record](ci-verification.json) |
+| Shopify application migrations, route types, TypeScript, lint, production build and request-handler tests | All checks passed; two readiness, four application, 11 Flow, 16 privacy, eight monitoring and 13 recovery tests passed | `output/shopify/verification.json` and matching test logs |
+| Linux production container | 12 checks: unprivileged server, missing-volume and recovery-configuration refusal, private files, authentication, persistence, automatic backup/restart, CLI backup/erasure/restore, privacy monitor and constrained order burst | [CI record](ci-verification.json) |
 | Railway staging | HTTPS/authentication checks, eight byte-identical commerce PDFs, enforced 0.5 CPU / 512 MiB limits and persistent branding/jobs through replacement | [Hosted evidence](staging-verification.json) |
 | Hosted monitoring drill | GitHub healthy check, expected synthetic privacy-deadline failure and healthy recovery; private endpoint rejects missing/wrong tokens; public logs contain no credential or queue payload | [Monitoring evidence](monitoring-verification.json) |
 | Hosted encrypted recovery and promotion | Three-part S3 backup; replay of erasure, completion and uninstall; restored service applies a later erasure before HTTP; templates and valid exports retained; sessions cleared and automation paused | [Recovery evidence](recovery-verification.json) |
@@ -23,6 +23,7 @@ was synthetic. No merchant store was changed and no customer PDF was retained.
 | Shopify Flow extensions | CLI validates both native actions and output schemas | `output/shopify/flow-config-validation.json` |
 | Actual Shopify Flow execution and browser downloads | 19 retained checks; both actions and the downstream step completed; downloaded PDFs match returned SHA-256 values; revoke and pause return HTTP 410 | `output/browser/shopify-flow-verification.json`, matching PDFs/PNGs |
 | Automatic Shopify order trigger and staff destination | A new unpaid order triggered both actions and four native order-metafield updates; real Chrome downloads match preparation hashes; private field access and revoked links verified | [Order-trigger evidence](order-trigger-verification.json) |
+| Shopify service burst under staging ceilings | 24 jobs across four stores, one preparation each, 24 matching downloads; 0.5 CPU / 512 MiB, 709 successful readiness probes and no OOM events | [Capacity evidence](capacity-verification.json), [scope and reproduction](../shopify/CAPACITY.md) |
 | Visual and source template editing in real Chrome 154 | Free editor saves, previews, reloads and resets; Pro also downloads a two-PDF ZIP and fits a 390px viewport | `output/browser/*-verification.json`, PDFs and screenshots |
 | Shopify real-browser editing and downloads | Summary/packing-slip downloads, visual edit, HTML/CSS save, actual preview, persisted template and reset passed | `output/browser/shopify-verification.json` |
 | Custom template rendering | Summary and packing slip: one page, zero missing glyphs, deterministic output; embedded PNG verified | `output/templates/verification.json` |
@@ -258,16 +259,22 @@ independent key recovery and merchant rollout remain separate gates. See
   component. The app's installed Polaris types pass TypeScript and production
   build checks; this does not substitute for real-browser QA.
 
-The final [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37091015663)
+The final [Linux CI run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37096054789)
 passed clean dependency installation, all 43 shared tests, plugin packaging,
 28 WooCommerce email automation checks, 35 customer-download checks in each
-order-storage mode, two readiness tests, four Shopify application tests, eight
-Flow tests, 16 privacy tests, eight monitoring tests, 13 recovery tests and all 11 production-container checks. Linux
+order-storage mode, two readiness tests, four Shopify application tests, 11
+Flow tests, 16 privacy tests, eight monitoring tests, 13 recovery tests and all 12 production-container checks. Linux
 also verified restrictive attachment
 file permissions. Both plugin archives are byte-identical to the Windows packages
 installed for browser checks. Both customer-summary PDFs and the Flow fixture
 PDF are identical across both operating systems. The retained [CI record](ci-verification.json)
 identifies the checked source commit, archive hashes and individual automation
 results. No production merchant credentials were supplied to CI.
+
+The constrained container workload additionally prepared 24 jobs across four
+synthetic stores and downloaded every PDF with identical bytes. The six document
+cases match Windows output, including the 250-item order. This is a finite
+service workload with synthetic order access and polling, not a production
+Shopify throughput claim. See [capacity scope and results](../shopify/CAPACITY.md).
 
 Spending remains recorded separately in [launch-budget.json](launch-budget.json).

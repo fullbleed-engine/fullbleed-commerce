@@ -1,0 +1,387 @@
+{
+  "checkedAt": "2026-10-03T04:25:53.875840+00:00",
+  "runtimeSourceCommit": "cd92c77272cac19d3645fe18656e2c38e3ef5a69",
+  "ci": {
+    "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37096054789",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "container",
+        "conclusion": "success",
+        "startedAt": "2026-10-03T04:17:37Z",
+        "completedAt": "2026-10-03T04:20:16Z",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37096054789/job/111126094171"
+      },
+      {
+        "name": "integration",
+        "conclusion": "success",
+        "startedAt": "2026-10-03T04:17:38Z",
+        "completedAt": "2026-10-03T04:22:49Z",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37096054789/job/111126094286"
+      }
+    ]
+  },
+  "regression": {
+    "beforeFixReproduced": true,
+    "beforeLogSha256": "d1c47f21c6e8ec5afb8289850bca81844f71c9caf8bb3daad1f7745dd22e0b79",
+    "afterFlowTestsPassed": 11,
+    "afterLogSha256": "fb4427b3885bb0f250a1ca8043ef5645ff87f75ddee9d79ef8279ba506e39431",
+    "coverage": [
+      "more than eight local capacity waits",
+      "service restart while waiting",
+      "pause race",
+      "competing lease",
+      "36-hour deadline",
+      "upstream throttling consumes an attempt"
+    ]
+  },
+  "workload": {
+    "checkedAt": "2026-10-03T04:20:13.189Z",
+    "syntheticOnly": true,
+    "node": "v24.21.0",
+    "sourceSha256": {
+      "src/node.js": "dae3e3db0487fe2c3a4fab39c1364f72d9b807e5aa3a4d8016cb99fa8c20b904",
+      "src/documents.js": "5ce99b21492625109b32f3c5e4a22313cdb9f9101d42a6d7ca248d2faea175d5",
+      "src/templates.js": "65fccfc51f4802cefb06a41426ded0a3ef37c0c73c4f1e307b9f6d92c5eaf63c",
+      "shopify/flow.js": "6dce7d59327f2f145da85a9b26838a93bc1bf901bc6fc40314b3626699062fbf",
+      "shopify/render-limit.js": "c8a9e9b126376965c015a810ce5c0a66fc90c54b78ba999c2cb52b572c14eb1f",
+      "tools/check-flow-capacity.mjs": "f0134cabdd0694ff0ea48e3d6639918ac0dda84c53d7acc4c1b409c143507d7b"
+    },
+    "limits": {
+      "cpu": "50000 100000",
+      "memoryBytes": 536870912,
+      "cgroupMemoryPeakBytes": 253702144,
+      "cpuCountersBefore": {
+        "usage_usec": 4589034,
+        "user_usec": 3773426,
+        "system_usec": 815607,
+        "nice_usec": 0,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 93,
+        "nr_throttled": 90,
+        "throttled_usec": 8475504,
+        "nr_bursts": 0,
+        "burst_usec": 0
+      },
+      "cpuCountersAfter": {
+        "usage_usec": 26243873,
+        "user_usec": 24218055,
+        "system_usec": 2025818,
+        "nice_usec": 0,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 875,
+        "nr_throttled": 470,
+        "throttled_usec": 64623115,
+        "nr_bursts": 0,
+        "burst_usec": 0
+      }
+    },
+    "processPeakRssKiB": 247968,
+    "processCpuMs": 19512,
+    "elapsedMs": 78123,
+    "burst": {
+      "jobs": 24,
+      "shops": 4,
+      "elapsedMs": 56506,
+      "preparationCalls": 24,
+      "peakConcurrentRenders": 2,
+      "retryRounds": 12,
+      "capacityWaitObservations": 132
+    },
+    "rendering": {
+      "samples": 48,
+      "medianMs": 650,
+      "p95Ms": 2994,
+      "maxMs": 3146
+    },
+    "downloads": {
+      "samples": 24,
+      "medianMs": 304,
+      "p95Ms": 1403,
+      "maxMs": 1463
+    },
+    "httpHealth": {
+      "enabled": true,
+      "errors": 0,
+      "samples": 709,
+      "medianMs": 3,
+      "p95Ms": 76,
+      "maxMs": 399
+    },
+    "eventLoop": {
+      "p95Ms": 21,
+      "maxMs": 105
+    },
+    "documents": [
+      {
+        "name": "studio-order-summary",
+        "items": 2,
+        "pages": 1,
+        "bytes": 142411,
+        "sha256": "60cd76df6cc0ebc8e73ee7b79f57f571d0e9e9dc3ea9cd7b6760d49943e70d78",
+        "engineVersion": "2.5.5",
+        "baselineMs": 1295
+      },
+      {
+        "name": "studio-packing-slip",
+        "items": 2,
+        "pages": 1,
+        "bytes": 142788,
+        "sha256": "014d71a2e2bc139c21d2d77a29da13a4cb0d0cccdfacf69fa31d84b54aaa5d02",
+        "engineVersion": "2.5.5",
+        "baselineMs": 526
+      },
+      {
+        "name": "long-order-summary",
+        "items": 60,
+        "pages": 8,
+        "bytes": 162911,
+        "sha256": "d46fe3c77912000d5d4097ef94595f9d92924674ec081f3fe0fe6217fea91738",
+        "engineVersion": "2.5.5",
+        "baselineMs": 2287
+      },
+      {
+        "name": "long-packing-slip",
+        "items": 60,
+        "pages": 8,
+        "bytes": 164227,
+        "sha256": "79e8f441e692ae49c178e6e6aeb5c73e548de0cfffaefd4cc92330b02c5e2bb5",
+        "engineVersion": "2.5.5",
+        "baselineMs": 929
+      },
+      {
+        "name": "maximum-items-summary",
+        "items": 250,
+        "pages": 20,
+        "bytes": 182830,
+        "sha256": "0f7c67ddcebe8cb21c84e439d55f0fb686351723c536a849deb18881f9591cf6",
+        "engineVersion": "2.5.5",
+        "baselineMs": 1689
+      },
+      {
+        "name": "custom-order-summary",
+        "items": 2,
+        "pages": 1,
+        "bytes": 160259,
+        "sha256": "d4da0e270dec4728d3162a8731a25f832f520a77e71d952578daa0c9d0bed435",
+        "engineVersion": "2.5.5",
+        "baselineMs": 286
+      }
+    ],
+    "checks": [
+      {
+        "name": "six real document cases render, including long orders, 250 items and custom HTML/CSS",
+        "passed": true
+      },
+      {
+        "name": "24 simultaneous jobs across four stores drain with exactly one preparation each and at most two renders",
+        "passed": true
+      },
+      {
+        "name": "capacity waits retain zero attempts and all prepared PDFs match their baselines",
+        "passed": true
+      },
+      {
+        "name": "all 24 private download responses reproduce exact prepared PDF bytes",
+        "passed": true
+      },
+      {
+        "name": "pause revokes the prepared burst after download verification",
+        "passed": true
+      },
+      {
+        "name": "co-resident production HTTP health remains available with no cgroup out-of-memory events",
+        "passed": true
+      }
+    ],
+    "scope": "Real service, limiter, SQLite and rendering with synthetic order access and locally simulated Flow polling. HTTP checks cover co-resident readiness, not authenticated Shopify traffic. A finite workload, not a production throughput or latency guarantee."
+  },
+  "artifactInspection": [
+    {
+      "name": "studio-order-summary: downloaded artifact hash matches",
+      "passed": true
+    },
+    {
+      "name": "studio-order-summary: page count matches",
+      "passed": true
+    },
+    {
+      "name": "studio-order-summary: every item identifier present",
+      "passed": true
+    },
+    {
+      "name": "studio-order-summary: all text inside page",
+      "passed": true
+    },
+    {
+      "name": "studio-packing-slip: downloaded artifact hash matches",
+      "passed": true
+    },
+    {
+      "name": "studio-packing-slip: page count matches",
+      "passed": true
+    },
+    {
+      "name": "studio-packing-slip: every item identifier present",
+      "passed": true
+    },
+    {
+      "name": "studio-packing-slip: all text inside page",
+      "passed": true
+    },
+    {
+      "name": "studio-packing-slip: amounts omitted",
+      "passed": true
+    },
+    {
+      "name": "long-order-summary: downloaded artifact hash matches",
+      "passed": true
+    },
+    {
+      "name": "long-order-summary: page count matches",
+      "passed": true
+    },
+    {
+      "name": "long-order-summary: every item identifier present",
+      "passed": true
+    },
+    {
+      "name": "long-order-summary: all text inside page",
+      "passed": true
+    },
+    {
+      "name": "long-packing-slip: downloaded artifact hash matches",
+      "passed": true
+    },
+    {
+      "name": "long-packing-slip: page count matches",
+      "passed": true
+    },
+    {
+      "name": "long-packing-slip: every item identifier present",
+      "passed": true
+    },
+    {
+      "name": "long-packing-slip: all text inside page",
+      "passed": true
+    },
+    {
+      "name": "long-packing-slip: amounts omitted",
+      "passed": true
+    },
+    {
+      "name": "maximum-items-summary: downloaded artifact hash matches",
+      "passed": true
+    },
+    {
+      "name": "maximum-items-summary: page count matches",
+      "passed": true
+    },
+    {
+      "name": "maximum-items-summary: every item identifier present",
+      "passed": true
+    },
+    {
+      "name": "maximum-items-summary: all text inside page",
+      "passed": true
+    },
+    {
+      "name": "custom-order-summary: downloaded artifact hash matches",
+      "passed": true
+    },
+    {
+      "name": "custom-order-summary: page count matches",
+      "passed": true
+    },
+    {
+      "name": "custom-order-summary: every item identifier present",
+      "passed": true
+    },
+    {
+      "name": "custom-order-summary: all text inside page",
+      "passed": true
+    },
+    {
+      "name": "all six PDFs byte-identical between Windows and Linux",
+      "passed": true
+    }
+  ],
+  "visualInspection": [
+    "250-item summary first and last pages",
+    "long packing slip last page",
+    "custom summary"
+  ],
+  "limitations": [
+    "Finite synthetic workload on a GitHub-hosted Linux runner; not an installed Shopify throughput or cost promise.",
+    "Actual Flow service, renderer and limiter with a dedicated synthetic SQLite database and locally simulated polling.",
+    "Readiness traffic uses the co-resident production HTTP server; merchant authentication, Shopify API latency, billing and production database traffic are not exercised by this probe.",
+    "Workload excludes image-heavy or pathological templates, sustained volume and production delivery timing.",
+    "Railway staging remains stopped; no paid merchant installation or new hosting purchase was made."
+  ],
+  "evidence": [
+    {
+      "file": "output/capacity-container/custom-order-summary-1.png",
+      "sha256": "e4dc0ed6e3a2deee7137fb7e95bd7e5496664a420582184ae8961bc1e1035c4a"
+    },
+    {
+      "file": "output/capacity-container/custom-order-summary.pdf",
+      "sha256": "d4da0e270dec4728d3162a8731a25f832f520a77e71d952578daa0c9d0bed435"
+    },
+    {
+      "file": "output/capacity-container/long-order-summary-1.png",
+      "sha256": "0bd6414d983ec1763b960c552f6d40a29f4be4d9b8ce9fbbdf0ab0ca91b754a3"
+    },
+    {
+      "file": "output/capacity-container/long-order-summary-8.png",
+      "sha256": "11674b5de59b72e4224b97d7e987798347eb7b96ee26e5291bedfa8bdb291388"
+    },
+    {
+      "file": "output/capacity-container/long-order-summary.pdf",
+      "sha256": "d46fe3c77912000d5d4097ef94595f9d92924674ec081f3fe0fe6217fea91738"
+    },
+    {
+      "file": "output/capacity-container/long-packing-slip-1.png",
+      "sha256": "c561703b3824109c192eed5120dd44f59b266c95bcb87ccadf1d993919fb51d0"
+    },
+    {
+      "file": "output/capacity-container/long-packing-slip-8.png",
+      "sha256": "76fae80e06e482e5824db9b87fa30c567e0f45d5926672108596e3e60010de50"
+    },
+    {
+      "file": "output/capacity-container/long-packing-slip.pdf",
+      "sha256": "79e8f441e692ae49c178e6e6aeb5c73e548de0cfffaefd4cc92330b02c5e2bb5"
+    },
+    {
+      "file": "output/capacity-container/maximum-items-summary-1.png",
+      "sha256": "eb7a9739c11f2f78e571517b1d1b484d8e14167fe84364b3dd6e76aacab454c3"
+    },
+    {
+      "file": "output/capacity-container/maximum-items-summary-20.png",
+      "sha256": "8367200fee0fa9275a549ce0b1c3a00b20242a65359e8a86b89dfb932189e716"
+    },
+    {
+      "file": "output/capacity-container/maximum-items-summary.pdf",
+      "sha256": "0f7c67ddcebe8cb21c84e439d55f0fb686351723c536a849deb18881f9591cf6"
+    },
+    {
+      "file": "output/capacity-container/studio-order-summary-1.png",
+      "sha256": "5340753d23b7226264e66466ba002df613d0c197499cc6ffc8307777b0108d91"
+    },
+    {
+      "file": "output/capacity-container/studio-order-summary.pdf",
+      "sha256": "60cd76df6cc0ebc8e73ee7b79f57f571d0e9e9dc3ea9cd7b6760d49943e70d78"
+    },
+    {
+      "file": "output/capacity-container/studio-packing-slip-1.png",
+      "sha256": "39917a9bdb51489b7e34e434666d494db143e4c0bc6805b3ad9d7c77bbc0e54a"
+    },
+    {
+      "file": "output/capacity-container/studio-packing-slip.pdf",
+      "sha256": "014d71a2e2bc139c21d2d77a29da13a4cb0d0cccdfacf69fa31d84b54aaa5d02"
+    },
+    {
+      "file": "output/capacity-container/verification.json",
+      "sha256": "1605a83331ed8a975adffbbdcfab647f2bb9c63d39e63184bda7826bd9b95a27"
+    }
+  ]
+}

@@ -58,6 +58,12 @@ assert.ok(orderTrigger.syntheticOnly && orderTrigger.checks.length > 40 && order
 assert.equal(orderTrigger.documents.length, 2);
 for (const item of orderTrigger.documents) assert.equal(hash(`output/browser/shopify-order-trigger-${item.kind}.pdf`), item.pdfSha256);
 for (const item of orderTrigger.evidence) assert.equal(hash(item.file), item.sha256);
+const capacity = json('docs/capacity-verification.json');
+assert.ok(capacity.ci.conclusion === 'success' && capacity.workload.syntheticOnly);
+assert.ok(capacity.workload.checks.every(check => check.passed) && capacity.artifactInspection.every(check => check.passed));
+assert.equal(capacity.workload.burst.jobs, 24);
+for (const [file, expected] of Object.entries(capacity.workload.sourceSha256)) assert.equal(hash(file), expected);
+for (const item of capacity.evidence) assert.equal(hash(item.file), item.sha256);
 assert.ok(json('output/shopify/flow-config-validation.json').valid);
 const templates = json('output/templates/verification.json');
 for (const item of templates.documents) assert.equal(hash(`output/templates/${item.kind}.pdf`), item.sha256);
@@ -69,7 +75,7 @@ const record = {
   sourceLocks: { root: hash('package-lock.json'), shopify: hash('shopify/app/package-lock.json') },
   packages, archiveChecks, sharedTests: tap('output/node-tests.log'),
   wordpress: { legacyFree: wordpress('legacy-free'), packagedHposPro: wordpress('packaged-hpos-pro'), finalAssets },
-  browser, templates, automation, customerPortal, orderTrigger,
+  browser, templates, automation, customerPortal, orderTrigger, capacity,
   examples, textChecks: json('output/pdf-text-verification.json'),
   shopify: { app, requestHandlerTests: tap('output/shopify/webhooks.log'), flowTests: tap('output/shopify/flow.log'), privacyTests: tap('output/shopify/privacy.log'), privacyBrowser, privacyUiToolkit: { success: privacyUiValidation.success, version: privacyUiValidation.resolvedVersion, evidenceSha256: hash('output/shopify/privacy-ui-minimal-validation.json'), limitation: 'Remote validator cannot resolve its own preact/jsx-runtime and JSX types, including a minimal component. Installed types, production build and browser checks provide separate evidence.' }, flowBrowser, flowConfiguration: json('output/shopify/flow-config-validation.json'), installedStore: installed, graphQLValidation: json('output/shopify/validation/verification.json') },
   monitoring: { requestHandlerTests: tap('output/shopify/monitor.log'), notificationDeliveryVerified: false, scheduledEnabled: false },

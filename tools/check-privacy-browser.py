@@ -73,7 +73,9 @@ with sync_playwright() as playwright:
         print(json.dumps({"stage": "completion", "body": page.inner_text("body")[:2500], "errors": errors, "network": network_errors}, indent=2))
         raise
     check("explicit completion clears download UI", page.get_by_role("link", name="Download fullbleed-privacy-90001.json").count() == 0)
-    check("merchant receipt appears", "Request 90001 · Marked handled by merchant" in page.inner_text("body"))
+    receipt = page.get_by_text("Request 90001 · Marked handled by merchant", exact=False)
+    receipt.wait_for()
+    check("merchant receipt appears", receipt.is_visible())
     cleared = context.request.get(f"{fixture['origin']}/app/privacy-export?id={fixture['ids'][0]}", headers={"Authorization": "Bearer " + token()})
     check("completed export returns gone", cleared.status == 410)
     page.set_viewport_size({"width": 390, "height": 844})
@@ -85,7 +87,9 @@ with sync_playwright() as playwright:
     check("signed erasure webhook accepted", erased.status == 204)
     page.get_by_role("button", name="Refresh requests").click()
     page.get_by_text("No outstanding customer data requests.", exact=True).wait_for()
-    check("erasure reflected in merchant UI", "Request 90002 · Erased by Shopify request" in page.inner_text("body"))
+    erased_receipt = page.get_by_text("Request 90002 · Erased by Shopify request", exact=False)
+    erased_receipt.wait_for()
+    check("erasure reflected in merchant UI", erased_receipt.is_visible())
     check("no browser runtime errors", not errors)
     version = browser.version
     browser.close()

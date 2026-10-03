@@ -161,6 +161,12 @@ actual browser downloads. Staff find the prepared documents on the order.
 This test uses the development tunnel; repeat it on the stable production
 origin with real installation and paid entitlement before merchant rollout.
 
+Capacity waits no longer spend the preparation retry budget. A 24-job synthetic
+burst across four stores passed under 0.5 CPU / 512 MiB, including long orders
+and custom templates; every download matched its prepared PDF. This finite
+service workload does not set commercial usage allowances. Installed-app load
+and host cost still need measurement. See [capacity evidence](../shopify/CAPACITY.md).
+
 WooCommerce Pro now includes an opt-in customer portal action for current order
 summaries. It checks the signed-in owner's access, processing/completed status
 and refunds, reuses the saved template, streams private downloads and provides

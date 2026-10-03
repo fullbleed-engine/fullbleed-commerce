@@ -97,6 +97,8 @@ from a trusted deployment value. Flow runtime URLs are relative to that origin.
 No new Shopify access scopes are required beyond the app's existing `read_orders`.
 Rendering limits currently apply per Node process; use one app process until a
 shared capacity limiter and production database topology are validated.
+The [order-burst check](CAPACITY.md) verifies that queued work survives repeated
+capacity waits and completes under the current staging resource ceilings.
 
 Platform references: [Flow action endpoints](https://shopify.dev/docs/apps/build/flow/actions/endpoints),
 [action configuration](https://shopify.dev/docs/apps/build/flow/actions/reference),
