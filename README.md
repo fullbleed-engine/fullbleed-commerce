@@ -165,7 +165,7 @@ site. Omit `--pro --hpos` to test the free package with legacy order storage.
 
 ## Current verification and limits
 
-The 0.1.1 release candidate uses numeric plugin versions and retains the
+The 0.1.1 preview uses numeric plugin versions and retains the
 staging-preview limitations below. It includes the Fullbleed 2.5.6 text-extraction
 correction for customized bold type and packages the opt-in Pro failure alerts.
 Plugin archives use the version in each plugin's PHP header and matching readme;
@@ -178,13 +178,18 @@ the browser-worker runtime, DOM workflows, WordPress authentication, and actual
 WooCommerce order reads are checked separately. DOM simulation is not a real
 Chrome/Safari test or Shopify approval.
 
-The candidate upgrade check starts from the published alpha.3 ZIPs and verifies
-that templates, revisions and enabled automation survive replacement while the
-new alerts remain disabled. Browser checks exercise custom bold text, actual
-worker downloads, editing and customer account access. The verification guide
-keeps candidate results separate from the retained
-[alpha.3 release evidence](docs/alpha3-release-verification.json) and its
-[browser workflow matrix](docs/verification.md#browser-workflow-matrix).
+The [0.1.1 release evidence](docs/release-011-verification.json) records identical
+Windows/Linux archives, 45 shared tests and six visually inspected designs.
+Chrome, Playwright Firefox and Playwright WebKit each pass 36 staff, customer and
+alert checks on Linux. Windows Chrome passes 26 staff/customer checks with matching
+PDFs. Native WordPress passes strict Plugin Check and 12 Chrome checks.
+
+Upgrades from the published alpha.3 ZIPs preserve templates, revisions and enabled
+automation in both order-storage modes, while new alerts stay disabled. The native
+renderer and private SMTP inbox pass 72 checks, including queued delivery, failure
+alerts and explicit recovery. The release includes the detailed evidence archive.
+External mail deliverability and merchant-host scheduling still require staging
+acceptance. Historical alpha.3 results remain separately identified.
 
 This preview produces order summaries, not fiscal invoices. It preserves store
 display amounts and does not calculate tax, create invoice numbers, or reconcile

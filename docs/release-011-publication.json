@@ -1,0 +1,154 @@
+{
+  "checkedAt": "2026-10-03T18:44:13.713421+00:00",
+  "sourceCommit": "e9732f8d73ea63349451b6ad982dfc66c95e3ae8",
+  "release": {
+    "assets": [
+      {
+        "apiUrl": "https://api.github.com/repos/fullbleed-engine/fullbleed-commerce/releases/assets/608330285",
+        "contentType": "application/zip",
+        "createdAt": "2026-10-03T18:42:39Z",
+        "digest": "sha256:0565168d8ea47bd3cc39cc561619ffeea539fddb68b733601668555dd5b0bc9f",
+        "downloadCount": 0,
+        "id": "RA_kwDOU5KRM84kQmIt",
+        "label": "",
+        "name": "commerce-0.1.1-evidence.zip",
+        "size": 11457274,
+        "state": "uploaded",
+        "updatedAt": "2026-10-03T18:42:53Z",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/download/v0.1.1/commerce-0.1.1-evidence.zip"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/fullbleed-engine/fullbleed-commerce/releases/assets/608330271",
+        "contentType": "application/json",
+        "createdAt": "2026-10-03T18:42:39Z",
+        "digest": "sha256:e14122caaaf3fda406325e909864a7313397cffb1af46c90d77f3c6a909bed6d",
+        "downloadCount": 0,
+        "id": "RA_kwDOU5KRM84kQmIf",
+        "label": "",
+        "name": "commerce-0.1.1-verification.json",
+        "size": 172347,
+        "state": "uploaded",
+        "updatedAt": "2026-10-03T18:42:39Z",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/download/v0.1.1/commerce-0.1.1-verification.json"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/fullbleed-engine/fullbleed-commerce/releases/assets/608330268",
+        "contentType": "application/zip",
+        "createdAt": "2026-10-03T18:42:39Z",
+        "digest": "sha256:03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+        "downloadCount": 0,
+        "id": "RA_kwDOU5KRM84kQmIc",
+        "label": "",
+        "name": "fullbleed-commerce-0.1.1.zip",
+        "size": 3061180,
+        "state": "uploaded",
+        "updatedAt": "2026-10-03T18:42:47Z",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/download/v0.1.1/fullbleed-commerce-0.1.1.zip"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/fullbleed-engine/fullbleed-commerce/releases/assets/608330267",
+        "contentType": "application/zip",
+        "createdAt": "2026-10-03T18:42:39Z",
+        "digest": "sha256:fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+        "downloadCount": 0,
+        "id": "RA_kwDOU5KRM84kQmIb",
+        "label": "",
+        "name": "fullbleed-commerce-pro-0.1.1.zip",
+        "size": 39012,
+        "state": "uploaded",
+        "updatedAt": "2026-10-03T18:42:39Z",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/download/v0.1.1/fullbleed-commerce-pro-0.1.1.zip"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/fullbleed-engine/fullbleed-commerce/releases/assets/608330269",
+        "contentType": "application/json",
+        "createdAt": "2026-10-03T18:42:39Z",
+        "digest": "sha256:a25bf3ff9493a56141dc79462134fddcec66264c9101fac1c6ab5617ebcf8a08",
+        "downloadCount": 0,
+        "id": "RA_kwDOU5KRM84kQmId",
+        "label": "",
+        "name": "packages.json",
+        "size": 483,
+        "state": "uploaded",
+        "updatedAt": "2026-10-03T18:42:39Z",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/download/v0.1.1/packages.json"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/fullbleed-engine/fullbleed-commerce/releases/assets/608330270",
+        "contentType": "text/plain; charset=utf-8",
+        "createdAt": "2026-10-03T18:42:39Z",
+        "digest": "sha256:22bf6fea4e880342f45e7cd2e5aa5b3214e5441762d6915c464952bd42d08934",
+        "downloadCount": 0,
+        "id": "RA_kwDOU5KRM84kQmIe",
+        "label": "",
+        "name": "SHA256SUMS.txt",
+        "size": 472,
+        "state": "uploaded",
+        "updatedAt": "2026-10-03T18:42:39Z",
+        "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/download/v0.1.1/SHA256SUMS.txt"
+      }
+    ],
+    "isDraft": false,
+    "isPrerelease": true,
+    "publishedAt": "2026-10-03T18:44:06Z",
+    "tagName": "v0.1.1",
+    "targetCommitish": "e9732f8d73ea63349451b6ad982dfc66c95e3ae8",
+    "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.1"
+  },
+  "publicDownloads": [
+    {
+      "name": "commerce-0.1.1-evidence.zip",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/download/v0.1.1/commerce-0.1.1-evidence.zip",
+      "bytes": 11457274,
+      "sha256": "0565168d8ea47bd3cc39cc561619ffeea539fddb68b733601668555dd5b0bc9f",
+      "status": 200,
+      "authenticated": false,
+      "matchesVerifiedArtifact": true
+    },
+    {
+      "name": "commerce-0.1.1-verification.json",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/download/v0.1.1/commerce-0.1.1-verification.json",
+      "bytes": 172347,
+      "sha256": "e14122caaaf3fda406325e909864a7313397cffb1af46c90d77f3c6a909bed6d",
+      "status": 200,
+      "authenticated": false,
+      "matchesVerifiedArtifact": true
+    },
+    {
+      "name": "fullbleed-commerce-0.1.1.zip",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/download/v0.1.1/fullbleed-commerce-0.1.1.zip",
+      "bytes": 3061180,
+      "sha256": "03f5ee1b8670a625457faa65d088c863e3e84f9f8b2f3208c5d1950d0f554f41",
+      "status": 200,
+      "authenticated": false,
+      "matchesVerifiedArtifact": true
+    },
+    {
+      "name": "fullbleed-commerce-pro-0.1.1.zip",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/download/v0.1.1/fullbleed-commerce-pro-0.1.1.zip",
+      "bytes": 39012,
+      "sha256": "fdebf14cc795bafb606edf11743a1ee17e7eeb05c9e224938adba780ed1dce22",
+      "status": 200,
+      "authenticated": false,
+      "matchesVerifiedArtifact": true
+    },
+    {
+      "name": "packages.json",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/download/v0.1.1/packages.json",
+      "bytes": 483,
+      "sha256": "a25bf3ff9493a56141dc79462134fddcec66264c9101fac1c6ab5617ebcf8a08",
+      "status": 200,
+      "authenticated": false,
+      "matchesVerifiedArtifact": true
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/download/v0.1.1/SHA256SUMS.txt",
+      "bytes": 472,
+      "sha256": "22bf6fea4e880342f45e7cd2e5aa5b3214e5441762d6915c464952bd42d08934",
+      "status": 200,
+      "authenticated": false,
+      "matchesVerifiedArtifact": true
+    }
+  ]
+}
