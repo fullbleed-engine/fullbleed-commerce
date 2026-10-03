@@ -144,7 +144,15 @@ try {
   passed('fresh native WordPress and WooCommerce install every exact base and Pro ZIP entry');
   const phases = [];
   function phase(mode) {
-    const record = php(wordpress, '/tmp/fullbleed-check.php', [mode]);
+    let record;
+    try { record = php(wordpress, '/tmp/fullbleed-check.php', [mode]); }
+    catch (error) {
+      for (const name of ['checks.json', 'mail.eml', 'summary.pdf', 'packing.pdf']) {
+        const file = `/tmp/fullbleed-native-${name}`;
+        if (spawnSync(docker, ['exec', wordpress, 'test', '-f', file], { stdio: 'ignore' }).status === 0) copyOut(wordpress, file, join(output, `failed-${mode}-${name}`));
+      }
+      throw error;
+    }
     assert.ok(record.checks.length > 0 && record.checks.every(item => item.passed));
     phases.push(record);
     for (const item of record.checks) passed(`${mode}: ${item.name}`);

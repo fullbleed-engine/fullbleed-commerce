@@ -12,6 +12,7 @@ function check( $name, $ok ) {
     global $checks;
     if ( ! $ok ) throw new RuntimeException( $name );
     $checks[] = array( 'name' => $name, 'passed' => true );
+    file_put_contents( '/tmp/fullbleed-native-checks.json', json_encode( $checks ) );
 }
 add_filter( 'http_request_host_is_external', function ( $external, $host ) { return 'renderer.example.test' === $host ? true : $external; }, 10, 2 );
 $trust = function ( $args, $url ) {
@@ -110,6 +111,10 @@ if ( 'outage' === $mode ) {
     check( 'renderer outage preserves the email without an invalid attachment', empty( $paths ) && false === strpos( $mime, 'application/pdf' ) );
     check( 'renderer outage records a safe merchant-visible failure', 'failed' === $result['state'] && 'renderer_502' === $result['code'] );
 } else {
+    if ( 1 !== count( $paths ) || false === strpos( $mime, 'application/pdf' ) ) {
+        preg_match_all( '/^Content-Type:[^\r\n]*/mi', $mime, $types );
+        throw new RuntimeException( 'Fixture attachment mismatch: ' . json_encode( array( 'count' => count( $paths ), 'result' => $result, 'types' => $types[0] ) ) );
+    }
     check( 'native WooCommerce email attaches an HTTPS-generated PDF', 1 === count( $paths ) && false !== strpos( $mime, 'application/pdf' ) );
     $attachment = file_get_contents( $paths[0] );
     check( 'attachment bytes match the direct HTTPS PDF', hash_equals( hash_file( 'sha256', '/tmp/fullbleed-native-summary.pdf' ), hash( 'sha256', $attachment ) ) );
