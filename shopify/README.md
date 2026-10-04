@@ -59,7 +59,7 @@ tombstone until cleanup to prevent recreation by delayed retries. Customer
 data requests capture encrypted metadata exports for authenticated merchant
 download, with deadlines and explicit completion independent of paid plans.
 Configure the stable privacy key and operational monitoring described in
-[the privacy workflow](PRIVACY.md). The [development privacy page](app/app/routes/privacy.tsx)
+[the privacy workflow](PRIVACY.md). The [public privacy notice](https://docs.fullbleed.dev/commerce/privacy/)
 describes this behavior.
 
 The renderer permits one active request per shop and two globally per process.
@@ -112,7 +112,10 @@ support delivery; finalize support/privacy/refund terms and App Store
 materials; then submit for review. No unverified data-protection answers should
 be submitted as completed controls.
 
-The proposed starting price is $12/month, subject to cost and merchant validation.
+The configured plans are Studio at $12/month for 250 orders and Scale at
+$29/month for 1,000 orders, with a seven-day trial. Reprints count once per order
+per billing period. The [hosted plan check](../docs/hosted-plans.md) covers the
+synthetic store's trial and plan changes; paid merchant purchases remain unverified.
 The total launch allowance is $50. The paid registration invoice totals $19,
 leaving $31 before metered hosting charges. Less than one cent of staging usage
 is reported so far; usage is not a settled invoice. See the

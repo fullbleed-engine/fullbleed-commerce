@@ -1,6 +1,6 @@
 {
-  "checkedAt": "2026-10-04T04:45:15.316521+00:00",
-  "sourceBaseCommit": "01d36790b8398eeb91ac14e01aafb3f40329d618",
+  "checkedAt": "2026-10-04T06:08:02.392270+00:00",
+  "sourceBaseCommit": "aba1b199d3000a2940e6869cfe207a0fe35d5cfc",
   "renderer": "Chrome through Playwright on Windows; device scale 1",
   "visualInspectionPassed": true,
   "syntheticDocumentDataOnly": true,
@@ -42,6 +42,79 @@
   ],
   "limitations": [
     "Feature media is artwork showing generated documents; it is not an app UI screenshot.",
-    "No App Store approval or production launch is claimed."
-  ]
+    "App screenshots and video use fictional data and an existing development-store trial.",
+    "The video manually retries an already configured Flow workflow, not a new order-created trigger.",
+    "No App Store approval, paid merchant purchase or production launch is claimed."
+  ],
+  "artworkCheckedAt": "2026-10-04T04:45:15.316521+00:00",
+  "screenshots": [
+    {
+      "file": "docs/marketplace/automations.png",
+      "width": 1600,
+      "height": 900,
+      "bytes": 142947,
+      "sha256": "adf97b48870f263851f9ff89547c31db94f18ffd029ae5625da535eebb819f8a",
+      "uploadedToDraft": true,
+      "source": "Actual installed Shopify app on the synthetic development store",
+      "applicationOrigin": "https://commerce.fullbleed.dev"
+    },
+    {
+      "file": "docs/marketplace/template-studio.png",
+      "width": 1600,
+      "height": 900,
+      "bytes": 155691,
+      "sha256": "1abf93342af233480ef16c5caee09a8f15abb888ae45cde55999fb78f77e2b6e",
+      "uploadedToDraft": true,
+      "source": "Actual installed Shopify app on the synthetic development store",
+      "applicationOrigin": "https://commerce.fullbleed.dev"
+    },
+    {
+      "file": "docs/marketplace/html-css.png",
+      "width": 1600,
+      "height": 900,
+      "bytes": 197820,
+      "sha256": "11a63cc115cbc42c264a3b08745ab6c204b1195d39885a0f87d7b31f3ad7ed2d",
+      "uploadedToDraft": true,
+      "source": "Actual installed Shopify app on the synthetic development store",
+      "applicationOrigin": "https://commerce.fullbleed.dev"
+    },
+    {
+      "file": "docs/marketplace/documents.png",
+      "width": 1600,
+      "height": 900,
+      "bytes": 144028,
+      "sha256": "08cb111f843aa553f32fd7345b72f4ead45c66852251031a73b50312d174479f",
+      "uploadedToDraft": false,
+      "source": "Actual installed Shopify app on the synthetic development store",
+      "applicationOrigin": "https://commerce.fullbleed.dev"
+    }
+  ],
+  "screencast": {
+    "url": "https://docs.fullbleed.dev/assets/commerce/fullbleed-commerce-walkthrough.mp4",
+    "page": "https://docs.fullbleed.dev/commerce/shopify/",
+    "docsSourceCommit": "ee0cc0ecd56f908ca1a84f9096aef9679946c896",
+    "docsMergeCommit": "8a6cefb53fa23e1d18798fae3fe7df61853bee27",
+    "docsPullRequest": "https://github.com/fullbleed-engine/docs/pull/32",
+    "sha256": "1d8bc4d62a175a1a88ceaf4f613194c54d6bd0b6ce5984c90fdd841fb98ae759",
+    "bytes": 4776097,
+    "media": {
+      "programs": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1600,
+          "height": 900,
+          "pix_fmt": "yuv420p",
+          "r_frame_rate": "24/1"
+        }
+      ],
+      "format": {
+        "duration": "252.416667"
+      }
+    },
+    "englishCaptions": "burned into video",
+    "audio": false,
+    "editing": "Actual screenshots from the recorded browser session; idle intervals removed; playback speed 1.3x; final paused screen held for eight seconds.",
+    "decodedWithoutErrors": true
+  }
 }

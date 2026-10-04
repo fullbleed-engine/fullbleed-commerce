@@ -14,10 +14,34 @@ or production merchant usage.
   fictional order data. It is promotional artwork, not a screenshot of an app
   screen.
 - [Saved listing readback](listing-verification.json): icon, feature media,
-  category tags, support contact, and permanent privacy URL verified after
-  reloading the English draft. Asset URLs omit temporary signed query strings.
+  three actual app screenshots, screencast, category tags, support contact and
+  permanent privacy URL verified after reloading the English draft. Asset URLs
+  omit temporary signed query strings.
 - [File verification](asset-verification.json): dimensions, sizes, and hashes
-  for both final PNGs and their source files.
+  for the artwork, screenshots and published video.
+
+The installed app screenshots are distinct 1600 × 900 captures from the actual
+synthetic Shopify store at the branded HTTPS origin:
+
+1. [Automations](automations.png): two prepared document jobs and their activity.
+2. [Template studio](template-studio.png): the saved visual template editor.
+3. [HTML / CSS](html-css.png): editing the document source and print styles.
+
+[Documents](documents.png) is an additional retained view. The first three are
+uploaded to the listing; the fourth is not. They contain no browser chrome,
+private download credentials or real customer data. These are app screenshots,
+not artwork or local stub fixtures.
+
+The [public walkthrough](https://docs.fullbleed.dev/commerce/shopify/) and
+[direct MP4](https://docs.fullbleed.dev/assets/commerce/fullbleed-commerce-walkthrough.mp4)
+show the actual installed app, saved template, manual retry of an existing Flow
+workflow, document activity and pause. The 4 minute 12 second H.264 video has
+English captions and no audio; idle intervals are removed and playback is 1.3
+times the recorded speed. It uses an existing development-store test plan,
+not a paid merchant checkout. The documentation page also supplies the two
+verified synthetic PDFs. The [public-file verification](public-walkthrough-verification.json)
+retains unauthenticated HTTPS responses, matching hashes, browser playback and
+desktop/mobile layout checks.
 
 To reproduce the artwork, serve the repository on loopback (for example,
 `python -m http.server 9479 --bind 127.0.0.1`) and capture
@@ -35,19 +59,19 @@ and delayed cleanup while the service is stopped.
 
 The new `commerce.fullbleed.dev` CNAME and ownership TXT are configured in
 Squarespace. [Railway's readback](../marketplace-domain-verification.json)
-confirms propagated DNS, verified ownership, a valid certificate, no pending
-infrastructure changes, and zero active deployments. Existing main-site, docs,
-and email records were preserved. The app still uses its previous staging
-origin until an attended origin migration and install/Flow check is complete.
+records propagated DNS, verified ownership and a valid certificate. Existing
+main-site, docs and email records were preserved. The
+[attended origin migration](../branded-origin.md) then verified the new app URL,
+OAuth callback, install, saved template, manual and Flow downloads, pause and
+real uninstall. Staging returned to zero active deployments after the check.
 
 ## Remaining work before submission
 
-The English form currently reports two issues: at least three desktop
-screenshots and a screencast URL. Capture distinct views of the real installed
-app after the branded-origin migration, without browser chrome, private links,
-or real customer data. The local plans fixture uses an HTTP origin and a stubbed
-Admin shell; it is unsuitable for final screenshots or a Flow-enabled capture.
-No screenshots from that attempt were uploaded.
+The English listing is saved with its screenshots and public screencast. The
+[readback](listing-verification.json) records zero form errors after reloading.
+The parent dashboard confirms the listing was created and checked for common
+issues; submission remains disabled. No local plans-fixture screenshots were
+uploaded.
 
 The parent submission checklist and the [hosted launch requirements](../hosted-plans.md)
 still apply: protected customer-data review, platform checks, continuous privacy

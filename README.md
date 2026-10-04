@@ -9,10 +9,10 @@ Fullbleed engine. **Developer preview; paid sales and marketplace listings are n
 | --- | --- | --- |
 | Fullbleed Commerce for WooCommerce | Order summaries and packing slips, visual and HTML/CSS template editor, embedded logos, PDF previews, Studio design, local browser generation | Free entry plugin; no account, quota, watermark, or telemetry |
 | Fullbleed Commerce Pro | Contrast and Quiet designs, up to 25 orders as a ZIP, automatic email attachments, customer account downloads, activity history and optional administrator failure alerts through a private renderer | Separate paid download, updates and support; proposed $79/year for one store, hosting separate |
-| Fullbleed Commerce for Shopify | Visual and HTML/CSS template editor, three designs, native Flow actions, expiring document links, persistent activity/retry/revoke controls, authenticated previews and subscription checks | App subscription; proposed $12/month starting tier, subject to operating-cost and merchant validation |
+| Fullbleed Commerce for Shopify | Visual and HTML/CSS template editor, three designs, native Flow actions, expiring document links, persistent activity/retry/revoke controls, authenticated previews and subscription checks | Studio $12 / 250 orders and Scale $29 / 1,000 orders per 30 days configured for development-store testing; paid launch pending |
 
-Prices are hypotheses, not live offers. Checkout, paid subscriptions and marketplace
-listings are not live. The engine remains available independently
+Prices are not live offers. Shopify plan changes are verified on a development
+store; paid merchant purchases and marketplace listings are not live. The engine remains available independently
 under MIT; WordPress plugin code is GPL-compatible. See [LICENSE](LICENSE).
 
 | Studio | Contrast | Quiet |
@@ -124,6 +124,10 @@ See the [Flow setup and reliability contract](shopify/FLOW.md).
 The [order-arrival recipe](shopify/recipes/order-documents.md) automatically
 prepares both PDFs and saves private links and expiry times on the Shopify order.
 It is verified with an actual synthetic order trigger and browser downloads.
+Watch the [recorded Shopify walkthrough](https://docs.fullbleed.dev/commerce/shopify/)
+for a saved custom template, the Flow workflow and document activity. The
+[branded-origin verification](docs/branded-origin.md) retains the current
+install, download, pause and uninstall evidence.
 
 These are development integrations. Customer delivery, production hosting,
 privacy operations and paid lifecycle validation remain launch gates. The

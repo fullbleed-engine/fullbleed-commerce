@@ -24,12 +24,12 @@
     "projectId": "ee2c5784-260b-44d7-aff3-ef46714687bc",
     "existingWorkspacePlan": "Hobby",
     "newSubscriptionPurchased": false,
-    "meteredUsageDollars": 0.0061987154937167875,
-    "usageCheckedAt": "2026-10-04T03:38:24.302229+00:00",
+    "meteredUsageDollars": 0.007029546208164405,
+    "usageCheckedAt": "2026-10-04T05:41:42.068876+00:00",
     "computeStopped": true,
     "persistentVolumeRetained": true,
     "notes": "Metered usage before plan credits, not an invoice or confirmed card charge. Usage can lag; bucket charges are not itemized. Compute is stopped. The retained private volume and recovery bucket remain metered; the bucket holds the synthetic backup, dataset marker and encrypted erasure instructions, including the verified hosted uninstall. Reconcile actual launch charges against the $50 total cap.",
     "privateRecoveryBucketRetained": true,
-    "recoveryBucketBytes": 5164822
+    "recoveryBucketBytes": 5165016
   }
 }

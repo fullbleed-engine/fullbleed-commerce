@@ -31,7 +31,7 @@ source files or logs. Set:
   [RECOVERY.md](RECOVERY.md). Initialize the bucket before starting the app.
 - `FULLBLEED_BACKUPS_ENABLED=true` for startup/hourly checks and verified daily
   snapshots. A disabled or missing setting keeps the private monitor unhealthy.
-- `SHOPIFY_APP_URL` to the service's HTTPS origin, `SCOPES=read_orders`,
+- `SHOPIFY_APP_URL=https://commerce.fullbleed.dev`, `SCOPES=read_orders`,
   `NODE_ENV=production`, `PORT=3000`, and
   `DATABASE_URL=file:/data/commerce.sqlite`.
 - `RAILWAY_RUN_UID=0` for Railway's initially root-owned volume. The entrypoint
@@ -50,9 +50,12 @@ Do not copy the development SQLite database or its sessions to staging.
 Install the app through Shopify to obtain fresh authorized sessions.
 
 `app/shopify.app.staging.toml` points this registered app at the stable staging
-origin, callback and signed webhook routes. Validate and deploy it explicitly
-with `--config staging`. Stop the development preview with `app dev clean` when
-switching to a released version. Existing Flow workflows can retain **Draft**
+origin `https://commerce.fullbleed.dev`, callback `/auth/callback` and signed
+webhook routes. Keep this origin identical to `SHOPIFY_APP_URL`; the Flow action
+URLs are relative to it. Provision the custom domain and verify DNS/TLS before
+changing the runtime or releasing the Shopify configuration. Validate and deploy
+it explicitly with `--config staging`. Stop the development preview with
+`app dev clean` when switching to a released version. Existing Flow workflows can retain **Draft**
 action references: replace those nodes with the released Fullbleed actions,
 reconnect their inputs/outputs and apply the workflow changes. A published app
 version alone did not migrate the saved development workflow in our test.
@@ -64,6 +67,11 @@ not-before check and the embedded page showed "Handling response". Restore
 operating-system time synchronization; do not disable token verification or
 weaken its checks. The retained browser test waited until tokens became valid;
 that temporary test adjustment is not an application fix or production setup.
+
+The public `/privacy` route redirects to the permanent
+[privacy notice](https://docs.fullbleed.dev/commerce/privacy/), which remains
+available while staging compute is stopped. The redirect does not forward
+request parameters and suppresses the referrer.
 
 ## Verification and operation
 
