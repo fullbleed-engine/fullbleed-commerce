@@ -49,6 +49,14 @@ Railway pre-deploy command: the persistent volume is unavailable there.
 Do not copy the development SQLite database or its sessions to staging.
 Install the app through Shopify to obtain fresh authorized sessions.
 
+`app/shopify.app.staging.toml` points this registered app at the stable staging
+origin, callback and signed webhook routes. Validate and deploy it explicitly
+with `--config staging`. Stop the development preview with `app dev clean` when
+switching to a released version. Existing Flow workflows can retain **Draft**
+action references: replace those nodes with the released Fullbleed actions,
+reconnect their inputs/outputs and apply the workflow changes. A published app
+version alone did not migrate the saved development workflow in our test.
+
 Keep the machine clock synchronized on local and hosted environments. During
 the real development-store test, the Windows Time service was stopped and the
 clock lagged Shopify by about 12 seconds. Session tokens then failed their
@@ -75,6 +83,13 @@ denied unauthenticated document/webhook requests, and persistence through a
 replacement deployment. Verify an actual Flow order trigger and downstream
 destination with synthetic data before enabling merchant workflows. Complete
 the App Pricing lifecycle separately; a healthy server is not billing evidence.
+
+The [hosted workflow check](../docs/hosted-workflow.md) covers a fresh authorized
+installation, private $0 plan checkout, saved custom template, actual order
+trigger, both Flow actions, four private order fields and browser downloads on
+the stable origin with `NODE_ENV=production`. The session, brand, template and
+prepared links survived a replacement deployment. This is synthetic staging
+evidence, not approval to accept paying merchants.
 
 Railway readiness is checked during deployment, not continuously. The
 [GitHub monitoring workflow](MONITORING.md) checks availability, privacy

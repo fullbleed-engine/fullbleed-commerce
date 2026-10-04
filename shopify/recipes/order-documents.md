@@ -56,6 +56,10 @@ Leave the link lifetime at **0** for the 24-hour default, or choose 1–72 hours
 Insert the complete returned URL, including its fragment. Do not shorten,
 rebuild or strip it. No additional logging step is needed for this recipe.
 
+When moving a development workflow to the released app, replace any Fullbleed
+nodes labeled **Draft** with the released actions and reconnect their variables.
+Publishing an app version does not replace saved Draft references in the workflow.
+
 In Fullbleed **Automations**, enable Flow automation, then turn on the workflow.
 Create one synthetic order in the development store. Confirm the run says
 **Trigger event**, all six actions finish, and the four order fields contain
@@ -96,11 +100,13 @@ not invalidate the documents. Both saved links stopped working after pausing.
 Storefront and customer-account API access were independently read back as
 `NONE`. See [retained evidence](../../docs/order-trigger-verification.json).
 
-Before merchant rollout, repeat the complete workflow on the stable production
-origin with installation, billing and operational controls enabled. This check
-used the development tunnel and development-store entitlement. Other triggers,
-external email delivery, production capacity and marketplace approval are
-separate release gates.
+That first check used the development tunnel and development-store entitlement.
+The later [hosted workflow check](../../docs/hosted-workflow.md) repeated the
+complete recipe on the stable staging origin after a fresh installation and
+private $0 plan checkout, with production subscription checks and a saved custom
+template. Other triggers, actual paid merchants, continuous operation, external
+email delivery, production capacity and marketplace approval remain separate
+release gates.
 
 Platform references: [Update order metafield](https://help.shopify.com/en/manual/shopify-flow/reference/actions/update-order-metafield),
 [create custom metafield definitions](https://help.shopify.com/en/manual/custom-data/metafields/metafield-definitions/creating-custom-metafield-definitions),

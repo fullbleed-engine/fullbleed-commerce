@@ -88,6 +88,19 @@ integrity, retry deduplication, email-only/order-based erasure, explicit
 completion, retention, pagination and bounded payloads. No billing or Admin API
 request is permitted by those tests.
 
+Lifecycle webhooks use Shopify's low-level HMAC validator over the bounded raw
+body, with allowed topics and store validation, without loading or refreshing an
+Admin session. The installed React Router SDK otherwise refreshes a nearly
+expired offline token before dispatching the webhook; a revoked token made a
+real uninstall return 500 before cleanup. Regression tests reproduce that
+failure and cover expired and nearly expired tokens for uninstall, scope
+updates and all three mandatory privacy topics. They verify zero network calls,
+invalid signatures, body limits, duplicate deliveries and store isolation.
+Durable recovery storage remains required before acknowledging erasure.
+
+See the [hosted lifecycle evidence](../docs/hosted-workflow.md) and Shopify's
+[webhook verification guidance](https://shopify.dev/docs/apps/build/webhooks/verify-deliveries).
+
 `tools/serve-privacy-fixture.mjs` and `tools/check-privacy-browser.py` exercise the
 built screen, download and completion flow in a real browser with synthetic
 Shopify session tokens. The external Shopify admin/App Bridge shell is stubbed;

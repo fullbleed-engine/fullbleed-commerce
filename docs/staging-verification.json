@@ -157,14 +157,14 @@
     "scope": "Sequential synthetic rendering through the deployed Fullbleed module. This is not an end-to-end Shopify billing/Flow test, concurrency benchmark or sustained capacity promise."
   },
   "currentState": {
-    "checkedAt": "2026-10-03T02:59:18.609420+00:00",
+    "checkedAt": "2026-10-04T00:48:25.567581+00:00",
     "computeStopped": true,
     "activeDeployments": 0,
+    "lastDeploymentId": "b670ae32-128a-4ad2-8592-3186eaf48a20",
+    "lastDeploymentStatus": "REMOVED",
     "persistentVolumeRetained": true,
     "privateRecoveryBucketRetained": true,
-    "backupScheduleConfigured": true,
-    "backupWorkerRunning": false,
-    "externalMonitorScheduledEnabled": false,
+    "scheduledMonitorEnabled": false,
     "project": {
       "deletedAt": null,
       "id": "ee2c5784-260b-44d7-aff3-ef46714687bc",
@@ -174,17 +174,17 @@
       "end": "2026-10-24T18:42:11+00:00",
       "start": "2026-09-24T18:42:11+00:00"
     },
-    "meteredUsageDollars": 0.001176759314569074,
+    "meteredUsageDollars": 0.00459412067667295,
     "serviceUsage": [
       {
         "backupDollars": 0.0,
-        "cpuDollars": 0.00018205135030864198,
-        "egressDollars": 0.0004434311,
+        "cpuDollars": 0.00030084933641975306,
+        "egressDollars": 0.0005867663500000001,
         "id": "bcd8801b-e89c-4c4c-baf3-b8e1d0fe8b59",
-        "memoryDollars": 0.0004967172582716051,
+        "memoryDollars": 0.0032378605037037037,
         "name": "shopify-app",
-        "totalDollars": 0.001176759314569074,
-        "volumeDollars": 5.45596059888268e-05
+        "totalDollars": 0.00459412067667295,
+        "volumeDollars": 0.0004686444865494934
       }
     ],
     "recoveryBucket": {
@@ -192,10 +192,10 @@
       "environmentId": "b3892972-504b-493b-8fc4-a6fb26b14d90",
       "id": "bf913690-c271-4932-8984-2168db8cc96d",
       "name": "privacy-recovery",
-      "objects": 13,
+      "objects": 14,
       "region": "sjc",
       "storage": "2.6 MB",
-      "storageBytes": 2583218
+      "storageBytes": 2583412
     },
     "usageCaveat": "Project metering is not an invoice, may lag, and does not itemize bucket charges."
   },
@@ -240,5 +240,6 @@
     "workerRunsOnlyWhileOnline": true,
     "backupFreshnessFailureRecoveryVerified": true,
     "backupScheduleEvidence": "docs/backup-schedule-verification.json"
-  }
+  },
+  "hostedWorkflowEvidence": "docs/hosted-workflow-verification.json"
 }
