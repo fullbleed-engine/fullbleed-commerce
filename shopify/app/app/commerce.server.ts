@@ -5,6 +5,7 @@ import { createSubscriptionLookup, developmentAccess, pricingUrl } from '../../b
 import { createRenderLimit } from '../../render-limit.js';
 import { createUsageMeter, developmentAllowance, usageAllowance } from '../../usage.js';
 import { designs as proDesigns } from '../../../pro/designs.js';
+import { agreementService } from './agreement.server';
 
 export const shopQuery = `#graphql
 query FullbleedShop {
@@ -22,6 +23,7 @@ export const withRenderLimit = createRenderLimit();
 export const usageMeter = createUsageMeter({ db });
 
 export async function verifyCommerceShop(admin: Awaited<ReturnType<typeof authenticate.flow>>['admin'], domain: string, signal?: AbortSignal) {
+  await agreementService.requireAccepted(domain);
   const response = await admin.graphql(shopQuery, { signal });
   const result = await response.json();
   const shop = result.data?.shop;
@@ -40,6 +42,7 @@ export async function commerceAccess(request: Request) {
   let access;
   try { access = await verifyCommerceShop(context.admin, context.session.shop, request.signal); }
   catch (error) {
+    if (error instanceof Response && error.status === 428) throw context.redirect('/app/agreement');
     if (!(error instanceof Response) || error.status !== 402) throw error;
     if (!process.env.SHOPIFY_APP_HANDLE) throw new Response('Plan selection is not configured. Contact support.', { status: 503 });
     throw context.redirect(pricingUrl(context.session.shop, process.env.SHOPIFY_APP_HANDLE), { target: '_top' });

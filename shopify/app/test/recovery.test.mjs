@@ -12,6 +12,7 @@ import { fileRecoveryStore } from '../scripts/recovery-store.mjs';
 import { configuredDatabasePath, databaseUrl, createDatabaseBackup, restoreDatabaseBackup, pruneRecoveryStorage, pruneAbandonedSnapshots } from '../scripts/recovery-operations.mjs';
 import { backupsEnabled, backupStatus, maintainBackups } from '../scripts/backup-maintenance.mjs';
 import { createUsageMeter, developmentAllowance } from '../../usage.js';
+import { merchantAgreement } from '../../merchant-agreement.js';
 
 if (!process.env.DATABASE_URL?.includes('webhook-test.sqlite') || process.env.SHOPIFY_API_SECRET !== 'synthetic-webhook-test-secret') throw new Error('Use the isolated test runner.');
 const privacyKey = 'ab'.repeat(32), key = 'ef'.repeat(32);
@@ -33,6 +34,7 @@ async function fixture(t, now = () => new Date()) {
     await rm(directory, { recursive: true, force: true });
   });
   await db.$transaction(async tx => {
+    await tx.agreementAcceptance.deleteMany();
     await tx.privacyRequest.deleteMany(); await tx.automationSettings.deleteMany(); await tx.session.deleteMany();
     await tx.brand.deleteMany(); await tx.documentTemplate.deleteMany(); await tx.recoveryReceipt.deleteMany();
     await tx.usagePeriod.deleteMany();
@@ -45,6 +47,7 @@ async function fixture(t, now = () => new Date()) {
   const service = createPrivacyService({ db, key: privacyKey, now, recordRecovery: journal.record });
   const requests = {};
   for (const shop of [primary, other, completed, removed]) {
+    await db.agreementAcceptance.create({ data: { shop, version: merchantAgreement.version, documentSha256: merchantAgreement.documentSha256, actorId: '42', acceptedAt: now() } });
     await db.session.create({ data: { id: `offline_${shop}`, shop, state: '', isOnline: false, accessToken: 'synthetic-recovery-access-token' } });
     await db.brand.create({ data: { shop, sellerName: 'Synthetic saved recovery brand' } });
     await db.documentTemplate.create({ data: { shop, kind: 'order-summary', revision: 'synthetic-saved-revision', content: '{"html":"<h1>Saved template</h1>"}' } });
@@ -88,6 +91,8 @@ test('encrypted multipart backup restores retained data and replays later erasur
   assert.equal((await restored.automationJob.findFirst({ where: { shop: primary } })).orderId, '');
   assert.equal((await restored.privacyRequest.findUnique({ where: { id: f.requests[completed] } })).snapshot, null);
   assert.equal(await restored.brand.count({ where: { shop: removed } }), 0);
+  assert.equal(await restored.agreementAcceptance.count({ where: { shop: removed } }), 0);
+  assert.equal((await restored.agreementAcceptance.findUniqueOrThrow({ where: { shop: other } })).documentSha256, merchantAgreement.documentSha256);
   assert.equal(await restored.documentTemplate.count({ where: { shop: removed } }), 0);
   assert.equal(await restored.usagePeriod.count({ where: { shop: removed } }), 0);
   assert.equal(await restored.usageOrder.count({ where: { shop: primary } }), 0);
@@ -124,6 +129,7 @@ test('a durable erasure survives a failed original database commit and replays e
   assert.equal(await f.db.recoveryReceipt.count(), 0);
   assert.equal((await f.journal.replay(f.db, applyRecoveryEvent)).applied, 1);
   assert.equal(await f.db.brand.count({ where: { shop: primary } }), 0);
+  assert.equal(await f.db.agreementAcceptance.count({ where: { shop: primary } }), 0);
   assert.equal((await f.journal.replay(f.db, applyRecoveryEvent)).applied, 0);
   assert.equal(await f.db.brand.count({ where: { shop: other } }), 1);
 });

@@ -34,6 +34,8 @@ COPY --from=build /commerce/shopify/usage.js ./shopify/usage.js
 COPY --from=build /commerce/shopify/access-audit.js ./shopify/access-audit.js
 COPY --from=build /commerce/shopify/recovery-journal.js ./shopify/recovery-journal.js
 COPY --from=build /commerce/shopify/operator-audit.js ./shopify/operator-audit.js
+COPY --from=build /commerce/shopify/merchant-agreement.js ./shopify/merchant-agreement.js
+COPY --from=build /commerce/shopify/agreements ./shopify/agreements
 COPY --from=build /commerce/shopify/app/package.json ./shopify/app/package.json
 COPY LICENSE ./LICENSE
 COPY LICENSES ./LICENSES

@@ -17,6 +17,7 @@ export async function action({ request }: ActionFunctionArgs) {
     if (response.status === 202) service.start(job.id);
     return response;
   } catch (error) {
+    if (error instanceof Response && error.status === 428) return flowResponse({ message: 'Open Fullbleed and accept the merchant agreement, then retry this workflow.' }, 428);
     if (error instanceof Response) return flowResponse({ message: error.status < 500 ? 'Check Fullbleed access, automation settings and the selected order.' : 'Fullbleed is temporarily unavailable. Flow will retry.' }, error.status, error.status === 429 ? { 'Retry-After': '15' } : {});
     return flowResponse({ message: 'Fullbleed is temporarily unavailable. Flow will retry.' }, 503);
   }

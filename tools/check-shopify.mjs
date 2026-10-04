@@ -32,6 +32,7 @@ const jobs = [
   ['health', '--test', '--test-reporter=tap', 'test/health.test.mjs'],
   ['webhooks', '--test', '--test-reporter=tap', 'test/webhooks.test.mjs'],
   ['webhook-lifecycle', '--test', '--test-reporter=tap', 'test/webhook-lifecycle.test.mjs'],
+  ['agreement', '--test', '--test-reporter=tap', 'test/agreement.test.mjs'],
   ['flow', '--test', '--test-reporter=tap', 'test/flow.test.mjs'],
   ['usage', '--test', '--test-reporter=tap', 'test/usage.test.mjs'],
   ['privacy', '--test', '--test-reporter=tap', 'test/privacy.test.mjs'],
