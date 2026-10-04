@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Fullbleed Commerce</title>
+  <desc id="desc">Two layered print sheets on a deep green background.</desc>
+  <rect width="1200" height="1200" fill="#164d46"/>
+  <path d="M210 160H690L840 310V940H210Z" fill="#91b7a7"/>
+  <path d="M340 290H810L990 470V1030H340Z" fill="#faf7ef"/>
+  <path d="M810 290V470H990Z" fill="#d9e4d8"/>
+  <path d="M450 580H850M450 710H750M450 840H630" fill="none" stroke="#164d46" stroke-width="58"/>
+  <path d="M800 810H870V880H800Z" fill="#b75135"/>
+</svg>

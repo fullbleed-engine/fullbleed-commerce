@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-10-04T04:29:41.601141+00:00",
+  "domain": "commerce.fullbleed.dev",
+  "domainId": "e6f232f3-164f-48d2-a239-6c0df8aad796",
+  "port": 3000,
+  "dnsRecords": [
+    {
+      "recordType": "DNS_RECORD_TYPE_CNAME",
+      "name": "commerce",
+      "fqdn": "commerce.fullbleed.dev",
+      "requiredValue": "euo12o07.up.railway.app",
+      "currentValue": "euo12o07.up.railway.app",
+      "status": "DNS_RECORD_STATUS_PROPAGATED",
+      "zone": "fullbleed.dev",
+      "purpose": "DNS_RECORD_PURPOSE_TRAFFIC_ROUTE"
+    }
+  ],
+  "ownershipVerified": true,
+  "ownershipTxtHost": "_railway-verify.commerce.fullbleed.dev",
+  "certificate": {
+    "status": "CERTIFICATE_STATUS_TYPE_VALID",
+    "detailedStatus": "CERTIFICATE_STATUS_TYPE_DETAILED_COMPLETE"
+  },
+  "certificates": [
+    {
+      "issuedAt": "2026-10-04T03:28:00+00:00",
+      "expiresAt": "2027-01-02T03:27:59+00:00",
+      "domainNames": [
+        "commerce.fullbleed.dev"
+      ],
+      "fingerprintSha256": "472174a3e9315a940dbe5efb380900d0c8f31f7e5f3f3291d94b21118ec7354d",
+      "keyType": "KEY_TYPE_ECDSA"
+    }
+  ],
+  "configurationPlan": {
+    "ok": true,
+    "changes": []
+  },
+  "computeActiveDeployments": 0,
+  "applicationOriginMigrated": false,
+  "notes": "Added only commerce CNAME and its Railway ownership TXT in Squarespace. DNS and TLS verified; hosted app is still stopped. Shopify application URL and runtime origin remain on previous staging host pending attended installation and Flow regression checks."
+}

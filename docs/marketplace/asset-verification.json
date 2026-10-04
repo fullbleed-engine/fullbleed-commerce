@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-10-04T04:45:15.316521+00:00",
+  "sourceBaseCommit": "01d36790b8398eeb91ac14e01aafb3f40329d618",
+  "renderer": "Chrome through Playwright on Windows; device scale 1",
+  "visualInspectionPassed": true,
+  "syntheticDocumentDataOnly": true,
+  "artifacts": [
+    {
+      "file": "docs/marketplace/app-icon.png",
+      "width": 1200,
+      "height": 1200,
+      "bytes": 8044,
+      "sha256": "7ddaabd624cccf7e1ea8581e5e9adf1034b28754bb9c3f88ae16f8eb5a2ada32"
+    },
+    {
+      "file": "docs/marketplace/feature.png",
+      "width": 1600,
+      "height": 900,
+      "bytes": 225092,
+      "sha256": "66771a2db4a9f782b9ff5c8eeddd749d52e38ad277f856ee6d99d3aaad634714"
+    },
+    {
+      "file": "docs/marketplace/app-icon.svg",
+      "bytes": 631,
+      "sha256": "ae1e3d3d48a6d458d2b8f45e84b0b6628bb2efe4aa2a040a931e4ee821715cb7"
+    },
+    {
+      "file": "docs/marketplace/feature.html",
+      "bytes": 1892,
+      "sha256": "faa13a5cda73f23196f8f4b65785f31e1a0e3783976406e3fb04d1629d8fc20a"
+    },
+    {
+      "file": "docs/previews/contrast-order-summary.png",
+      "bytes": 78017,
+      "sha256": "f3a44da6ddded3df010c925f02cf67dcafdf9306712d9208fe2f05916d44728e"
+    },
+    {
+      "file": "docs/previews/custom-packing-slip.png",
+      "bytes": 76108,
+      "sha256": "83e397192e77315397751749245fb1c0d1bd90ba8a18da23ac891bd58dd99e7e"
+    }
+  ],
+  "limitations": [
+    "Feature media is artwork showing generated documents; it is not an app UI screenshot.",
+    "No App Store approval or production launch is claimed."
+  ]
+}
