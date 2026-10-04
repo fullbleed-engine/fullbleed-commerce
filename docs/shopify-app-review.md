@@ -1,6 +1,6 @@
 # Shopify local App Store review
 
-Checked October 4, 2026 against source `51a12c510e99970fac5c86294e642589b2d858f6`. The
+Checked October 4, 2026 against source `fe1fc52a23b8024d89a59ed24c6b74cc4df1e103`. The
 [retained record](shopify-app-review.json) includes every applicable requirement,
 its code evidence, the freshly fetched requirements hash and local test results.
 Shopify CLI 4.8.4 fetched the current requirements from the app project directory.
@@ -46,12 +46,18 @@ scaffold asked for a shop domain on `/` and `/auth/login`; both now show an
 launch parameters are preserved. Old POST forms return to the instructions
 without using their submitted shop value.
 
-The change passed 84 Shopify tests and 18 browser checks,
-including anonymous desktop/mobile entry, authenticated plans and a real PDF
-download. [Desktop](previews/shopify-entry-desktop.png) and
-[mobile](previews/shopify-entry-mobile.png) captures were visually inspected.
-The API and embedded-admin boundaries in the local plan fixture are synthetic;
-the new entry change has not been part of an attended hosted install check yet.
+The current source passed **96 Shopify tests**, **24 plan/access browser checks**
+and **13 privacy browser checks**, with actual PDF and JSON downloads. The 47
+shared Commerce tests also passed after building their browser assets.
+[Access-history evidence](access-audit-verification.json) retains source and
+artifact hashes, test boundaries and desktop/mobile captures. The Shopify UI
+toolkit validator failed in its own JSX/module environment; the actual app
+typecheck, production build and Chrome checks passed.
+
+Shopify API and embedded-admin shell boundaries in local browser checks are
+synthetic. The current entry and access-history changes still need an attended
+hosted rollout. Application history does not establish direct database, provider
+or operator access controls, or complete the customer-data questionnaire.
 
 ## Skipped groups
 

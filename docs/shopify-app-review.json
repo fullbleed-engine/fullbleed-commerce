@@ -1,6 +1,6 @@
 {
-  "checkedAt": "2026-10-04T06:40:18.282100+00:00",
-  "sourceCommit": "51a12c510e99970fac5c86294e642589b2d858f6",
+  "checkedAt": "2026-10-04T09:04:10.598709+00:00",
+  "sourceCommit": "fe1fc52a23b8024d89a59ed24c6b74cc4df1e103",
   "requirements": {
     "url": "https://shopify.dev/docs/apps/launch/app-store-review/app-store-ai-self-review-requirements",
     "fetchedUsing": "Shopify CLI 4.8.4 doc fetch from the app project directory",
@@ -353,11 +353,11 @@
     }
   ],
   "localValidation": {
-    "checkedAt": "2026-10-04T06:34:23.257Z",
+    "checkedAt": "2026-10-04T08:56:24.273Z",
     "node": "v24.21.0",
     "checks": [
       {
-        "name": "generated-client-matches-schema",
+        "name": "schema",
         "exitCode": 0,
         "passed": true
       },
@@ -427,6 +427,11 @@
         "passed": true
       },
       {
+        "name": "access-audit",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
         "name": "monitor",
         "exitCode": 0,
         "passed": true
@@ -439,21 +444,21 @@
     ],
     "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
     "lockSha256": "98c11aefe0018a038a15e0723eaec57874cc8bc10bb8d7197be8ca2c457784c3",
-    "serverBuildSha256": "6e0d9dd9dc82abacc609dfe7b9d80f90b1cae38b9912839f81cff931799d9d5e",
+    "serverBuildSha256": "9c7daf4b50a278f977a4180c4216833902eda8d4ae71be3fa6eed3fff80cebe8",
     "browserTested": false,
     "liveBillingTested": false
   },
-  "shopifyTests": 84,
+  "shopifyTests": 96,
   "entryRequestHandlerTests": 5,
   "browserValidation": {
-    "checkedAt": "2026-10-04T06:34:48Z",
+    "checkedAt": "2026-10-04T08:58:49Z",
     "browser": "154.0.8037.93",
     "syntheticOnly": true,
     "entryRoutesTestedWithoutAuthentication": true,
     "shopifyApiAndAdminShellStubbed": true,
     "realSdkAuthentication": true,
     "realPdfRendering": true,
-    "serverBuildSha256": "6e0d9dd9dc82abacc609dfe7b9d80f90b1cae38b9912839f81cff931799d9d5e",
+    "serverBuildSha256": "9c7daf4b50a278f977a4180c4216833902eda8d4ae71be3fa6eed3fff80cebe8",
     "checks": [
       {
         "name": "root: anonymous entry gives Shopify instructions",
@@ -524,6 +529,30 @@
         "passed": true
       },
       {
+        "name": "access history authenticates through SDK",
+        "passed": true
+      },
+      {
+        "name": "history includes completed PDFs and denied quota request",
+        "passed": true
+      },
+      {
+        "name": "history excludes customer content and credentials",
+        "passed": true
+      },
+      {
+        "name": "desktop: access history fits",
+        "passed": true
+      },
+      {
+        "name": "mobile: access history fits",
+        "passed": true
+      },
+      {
+        "name": "history records its own authenticated reads",
+        "passed": true
+      },
+      {
         "name": "no browser runtime errors",
         "passed": true
       }
@@ -546,12 +575,20 @@
         "sha256": "286c73d475bbfa74376e2abe199b4166c726c62d35d55cf0c8e357b6ef8ee990"
       },
       {
+        "file": "output/browser/shopify-plans-access-desktop.png",
+        "sha256": "d5dc1ef081011b103d19128bf2f229938f4fe5aa5ab1fc8e6649d066325013ff"
+      },
+      {
+        "file": "output/browser/shopify-plans-access-mobile.png",
+        "sha256": "75e082e6a31e4c7e0d472ff27e0bfe6715a1ce31738a5bca8781e449ac9ea8c7"
+      },
+      {
         "file": "output/browser/shopify-plans-desktop.png",
-        "sha256": "18196d601f7ad0cd6327cd2d342f01e251f3d3054bdb884e52668f1c897c9a70"
+        "sha256": "dd0ab257672cfab29b2c64c8003fe62c286011b61d8b4ab8fabfb631612126fb"
       },
       {
         "file": "output/browser/shopify-plans-mobile.png",
-        "sha256": "92df3653361e3056f7194e1cbab8852470fa6f2ca90fcbde69992ab0dee6981e"
+        "sha256": "9c1c7366fdd1b9b9b6b28d9bab8e283e018817ac3c8e73216197907359cfba5f"
       },
       {
         "file": "output/browser/shopify-plans-order-summary.pdf",
@@ -564,9 +601,11 @@
   "shopifySelfReviewMarkedDone": false,
   "submitted": false,
   "limitations": [
-    "This is a local code review, not the full Shopify review or a conformance certification.",
-    "The new entry UI was checked locally with real built routes. Shopify API and admin-shell boundaries in plan browser checks are synthetic.",
-    "The earlier hosted install/Flow evidence applies to the identified prior source; this entry change has not been deployed in that record.",
+    "This is a local code review of all 31 applicable criteria, not the full Shopify review or a conformance certification.",
+    "Shopify API and embedded-admin shell boundaries in local browser checks are synthetic.",
+    "The existing hosted installation evidence applies to its identified prior source. The current entry and access-history changes await an attended hosted rollout.",
+    "Application access history does not cover direct database/provider/backup access or prove operational policy controls.",
     "Protected customer-data attestations, production operations, independent recovery, capacity/costs, the native crash investigation and merchant pilots remain open."
-  ]
+  ],
+  "accessAuditVerification": "access-audit-verification.json"
 }
