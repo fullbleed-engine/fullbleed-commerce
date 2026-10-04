@@ -192,6 +192,10 @@ the browser-worker runtime, DOM workflows, WordPress authentication, and actual
 WooCommerce order reads are checked separately. DOM simulation is not a real
 Chrome/Safari test or Shopify approval.
 
+The [native rendering investigation](docs/native-diagnostics.md) retains the
+unresolved Linux crash evidence and documents reproducible, bounded diagnostic
+runs. Passing repetitions do not establish that the intermittent crash is fixed.
+
 The [0.1.1 release evidence](docs/release-011-verification.json) records identical
 Windows/Linux archives, 45 shared tests and six visually inspected designs.
 Chrome, Playwright Firefox and Playwright WebKit each pass 36 staff, customer and

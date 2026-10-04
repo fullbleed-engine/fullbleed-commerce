@@ -1,0 +1,55 @@
+name: Native rendering diagnostics
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/native-stability.yml'
+      - 'tools/capture-native.gdb'
+      - 'tools/check-native-stability.py'
+      - 'tools/check-native-diagnostic-capture.py'
+      - 'tools/render-pagination.mjs'
+      - 'package-lock.json'
+
+permissions:
+  contents: read
+
+jobs:
+  repeat:
+    name: Linux Node 24.21.0 (${{ matrix.debugger }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        debugger: [none, gdb]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.21.0
+          cache: npm
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - run: npm ci --ignore-scripts
+      - run: python -m pip install pypdf==6.1.1
+      - name: Install GDB on the disposable runner
+        if: matrix.debugger == 'gdb'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends gdb
+          gdb --version
+      - name: Verify failure capture with controlled child processes
+        if: matrix.debugger == 'gdb'
+        run: python tools/check-native-diagnostic-capture.py
+      - name: Five independent synthetic pagination sweeps
+        run: python tools/check-native-stability.py --runs 5 --debugger ${{ matrix.debugger }}
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        if: always()
+        with:
+          name: native-stability-${{ matrix.debugger }}
+          path: |
+            output/native-stability/
+            output/native-diagnostic-capture/
+          retention-days: 14

@@ -59,7 +59,7 @@ jobs:
           python-version: '3.11'
       - run: npm ci --ignore-scripts
       - run: python -m pip install pypdf==6.1.1
-      - run: node tools/render-pagination.mjs
+      - run: node --report-on-fatalerror --report-uncaught-exception --report-exclude-env --report-exclude-network --report-directory=output/pagination tools/render-pagination.mjs
       - run: python tools/check-pagination.py
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: always()
