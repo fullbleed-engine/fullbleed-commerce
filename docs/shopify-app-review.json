@@ -1,0 +1,572 @@
+{
+  "checkedAt": "2026-10-04T06:40:18.282100+00:00",
+  "sourceCommit": "51a12c510e99970fac5c86294e642589b2d858f6",
+  "requirements": {
+    "url": "https://shopify.dev/docs/apps/launch/app-store-review/app-store-ai-self-review-requirements",
+    "fetchedUsing": "Shopify CLI 4.8.4 doc fetch from the app project directory",
+    "sha256": "62925bc806714830625a7032c1305c2c55a833857261b30fce2a7e4fd0af74f3"
+  },
+  "scope": "All applicable requirements in the freshly fetched local-code review; no marketplace approval or final review confirmation.",
+  "summary": {
+    "likelyPassing": 29,
+    "likelyFailing": 0,
+    "needsReview": 2,
+    "groupsSkipped": 10
+  },
+  "evaluations": [
+    {
+      "id": "1.1.1",
+      "status": "needs-review",
+      "finding": "Session-token authentication is present, but the installed embedded app still needs a recorded test with third-party cookies blocked in a fresh Chrome context.",
+      "evidence": [
+        "shopify/app/app/shopify.server.ts",
+        "shopify/app/app/routes/app.tsx",
+        "docs/branded-origin-verification.json"
+      ]
+    },
+    {
+      "id": "1.1.2",
+      "status": "likely-passing",
+      "finding": "The app reads orders to render documents; no buyer checkout or payment processing is implemented.",
+      "evidence": [
+        "shopify/adapter.js",
+        "shopify/app/shopify.app.staging.toml"
+      ]
+    },
+    {
+      "id": "1.1.3",
+      "status": "likely-passing",
+      "finding": "Only two Flow action extensions exist; there is no theme installation or distribution path.",
+      "evidence": [
+        "shopify/app/extensions",
+        "shopify/app/shopify.app.staging.toml"
+      ]
+    },
+    {
+      "id": "1.1.4",
+      "status": "likely-passing",
+      "finding": "Documents use authenticated order queries. Public examples are explicitly synthetic; the UI has no fabricated reviews or sales notifications.",
+      "evidence": [
+        "shopify/adapter.js",
+        "shopify/app/app/routes/app._index.tsx",
+        "docs/marketplace/listing-verification.json"
+      ]
+    },
+    {
+      "id": "1.1.6",
+      "status": "likely-passing",
+      "finding": "State is scoped to the authenticated Shopify shop; no multi-seller marketplace is implemented.",
+      "evidence": [
+        "shopify/app/app/commerce.server.ts",
+        "shopify/app/prisma/schema.prisma"
+      ]
+    },
+    {
+      "id": "1.1.7",
+      "status": "likely-passing",
+      "finding": "No gateway extension, payment gateway scope or buyer payment processor is present.",
+      "evidence": [
+        "shopify/app/extensions",
+        "shopify/app/shopify.app.staging.toml"
+      ]
+    },
+    {
+      "id": "1.1.8",
+      "status": "likely-passing",
+      "finding": "No POS connector or POS extension exists in this Shopify application.",
+      "evidence": [
+        "shopify/app/extensions",
+        "shopify/app/app"
+      ]
+    },
+    {
+      "id": "1.1.9",
+      "status": "likely-passing",
+      "finding": "There are no cart or checkout mutations; order totals are read from Shopify for display.",
+      "evidence": [
+        "shopify/adapter.js",
+        "shopify/app/shopify.app.staging.toml"
+      ]
+    },
+    {
+      "id": "1.1.10",
+      "status": "likely-passing",
+      "finding": "No shipping-option customization or checkout extension exists.",
+      "evidence": [
+        "shopify/app/extensions",
+        "shopify/app/shopify.app.staging.toml"
+      ]
+    },
+    {
+      "id": "1.1.13",
+      "status": "likely-passing",
+      "finding": "The app reads line items from the authorized shop and does not import product catalogs or scrape other stores.",
+      "evidence": [
+        "shopify/adapter.js"
+      ]
+    },
+    {
+      "id": "1.1.14",
+      "status": "likely-passing",
+      "finding": "The app provides its own document workflow and support; it does not connect merchants to a services marketplace.",
+      "evidence": [
+        "shopify/app/app/routes",
+        "docs/marketplace/listing-verification.json"
+      ]
+    },
+    {
+      "id": "1.1.15",
+      "status": "likely-passing",
+      "finding": "The adapter rejects refunded orders; the Shopify app does not issue refunds, credits or gift cards.",
+      "evidence": [
+        "shopify/adapter.js",
+        "shopify/app/shopify.app.staging.toml"
+      ]
+    },
+    {
+      "id": "1.1.16",
+      "status": "likely-passing",
+      "finding": "No lending or financing functionality is present in the app.",
+      "evidence": [
+        "shopify/app/app/routes",
+        "docs/marketplace/listing-verification.json"
+      ]
+    },
+    {
+      "id": "1.2.1",
+      "status": "likely-passing",
+      "finding": "Shopify App Pricing handles app plans. The app verifies the active contract through the Partner GraphQL API and links to Shopify pricing.",
+      "evidence": [
+        "shopify/billing.js",
+        "shopify/app/app/routes/app.plans.tsx",
+        "docs/hosted-plans-verification.json"
+      ]
+    },
+    {
+      "id": "1.2.2",
+      "status": "needs-review",
+      "finding": "Development-store approvals, plan changes and reinstall were exercised. Merchant decline, real paid cycles, renewal/cancellation and frozen-store behavior still need lifecycle evidence.",
+      "evidence": [
+        "shopify/billing.js",
+        "shopify/app/app/commerce.server.ts",
+        "docs/hosted-plans.md"
+      ]
+    },
+    {
+      "id": "1.2.3",
+      "status": "likely-passing",
+      "finding": "The in-app plan action opens Shopify pricing. Actual test-store upgrades and downgrades preserved the usage receipt.",
+      "evidence": [
+        "shopify/app/app/routes/app.plans.tsx",
+        "docs/hosted-plans-verification.json"
+      ]
+    },
+    {
+      "id": "2.2.1",
+      "status": "likely-passing",
+      "finding": "SDK authentication and Shopify GraphQL order/shop queries are necessary to produce the documents.",
+      "evidence": [
+        "shopify/app/app/shopify.server.ts",
+        "shopify/app/app/commerce.server.ts",
+        "shopify/adapter.js"
+      ]
+    },
+    {
+      "id": "2.2.3",
+      "status": "likely-passing",
+      "finding": "The installed React Router AppProvider adds the current CDN app-bridge.js script before Polaris and child UI. No legacy @shopify/app-bridge package is used by the app.",
+      "evidence": [
+        "shopify/app/app/routes/app.tsx",
+        "shopify/app/package.json"
+      ]
+    },
+    {
+      "id": "2.2.4",
+      "status": "likely-passing",
+      "finding": "Admin operations use GraphQL through the SDK; no general Admin REST resources were found.",
+      "evidence": [
+        "shopify/adapter.js",
+        "shopify/app/app/commerce.server.ts",
+        "shopify/app/app/routes/app._index.tsx"
+      ]
+    },
+    {
+      "id": "2.2.6",
+      "status": "likely-passing",
+      "finding": "There are no admin UI block/action/link extensions with promotional content; the only extensions are Flow actions.",
+      "evidence": [
+        "shopify/app/extensions"
+      ]
+    },
+    {
+      "id": "2.2.7",
+      "status": "likely-passing",
+      "finding": "No Max modal or fullscreen API is used in the app.",
+      "evidence": [
+        "shopify/app/app/routes"
+      ]
+    },
+    {
+      "id": "2.3.1",
+      "status": "likely-passing",
+      "finding": "Manual domain forms were removed from both public entry routes. Direct visitors are sent to Shopify admin; stale POST forms return to instructions without initiating installation.",
+      "evidence": [
+        "shopify/app/app/components/shopify-entry.tsx",
+        "shopify/app/app/routes/_index/route.tsx",
+        "shopify/app/app/routes/auth.login/route.tsx",
+        "shopify/app/test/entry.test.mjs"
+      ]
+    },
+    {
+      "id": "2.3.2",
+      "status": "likely-passing",
+      "finding": "Protected loaders and actions authenticate through the SDK before shop access. The public entry route forwards Shopify launch parameters to that authenticated route.",
+      "evidence": [
+        "shopify/app/app/routes/app.tsx",
+        "shopify/app/app/commerce.server.ts",
+        "shopify/app/test/entry.test.mjs"
+      ]
+    },
+    {
+      "id": "2.3.3",
+      "status": "likely-passing",
+      "finding": "The branded-origin hosted installation reached Documents. The entry change preserves the SDK handoff and launch parameters in request-handler checks.",
+      "evidence": [
+        "docs/branded-origin-verification.json",
+        "shopify/app/test/entry.test.mjs"
+      ]
+    },
+    {
+      "id": "2.3.4",
+      "status": "likely-passing",
+      "finding": "The SDK and Prisma session storage are used without an install-once flag. The hosted check installed again after an earlier uninstall, then verified session erasure.",
+      "evidence": [
+        "shopify/app/app/shopify.server.ts",
+        "docs/branded-origin-verification.json"
+      ]
+    },
+    {
+      "id": "3.1.1",
+      "status": "likely-passing",
+      "finding": "The configured app/callback use HTTPS. DNS ownership and the branded certificate were verified before the attended deployment.",
+      "evidence": [
+        "shopify/app/shopify.app.staging.toml",
+        "docs/marketplace-domain-verification.json",
+        "docs/branded-origin-verification.json"
+      ]
+    },
+    {
+      "id": "3.2.1",
+      "status": "likely-passing",
+      "finding": "Both app configurations request read_orders only, without historical-order access.",
+      "evidence": [
+        "shopify/app/shopify.app.toml",
+        "shopify/app/shopify.app.staging.toml"
+      ]
+    },
+    {
+      "id": "3.2.2",
+      "status": "likely-passing",
+      "finding": "No payment-mandate scope is requested and no deferred payment feature is implemented.",
+      "evidence": [
+        "shopify/app/shopify.app.staging.toml"
+      ]
+    },
+    {
+      "id": "3.2.3",
+      "status": "likely-passing",
+      "finding": "No checkout extension API scope is requested; the two extensions are Flow actions.",
+      "evidence": [
+        "shopify/app/shopify.app.staging.toml",
+        "shopify/app/extensions"
+      ]
+    },
+    {
+      "id": "3.2.4",
+      "status": "likely-passing",
+      "finding": "No advanced DOM-pixel scope or checkout session recording is present.",
+      "evidence": [
+        "shopify/app/shopify.app.staging.toml",
+        "shopify/app/extensions"
+      ]
+    },
+    {
+      "id": "3.2.5",
+      "status": "likely-passing",
+      "finding": "No checkout chat scope or checkout chat extension is present.",
+      "evidence": [
+        "shopify/app/shopify.app.staging.toml",
+        "shopify/app/extensions"
+      ]
+    }
+  ],
+  "skippedGroups": [
+    {
+      "id": "5.1",
+      "name": "Online store",
+      "reason": "No theme extension."
+    },
+    {
+      "id": "5.2",
+      "name": "Payment",
+      "reason": "No payment extension or payment gateway scope."
+    },
+    {
+      "id": "5.3",
+      "name": "Payment facilitator",
+      "reason": "Opt-in review was not requested."
+    },
+    {
+      "id": "5.4",
+      "name": "Purchase option",
+      "reason": "No customer payment-method, own-subscription-contract or deferred-payment scopes."
+    },
+    {
+      "id": "5.5",
+      "name": "Product sourcing",
+      "reason": "Opt-in review was not requested."
+    },
+    {
+      "id": "5.6",
+      "name": "Checkout customization",
+      "reason": "No checkout UI extension targets."
+    },
+    {
+      "id": "5.7",
+      "name": "Sales channel",
+      "reason": "No channel_config extension."
+    },
+    {
+      "id": "5.8",
+      "name": "Post purchase",
+      "reason": "No checkout_post_purchase extension."
+    },
+    {
+      "id": "5.9",
+      "name": "Mobile app builders",
+      "reason": "Opt-in review was not requested."
+    },
+    {
+      "id": "5.10",
+      "name": "Donation",
+      "reason": "Donation-app review was not requested; project-maintainer funding is separate from this app."
+    }
+  ],
+  "localValidation": {
+    "checkedAt": "2026-10-04T06:34:23.257Z",
+    "node": "v24.21.0",
+    "checks": [
+      {
+        "name": "generated-client-matches-schema",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "migrations",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "recovery-fixture",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "route-types",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "typecheck",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "lint",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "build",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "entry",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "health",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "webhooks",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "webhook-lifecycle",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "flow",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "usage",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "privacy",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "monitor",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "recovery",
+        "exitCode": 0,
+        "passed": true
+      }
+    ],
+    "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
+    "lockSha256": "98c11aefe0018a038a15e0723eaec57874cc8bc10bb8d7197be8ca2c457784c3",
+    "serverBuildSha256": "6e0d9dd9dc82abacc609dfe7b9d80f90b1cae38b9912839f81cff931799d9d5e",
+    "browserTested": false,
+    "liveBillingTested": false
+  },
+  "shopifyTests": 84,
+  "entryRequestHandlerTests": 5,
+  "browserValidation": {
+    "checkedAt": "2026-10-04T06:34:48Z",
+    "browser": "154.0.8037.93",
+    "syntheticOnly": true,
+    "entryRoutesTestedWithoutAuthentication": true,
+    "shopifyApiAndAdminShellStubbed": true,
+    "realSdkAuthentication": true,
+    "realPdfRendering": true,
+    "serverBuildSha256": "6e0d9dd9dc82abacc609dfe7b9d80f90b1cae38b9912839f81cff931799d9d5e",
+    "checks": [
+      {
+        "name": "root: anonymous entry gives Shopify instructions",
+        "passed": true
+      },
+      {
+        "name": "root: no manual shop-domain form",
+        "passed": true
+      },
+      {
+        "name": "root: desktop entry fits",
+        "passed": true
+      },
+      {
+        "name": "root: mobile entry fits",
+        "passed": true
+      },
+      {
+        "name": "login: anonymous entry gives Shopify instructions",
+        "passed": true
+      },
+      {
+        "name": "login: no manual shop-domain form",
+        "passed": true
+      },
+      {
+        "name": "login: desktop entry fits",
+        "passed": true
+      },
+      {
+        "name": "login: mobile entry fits",
+        "passed": true
+      },
+      {
+        "name": "anonymous entry has no browser runtime errors",
+        "passed": true
+      },
+      {
+        "name": "plan page authenticates through SDK",
+        "passed": true
+      },
+      {
+        "name": "browser receives complete PDF",
+        "passed": true
+      },
+      {
+        "name": "successful order consumes final allowance unit",
+        "passed": true
+      },
+      {
+        "name": "same-order reprint remains available at limit",
+        "passed": true
+      },
+      {
+        "name": "new order explains limit without a PDF or charge",
+        "passed": true
+      },
+      {
+        "name": "active upgrade preserves usage despite Shopify moving the trial end",
+        "passed": true
+      },
+      {
+        "name": "mobile plan screen fits",
+        "passed": true
+      },
+      {
+        "name": "plan changes use Shopify pricing destination",
+        "passed": true
+      },
+      {
+        "name": "no browser runtime errors",
+        "passed": true
+      }
+    ],
+    "evidence": [
+      {
+        "file": "output/browser/shopify-plans-entry-root-desktop.png",
+        "sha256": "756a7025c816302f4e4823114069f8aae83a2a9fb338c33cb9a9bf9fe4d8f3b4"
+      },
+      {
+        "file": "output/browser/shopify-plans-entry-root-mobile.png",
+        "sha256": "286c73d475bbfa74376e2abe199b4166c726c62d35d55cf0c8e357b6ef8ee990"
+      },
+      {
+        "file": "output/browser/shopify-plans-entry-login-desktop.png",
+        "sha256": "756a7025c816302f4e4823114069f8aae83a2a9fb338c33cb9a9bf9fe4d8f3b4"
+      },
+      {
+        "file": "output/browser/shopify-plans-entry-login-mobile.png",
+        "sha256": "286c73d475bbfa74376e2abe199b4166c726c62d35d55cf0c8e357b6ef8ee990"
+      },
+      {
+        "file": "output/browser/shopify-plans-desktop.png",
+        "sha256": "18196d601f7ad0cd6327cd2d342f01e251f3d3054bdb884e52668f1c897c9a70"
+      },
+      {
+        "file": "output/browser/shopify-plans-mobile.png",
+        "sha256": "92df3653361e3056f7194e1cbab8852470fa6f2ca90fcbde69992ab0dee6981e"
+      },
+      {
+        "file": "output/browser/shopify-plans-order-summary.pdf",
+        "sha256": "2426c3609b3314b6a6c371439eaa4daac52fef2f5c38ccc6373e835491850e0a"
+      }
+    ]
+  },
+  "visualInspectionPassed": true,
+  "hostedEntryChangeTested": false,
+  "shopifySelfReviewMarkedDone": false,
+  "submitted": false,
+  "limitations": [
+    "This is a local code review, not the full Shopify review or a conformance certification.",
+    "The new entry UI was checked locally with real built routes. Shopify API and admin-shell boundaries in plan browser checks are synthetic.",
+    "The earlier hosted install/Flow evidence applies to the identified prior source; this entry change has not been deployed in that record.",
+    "Protected customer-data attestations, production operations, independent recovery, capacity/costs, the native crash investigation and merchant pilots remain open."
+  ]
+}
