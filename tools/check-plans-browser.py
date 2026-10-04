@@ -52,6 +52,33 @@ with sync_playwright() as pw:
     page = context.new_page()
     errors = []
     page.on('pageerror', lambda e: errors.append(str(e)))
+    page.goto(f"{fixture['origin']}/app/plans", wait_until='networkidle')
+    expect(page.locator('s-page')).to_have_attribute('heading', 'Merchant agreement')
+    expect(page.get_by_role('heading', name='Your store\u2019s document service', exact=True)).to_be_visible()
+    check('unaccepted store reaches agreement before plan or document work', '/app/agreement' in page.url)
+    for selector, filename in [('s-page', 'shopify-plans-agreement.html'), ('ui-nav-menu', 'shopify-plans-navigation.html')]:
+        (OUT / filename).write_text(page.locator(selector).evaluate('(element) => element.outerHTML'), encoding='utf-8')
+        entry_files.append(filename)
+    for width, height, size in [(1280, 1000, 'desktop'), (390, 844, 'mobile')]:
+        page.set_viewport_size({'width': width, 'height': height})
+        check(f'{size}: merchant agreement fits', page.evaluate('document.documentElement.scrollWidth <= innerWidth'))
+        filename = f'shopify-plans-agreement-{size}.png'
+        page.screenshot(path=str(OUT / filename), full_page=True, animations='disabled')
+        entry_files.append(filename)
+        filename = f'shopify-plans-agreement-acceptance-{size}.png'
+        page.get_by_role('button', name='Accept and continue').scroll_into_view_if_needed()
+        page.screenshot(path=str(OUT / filename), animations='disabled')
+        entry_files.append(filename)
+    checkbox = page.get_by_role('checkbox', name='I am authorized to act for this store', exact=False)
+    expect(checkbox).not_to_be_checked()
+    check('agreement is not preaccepted', True)
+    checkbox.check()
+    page.get_by_role('button', name='Accept and continue').click()
+    expect(page.get_by_role('button', name='Create PDF', exact=True)).to_be_visible()
+    page.goto(f"{fixture['origin']}/app/agreement", wait_until='networkidle')
+    expect(page.get_by_text('Accepted for this store on', exact=False)).to_be_visible()
+    check('real browser acceptance persists and can be reviewed', True)
+    page.set_viewport_size({'width': 1280, 'height': 1000})
     response = page.goto(f"{fixture['origin']}/app/plans", wait_until='networkidle')
     if response.status != 200:
         print(json.dumps({'status': response.status, 'text': page.inner_text('body')[:1500], 'errors': errors}))

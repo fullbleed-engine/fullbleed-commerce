@@ -57,6 +57,7 @@ export function parsePrivacyPayload(body, shop, topic) {
 
 export async function erasePrivacyShop(tx, shop, recordRecovery = async (_tx, _event) => {}) {
   await recordRecovery(tx, { type: 'erase-shop', shop });
+  await tx.agreementAcceptance.deleteMany({ where: { shop } });
   await tx.accessEvent.deleteMany({ where: { shop } });
   await tx.privacyRequest.deleteMany({ where: { shop } });
   await tx.session.deleteMany({ where: { shop } });

@@ -13,6 +13,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model AgreementAcceptance {
+  shop           String   @id
+  version        String
+  documentSha256 String
+  actorId        String
+  acceptedAt     DateTime @default(now())
+}
+
 model Brand {
   shop        String @id
   sellerName  String

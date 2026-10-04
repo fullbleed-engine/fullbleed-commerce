@@ -9,6 +9,7 @@ import { createRequestHandler } from 'react-router';
 import { createFlowService, parseFlowPayload, boundedFlowRequest, pruneAutomationJobs } from '../../flow.js';
 import { createRenderLimit } from '../../render-limit.js';
 import { renderOrder } from '../../../src/node.js';
+import { merchantAgreement } from '../../merchant-agreement.js';
 
 if (!process.env.DATABASE_URL?.includes('webhook-test.sqlite') || process.env.SHOPIFY_API_SECRET !== 'synthetic-webhook-test-secret') throw new Error('Run only against the isolated synthetic webhook database.');
 const db = new PrismaClient();
@@ -82,9 +83,11 @@ async function readyJob(svc = service) {
 const linkToken = async job => new URL((await service.status(job).json()).return_value.downloadUrl).hash.slice(1);
 
 test.beforeEach(async () => {
+  await db.agreementAcceptance.deleteMany();
   await db.accessEvent.deleteMany();
   await db.automationSettings.deleteMany(); await db.session.deleteMany(); await db.brand.deleteMany(); await db.documentTemplate.deleteMany(); await db.usagePeriod.deleteMany();
   await db.session.createMany({ data: [primary, other].map(shop => ({ id: `offline_${shop}`, shop, state: '', isOnline: false, accessToken: 'synthetic-token', scope: 'read_orders' })) });
+  await db.agreementAcceptance.createMany({ data: [primary, other].map(shop => ({ shop, version: merchantAgreement.version, documentSha256: merchantAgreement.documentSha256, actorId: '42' })) });
   time = Date.now(); inputOrder = structuredClone(baseOrder); renderCalls = 0; orderReads = 0; unavailable = false; slowRender = null; paid = true; catalogPriceActive = true;
   paidHandle = 'studio';
   service = serviceFor(db);
@@ -316,6 +319,13 @@ test('real request handler verifies Flow HMAC, retained-price access, preparatio
   const linkAccess = await db.accessEvent.findFirstOrThrow({ where: { jobId: job.id, operation: 'document.download' } });
   assert.equal(linkAccess.actorType, 'document_link'); assert.equal(linkAccess.actorId, job.id); assert.equal(linkAccess.outcome, 'completed');
   assert.doesNotMatch(JSON.stringify(await db.accessEvent.findMany()), new RegExp(`${token}|Synthetic Recipient|Example Street|synthetic-token`));
+  const receipt = await db.agreementAcceptance.findUniqueOrThrow({ where: { shop: primary } });
+  await db.agreementAcceptance.delete({ where: { shop: primary } });
+  const readsBeforeRenewal = orderReads;
+  assert.equal((await handler(new Request(url, { method: 'POST', headers: { Authorization: `Bearer ${token}` } }))).status, 503);
+  assert.equal((await signedRequest('/api/flow/documents', body)).status, 428);
+  assert.equal(orderReads, readsBeforeRenewal, 'An existing link and Flow replay must not read an order without current acceptance.');
+  await db.agreementAcceptance.create({ data: receipt });
   paid = false;
   assert.equal((await handler(new Request(url, { method: 'POST', headers: { Authorization: `Bearer ${token}` } }))).status, 503);
   paid = true;

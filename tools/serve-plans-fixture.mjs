@@ -18,6 +18,7 @@ const migration = spawnSync(process.execPath, ['node_modules/prisma/build/index.
 if (migration.status !== 0) throw new Error('Synthetic plan fixture migration failed.');
 const require = createRequire(resolve(app, 'package.json')), { PrismaClient } = require('@prisma/client'), { createRequestHandler } = require('react-router');
 const db = new PrismaClient();
+await db.agreementAcceptance.deleteMany();
 await db.accessEvent.deleteMany();
 await db.usagePeriod.deleteMany(); await db.session.deleteMany(); await db.automationSettings.deleteMany(); await db.recoveryReceipt.deleteMany();
 await db.session.create({ data: { id: `offline_${shop}`, shop, state: '', isOnline: false, accessToken: 'synthetic-token', scope: 'read_orders' } });

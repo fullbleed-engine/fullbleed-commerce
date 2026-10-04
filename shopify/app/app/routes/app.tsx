@@ -26,6 +26,7 @@ export default function App() {
         <a href="/app/plans">Plan and usage</a>
         <a href="/app/privacy">Privacy requests</a>
         <a href="/app/access">Access history</a>
+        <a href="/app/agreement">Merchant agreement</a>
       </NavMenu>
       <Outlet />
     </AppProvider>

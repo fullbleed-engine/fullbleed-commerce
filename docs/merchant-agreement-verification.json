@@ -1,0 +1,120 @@
+{
+  "checkedAt": "2026-10-04T17:35:38.001798+00:00",
+  "scope": "Synthetic development preview only. Not production admission, legal review, continuous operations or Shopify approval.",
+  "testedSourceCommit": "eb77d3cfaf7c526b8cd07a418be7bbb08db312b8",
+  "agreement": {
+    "version": "2026-10-04",
+    "documentSha256": "0be84da15030df45e866371168864aa02785b05e3f774efb6f94517d41711fac",
+    "url": "https://docs.fullbleed.dev/commerce/agreements/2026-10-04/",
+    "receiptFields": [
+      "acceptedAt",
+      "actorId",
+      "documentSha256",
+      "shop",
+      "version"
+    ],
+    "verifiedStaffIdentity": true,
+    "replacesLatestReceipt": true,
+    "uninstallAndErasureDeleteReceipt": true
+  },
+  "local": {
+    "sharedTests": 51,
+    "appCheckGroups": 19,
+    "agreementTests": 10,
+    "flowTests": 14,
+    "recoveryTests": 24,
+    "browserChecks": 29,
+    "browser": "154.0.8037.93",
+    "serverBuildSha256": "3e1d3aa6ef72638175e26e37938f8ce1be2153c2f0bce7b45c232da1699cbd4b",
+    "realSdkAuthentication": true,
+    "realPdfRendering": true,
+    "shopifyApiAndAdminShellStubbed": true,
+    "visualReviewPassed": true
+  },
+  "toolkit": {
+    "api": "polaris-app-home",
+    "version": "1.1",
+    "standaloneValidation": "Unavailable: TSX and rendered-HTML attempts fail because the validator cannot resolve the app imports and JSX.IntrinsicElements. Three agreement attempts and one navigation attempt retained.",
+    "substituteEvidence": "The application passes its own pinned Polaris TypeScript check and exercises the real Polaris 1.1 CDN components in local and hosted Chrome."
+  },
+  "ci": {
+    "testedHead": "eb77d3cfaf7c526b8cd07a418be7bbb08db312b8",
+    "successfulChecks": 15,
+    "allPassed": true,
+    "includes": [
+      "Shopify browser and PDF",
+      "container",
+      "pagination",
+      "integration",
+      "upgrade",
+      "renderer deployment",
+      "Chrome",
+      "Firefox",
+      "WebKit"
+    ]
+  },
+  "publicDocs": {
+    "pullRequest": "https://github.com/fullbleed-engine/docs/pull/40",
+    "mergeCommit": "f3c18f5ee9b5cbbb6530e08abbdf72dd78955d68",
+    "mainRun": 37219367880,
+    "pages": [
+      {
+        "label": "agreement",
+        "url": "https://docs.fullbleed.dev/commerce/agreements/2026-10-04/",
+        "htmlSha256": "486abf5ed0e99c433007e8e68a3ba6a758a4fde1fda8911a4561b51d391a8264",
+        "matchesStrictBuild": true,
+        "noHorizontalOverflow": true
+      },
+      {
+        "label": "privacy",
+        "url": "https://docs.fullbleed.dev/commerce/privacy/",
+        "htmlSha256": "c81da272dd8705db7bf19d4249dd8270f1aa1eb5b34658e28711367510501448",
+        "matchesStrictBuild": true,
+        "noHorizontalOverflow": true
+      }
+    ],
+    "strictBuildPages": 58,
+    "visualReviewPassed": true
+  },
+  "hosted": {
+    "deploymentId": "cb66a4a8-5656-4303-8f67-8c34c25ed40a",
+    "imageDigest": "sha256:fae78d2ab168500b25b802f2a2a1b84c4ad9a76d5b456636aa532a4fc34536de",
+    "sourceFilesMatched": true,
+    "actualShopifyInstallAcceptanceAndDownload": true,
+    "manualPdfSha256": "4e58f4268873a1522095663d4a5ca900c1380c8f4ec088d698390b5851ba8159",
+    "manualPdfPages": 1,
+    "noDocumentUsageBeforeAcceptance": true,
+    "beforeAcceptanceReceiptCount": 0,
+    "afterAcceptanceReceiptCount": 1,
+    "privacyAndAccessBeforeAcceptance": true,
+    "billingApprovalPerformed": false,
+    "workflowRemainedDisabled": true,
+    "allElevenMerchantTablesEmptyAfterUninstall": true,
+    "allElevenMerchantTablesEmptyAfterRestore": true,
+    "deletionEventsReplayed": 1,
+    "liveDatabaseUnchanged": true,
+    "quarantineRemoved": true,
+    "operatorMaintenanceAudited": true
+  },
+  "staging": {
+    "status": "REMOVED",
+    "activeDeployments": 0,
+    "volumeRetained": true,
+    "meteredUsageUsd": 0.009703821139081577,
+    "invoiceOrConfirmedCharge": false
+  },
+  "evidence": {
+    "archive": "commerce-merchant-agreement-evidence.zip",
+    "sha256": "0018589f44e193de34d999e135084b886f5b8ce80cea1091563e803ac2aa6660",
+    "bytes": 6292454,
+    "files": 81,
+    "everyManifestHashAndZipCrcVerified": true
+  },
+  "remainingProductionWork": [
+    "Separate production dataset and secrets",
+    "Production provider and transfer arrangements and matching agreement",
+    "Independent key recovery",
+    "Continuous retention, monitoring and incident operations",
+    "Shopify review and production admission"
+  ]
+}
