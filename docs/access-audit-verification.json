@@ -1,0 +1,431 @@
+{
+  "checkedAt": "2026-10-04T09:04:10.598709+00:00",
+  "sourceCommit": "fe1fc52a23b8024d89a59ed24c6b74cc4df1e103",
+  "scope": "Synthetic local production-route, database, recovery and Chrome checks. Not a hosted rollout, paid merchant test, protected-data approval or immutable operator audit.",
+  "localValidation": {
+    "checkedAt": "2026-10-04T08:56:24.273Z",
+    "node": "v24.21.0",
+    "checks": [
+      {
+        "name": "schema",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "migrations",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "recovery-fixture",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "route-types",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "typecheck",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "lint",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "build",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "entry",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "health",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "webhooks",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "webhook-lifecycle",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "flow",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "usage",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "privacy",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "access-audit",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "monitor",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "recovery",
+        "exitCode": 0,
+        "passed": true
+      }
+    ],
+    "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
+    "lockSha256": "98c11aefe0018a038a15e0723eaec57874cc8bc10bb8d7197be8ca2c457784c3",
+    "serverBuildSha256": "9c7daf4b50a278f977a4180c4216833902eda8d4ae71be3fa6eed3fff80cebe8",
+    "browserTested": false,
+    "liveBillingTested": false
+  },
+  "shopifyTests": [
+    {
+      "suite": "access-audit",
+      "passed": 12,
+      "sha256": "8a16090d42487a4482de0926a53581b71239700d944bfdbe8f565dfc3a7a993b"
+    },
+    {
+      "suite": "entry",
+      "passed": 5,
+      "sha256": "5c253521cfb2bdcd1a00aad80a59133e6ba1377199e3541a835d7f7856b85acc"
+    },
+    {
+      "suite": "flow",
+      "passed": 14,
+      "sha256": "771803cf01354d6beb92b13aa7fe8e2207718556d8f1b3ea557abe96328ea073"
+    },
+    {
+      "suite": "health",
+      "passed": 2,
+      "sha256": "715c95fb1785fa57dba35e408891564936af908f682772df42ac4e1c7b6adceb"
+    },
+    {
+      "suite": "monitor",
+      "passed": 8,
+      "sha256": "2da0d32b38a15ae295b56af0095380d5f2b1d54d11e119f77a7bb258f57994fe"
+    },
+    {
+      "suite": "privacy",
+      "passed": 16,
+      "sha256": "6a4a600835be946a09fac1fcca71e983b26d6f6640337d7387daaa7b2e51cc18"
+    },
+    {
+      "suite": "recovery",
+      "passed": 14,
+      "sha256": "693cacfb1a98e7d5706ac31157791dfff6694dcea6c9b1786dd653c77bf10a70"
+    },
+    {
+      "suite": "usage",
+      "passed": 9,
+      "sha256": "3715e31f08bceb6e78990d1776da55337f2c1965260cb29fa33a00cbc8d8e1ec"
+    },
+    {
+      "suite": "webhook-lifecycle",
+      "passed": 12,
+      "sha256": "9e01aea8c302ef1c83734dce33bcb2478cc5c505f019293773b9529cc632a5a3"
+    },
+    {
+      "suite": "webhooks",
+      "passed": 4,
+      "sha256": "e4de85ca21a9a3afd4d301b440eae0a8317f9f8e9f16682d4d2dc4eae02f7fed"
+    }
+  ],
+  "rootTests": {
+    "passed": 47,
+    "sha256": "d97efd2aea42780763277350388ce5639dbba429b3fea5908108414d74e0b3d9",
+    "command": "node tools/build.mjs && node --test --test-reporter=tap test/*.test.mjs"
+  },
+  "browserValidation": {
+    "plansAndAccess": {
+      "checkedAt": "2026-10-04T08:58:49Z",
+      "browser": "154.0.8037.93",
+      "syntheticOnly": true,
+      "entryRoutesTestedWithoutAuthentication": true,
+      "shopifyApiAndAdminShellStubbed": true,
+      "realSdkAuthentication": true,
+      "realPdfRendering": true,
+      "serverBuildSha256": "9c7daf4b50a278f977a4180c4216833902eda8d4ae71be3fa6eed3fff80cebe8",
+      "checks": [
+        {
+          "name": "root: anonymous entry gives Shopify instructions",
+          "passed": true
+        },
+        {
+          "name": "root: no manual shop-domain form",
+          "passed": true
+        },
+        {
+          "name": "root: desktop entry fits",
+          "passed": true
+        },
+        {
+          "name": "root: mobile entry fits",
+          "passed": true
+        },
+        {
+          "name": "login: anonymous entry gives Shopify instructions",
+          "passed": true
+        },
+        {
+          "name": "login: no manual shop-domain form",
+          "passed": true
+        },
+        {
+          "name": "login: desktop entry fits",
+          "passed": true
+        },
+        {
+          "name": "login: mobile entry fits",
+          "passed": true
+        },
+        {
+          "name": "anonymous entry has no browser runtime errors",
+          "passed": true
+        },
+        {
+          "name": "plan page authenticates through SDK",
+          "passed": true
+        },
+        {
+          "name": "browser receives complete PDF",
+          "passed": true
+        },
+        {
+          "name": "successful order consumes final allowance unit",
+          "passed": true
+        },
+        {
+          "name": "same-order reprint remains available at limit",
+          "passed": true
+        },
+        {
+          "name": "new order explains limit without a PDF or charge",
+          "passed": true
+        },
+        {
+          "name": "active upgrade preserves usage despite Shopify moving the trial end",
+          "passed": true
+        },
+        {
+          "name": "mobile plan screen fits",
+          "passed": true
+        },
+        {
+          "name": "plan changes use Shopify pricing destination",
+          "passed": true
+        },
+        {
+          "name": "access history authenticates through SDK",
+          "passed": true
+        },
+        {
+          "name": "history includes completed PDFs and denied quota request",
+          "passed": true
+        },
+        {
+          "name": "history excludes customer content and credentials",
+          "passed": true
+        },
+        {
+          "name": "desktop: access history fits",
+          "passed": true
+        },
+        {
+          "name": "mobile: access history fits",
+          "passed": true
+        },
+        {
+          "name": "history records its own authenticated reads",
+          "passed": true
+        },
+        {
+          "name": "no browser runtime errors",
+          "passed": true
+        }
+      ],
+      "evidence": [
+        {
+          "file": "output/browser/shopify-plans-entry-root-desktop.png",
+          "sha256": "756a7025c816302f4e4823114069f8aae83a2a9fb338c33cb9a9bf9fe4d8f3b4"
+        },
+        {
+          "file": "output/browser/shopify-plans-entry-root-mobile.png",
+          "sha256": "286c73d475bbfa74376e2abe199b4166c726c62d35d55cf0c8e357b6ef8ee990"
+        },
+        {
+          "file": "output/browser/shopify-plans-entry-login-desktop.png",
+          "sha256": "756a7025c816302f4e4823114069f8aae83a2a9fb338c33cb9a9bf9fe4d8f3b4"
+        },
+        {
+          "file": "output/browser/shopify-plans-entry-login-mobile.png",
+          "sha256": "286c73d475bbfa74376e2abe199b4166c726c62d35d55cf0c8e357b6ef8ee990"
+        },
+        {
+          "file": "output/browser/shopify-plans-access-desktop.png",
+          "sha256": "d5dc1ef081011b103d19128bf2f229938f4fe5aa5ab1fc8e6649d066325013ff"
+        },
+        {
+          "file": "output/browser/shopify-plans-access-mobile.png",
+          "sha256": "75e082e6a31e4c7e0d472ff27e0bfe6715a1ce31738a5bca8781e449ac9ea8c7"
+        },
+        {
+          "file": "output/browser/shopify-plans-desktop.png",
+          "sha256": "dd0ab257672cfab29b2c64c8003fe62c286011b61d8b4ab8fabfb631612126fb"
+        },
+        {
+          "file": "output/browser/shopify-plans-mobile.png",
+          "sha256": "9c1c7366fdd1b9b9b6b28d9bab8e283e018817ac3c8e73216197907359cfba5f"
+        },
+        {
+          "file": "output/browser/shopify-plans-order-summary.pdf",
+          "sha256": "2426c3609b3314b6a6c371439eaa4daac52fef2f5c38ccc6373e835491850e0a"
+        }
+      ]
+    },
+    "privacy": {
+      "checkedAt": "2026-10-04T08:58:42Z",
+      "browser": "154.0.8037.93",
+      "syntheticOnly": true,
+      "shopifyAdminShellStubbed": true,
+      "realSdkAuthentication": true,
+      "productionBuildSha256": "9c7daf4b50a278f977a4180c4216833902eda8d4ae71be3fa6eed3fff80cebe8",
+      "checks": [
+        {
+          "name": "authenticated merchant page with no paid-plan or Admin API call",
+          "passed": true
+        },
+        {
+          "name": "overdue request calls for action",
+          "passed": true
+        },
+        {
+          "name": "no customer identifiers in list",
+          "passed": true
+        },
+        {
+          "name": "browser download preserves large IDs",
+          "passed": true
+        },
+        {
+          "name": "download contains captured metadata",
+          "passed": true
+        },
+        {
+          "name": "download does not auto-complete customer response",
+          "passed": true
+        },
+        {
+          "name": "explicit completion clears download UI",
+          "passed": true
+        },
+        {
+          "name": "merchant receipt appears",
+          "passed": true
+        },
+        {
+          "name": "completed export returns gone",
+          "passed": true
+        },
+        {
+          "name": "mobile page fits viewport",
+          "passed": true
+        },
+        {
+          "name": "signed erasure webhook accepted",
+          "passed": true
+        },
+        {
+          "name": "erasure reflected in merchant UI",
+          "passed": true
+        },
+        {
+          "name": "no browser runtime errors",
+          "passed": true
+        }
+      ],
+      "evidence": [
+        {
+          "file": "output/browser/shopify-privacy-desktop.png",
+          "sha256": "d34987f5cb79a63cd4886e3bcdf2e60ae9ac1cc923076a6324ad314ae14a26ae"
+        },
+        {
+          "file": "output/browser/shopify-privacy-mobile.png",
+          "sha256": "0048bef4c2be971cabf17420a473ad0996124b5337b717f2ccfc90f2d3e9de56"
+        },
+        {
+          "file": "output/browser/shopify-privacy-export.json",
+          "sha256": "52a39f8de9e1fded5b88f8e2296250d8e4c4054b9be83f9a2136176e7533e745"
+        }
+      ]
+    }
+  },
+  "visualInspection": {
+    "passed": true,
+    "screens": [
+      "access desktop",
+      "access mobile",
+      "downloaded one-page order-summary PDF"
+    ],
+    "pdfSha256": "2426c3609b3314b6a6c371439eaa4daac52fef2f5c38ccc6373e835491850e0a",
+    "pngSha256": "af7c96574f8e92935aab138385ae935a6cff48f6bcbeff2ba3a2d6a52af79712"
+  },
+  "retainedPreviews": [
+    {
+      "file": "docs/previews/shopify-plans-access-desktop.png",
+      "sha256": "d5dc1ef081011b103d19128bf2f229938f4fe5aa5ab1fc8e6649d066325013ff"
+    },
+    {
+      "file": "docs/previews/shopify-plans-access-mobile.png",
+      "sha256": "75e082e6a31e4c7e0d472ff27e0bfe6715a1ce31738a5bca8781e449ac9ea8c7"
+    }
+  ],
+  "toolkitValidation": [
+    {
+      "artifact": "access-ui-validation.json",
+      "success": false,
+      "resolvedVersion": "v1.1",
+      "limitation": "Standalone validator cannot resolve the JSX runtime/types and Shopify React Router modules. The real app typecheck, production build and Chrome checks passed.",
+      "sha256": "e5f30f7079fdb2799803c641da26a74ebf39817585654f797c7a0b4dbcbc4647"
+    },
+    {
+      "artifact": "access-nav-validation.json",
+      "success": false,
+      "resolvedVersion": "v1.1",
+      "limitation": "Standalone validator cannot resolve the JSX runtime/types and Shopify React Router modules. The real app typecheck, production build and Chrome checks passed.",
+      "sha256": "ce81796736115e1f119ccfb42b53bb21db35e834f9732687881a07eb03cf8d35"
+    }
+  ],
+  "publicPrivacyNotice": {
+    "pullRequest": "https://github.com/fullbleed-engine/docs/pull/34",
+    "describesPendingPreviewUpdate": true
+  },
+  "hostedAuditRolloutTested": false,
+  "protectedDataQuestionnaireSubmitted": false,
+  "limitations": [
+    "Collection reads record an operation, not every returned order/customer.",
+    "Completed describes the protected operation, not final delivery or a person reading a file.",
+    "Direct database, provider-console and operator backup access are outside this application history.",
+    "Customer and uninstall deletion can remove specific in-flight audit entries; the completion write withholds their results and cannot recreate those entries.",
+    "Attended hosted migration/recovery, operational access controls, key recovery and alerts remain launch gates."
+  ]
+}

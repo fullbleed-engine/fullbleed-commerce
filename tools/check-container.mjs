@@ -141,9 +141,11 @@ try {
   script(`
     import { PrismaClient } from '@prisma/client';
     import { createPrivacyService, parsePrivacyPayload } from '../../shopify/privacy.js';
+    import { createAccessAudit } from '../../shopify/access-audit.js';
     const db = new PrismaClient();
     const shop = 'synthetic-container.myshopify.com';
     await db.session.create({ data: { id: 'offline_' + shop, shop, state: '', isOnline: false, accessToken: 'synthetic-container-token' } });
+    await createAccessAudit({ db }).run({ shop, actor: { type: 'staff', id: '1' }, operation: 'document.render', orderId: 'gid://shopify/Order/1' }, async () => 'synthetic response');
     const input = parsePrivacyPayload(Buffer.from(JSON.stringify({ shop_domain: shop, shop_id: 1, customer: { email: 'synthetic-container@example.invalid' }, data_request: { id: 1 }, orders_requested: [1] })), shop, 'CUSTOMERS_DATA_REQUEST');
     await createPrivacyService({ db, key: process.env.FULLBLEED_PRIVACY_KEY }).accept(input);
     await db.$disconnect();
@@ -165,6 +167,7 @@ try {
     assert.equal(await restored.session.count(), 0);
     assert.equal((await restored.privacyRequest.findFirst()).snapshot, null);
     assert.equal((await restored.automationJob.findFirst()).orderId, '');
+    assert.equal(await restored.accessEvent.count(), 0);
     assert.equal((await restored.brand.findFirst()).sellerName, 'Synthetic persisted branding');
     assert.equal(await restored.automationSettings.count({ where: { enabled: true } }), 0);
     await restored.$disconnect();

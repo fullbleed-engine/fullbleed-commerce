@@ -1,6 +1,6 @@
 # Build from the repository root:
 # docker build -f shopify/app/Dockerfile -t fullbleed-commerce .
-FROM node:24.21.0-bookworm-slim AS base
+FROM node:26.10.0-bookworm-slim AS base
 RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /commerce
@@ -31,6 +31,7 @@ COPY --from=build /commerce/shopify/app/scripts ./shopify/app/scripts
 COPY --from=build /commerce/shopify/privacy.js ./shopify/privacy.js
 COPY --from=build /commerce/shopify/flow.js ./shopify/flow.js
 COPY --from=build /commerce/shopify/usage.js ./shopify/usage.js
+COPY --from=build /commerce/shopify/access-audit.js ./shopify/access-audit.js
 COPY --from=build /commerce/shopify/recovery-journal.js ./shopify/recovery-journal.js
 COPY --from=build /commerce/shopify/app/package.json ./shopify/app/package.json
 COPY LICENSE ./LICENSE

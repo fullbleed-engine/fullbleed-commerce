@@ -62,6 +62,12 @@ Configure the stable privacy key and operational monitoring described in
 [the privacy workflow](PRIVACY.md). The [public privacy notice](https://docs.fullbleed.dev/commerce/privacy/)
 describes this behavior.
 
+[Access history](ACCESS.md) records verified staff requests, Flow preparation,
+private-link downloads and privacy export activity for up to 30 days. It remains
+available without a paid plan, follows customer/shop deletion and backup erasure,
+and contains references and outcomes rather than document contents. Its current
+verification uses synthetic stores; the updated schema still needs hosted rollout.
+
 The renderer permits one active request per shop and two globally per process.
 Settings bodies are limited to 8 KiB while streaming. The preview rejects
 cancelled, refunded, edited, truncated and inconsistent-currency orders, and uses exact

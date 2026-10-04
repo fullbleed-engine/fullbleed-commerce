@@ -88,3 +88,31 @@ Next evidence needed: reproduce the SIGSEGV with its native stack, reduce the
 failing workload, then compare the unchanged package with a targeted correction
 under the same runtime. Keep the original failure open until that evidence
 supports a fix.
+
+## Recurrence and runtime selection
+
+The [October 4 recurrence](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37191141479/job/111403428088)
+at source `8c41f401aaef9b4f82f4689e1c1cb09747f15135` also exited 139 on
+Node 24.21.0. Its synchronous journal ends at the start of
+`contrast-A4-starter-33.pdf`, immediately after retaining the 32-item PDF and
+preview. All 87 completed PDFs match the earlier baseline. This narrows the
+boundary but does not provide a native stack or identify the defective code.
+Five normal and five GDB repetitions in the
+[follow-up run](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37191334537)
+passed without reproducing it.
+
+[Node issue 66366](https://github.com/nodejs/node/issues/66366) reports a V8
+WebAssembly-wrapper lifetime failure in Node 24.21.0 on Linux workers and no
+corresponding native failure in its Node 26.10.0 comparisons. The
+[V8 correction](https://github.com/v8/v8/commit/9b8ca54d5a) addresses a wrapper
+being released twice during code collection. This is a relevant upstream lead,
+not a confirmed diagnosis of Fullbleed's crash.
+
+Commerce now pins Node 26.10.0 for its container and development/CI toolchain.
+The native diagnostic workflow defaults to that selected runtime; its manual
+runtime selector keeps 24.21.0 available for investigating the failing baseline.
+All release checks must pass on the selected runtime before merging or deploying.
+No engine change, disabled garbage collection, automatic retry or suppressed
+failure is used as a workaround. Node 26.10.0 is a Current release, not LTS;
+reassess the supported runtime when the upstream Node 24 correction ships or
+Node 26 enters LTS. The original Node 24 crash remains open.

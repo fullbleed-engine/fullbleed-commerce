@@ -36,6 +36,7 @@ async function fixture(t, now = () => new Date()) {
     await tx.privacyRequest.deleteMany(); await tx.automationSettings.deleteMany(); await tx.session.deleteMany();
     await tx.brand.deleteMany(); await tx.documentTemplate.deleteMany(); await tx.recoveryReceipt.deleteMany();
     await tx.usagePeriod.deleteMany();
+    await tx.accessEvent.deleteMany();
   });
   const storeDirectory = join(directory, 'independent-store');
   const store = await fileRecoveryStore(storeDirectory), dataset = randomUUID();
@@ -53,6 +54,8 @@ async function fixture(t, now = () => new Date()) {
     } } } });
     await createUsageMeter({ db, now }).run(shop, 'gid://shopify/Order/1', developmentAllowance(now()), async () => 'synthetic document');
     requests[shop] = await service.accept(input(shop));
+    await db.accessEvent.create({ data: { shop, actorType: 'staff', actorId: '42', operation: 'document.render', orderId: 'gid://shopify/Order/1', outcome: 'completed', startedAt: now(), finishedAt: now() } });
+    await db.accessEvent.create({ data: { shop, actorType: 'staff', actorId: '42', operation: 'privacy.export', requestId: requests[shop], outcome: 'completed', startedAt: now(), finishedAt: now() } });
   }
   const connect = path => { const client = new PrismaClient({ datasources: { db: { url: databaseUrl(path) } } }); clients.push(client); return client; };
   return { directory, path, db, journal, store, storeDirectory, dataset, service, requests, connect };
@@ -90,6 +93,10 @@ test('encrypted multipart backup restores retained data and replays later erasur
   assert.equal(await restored.usageOrder.count({ where: { shop: primary } }), 0);
   assert.equal((await restored.usagePeriod.findFirst({ where: { shop: primary } })).used, 1);
   assert.equal(await restored.usageOrder.count({ where: { shop: other } }), 1);
+  assert.equal(await restored.accessEvent.count({ where: { shop: primary } }), 0);
+  assert.equal(await restored.accessEvent.count({ where: { shop: removed } }), 0);
+  assert.equal(await restored.accessEvent.count({ where: { shop: completed, requestId: { not: null } } }), 0);
+  assert.equal(await restored.accessEvent.count({ where: { shop: other } }), 2);
   assert.equal((await restored.brand.findUnique({ where: { shop: other } })).sellerName, 'Synthetic saved recovery brand');
   assert.match((await restored.documentTemplate.findFirst({ where: { shop: other } })).content, /Saved template/);
   const exportData = await createPrivacyService({ db: restored, key: privacyKey }).exportData(other, f.requests[other]);
@@ -121,11 +128,13 @@ test('a durable erasure survives a failed original database commit and replays e
   assert.equal(await f.db.brand.count({ where: { shop: other } }), 1);
 });
 
-test('restoration migrates a backup from before usage tables before replaying erasure', async t => {
+test('restoration migrates backups from before usage and audit tables before replaying erasure', async t => {
   const f = await fixture(t);
   await f.db.$executeRawUnsafe('DROP TABLE "UsageOrder"');
   await f.db.$executeRawUnsafe('DROP TABLE "UsagePeriod"');
+  await f.db.$executeRawUnsafe('DROP TABLE "AccessEvent"');
   await f.db.$executeRaw`DELETE FROM _prisma_migrations WHERE migration_name = '20261004020000_order_allowances'`;
+  await f.db.$executeRaw`DELETE FROM _prisma_migrations WHERE migration_name = '20261004083000_access_events'`;
   const saved = await createDatabaseBackup({ db: f.db, databasePath: f.path, journal: f.journal });
   // The retained intent is durable even though the old source schema cannot
   // apply a new-version erasure. Recovery must migrate, then apply the intent.
@@ -136,6 +145,7 @@ test('restoration migrates a backup from before usage tables before replaying er
   const restored = f.connect(join(output, 'commerce.sqlite'));
   assert.equal(await restored.usagePeriod.count(), 0);
   assert.equal(await restored.usageOrder.count(), 0);
+  assert.equal(await restored.accessEvent.count(), 0);
   assert.equal(await restored.brand.count({ where: { shop: removed } }), 0);
 });
 

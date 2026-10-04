@@ -7,16 +7,20 @@ import db from '../db.server';
 import { commerceAccess } from '../commerce.server';
 import { flowService } from '../flow.server';
 import { readSettingsForm } from '../../../settings-form.js';
+import { staffAccess } from '../access.server';
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const { session } = await commerceAccess(request);
-  const [settings, jobs] = await Promise.all([
-    db.automationSettings.findUnique({ where: { shop: session.shop } }),
-    db.automationJob.findMany({ where: { shop: session.shop }, orderBy: { createdAt: 'desc' }, take: 50, select: {
-      id: true, orderId: true, kind: true, status: true, attempts: true, downloads: true, createdAt: true, expiresAt: true, lastError: true,
-    } }),
-  ]);
-  return { enabled: settings?.enabled || false, jobs: jobs.map(job => ({ ...job, status: job.status === 'ready' && job.expiresAt && job.expiresAt <= new Date() ? 'expired' : job.status })) };
+  const context = await commerceAccess(request);
+  const { session } = context;
+  return staffAccess(context, 'automation.list', async () => {
+    const [settings, jobs] = await Promise.all([
+      db.automationSettings.findUnique({ where: { shop: session.shop } }),
+      db.automationJob.findMany({ where: { shop: session.shop }, orderBy: { createdAt: 'desc' }, take: 50, select: {
+        id: true, orderId: true, kind: true, status: true, attempts: true, downloads: true, createdAt: true, expiresAt: true, lastError: true,
+      } }),
+    ]);
+    return { enabled: settings?.enabled || false, jobs: jobs.map(job => ({ ...job, status: job.status === 'ready' && job.expiresAt && job.expiresAt <= new Date() ? 'expired' : job.status })) };
+  });
 }
 
 export async function action({ request }: ActionFunctionArgs) {

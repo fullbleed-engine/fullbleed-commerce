@@ -57,6 +57,7 @@ export function parsePrivacyPayload(body, shop, topic) {
 
 export async function erasePrivacyShop(tx, shop, recordRecovery = async (_tx, _event) => {}) {
   await recordRecovery(tx, { type: 'erase-shop', shop });
+  await tx.accessEvent.deleteMany({ where: { shop } });
   await tx.privacyRequest.deleteMany({ where: { shop } });
   await tx.session.deleteMany({ where: { shop } });
   await tx.brand.deleteMany({ where: { shop } });
@@ -113,6 +114,7 @@ export function createPrivacyService({ db, key, now = () => new Date(), recordRe
       const receivedAt = now();
       const jobs = [];
       const usage = [];
+      const access = [];
       for (const batch of chunked(input.orderIds)) {
         const rows = await tx.automationJob.findMany({ where: { shop: input.shop, orderId: { in: batch } }, orderBy: [{ createdAt: 'asc' }, { id: 'asc' }], take: 50001 - jobs.length,
           // Credentials and transient worker leases are not customer export data.
@@ -124,12 +126,18 @@ export function createPrivacyService({ db, key, now = () => new Date(), recordRe
           select: { orderId: true, completedAt: true, period: { select: { startsAt: true, endsAt: true } } },
         }));
         if (usage.length > 50000) throw fail('Privacy export needs operator assistance.', 503);
+        access.push(...await tx.accessEvent.findMany({ where: { shop: input.shop, orderId: { in: batch } }, orderBy: [{ startedAt: 'asc' }, { id: 'asc' }], take: 50001 - access.length,
+          // Customer exports describe access to the requested order; staff IDs
+          // remain in the authenticated merchant history, not customer exports.
+          select: { id: true, orderId: true, operation: true, actorType: true, outcome: true, startedAt: true, finishedAt: true },
+        }));
+        if (access.length > 50000) throw fail('Privacy export needs operator assistance.', 503);
       }
       const report = {
         format: 'fullbleed-customer-data-v1', shop: input.shop, requestId: input.requestId, capturedAt: receivedAt.toISOString(),
         customer: { ...(input.customerId ? { id: input.customerId } : {}), ...(input.email ? { email: input.email } : {}) },
-        requestedOrderIds: input.orderIds, automationJobs: jobs, orderUsage: usage,
-        scope: 'Retained Fullbleed automation and order-allowance metadata at receipt of this request, plus the identifiers needed to fulfill it. Order contents, addresses, payment details and generated PDFs are not stored. Expired history cannot be reconstructed. No new order data was fetched from Shopify.',
+        requestedOrderIds: input.orderIds, automationJobs: jobs, orderUsage: usage, orderAccess: access,
+        scope: 'Retained Fullbleed automation, order-allowance and order-specific access metadata at receipt of this request, plus the identifiers needed to fulfill it. Staff identifiers are omitted. Order contents, addresses, payment details and generated PDFs are not stored. Expired history cannot be reconstructed. No new order data was fetched from Shopify.',
       };
       const row = await tx.privacyRequest.create({ data: { shop: input.shop, requestId: input.requestId, ...keys(input), keyId, snapshot: encrypt(input.shop, input.requestId, report), receivedAt, dueAt: new Date(receivedAt.valueOf() + 30 * DAY) } });
       for (const batch of chunked(input.orderIds)) await tx.privacyRequestOrder.createMany({ data: batch.map(orderId => ({ requestId: row.id, orderId })) });
@@ -187,6 +195,7 @@ export async function completePrivacyRequest(db, shop, id, now = new Date(), rec
     if (row.status === 'completed') return;
     if (row.status !== 'ready' || !row.lastExportAt) throw fail('Download the export before marking it handled.', 409);
     await recordRecovery(tx, { type: 'complete-request', shop, requestId: id });
+    await tx.accessEvent.deleteMany({ where: { shop, requestId: id } });
     await tx.privacyRequestOrder.deleteMany({ where: { requestId: id } });
     await tx.privacyRequest.update({ where: { id }, data: { snapshot: null, keyId: null, customerKey: null, emailKey: null, status: 'completed', finishedAt: now } });
   });
@@ -206,6 +215,7 @@ export async function redactPrivacyRecords(tx, input, at, recordRecovery = async
   }
   const orders = new Set(orderIds);
   for (const batch of chunked([...requestIds])) {
+    await tx.accessEvent.deleteMany({ where: { shop, requestId: { in: batch } } });
     for (const row of await tx.privacyRequestOrder.findMany({ where: { requestId: { in: batch } }, select: { orderId: true } })) orders.add(row.orderId);
   }
   await recordRecovery(tx, { type: 'erase-customer', shop, customerKey, emailKey, orderIds: [...orders].sort() });
@@ -220,12 +230,14 @@ export async function redactPrivacyRecords(tx, input, at, recordRecovery = async
   // Aggregate used counts contain no customer identifiers. Erasure clears order
   // references and pending reservations without refunding successful past work.
   for (const batch of chunked([...orders])) await tx.usageOrder.deleteMany({ where: { shop, orderId: { in: batch } } });
+  for (const batch of chunked([...orders])) await tx.accessEvent.deleteMany({ where: { shop, orderId: { in: batch } } });
 }
 
 export async function applyRecoveryEvent(tx, event, at) {
   if (event.type === 'erase-shop') return erasePrivacyShop(tx, event.shop);
   if (event.type === 'erase-customer') return redactPrivacyRecords(tx, event, at);
   if (event.type !== 'complete-request') throw new Error('Unknown recovery event.');
+  await tx.accessEvent.deleteMany({ where: { shop: event.shop, requestId: event.requestId } });
   const row = await tx.privacyRequest.findFirst({ where: { id: event.requestId, shop: event.shop } });
   if (row?.status !== 'ready') return;
   await tx.privacyRequestOrder.deleteMany({ where: { requestId: row.id } });

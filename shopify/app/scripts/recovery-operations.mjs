@@ -12,6 +12,7 @@ import { PrismaClient } from '@prisma/client';
 import { applyRecoveryEvent, createPrivacyService, prunePrivacyRequests } from '../../privacy.js';
 import { pruneAutomationJobs } from '../../flow.js';
 import { pruneUsage } from '../../usage.js';
+import { pruneAccessEvents } from '../../access-audit.js';
 import { BACKUP_RETENTION_DAYS, RECOVERY_RETENTION_DAYS, recoveryFailure } from '../../recovery-journal.js';
 
 const DAY = 86400000, PART_SIZE = 1024 * 1024, MAX_DATABASE_BYTES = 512 * PART_SIZE;
@@ -143,7 +144,7 @@ export async function restoreDatabaseBackup({ journal, id, outputDirectory, priv
       await tx.automationJob.updateMany({ where: { status: { in: ['pending', 'running', 'retry-wait', 'ready'] } }, data: { status: 'revoked', expiresAt: null, leaseId: null, leaseUntil: null, nextAttemptAt: null } });
       await tx.usageOrder.deleteMany({ where: { completedAt: null } });
     });
-    await pruneAutomationJobs(db, now()); await prunePrivacyRequests(db, now()); await pruneUsage(db, now());
+    await pruneAutomationJobs(db, now()); await prunePrivacyRequests(db, now()); await pruneUsage(db, now()); await pruneAccessEvents(db, now());
     const privacyService = createPrivacyService({ db, key: privacyKey, now });
     const privacy = await privacyService.status();
     if (privacy.keyMismatch) throw recoveryFailure();
