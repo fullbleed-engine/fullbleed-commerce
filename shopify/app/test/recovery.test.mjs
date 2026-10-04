@@ -235,6 +235,181 @@ test('retention removes expired backups and applied recovery events while retain
   await f.journal.verify();
 });
 
+test('retention boundary preserves erasures for the last eligible restore and removes their references after eight days', async t => {
+  const DAY = 86400000, started = Date.now();
+  let at = started;
+  const now = () => new Date(at), f = await fixture(t, now);
+  const saved = await createDatabaseBackup({ db: f.db, databasePath: f.path, journal: f.journal, now });
+  at += 3600000;
+  const erasedAt = at;
+  await f.service.redact({ shop: primary, customerId: null, email: 'synthetic-recovery@example.invalid', orderIds: [] });
+  await f.service.exportData(completed, f.requests[completed]);
+  await completePrivacyRequest(f.db, completed, f.requests[completed], now(), f.journal.record);
+  await f.db.$transaction(tx => erasePrivacyShop(tx, removed, f.journal.record));
+  at = started + 7 * DAY;
+  const retained = await pruneRecoveryStorage({ journal: f.journal, db: f.db, now: now() });
+  assert.equal(retained.removedEvents, 0); assert.equal(retained.removedBackupObjects, 0);
+  const lastOutput = join(f.directory, 'last-eligible');
+  const last = await restoreDatabaseBackup({ journal: f.journal, id: saved.id, outputDirectory: lastOutput, privacyKey, now });
+  assert.equal(last.replay.applied, 3);
+  const restored = f.connect(join(lastOutput, 'commerce.sqlite'));
+  assert.equal(await restored.usageOrder.count({ where: { shop: primary } }), 0);
+  assert.equal(await restored.accessEvent.count({ where: { shop: primary } }), 0);
+  assert.equal((await restored.privacyRequest.findUniqueOrThrow({ where: { id: f.requests[completed] } })).snapshot, null);
+  assert.equal(await restored.brand.count({ where: { shop: removed } }), 0);
+  at = erasedAt + 8 * DAY + 1;
+  const fresh = await createDatabaseBackup({ db: f.db, databasePath: f.path, journal: f.journal, now });
+  const pruned = await pruneRecoveryStorage({ journal: f.journal, db: f.db, now: now() });
+  assert.equal(pruned.removedEvents, 3); assert.equal(pruned.removedBackupObjects, saved.parts + 1);
+  assert.deepEqual(await f.journal.entries(), []); assert.equal(await f.db.recoveryReceipt.count(), 1);
+  await assert.rejects(restoreDatabaseBackup({ journal: f.journal, id: saved.id, outputDirectory: join(f.directory, 'expired-source'), privacyKey, now }));
+  const freshOutput = join(f.directory, 'after-retention');
+  await restoreDatabaseBackup({ journal: f.journal, id: fresh.id, outputDirectory: freshOutput, privacyKey, now });
+  const current = f.connect(join(freshOutput, 'commerce.sqlite'));
+  assert.equal(await current.usageOrder.count({ where: { shop: primary } }), 0);
+  assert.equal(await current.accessEvent.count({ where: { shop: primary } }), 0);
+  assert.equal((await current.privacyRequest.findUniqueOrThrow({ where: { id: f.requests[completed] } })).snapshot, null);
+  assert.equal(await current.brand.count({ where: { shop: removed } }), 0);
+  assert.equal(await current.brand.count({ where: { shop: other } }), 1);
+});
+
+test('retention after downtime applies an uncommitted erasure before removing its aged reference', async t => {
+  let at = Date.now();
+  const now = () => new Date(at), f = await fixture(t, now);
+  const saved = await createDatabaseBackup({ db: f.db, databasePath: f.path, journal: f.journal, now });
+  await assert.rejects(f.db.$transaction(async tx => {
+    await erasePrivacyShop(tx, primary, f.journal.record);
+    throw new Error('Synthetic interrupted commit before downtime.');
+  }), /Synthetic interrupted commit/);
+  assert.equal(await f.db.brand.count({ where: { shop: primary } }), 1);
+  at += 9 * 86400000;
+  const pruned = await pruneRecoveryStorage({ journal: f.journal, db: f.db, now: now() });
+  assert.equal(await f.db.brand.count({ where: { shop: primary } }), 0);
+  assert.equal(pruned.removedEvents, 1); assert.equal(pruned.removedBackupObjects, saved.parts + 1);
+  assert.deepEqual(await f.journal.entries(), []); assert.equal(await f.db.recoveryReceipt.count(), 1);
+  assert.equal(await f.db.brand.count({ where: { shop: other } }), 1);
+});
+
+test('restore crossing the seven-day expiry fails and removes its plaintext quarantine', async t => {
+  const started = Date.now();
+  let at = started;
+  const now = () => new Date(at), f = await fixture(t, now);
+  const saved = await createDatabaseBackup({ db: f.db, databasePath: f.path, journal: f.journal, now });
+  at = started + 7 * 86400000 - 1;
+  const store = { ...f.store, read: async (path, ...args) => {
+    const result = await f.store.read(path, ...args);
+    if (path === `backups/${saved.id}/0000.bin`) at += 2;
+    return result;
+  } };
+  const journal = createRecoveryJournal({ store, key, dataset: f.dataset, now });
+  const output = join(f.directory, 'crossed-expiry');
+  await assert.rejects(restoreDatabaseBackup({ journal, id: saved.id, outputDirectory: output, privacyKey, now }));
+  await assert.rejects(stat(output), error => error.code === 'ENOENT');
+  assert.equal(await f.db.brand.count(), 4);
+});
+
+test('late backup preparation cannot outlive a missed erasure instruction', async t => {
+  const DAY = 86400000, started = Date.now();
+  let at = started;
+  const now = () => new Date(at), f = await fixture(t, now);
+  const delayed = { ...f.journal, replay: async (...args) => {
+    const result = await f.journal.replay(...args);
+    // Real durable intent arrives after reconciliation's scan; its database
+    // transaction fails. Advance the clock before SQLite takes its snapshot.
+    at++;
+    await assert.rejects(f.db.$transaction(async tx => {
+      await erasePrivacyShop(tx, primary, f.journal.record);
+      throw new Error('Synthetic delayed erasure commit.');
+    }), /Synthetic delayed erasure commit/);
+    at = started + 2 * DAY;
+    return result;
+  } };
+  const saved = await createDatabaseBackup({ db: f.db, databasePath: f.path, journal: delayed, now });
+  at = started + 8 * DAY + 2;
+  const pruned = await pruneRecoveryStorage({ journal: f.journal, db: f.db, now: now() });
+  assert.equal(pruned.removedEvents, 1);
+  assert.equal(await f.db.brand.count({ where: { shop: primary } }), 0);
+  await assert.rejects(restoreDatabaseBackup({ journal: f.journal, id: saved.id, outputDirectory: join(f.directory, 'late-source'), privacyKey, now }));
+});
+
+async function legacyRetentionFixture(t) {
+  const started = Date.now();
+  let at = started;
+  const now = () => new Date(at), f = await fixture(t, now);
+  await f.journal.bind(f.db);
+  await assert.rejects(f.db.$transaction(async tx => {
+    await erasePrivacyShop(tx, primary, f.journal.record);
+    throw new Error('Synthetic legacy commit interruption.');
+  }), /Synthetic legacy commit interruption/);
+  at += 2 * 86400000;
+  // Emulate the old backup boundary: reconciliation had already scanned before
+  // the failed erasure, but the snapshot timestamp was taken after its delay.
+  const saved = await createDatabaseBackup({ db: f.db, databasePath: f.path, now,
+    journal: { ...f.journal, replay: async () => ({ checked: 0, applied: 0 }) } });
+  const path = `backups/${saved.id}/manifest.bin`;
+  const manifest = JSON.parse(f.journal.codec.open(path, await f.store.read(path, 128 * 1024)));
+  delete manifest.replayBoundary;
+  await writeFile(join(f.storeDirectory, path), f.journal.codec.seal(path, Buffer.from(JSON.stringify(manifest))));
+  at = started + 8 * 86400000 + 1;
+  return { ...f, saved, now };
+}
+
+test('legacy retention guard retires an unproven snapshot and automatic maintenance replaces it', async t => {
+  const f = await legacyRetentionFixture(t);
+  assert.equal((await backupStatus({ journal: f.journal, enabled: true, now: f.now() })).status, 'unverified');
+  const before = await restoreDatabaseBackup({ journal: f.journal, id: f.saved.id, outputDirectory: join(f.directory, 'before-expiration'), privacyKey, now: f.now });
+  assert.equal(before.replay.applied, 1, 'Older manifests remain restorable while their erasure instructions are available.');
+  const pruned = await pruneRecoveryStorage({ journal: f.journal, db: f.db, now: f.now() });
+  assert.equal(pruned.removedEvents, 1); assert.equal(pruned.removedBackupObjects, 0);
+  assert.deepEqual(await f.store.list('retention/'), ['retention/before-replay.bin']);
+  await assert.rejects(restoreDatabaseBackup({ journal: f.journal, id: f.saved.id, outputDirectory: join(f.directory, 'retired-legacy'), privacyKey, now: f.now }));
+  const refreshed = await maintainBackups({ db: f.db, databasePath: f.path, journal: f.journal, enabled: true, now: f.now });
+  assert.equal(refreshed.backupCreated, true); assert.equal(refreshed.backups.status, 'fresh');
+  const output = join(f.directory, 'new-boundary');
+  await restoreDatabaseBackup({ journal: f.journal, id: refreshed.backup.id, outputDirectory: output, privacyKey, now: f.now });
+  const db = f.connect(join(output, 'commerce.sqlite'));
+  assert.equal(await db.brand.count({ where: { shop: primary } }), 0);
+  assert.equal(await db.brand.count({ where: { shop: other } }), 1);
+});
+
+test('legacy retention activation during a restore prevents its readiness report from escaping', async t => {
+  const f = await legacyRetentionFixture(t);
+  let activated = false;
+  const store = { ...f.store, list: async prefix => {
+    if (prefix === 'journal/' && !activated) {
+      activated = true;
+      assert.equal((await pruneRecoveryStorage({ journal: f.journal, db: f.db, now: f.now() })).removedEvents, 1);
+    }
+    return f.store.list(prefix);
+  } };
+  const journal = createRecoveryJournal({ store, key, dataset: f.dataset, now: f.now });
+  const output = join(f.directory, 'concurrent-retirement');
+  await assert.rejects(restoreDatabaseBackup({ journal, id: f.saved.id, outputDirectory: output, privacyKey, now: f.now }));
+  assert.equal(activated, true);
+  await assert.rejects(stat(output), error => error.code === 'ENOENT');
+  assert.equal(await f.db.brand.count({ where: { shop: primary } }), 0);
+});
+
+test('legacy retention activation must persist and authenticate before any erasure instruction is removed', async t => {
+  for (const failure of ['write', 'readback']) {
+    const f = await legacyRetentionFixture(t);
+    const store = { ...f.store,
+      write: async (path, ...args) => {
+        if (failure === 'write' && path.startsWith('retention/')) throw new Error('Synthetic retention storage failure.');
+        return f.store.write(path, ...args);
+      },
+      read: async (path, ...args) => {
+        if (failure === 'readback' && path.startsWith('retention/')) throw new Error('Synthetic retention readback failure.');
+        return f.store.read(path, ...args);
+      },
+    };
+    const journal = createRecoveryJournal({ store, key, dataset: f.dataset, now: f.now });
+    await assert.rejects(pruneRecoveryStorage({ journal, db: f.db, now: f.now() }));
+    assert.equal((await f.journal.entries()).length, 1);
+    assert.equal(await f.db.brand.count({ where: { shop: primary } }), 0, 'The durable erasure is applied before cleanup is attempted.');
+  }
+});
+
 test('a valid SQLite backup with a damaged privacy snapshot remains unpublishable', async t => {
   const f = await fixture(t);
   const row = await f.db.privacyRequest.findUniqueOrThrow({ where: { id: f.requests[other] } });

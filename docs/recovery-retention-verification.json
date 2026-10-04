@@ -1,0 +1,183 @@
+{
+  "checkedAt": "2026-10-04T16:09:17.259958+00:00",
+  "scope": "Attended synthetic recovery-retention verification. Accelerated age fixtures, not a nine-day soak, production merchant test, legal compliance finding, independent security audit or marketplace approval.",
+  "testedSourceCommit": "ea87b9b036438a6b86008f58f413fa456e52baa9",
+  "pullRequest": "https://github.com/fullbleed-engine/fullbleed-commerce/pull/27",
+  "policy": {
+    "backupRestoreDays": 7,
+    "backupCleanupDays": 8,
+    "recoveryInstructionCleanupDays": 8,
+    "operatorReceiptCleanupDays": 30,
+    "backupAgeStarts": "Before reconciliation",
+    "restoreAgeCheckedBeforeCompletion": true,
+    "legacyRetirement": "Authenticated permanent reference-free policy marker is persisted before the first expired instruction is removed.",
+    "cleanupRequiresOnlineService": true
+  },
+  "regressions": {
+    "originalImplementation": {
+      "passed": 0,
+      "failed": 4
+    },
+    "constantOnlyChange": {
+      "passed": 2,
+      "failed": 2
+    },
+    "timingAndRetentionFix": {
+      "passed": 4,
+      "failed": 0
+    },
+    "completeRecoverySuite": {
+      "passed": 24,
+      "failed": 0
+    },
+    "covered": [
+      "Eight-day reference retention and final eligible restore",
+      "Interrupted erasure commit after downtime",
+      "Restore crossing the seven-day age limit",
+      "Delayed backup reconciliation missing an erasure",
+      "Legacy backup retirement and automatic replacement",
+      "First retention activation during legacy restore",
+      "Policy-marker write and readback failures before deletion"
+    ]
+  },
+  "local": {
+    "sharedTestsPassed": 51,
+    "shopifyVerificationGroupsPassed": 18,
+    "productionDockerBuildPassed": true,
+    "imageDigest": "sha256:de2df5a81caaf958a054edd60b89ea45e70ef1e14b33396ac57a6fc8e83ba820"
+  },
+  "ci": {
+    "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37215275217",
+    "headSha": "ea87b9b036438a6b86008f58f413fa456e52baa9",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "upgrade",
+        "conclusion": "success"
+      },
+      {
+        "name": "integration",
+        "conclusion": "success"
+      },
+      {
+        "name": "container",
+        "conclusion": "success"
+      },
+      {
+        "name": "renderer-deployment",
+        "conclusion": "success"
+      },
+      {
+        "name": "shopify-plans-browser",
+        "conclusion": "success"
+      },
+      {
+        "name": "pagination",
+        "conclusion": "success"
+      }
+    ],
+    "containerChecksPassed": 14,
+    "syntheticBurstJobs": 24,
+    "browserChecksPassed": 24,
+    "browserScope": "Real SDK authentication and PDF rendering; synthetic Shopify API responses and admin shell."
+  },
+  "hosted": {
+    "deploymentId": "119fa474-6280-4454-af8a-0bc4b41cabd5",
+    "imageDigest": "sha256:f44afd4a7035b1499e1f068687eac004738446967dcc16adc84a036d82c8cb88",
+    "node": "v26.10.0",
+    "serverBuildSha256": "bc0427d56d55409cb561b79132033caff8dc0accfaafd9eab7e4bdd2593f56ae",
+    "runtimeFiles": {
+      "package.json": "27a7b608e65f6c22e7f782f8ebb53fcbc71dbf0a35b3ab1bfb9941b1500f76b0",
+      "shopify/app/package.json": "8eb09d232bab0a03417be40cd072ceba9c45b9cfbe22cd6ae0e82a46e2b0cf87",
+      "shopify/operator-audit.js": "ce82fefd1fbb6ebc932689ffe31c70e98a544cff6c4c01bda96b6859cd05eb1a",
+      "shopify/recovery-journal.js": "753122fd08926363cce44b7a986e1be6604b056eed23d99ab4f54da72d90fa1a",
+      "shopify/privacy.js": "bbe63eb572d47df3a09c02843bc54ba69e62b49aaab5595e9592fdce6aeba6c0",
+      "shopify/app/scripts/recovery.mjs": "63eb2bcfab1f7cc4096549e41b9f6614984085b12f0584568baf1baecfb8d8b2",
+      "shopify/app/scripts/recovery-operations.mjs": "fc991e1b29ab7511b55cb9bc6d64004c126d5ba6ec48dd04a6410b68607564dc",
+      "shopify/app/scripts/recovery-store.mjs": "84963ea5dad614a67d30f8d225dd6ddc0a01bcc20920964cd5af2384b45176c7",
+      "shopify/app/scripts/backup-maintenance.mjs": "387b0cb6a54503a85de815ee400da54e0d62f176eee7e0a33cbba508e6bd401e",
+      "shopify/app/scripts/container-start.sh": "1f0f0fd3da5d2b934c455f5e14dc38449bdc5cb16e024e85bd63e1987b61bae7",
+      "shopify/app/prisma/schema.prisma": "2c08bb99e1b8a08ac3edcf417e7a9672b225a68da0768d87029cf5b92190e3ae"
+    },
+    "cpuLimit": 0.5,
+    "memoryBytes": 536870912,
+    "checks": [
+      {
+        "name": "all ten merchant tables are empty before the isolated synthetic fixture",
+        "passed": true
+      },
+      {
+        "name": "runtime matches the exact committed source, Node version, non-root user and staging limits",
+        "passed": true
+      },
+      {
+        "name": "startup maintenance replaced the old backup with a verified pre-replay age boundary",
+        "passed": true
+      },
+      {
+        "name": "nine-day-old encrypted backup and durable erasure were created in a separate synthetic dataset; the database commit was interrupted",
+        "passed": true
+      },
+      {
+        "name": "actual wall-clock maintenance CLI applied the failed erasure before deleting expired references and backup objects",
+        "passed": true
+      },
+      {
+        "name": "independent S3 readback authenticated the encrypted reference-free policy record and fresh backup manifest",
+        "passed": true
+      },
+      {
+        "name": "expired backup is rejected by the real restore CLI without leaving plaintext files",
+        "passed": true
+      },
+      {
+        "name": "fresh backup restores the preserved synthetic shop while the erased shop remains absent",
+        "passed": true
+      },
+      {
+        "name": "hosted HTTPS readiness passes and all real staging merchant tables remain empty",
+        "passed": true
+      },
+      {
+        "name": "isolated dataset objects and private database copies are removed; the outer maintenance audit is retained",
+        "passed": true
+      }
+    ],
+    "maintenance": {
+      "removedBackupObjects": 4,
+      "removedEvents": 1,
+      "removedOperatorRecords": 0,
+      "removedAbandonedSnapshots": 0
+    },
+    "fixtureAgeDays": 9,
+    "acceleratedAgingFixture": true,
+    "allTenMerchantTablesRemainEmpty": true,
+    "fixtureRemoved": true,
+    "fixtureObjectsRemoved": 12,
+    "policyCiphertextSha256": "fb842b48e2d53a35c1f870f9c0895161906d03306d977fda5e4fac23f6e2a48a",
+    "backupSha256": "913fa46d9d9211fd4e2714abfdcef5960f637195c7fff0f1a1bb63718bd76437",
+    "restoredSha256": "015b4877e9dc14fa5a7a0550b128590be9e028a9691f7a50e957ae75f66b89fe",
+    "stagingStatus": "REMOVED",
+    "activeDeployments": 0
+  },
+  "retainedEvidenceSha256": {
+    "target/retention-baseline.tap": "d49c127156481845632e17e47f506a572346956e479458e9bcc2e409ed63ca37",
+    "target/retention-short-window.tap": "563969f58690f8a72d5df6905de337af471cbc78144bddda6efe0977bc4fb42a",
+    "target/retention-candidate.tap": "3d6cdf7ff98d16311aa2c4943b295a883c6c7c9cc0226940ad79fed4a9604a69",
+    "target/retention-complete.tap": "59829df997a952858a2ea552d2bf865b00e1796474a8f196d66c0902e07da0d2",
+    "target/shared-tests.log": "98e9e1d3d5c21cd7763a57db253e78ff029fa8f4f2e2d6aeedfca886525fe39e",
+    "output/shopify/verification.json": "16c0933a085fddfe2e5a4c6251858256b6023a24ab59be086b54ac1712276116",
+    "target/ci-container/verification.json": "cdec4effea191a9239535201bddbc3f72c7ae5639deea5041e61cb541090f77b",
+    "target/ci-container/capacity/verification.json": "45334dcc2f490234f326e551e42f0e6867bd47a8d1ccf284c72f175d807a8397",
+    "target/ci-shopify-plans/browser/shopify-plans-verification.json": "4ac35562ace1cd0155c3f4de9a42deebc4b2d2d9cb37dc85ce06596047a99483",
+    "output/hosted-retention/probe.json": "8bedd7413e069be4455ef2b5c1d28eca7945cbd429dffed0ee7e4c550dc44d10",
+    "output/hosted-retention/source.json": "f55f2de60e28d009bf0b4b4dd2cba6036aedf75d717236779fa9c7688b91331f",
+    "output/hosted-retention/stopped.json": "a04015b5a2120a3873ef8a263a9818ff6fd95697cb75dc383db0eeabb9cd3fde"
+  },
+  "limits": [
+    "Cleanup waits for startup/hourly maintenance; downtime delays physical deletion.",
+    "Use the current recovery implementation. Removing the policy marker or downgrading code can bypass the guard.",
+    "Staging compute is stopped between attended checks. Continuous cleanup, independent key recovery and production monitoring still require verification.",
+    "Production merchant admission remains closed."
+  ]
+}

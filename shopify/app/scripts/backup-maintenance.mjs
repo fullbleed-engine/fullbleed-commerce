@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { recoveryFailure } from '../../recovery-journal.js';
+import { BACKUP_REPLAY_BOUNDARY, recoveryFailure } from '../../recovery-journal.js';
 import { createDatabaseBackup, pruneRecoveryStorage, readBackupManifest, pruneAbandonedSnapshots } from './recovery-operations.mjs';
 
 export const BACKUP_INTERVAL_SECONDS = 24 * 3600;
@@ -28,7 +28,7 @@ export async function backupStatus({ journal, enabled, now = new Date() }) {
   const prefix = `backups/${id}/`, objects = new Set(paths.filter(path => path.startsWith(prefix)));
   if (objects.size !== manifest.parts.length + 1 || manifest.parts.some((_, index) => !objects.has(`${prefix}${String(index).padStart(4, '0')}.bin`))) throw recoveryFailure();
   const ageSeconds = Math.max(0, Math.floor((now.valueOf() - Date.parse(manifest.createdAt)) / 1000));
-  const status = !manifest.verifiedAt ? 'unverified' : ageSeconds > BACKUP_MAX_AGE_SECONDS ? 'stale' : 'fresh';
+  const status = !manifest.verifiedAt || manifest.replayBoundary !== BACKUP_REPLAY_BOUNDARY ? 'unverified' : ageSeconds > BACKUP_MAX_AGE_SECONDS ? 'stale' : 'fresh';
   return { status, snapshotAt: manifest.createdAt, ageSeconds };
 }
 
