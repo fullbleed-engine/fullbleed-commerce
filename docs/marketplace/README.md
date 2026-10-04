@@ -80,6 +80,10 @@ capacity/cost measurements, and consenting merchant pilots. Completing listing
 fields does not satisfy those gates. Staging compute remains off between
 attended tests; no new hosting subscription was purchased.
 
+The [local App Store code review](../shopify-app-review.md) records the current
+requirements, corrected Shopify entry pages and remaining browser/billing
+checks. It does not complete the dashboard's final self-review attestation.
+
 Design references:
 [Shopify visual design](https://shopify.dev/docs/apps/design/visual-design),
 [listing best practices](https://shopify.dev/docs/apps/launch/shopify-app-store/best-practices),
