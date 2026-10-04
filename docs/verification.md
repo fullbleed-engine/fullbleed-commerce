@@ -630,7 +630,9 @@ workflow measurement or production capacity promise.
 
 The final infrastructure plan matched the live service. After testing, compute
 was stopped and the persistent volume retained. The host is not currently
-serving merchants. Billing, full hosted installation and Flow verification, continuous operator coverage,
+serving merchants. The [later hosted workflow check](hosted-workflow.md) covers
+installation, private test-plan checkout, saved templates and actual Flow
+execution on the stable origin. Paid merchant operation, continuous operator coverage,
 independent key recovery and merchant rollout remain separate gates. See
 [deployment operation](../shopify/DEPLOYMENT.md) and the
 [retained hosted record](staging-verification.json).
@@ -648,17 +650,19 @@ independent key recovery and merchant rollout remain separate gates. See
   implement fiscal invoices or recalculate taxes.
 - Paid purchase, delivery, update and support setup for the separate Pro add-on.
   No checkout, licensing server or renewal workflow exists yet.
-- Shopify live entitlement lifecycle checks, production operation and App Store review.
+- Shopify plan changes/freezes, paid merchant operation and App Store review.
   The Partner organization, registered app, development store, installation and
   access to the synthetic order are verified. Billing configuration and
-  production merchant rollout are not complete. The isolated staging container
+  production merchant rollout are not complete. The private $0 plan's live
+  activation/cancellation lifecycle and hosted checkout-to-Flow workflow passed.
+  The isolated staging container
   deployment and persistent storage have now been verified.
 - Shopify webhook monitoring, continuous operator coverage, missed-check detection, independent key recovery and secure support-delivery setup
   remain required. A real automatic new-order trigger now prepares both PDFs and
   saves links and expiry times in private Shopify order fields. Actual browser
-  downloads and revocation passed. Repeat that complete workflow on the stable
-  hosted origin with production configuration; the current check uses the
-  development tunnel. Customer email delivery is not covered. Public
+  downloads and revocation passed. The [hosted workflow evidence](hosted-workflow.md)
+  repeats it on the stable origin with production subscription checks and a
+  saved custom template. Customer email delivery is not covered. Public
   distribution is selected; that is not App Store approval or publication.
 - The Shopify toolkit's Polaris validator could not resolve its own
   `preact/jsx-runtime` and JSX types after three attempts, including a minimal

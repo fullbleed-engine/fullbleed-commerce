@@ -41,11 +41,20 @@ Shopify responses; a real catalog-price migration has not been exercised.
 
 The private plan, app handle, Partner identifiers and runtime secret are saved in
 Railway. The IaC definition preserves those variables. Compute remains stopped;
-the configuration has not been verified through a running hosted installation.
-The test subscription is cancelled at the end of this check.
+the [hosted workflow check](../docs/hosted-workflow.md) now verifies the stable
+origin through installation, hosted checkout, saved templates, actual Flow
+actions and private browser downloads. It uses `NODE_ENV=production` with no
+development subscription bypass. The earlier immediate-cancellation test above
+was followed by a new $0 test subscription for this hosted check.
 
-Before accepting paying merchants, verify plan changes and freezes, the hosted
-install-to-checkout-to-Flow workflow and privacy/backup operation. Finalize actual
+Uninstall scheduled that test subscription's cancellation at the end of its
+cycle. The Partner API still returned the zero-price `shopify-test` contract
+with `cancelAtEndOfCycle: true`; do not interpret uninstall as an immediately
+null subscription. The app's session and automation records are independently
+erased by its authenticated uninstall webhook.
+
+Before accepting paying merchants, verify plan changes and freezes, actual paid
+purchase behavior and sustained privacy/backup operation. Finalize actual
 paid plans, merchant limits, support/privacy/refund terms, listing media and the
 protected-data review. The App Store registration is paid; the listing remains a
 draft and has not been submitted or approved.

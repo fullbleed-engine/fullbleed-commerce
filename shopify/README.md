@@ -1,9 +1,9 @@
 # Fullbleed Commerce for Shopify
 
 A working development app built from Shopify's official React Router template.
-It is registered in the Fullbleed.dev Partner organization and installed on the
+It is registered in the Fullbleed.dev Partner organization and tested on the
 synthetic `fullbleed-commerce-test.myshopify.com` development store with
-`read_orders`. It is not a hosted production service or an approved App Store
+`read_orders`. It is not an operating merchant service or an approved App Store
 listing. No subscription is being sold or charged.
 
 The app provides recent-order selection, order-summary and packing-slip PDFs,
@@ -76,8 +76,11 @@ produce fiscal invoices.
 - A second synthetic unpaid order triggered Flow automatically. Both documents
   and four private order-field updates completed, browser downloads matched the
   prepared hashes, and pause revoked the saved links. See the
-  [order-trigger evidence](../docs/order-trigger-verification.json). The test
-  used the development tunnel; hosted installation and paid operation remain gates.
+  [order-trigger evidence](../docs/order-trigger-verification.json). That first
+  check used a development tunnel. A later [hosted check](../docs/hosted-workflow.md)
+  repeated the workflow with a saved custom template, private $0 plan and
+  production subscription checks on the stable staging origin. Paid merchant
+  operation remains a gate.
 - Type generation, TypeScript, lint, production build, migrations and real
   request-handler tests pass. Tests cover forged webhooks, shop isolation,
   deletion/replay, and unauthenticated PDF requests.
@@ -89,7 +92,7 @@ produce fiscal invoices.
 - A private $0 Shopify test plan passed live activation, scheduled cancellation,
   reactivation and immediate-cancellation access checks with the production
   entitlement function. See [billing verification](BILLING.md). Plan changes,
-  freezes, hosted purchase-to-Flow testing, Safari and merchant staging remain.
+  freezes, actual paid purchases, Safari and merchant staging remain.
   The Shopify UI toolkit validator failed in its own JSX/type environment;
   the actual application typecheck and build pass.
 - The Railway staging container passed readiness, authentication, private file
@@ -101,8 +104,8 @@ produce fiscal invoices.
 Public distribution has been selected and the $19 App Store registration is paid;
 the app is not listed or approved. The private development-store test plan, a
 Partner API client and staging identifiers are configured.
-Before paid release, exercise plan freezes and changes and the hosted billing
-workflow; complete protected
+Before paid release, exercise plan freezes and changes and actual paid purchases;
+complete protected
 customer data requirements and merchant staging checks; deploy with durable,
 encrypted session storage; verify privacy monitoring, backup erasure and secure
 support delivery; finalize support/privacy/refund terms and App Store
