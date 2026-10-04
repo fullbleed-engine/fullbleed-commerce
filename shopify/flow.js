@@ -122,16 +122,21 @@ export function createFlowService({ db, loadDocument = /** @returns {Promise<any
           const setting = await db.automationSettings.findUnique({ where: { shop: job.shop } });
           if (!setting?.enabled) throw reject('Automation is paused.', 409);
           const signal = AbortSignal.timeout(60000);
-          await withDocument(job, signal, async document => {
+          const prepared = await withDocument(job, signal, async document => {
             const result = await render(document.order, { ...document.options, signal });
             if (result.pdf.length > 8 * 1024 * 1024 || Buffer.from(result.pdf).subarray(0, 5).toString() !== '%PDF-') throw new TypeError('Invalid document output.');
-            const saved = await db.automationJob.updateMany({ where: owned, data: {
-              status: 'ready', fingerprint: fingerprint(document), templateRevision: document.revision,
+            return {
+              fingerprint: fingerprint(document), templateRevision: document.revision,
               pdfSha256: hash(result.pdf), expiresAt: new Date(now().valueOf() + job.ttlHours * 3600000),
-              leaseId: null, leaseUntil: null, lastError: null,
-            } });
-            if (!saved.count) throw reject('This document request was revoked or cleared.', 409);
+            };
           });
+          // withDocument commits the order allowance before returning. Keep the
+          // job leased and unavailable until that commit succeeds; otherwise
+          // Flow could receive a link while accounting is pending or failed.
+          const saved = await db.automationJob.updateMany({ where: owned, data: {
+            ...prepared, status: 'ready', leaseId: null, leaseUntil: null, lastError: null,
+          } });
+          if (!saved.count) throw reject('This document request was revoked or cleared.', 409);
         } catch (error) {
           const terminal = error instanceof TypeError || (error instanceof Response && error.status >= 400 && error.status < 500 && error.status !== 429);
           await db.automationJob.updateMany({ where: owned, data: {

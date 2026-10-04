@@ -207,6 +207,38 @@ test('upstream throttling still counts as an attempted preparation', async () =>
   assert.equal(waiting.nextAttemptAt.valueOf(), time + 15000);
 });
 
+test('Flow exposes ready links only after accounting commits and preserves failure or revocation', async () => {
+  for (const outcome of ['commit', 'reject', 'pause']) {
+    let release, rendered;
+    const gate = new Promise(resolve => { release = resolve; });
+    const afterRender = new Promise(resolve => { rendered = resolve; });
+    const metered = createFlowService({ db, render, secret, appUrl: 'https://fullbleed-test.invalid', limit: createRenderLimit(), now: () => new Date(time),
+      withDocument: async (job, signal, work) => {
+        const result = await work(await loadDocument(job, signal));
+        rendered();
+        await gate;
+        if (outcome === 'reject') throw new Response(null, { status: 409 });
+        return result;
+      },
+    });
+    await metered.setEnabled(primary, true);
+    const job = await metered.accept(parsed());
+    const work = metered.start(job.id);
+    await afterRender;
+    const pending = await db.automationJob.findUniqueOrThrow({ where: { id: job.id } });
+    assert.equal(pending.status, 'running');
+    assert.equal(metered.status(pending).status, 202);
+    assert.equal(pending.pdfSha256, null);
+    if (outcome === 'pause') await metered.setEnabled(primary, false);
+    release();
+    await work;
+    const finished = await db.automationJob.findUniqueOrThrow({ where: { id: job.id } });
+    assert.equal(finished.status, outcome === 'commit' ? 'ready' : outcome === 'reject' ? 'failed' : 'revoked');
+    assert.equal(metered.status(finished).status, outcome === 'commit' ? 200 : outcome === 'reject' ? 422 : 410);
+    if (outcome !== 'commit') assert.equal(finished.pdfSha256, null);
+  }
+});
+
 test('verified downloads use exact bytes, reject forged/expired links and invalidate changed content', async () => {
   const job = await readyJob(); const token = await linkToken(job);
   const reads = orderReads;
