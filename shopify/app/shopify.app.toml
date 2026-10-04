@@ -1,32 +1,30 @@
-# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
-
-client_id = "91ba2420b9c9d87e00dab059b51eb005"
-application_url = "https://shopify.dev/apps/default-app-home"
+# Safe default: the development app, never the App Store app.
+# Local synthetic testing; Shopify CLI replaces URLs with its development tunnel.
+client_id = "09e47bbd732e1cd77b17b99af2a64feb"
+name = "Fullbleed Commerce Dev"
+application_url = "https://shopify-app-production-346e.up.railway.app"
 embedded = true
-name = "Fullbleed Commerce"
 
 [access_scopes]
-# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
 scopes = "read_orders"
+
+[auth]
+redirect_urls = ["https://shopify-app-production-346e.up.railway.app/auth/callback"]
 
 [webhooks]
 api_version = "2026-10"
 
-  [[webhooks.subscriptions]]
-  uri = "/webhooks/app/uninstalled"
-  topics = [ "app/uninstalled" ]
+[[webhooks.subscriptions]]
+uri = "/webhooks/app/uninstalled"
+topics = ["app/uninstalled"]
 
-  [[webhooks.subscriptions]]
-  uri = "/webhooks/app/scopes_update"
-  topics = [ "app/scopes_update" ]
-
-[auth]
-redirect_urls = [ "https://shopify.dev/apps/default-app-home/api/auth" ]
+[[webhooks.subscriptions]]
+uri = "/webhooks/app/scopes_update"
+topics = ["app/scopes_update"]
 
 [[webhooks.subscriptions]]
 uri = "/webhooks/privacy"
 compliance_topics = ["customers/data_request", "customers/redact", "shop/redact"]
 
 [build]
-include_config_on_deploy = true
 automatically_update_urls_on_dev = true

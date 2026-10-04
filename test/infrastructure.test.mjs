@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { createRailwayContext } from 'railway/iac';
+import { createRailwayContext, preserve } from 'railway/iac';
 import configuration from '../.railway/railway.ts';
 
 const production = { projectId: '6337f5dc-6602-48a3-acba-0286271471ea', environmentId: '432435d8-c0d2-4ad5-80ae-0c1444e7e1d1' };
@@ -18,7 +18,7 @@ test('infrastructure refuses unknown projects and crossed or missing environment
   assert.doesNotThrow(() => configuration(context(production)));
 });
 
-test('unadmitted production infrastructure has no deploy source, public domain or Shopify credentials', () => {
+test('unadmitted production infrastructure has no deploy source or public domain and preserves its credentials', () => {
   const project = configuration(context(production));
   const services = project.resources.filter(resource => resource.type === 'service');
   assert.equal(services.length, 1);
@@ -28,7 +28,7 @@ test('unadmitted production infrastructure has no deploy source, public domain o
   assert.equal(service.networking, undefined);
   assert.equal(service.domains, undefined);
   for (const name of ['SHOPIFY_API_KEY', 'SHOPIFY_API_SECRET', 'SHOPIFY_APP_URL', 'SHOPIFY_PARTNER_API_ACCESS_TOKEN']) {
-    assert.equal(service.variables[name], undefined);
+    assert.deepEqual(service.variables[name], preserve());
   }
   // The existing staging plan remains the only repository-connected service.
   const staged = configuration(context(staging)).resources.find(resource => resource.type === 'service');

@@ -8,8 +8,8 @@ export default defineRailway((ctx) => {
     const productionData = volume("shopify-app-volume", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "us-west2", sizeMB: 1024 });
     const productionRecovery = bucket("privacy-recovery", { region: "sjc" });
     // Provision storage and runtime settings without connecting a repository,
-    // publishing a domain, or admitting merchants. Shopify credentials and the
-    // production agreement are separate launch work; do not copy staging data.
+    // publishing a domain, or admitting merchants. Keep this app's own Shopify
+    // credentials in Railway; the production agreement and runtime are pending.
     const productionApp = service("shopify-app", {
       build: { buildEnvironment: "V3", builder: "DOCKERFILE", dockerfilePath: "shopify/app/Dockerfile" },
       healthcheck: "/health",
@@ -35,6 +35,14 @@ export default defineRailway((ctx) => {
         RAILWAY_DOCKERFILE_PATH: "shopify/app/Dockerfile",
         RAILWAY_RUN_UID: "0",
         SCOPES: "read_orders",
+        SHOPIFY_API_KEY: preserve(),
+        SHOPIFY_API_SECRET: preserve(),
+        SHOPIFY_APP_URL: preserve(),
+        SHOPIFY_APP_HANDLE: preserve(),
+        SHOPIFY_PARTNER_APP_ID: preserve(),
+        SHOPIFY_PARTNER_ORG_ID: preserve(),
+        SHOPIFY_PARTNER_API_ACCESS_TOKEN: preserve(),
+        SHOPIFY_PLAN_HANDLES: preserve(),
       },
     });
     return project("fullbleed-commerce-production", { resources: [productionApp, productionData, productionRecovery] });

@@ -12,7 +12,7 @@ import { designs } from '../../../pro/designs.js';
 const app = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const root = resolve(app, '../..');
 const store = 'fullbleed-commerce-test.myshopify.com';
-if (process.env.NODE_ENV !== 'development' || process.env.FULLBLEED_DEV_STORE !== store || process.env.SHOPIFY_API_KEY !== '91ba2420b9c9d87e00dab059b51eb005') throw new Error('This check is restricted to the registered Fullbleed development app and synthetic store.');
+if (process.env.NODE_ENV !== 'development' || process.env.FULLBLEED_DEV_STORE !== store || process.env.SHOPIFY_API_KEY !== '09e47bbd732e1cd77b17b99af2a64feb') throw new Error('This check is restricted to the registered Fullbleed development app and synthetic store.');
 const output = resolve(root, 'output/shopify/installed-store');
 await mkdir(output, { recursive: true });
 const record = { checkedAt: new Date().toISOString(), store, developmentStoreVerified: false, source: 'Shopify Admin API using installed app offline session', documents: [], billingTested: false, browserTested: false, passed: false };
