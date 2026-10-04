@@ -28,6 +28,7 @@ const jobs = [
   ['typecheck', 'node_modules/typescript/bin/tsc', '--noEmit'],
   ['lint', 'node_modules/eslint/bin/eslint.js', '--ignore-path', '.gitignore', '--cache', '--cache-location', './node_modules/.cache/eslint', '.'],
   ['build', 'node_modules/@react-router/dev/bin.js', 'build'],
+  ['entry', '--test', '--test-reporter=tap', 'test/entry.test.mjs'],
   ['health', '--test', '--test-reporter=tap', 'test/health.test.mjs'],
   ['webhooks', '--test', '--test-reporter=tap', 'test/webhooks.test.mjs'],
   ['webhook-lifecycle', '--test', '--test-reporter=tap', 'test/webhook-lifecycle.test.mjs'],

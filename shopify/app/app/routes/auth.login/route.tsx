@@ -1,49 +1,13 @@
-import { useState } from "react";
-import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
-import { Form, useActionData, useLoaderData } from "react-router";
-
+import type { LoaderFunctionArgs } from "react-router";
+import { redirect } from "react-router";
 import { login } from "../../shopify.server";
-import { loginErrorMessage } from "./error.server";
+export { default } from "../../components/shopify-entry";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const errors = loginErrorMessage(await login(request));
-
-  return { errors };
+  // Preserve Shopify's GET handoff; direct visitors open the app from admin.
+  await login(request);
+  return null;
 };
 
-export const action = async ({ request }: ActionFunctionArgs) => {
-  const errors = loginErrorMessage(await login(request));
-
-  return {
-    errors,
-  };
-};
-
-export default function Auth() {
-  const loaderData = useLoaderData<typeof loader>();
-  const actionData = useActionData<typeof action>();
-  const [shop, setShop] = useState("");
-  const { errors } = actionData || loaderData;
-
-  return (
-    <>
-      <script src="https://cdn.shopify.com/shopifycloud/polaris.js" />
-      <s-page>
-        <Form method="post">
-        <s-section heading="Log in">
-          <s-text-field
-            name="shop"
-            label="Shop domain"
-            details="example.myshopify.com"
-            value={shop}
-            onChange={(e) => setShop(e.currentTarget.value)}
-            autocomplete="on"
-            error={errors.shop}
-          ></s-text-field>
-          <s-button type="submit">Log in</s-button>
-        </s-section>
-        </Form>
-      </s-page>
-    </>
-  );
-}
+// Old bookmarked forms return to the entry instructions without using their data.
+export const action = async () => redirect("/auth/login", { status: 303 });

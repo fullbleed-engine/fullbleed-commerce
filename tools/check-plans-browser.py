@@ -11,6 +11,7 @@ fixture = json.loads((ROOT / 'target/plans-browser-fixture.json').read_text())
 assert fixture['origin'] == 'http://127.0.0.1:9486'
 assert fixture['shop'] == 'synthetic-plans.myshopify.com'
 checks = []
+entry_files = []
 
 def token():
     now = int(time.time())
@@ -24,6 +25,27 @@ def check(name, condition):
 
 with sync_playwright() as pw:
     browser = pw.chromium.launch(channel='chrome', headless=True)
+    # Public entry routes use an empty browser context, without the fixture's
+    # authenticated headers or App Bridge stub used for the plan checks below.
+    entry_context = browser.new_context(viewport={'width': 1440, 'height': 900})
+    entry_page = entry_context.new_page()
+    entry_errors = []
+    entry_page.on('pageerror', lambda e: entry_errors.append(str(e)))
+    for path, name in [('/', 'root'), ('/auth/login', 'login')]:
+        entry_page.set_viewport_size({'width': 1440, 'height': 900})
+        response = entry_page.goto(f"{fixture['origin']}{path}", wait_until='networkidle')
+        check(f'{name}: anonymous entry gives Shopify instructions', response.status == 200)
+        expect(entry_page.get_by_role('heading', name='Open Fullbleed in Shopify')).to_be_visible()
+        expect(entry_page.get_by_role('link', name='Open Shopify admin')).to_have_attribute('href', 'https://admin.shopify.com/')
+        check(f'{name}: no manual shop-domain form', entry_page.locator('form, input, s-text-field').count() == 0)
+        for width, height, size in [(1440, 900, 'desktop'), (390, 844, 'mobile')]:
+            entry_page.set_viewport_size({'width': width, 'height': height})
+            check(f'{name}: {size} entry fits', entry_page.evaluate('document.documentElement.scrollWidth <= innerWidth'))
+            filename = f'shopify-plans-entry-{name}-{size}.png'
+            entry_page.screenshot(path=str(OUT / filename), full_page=True)
+            entry_files.append(filename)
+    check('anonymous entry has no browser runtime errors', not entry_errors)
+    entry_context.close()
     context = browser.new_context(viewport={'width': 1280, 'height': 1000}, accept_downloads=True, user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36')
     context.route('https://cdn.shopify.com/shopifycloud/app-bridge.js*', lambda route: route.fulfill(content_type='text/javascript', body="window.shopify={config:{apiKey:'synthetic-test-api-key'},environment:{embedded:true},loading:()=>{},ready:Promise.resolve()};"))
     context.route(f"{fixture['origin']}/**", lambda route: route.continue_(headers={**route.request.headers, 'Authorization': 'Bearer ' + token()}))
@@ -72,8 +94,8 @@ with sync_playwright() as pw:
     version = browser.version
     browser.close()
 
-files = ['shopify-plans-desktop.png', 'shopify-plans-mobile.png', 'shopify-plans-order-summary.pdf']
+files = entry_files + ['shopify-plans-desktop.png', 'shopify-plans-mobile.png', 'shopify-plans-order-summary.pdf']
 evidence = [{'file': f'output/browser/{name}', 'sha256': hashlib.sha256((OUT / name).read_bytes()).hexdigest()} for name in files]
-record = {'checkedAt': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'browser': version, 'syntheticOnly': True, 'shopifyApiAndAdminShellStubbed': True, 'realSdkAuthentication': True, 'realPdfRendering': True, 'serverBuildSha256': fixture['serverBuildSha256'], 'checks': checks, 'evidence': evidence}
+record = {'checkedAt': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'browser': version, 'syntheticOnly': True, 'entryRoutesTestedWithoutAuthentication': True, 'shopifyApiAndAdminShellStubbed': True, 'realSdkAuthentication': True, 'realPdfRendering': True, 'serverBuildSha256': fixture['serverBuildSha256'], 'checks': checks, 'evidence': evidence}
 (OUT / 'shopify-plans-verification.json').write_text(json.dumps(record, indent=2) + '\n')
 print(json.dumps(record, indent=2))
