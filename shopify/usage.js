@@ -46,26 +46,38 @@ export function isUsageLimit(error) {
  */
 export function createUsageMeter({ db, now = () => new Date() }) {
   const transaction = action => db.$transaction(action, { maxWait: 2000, timeout: 5000 });
+  // Shopify can move trialEndsAt when a merchant changes plans. An ongoing
+  // trial keeps its receipt set even when that timestamp changes. Paid cycles
+  // continue to use Shopify's exact billing-cycle start.
+  const periodWhere = (shop, allowance) => allowance.trial
+    ? { shop, key: { startsWith: 'trial:' }, endsAt: { gt: now() } }
+    : { shop, key: allowance.key };
   function validate(shop, allowance) {
     if (!/^[a-z0-9][a-z0-9-]*\.myshopify\.com$/.test(shop) || !allowance?.key || !Number.isInteger(allowance.orders) || allowance.orders < 1 || !(allowance.endsAt > now())) throw fail('The order allowance needs to be refreshed.');
   }
   async function reserve(shop, orderId, allowance) {
     validate(shop, allowance);
     if (!/^gid:\/\/shopify\/Order\/[1-9]\d*$/.test(orderId)) throw new TypeError('A Shopify order is required.');
-    return transaction(async tx => {
+    const receipt = await transaction(async tx => {
       // Write first so two SQLite clients cannot both read a free final slot.
       await tx.usageOrder.deleteMany({ where: { shop, completedAt: null, reservedUntil: { lte: now() } } });
       if (!await tx.session.findFirst({ where: { id: `offline_${shop}`, shop, isOnline: false } })) throw fail('Reopen the installed Fullbleed app before preparing documents.', 409);
-      const period = await tx.usagePeriod.upsert({ where: { shop_key: { shop, key: allowance.key } },
-        create: { shop, key: allowance.key, startsAt: allowance.startsAt, endsAt: allowance.endsAt }, update: { endsAt: allowance.endsAt } });
+      const previous = await tx.usagePeriod.findFirst({ where: periodWhere(shop, allowance), orderBy: { endsAt: 'desc' } });
+      const period = previous
+        ? await tx.usagePeriod.update({ where: { id: previous.id }, data: { endsAt: new Date(Math.max(previous.endsAt.valueOf(), allowance.endsAt.valueOf())) } })
+        : await tx.usagePeriod.create({ data: { shop, key: allowance.key, startsAt: allowance.startsAt, endsAt: allowance.endsAt } });
       const existing = await tx.usageOrder.findUnique({ where: { periodId_orderId: { periodId: period.id, orderId } } });
       if (existing?.completedAt) return { id: existing.id, periodId: period.id, committed: true };
-      if (existing) throw fail('This order is already being prepared. Please retry shortly.', 429, { 'Retry-After': '5' });
+      if (existing) return { error: fail('This order is already being prepared. Please retry shortly.', 429, { 'Retry-After': '5' }) };
       const pending = await tx.usageOrder.count({ where: { periodId: period.id, completedAt: null } });
-      if (period.used + pending >= allowance.orders) throw fail('This plan’s order allowance is used. Open Plan and usage to change plans, or retry when the next billing period starts. Reprints of orders already counted this period remain available.', 409, { 'X-Fullbleed-Error': 'usage_limit' });
+      // Commit a verified trial extension even at the limit, so cleanup cannot
+      // remove an ongoing trial and silently grant a fresh allowance.
+      if (period.used + pending >= allowance.orders) return { error: fail('This plan’s order allowance is used. Open Plan and usage to change plans, or retry when the next billing period starts. Reprints of orders already counted this period remain available.', 409, { 'X-Fullbleed-Error': 'usage_limit' }) };
       const row = await tx.usageOrder.create({ data: { id: randomUUID(), periodId: period.id, shop, orderId, reservedUntil: new Date(now().valueOf() + leaseMs) } });
       return { id: row.id, periodId: period.id, committed: false };
     });
+    if (receipt.error) throw receipt.error;
+    return receipt;
   }
   async function run(shop, orderId, allowance, task) {
     const receipt = await reserve(shop, orderId, allowance);
@@ -89,7 +101,8 @@ export function createUsageMeter({ db, now = () => new Date() }) {
   }
   async function status(shop, allowance) {
     validate(shop, allowance);
-    const row = await db.usagePeriod.findUnique({ where: { shop_key: { shop, key: allowance.key } }, include: { _count: { select: { orders: { where: { completedAt: null, reservedUntil: { gt: now() } } } } } } });
+    if (allowance.trial) await db.usagePeriod.updateMany({ where: { ...periodWhere(shop, allowance), endsAt: { gt: now(), lt: allowance.endsAt } }, data: { endsAt: allowance.endsAt } });
+    const row = await db.usagePeriod.findFirst({ where: periodWhere(shop, allowance), orderBy: { endsAt: 'desc' }, include: { _count: { select: { orders: { where: { completedAt: null, reservedUntil: { gt: now() } } } } } } });
     const used = row?.used || 0, preparing = row?._count.orders || 0;
     return { used, preparing, remaining: Math.max(0, allowance.orders - used - preparing), limit: allowance.orders };
   }

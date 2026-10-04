@@ -82,6 +82,28 @@ test('failed rendering and expired worker reservations free capacity without cha
   assert.deepEqual(await meter.status(shop, allowance(1)), { used: 1, preparing: 0, remaining: 0, limit: 1 });
 });
 
+test('Shopify trial timestamp changes preserve usage on upgrade and downgrade, including at the limit', async () => {
+  const trial = (handle, end) => ({ ...usageAllowance({ ...subscription(handle), currentBillingCycle: null, trialEndsAt: end }, now()), orders: handle === 'scale' ? 2 : 1 });
+  const original = trial('studio', '2026-10-11T02:48:23Z');
+  await meter.run(shop, order(1), original, async () => 'first trial document');
+  const upgrade = trial('scale', '2026-10-11T02:52:31Z');
+  assert.deepEqual(await meter.status(shop, upgrade), { used: 1, preparing: 0, remaining: 1, limit: 2 });
+  await meter.run(shop, order(1), upgrade, async () => 'same order after upgrade');
+  await meter.run(shop, order(2), upgrade, async () => 'second order');
+  const downgrade = trial('studio', '2026-10-12T02:52:31Z');
+  await assert.rejects(meter.run(shop, order(3), downgrade, async () => assert.fail()), isUsageLimit);
+  assert.equal(await db.usagePeriod.count(), 1);
+  const period = await db.usagePeriod.findFirst();
+  assert.equal(period.used, 2); assert.equal(period.endsAt.toISOString(), downgrade.endsAt.toISOString());
+  at = Date.parse('2026-10-11T03:00:00Z');
+  assert.deepEqual(await meter.status(shop, downgrade), { used: 2, preparing: 0, remaining: 0, limit: 1 });
+  assert.equal(await meter.run(shop, order(1), downgrade, async () => 'reprint'), 'reprint');
+  // A first actual paid cycle has a separate allowance, even while trial
+  // receipts remain within their support retention window.
+  const paid = { ...allowance(), key: 'cycle:2026-10-11T03:00:00.000Z', startsAt: now() };
+  assert.equal((await meter.status(shop, paid)).used, 0);
+});
+
 test('privacy exports include usage; redaction clears order references and blocks in-flight completion', async () => {
   await meter.run(shop, order(1), allowance(), async () => 'ok');
   const service = createPrivacyService({ db, key: 'ab'.repeat(32), now });

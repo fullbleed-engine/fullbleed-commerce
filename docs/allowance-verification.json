@@ -1,46 +1,46 @@
 {
-  "recordedAt": "2026-10-04T02:36:58.180462+00:00",
+  "recordedAt": "2026-10-04T02:58:04.565733+00:00",
   "scope": "Synthetic APIs and stores; no real merchant payment or adoption claim.",
   "appTests": {
     "health": {
       "passed": 2,
-      "sha256": "39ec74af35e93c8722291e71fd9047e2318741783d0a791944c02fa883fa343c"
+      "sha256": "a62104e91c8c8092d1941cfca7827f39137d82a592b9f8f654cf8b03f1115c2c"
     },
     "webhooks": {
       "passed": 4,
-      "sha256": "d0e28d384bc4a080ed1db2f0bd3405dc596ac22441403e7b646a8fb564e17dff"
+      "sha256": "4ea07dcdc0bb9c249d591ff393f457c216b355985e41912f4ecae7b2da893fce"
     },
     "webhook-lifecycle": {
       "passed": 12,
-      "sha256": "d19d694157f13f5ef7d7afba5065bcf4dff0694b4646dded90757c8cc9517cf5"
+      "sha256": "d9eb55aae095d7effbc8d332ceab91c18560710b0d41151d39cbc5476f64a541"
     },
     "flow": {
       "passed": 13,
-      "sha256": "d4d026f2def02ca4678fcd788f352da3ba645b2a6da25e8163d0903a35e5337a"
+      "sha256": "6fd397c52ff4ad598b6d72b09071b888d306b90c362ff517ee8712689ae047b5"
     },
     "usage": {
-      "passed": 8,
-      "sha256": "8b7b44dfd2386b7ab9b00f1d3d6d37d872a6fbec904211bd002e666a048a3bdd"
+      "passed": 9,
+      "sha256": "b4ac5244f91ee65e4658dbcc865770b70c5ef1a4ad3941555a4309a5e0ffb918"
     },
     "privacy": {
       "passed": 16,
-      "sha256": "3562e50352c4c2da81aeec49de8e22f6ed93cda91905afe3e92f228d60357761"
+      "sha256": "89afeabf8abd9712fb59af82122dd2cbc83e7eb4ce36d91dc93aa0facffdfbf4"
     },
     "monitor": {
       "passed": 8,
-      "sha256": "1960fa671862b6bb63777c4da4f8e8c6f754f227e498f91ba875f0282c8fb5da"
+      "sha256": "a6fbff01442ae5acdd650fa767e0ebb10edeacd7b799ab56afc7e43a995eef50"
     },
     "recovery": {
       "passed": 14,
-      "sha256": "3db4370352bf34a05c7b580eb8b143a26b084203d9e71d32cb6a234d77bc47c5"
+      "sha256": "8b279131a027ea7adf7653e1c9625ccec76de72d6875cbc88c39ee64dfd52fdb"
     }
   },
-  "appTestCount": 77,
+  "appTestCount": 78,
   "rootTests": {
     "passed": 47
   },
   "build": {
-    "checkedAt": "2026-10-04T02:33:58.281Z",
+    "checkedAt": "2026-10-04T02:57:03.077Z",
     "node": "v24.21.0",
     "checks": [
       {
@@ -121,18 +121,18 @@
     ],
     "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
     "lockSha256": "98c11aefe0018a038a15e0723eaec57874cc8bc10bb8d7197be8ca2c457784c3",
-    "serverBuildSha256": "5bc9193b9ac3e40ffdffdab289d395bd138331c28d9072abc4b6ac662b2a400b",
+    "serverBuildSha256": "5524c546af8f54a881a0750c1f439f39e310559cce6381c6dfa471a8051e6dbd",
     "browserTested": false,
     "liveBillingTested": false
   },
   "browser": {
-    "checkedAt": "2026-10-04T02:35:48Z",
+    "checkedAt": "2026-10-04T02:57:30Z",
     "browser": "154.0.8037.93",
     "syntheticOnly": true,
     "shopifyApiAndAdminShellStubbed": true,
     "realSdkAuthentication": true,
     "realPdfRendering": true,
-    "serverBuildSha256": "5bc9193b9ac3e40ffdffdab289d395bd138331c28d9072abc4b6ac662b2a400b",
+    "serverBuildSha256": "5524c546af8f54a881a0750c1f439f39e310559cce6381c6dfa471a8051e6dbd",
     "checks": [
       {
         "name": "plan page authenticates through SDK",
@@ -155,7 +155,7 @@
         "passed": true
       },
       {
-        "name": "active upgrade preserves usage and increases available orders",
+        "name": "active upgrade preserves usage despite Shopify moving the trial end",
         "passed": true
       },
       {
@@ -174,11 +174,11 @@
     "evidence": [
       {
         "file": "output/browser/shopify-plans-desktop.png",
-        "sha256": "b70a85c9c1b72faf125efa719e14849f0fe38fe035f31ca6ab80534cdaca51e3"
+        "sha256": "2dff43de8ea342e9d3d2187c250889885710d114c86f6b1a7c7cdd181484f237"
       },
       {
         "file": "output/browser/shopify-plans-mobile.png",
-        "sha256": "5917e2e10899e4fe7d44f0296cdb3fa839f9417bab7f9f8799e19ce90438ca92"
+        "sha256": "449281a3632430396e6ac8d3762b96fcdd13e3c37cce5ec27a53561d799269ca"
       },
       {
         "file": "output/browser/shopify-plans-order-summary.pdf",
@@ -188,7 +188,7 @@
   },
   "sourceHashes": {
     "shopify/billing.js": "eb1bc22562390938b9acfd35898965d31a01e738df0f9d8b18c44d7eb68feb9c",
-    "shopify/usage.js": "ea535b6b42bc91f0b9627240c925cbe60d038233a19f20a4b30e5df2da7852f1",
+    "shopify/usage.js": "c25efead459ab0f9ff9d285d6550f4d06b2e3a078a3880c12c4b3e3823b51995",
     "shopify/flow.js": "5074e8f49bc72b0c13072e488a62ac30815fc93b15ca4eea8b6c2c0af34e19f7",
     "shopify/privacy.js": "0822e89040929270f32769b17e79598fca3b37279c0c6d0937c1304027f31072",
     "shopify/app/app/routes/app.plans.tsx": "d11f338a2ec48a30295cec7003b0f6e154127022d22b34528ce81826d6b6bc0a",

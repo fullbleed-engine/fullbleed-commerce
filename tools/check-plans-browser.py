@@ -60,7 +60,7 @@ with sync_playwright() as pw:
     context.request.post(f"{fixture['origin']}/__fixture/scale")
     page.goto(f"{fixture['origin']}/app/plans", wait_until='networkidle')
     expect(page.get_by_role('heading', name='250 orders used')).to_be_visible()
-    check('active upgrade preserves usage and increases available orders', '750 available' in page.inner_text('body'))
+    check('active upgrade preserves usage despite Shopify moving the trial end', '750 available' in page.inner_text('body'))
     page.set_viewport_size({'width': 390, 'height': 844})
     page.screenshot(path=str(OUT / 'shopify-plans-mobile.png'), full_page=True)
     check('mobile plan screen fits', page.evaluate('document.documentElement.scrollWidth <= innerWidth'))

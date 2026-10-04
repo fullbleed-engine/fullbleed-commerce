@@ -20,13 +20,13 @@ const require = createRequire(resolve(app, 'package.json')), { PrismaClient } = 
 const db = new PrismaClient();
 await db.usagePeriod.deleteMany(); await db.session.deleteMany(); await db.automationSettings.deleteMany(); await db.recoveryReceipt.deleteMany();
 await db.session.create({ data: { id: `offline_${shop}`, shop, state: '', isOnline: false, accessToken: 'synthetic-token', scope: 'read_orders' } });
-const startsAt = new Date(Date.now() - 86400000), endsAt = new Date(Date.now() + 29 * 86400000);
-await db.usagePeriod.create({ data: { shop, key: `cycle:${startsAt.toISOString()}`, startsAt, endsAt, used: 249 } });
+let trialEndsAt = new Date(Date.now() + 7 * 86400000);
+await db.usagePeriod.create({ data: { shop, key: `trial:${trialEndsAt.toISOString()}`, startsAt: null, endsAt: trialEndsAt, used: 249 } });
 let handle = 'studio';
 const money = amount => ({ presentmentMoney: { amount, currencyCode: 'USD' } });
 globalThis.fetch = async (resource, init) => {
   const request = new Request(resource, init), url = new URL(request.url), body = await request.json();
-  if (url.origin === 'https://partners.shopify.com') return Response.json({ data: { activeSubscription: { shop: { id: 'gid://shopify/Shop/1', myshopifyDomain: shop }, billingPeriod: 'EVERY_30_DAYS', currentBillingCycle: { startTime: startsAt.toISOString(), endTime: endsAt.toISOString() }, items: [{ handle }], cancelAtEndOfCycle: false, trialEndsAt: null, pendingUpdate: null } } });
+  if (url.origin === 'https://partners.shopify.com') return Response.json({ data: { activeSubscription: { shop: { id: 'gid://shopify/Shop/1', myshopifyDomain: shop }, billingPeriod: 'EVERY_30_DAYS', currentBillingCycle: null, items: [{ handle }], cancelAtEndOfCycle: false, trialEndsAt: trialEndsAt.toISOString(), pendingUpdate: null } } });
   if (url.origin !== `https://${shop}`) throw new Error('Only synthetic API calls are allowed.');
   if (body.query.includes('FullbleedShop')) return Response.json({ data: { shop: { id: 'gid://shopify/Shop/1', name: 'Cedar Studio', myshopifyDomain: shop, ianaTimezone: 'America/Chicago', plan: { partnerDevelopment: true } } } });
   if (body.query.includes('FullbleedRecentOrders')) return Response.json({ data: { orders: { nodes: [1, 2].map(id => ({ id: `gid://shopify/Order/${id}`, name: `#100${id}`, displayFinancialStatus: 'PAID' })) } } });
@@ -41,7 +41,7 @@ const handler = createRequestHandler(await import('../shopify/app/build/server/i
 const server = createServer(async (incoming, outgoing) => {
   try {
     const url = new URL(incoming.url, origin);
-    if (url.pathname === '/__fixture/scale' && incoming.method === 'POST') { handle = 'scale'; outgoing.writeHead(204); outgoing.end(); return; }
+    if (url.pathname === '/__fixture/scale' && incoming.method === 'POST') { handle = 'scale'; trialEndsAt = new Date(trialEndsAt.valueOf() + 4 * 60000); outgoing.writeHead(204); outgoing.end(); return; }
     if (url.pathname.startsWith('/assets/')) {
       const file = resolve(assets, `.${decodeURIComponent(url.pathname)}`);
       if (!file.startsWith(assets + sep)) { outgoing.writeHead(404); outgoing.end(); return; }

@@ -36,8 +36,10 @@ retirement does not invalidate an active contract.
 The usage key derives from Shopify's current billing-cycle start, independent
 of plan handle. Changing plans within that cycle preserves usage. Pending
 downgrades take effect only when Shopify returns the new active plan. Trial
-subscriptions with no current cycle use the trial end as their separate key;
-the first paid cycle then starts its own allowance. Invalid or expired period
+subscriptions with no current cycle share one allowance throughout an ongoing
+trial. Shopify can move the trial end when changing plans, so the app preserves
+the original receipts and extends their period instead of resetting usage.
+The first paid cycle starts its own allowance. Invalid or expired period
 metadata fails closed. Annual plans are not implemented.
 
 ## Durable accounting and privacy
