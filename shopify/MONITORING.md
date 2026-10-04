@@ -57,7 +57,11 @@ A production operator must detect missed checks as well as failed checks.
 A privacy warning returns HTTP 503 only on the private monitor route. It does
 not change public deployment readiness or cause the service to restart. The
 existing `node scripts/privacy-status.mjs` command remains available inside the
-container for private operator diagnostics.
+container for private operator diagnostics. Supply the per-task
+[operator context](SECURITY-OPERATIONS.md#record-privileged-operations); it now
+records encrypted start/finish receipts and verifies the recovery dataset
+binding before reading the database. The public monitoring workflow continues
+to use its restricted aggregate HTTP probe and needs no operator credentials.
 
 ## Verify alert delivery before launch
 

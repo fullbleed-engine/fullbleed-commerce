@@ -20,7 +20,8 @@ provide bucket versioning, object locks or lifecycle rules. Never publish signed
 backup URLs. The app's credential is scoped to this separate bucket and is not
 available to the public GitHub monitoring workflow.
 
-Use Node 24.18+ and run from `shopify/app`, with the deployed secret environment:
+Use Node 26.10.0 and run from `shopify/app`, with the deployed secret environment
+and the per-task [operator context](SECURITY-OPERATIONS.md#record-privileged-operations):
 
 ```sh
 node scripts/recovery.mjs init
@@ -31,11 +32,24 @@ existing encrypted marker and cannot replace it. A different key/dataset or a
 database already bound to another dataset fails closed. Railway cannot use the
 filesystem adapter; that adapter exists for isolated local/container rehearsals.
 
-Container startup runs migrations, then `reconcile`, before opening HTTP. Missing
+Container startup runs migrations, then `reconcile --service`, before opening HTTP. Missing
 credentials, inaccessible storage or invalid journal objects stop startup. The
 private monitor also checks storage access; a later outage does not cause public
 readiness to restart the server. It prevents privacy operations from acknowledging
 success without recording their recovery instruction.
+
+Every manual recovery command records an encrypted operator start before database
+access and a completion before returning its result. Keep the returned `auditId`
+with the private work reference. Missing context or initial audit storage failure
+stops the operation. Failed completion recording leaves an incomplete start;
+inspect it before deciding whether to retry. The empty dataset marker is the
+only initialization write before that first audit receipt.
+
+The `--service` identity is limited to startup `reconcile` and scheduled `maintain`.
+Those operations are also audited, as `fullbleed-maintenance`, independently of
+human environment variables. Do not invoke service mode for interactive work.
+It grants no additional storage permissions and cannot select backup, restore,
+list, status or initialization commands.
 
 ## What a backup contains
 
@@ -64,6 +78,9 @@ remain for 35 days and are removed only after replay confirms their database
 commit. Completed instruction receipts then expire too; the dataset binding stays.
 Cleanup runs at startup and hourly while the server is online. Downtime delays
 physical removal, but does not extend the seven-day restore limit.
+The same maintenance removes encrypted operator receipts after 30 days, including
+abandoned sessions. It authenticates expired records before deletion and reads
+only those records, rather than downloading the full current audit history.
 
 ## Automatic backups and freshness
 

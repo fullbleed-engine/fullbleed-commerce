@@ -1,0 +1,191 @@
+{
+  "checkedAt": "2026-10-04T14:57:28.576Z",
+  "scope": "Attended operator-audit and recovery verification on an empty synthetic staging database. Not a production merchant test, continuous-operations demonstration, independent security audit or marketplace approval.",
+  "testedSourceCommit": "f933bb1bcef985fc0c9d4020a79be241d1c94ede",
+  "deploymentId": "c77bcdde-0e67-430a-bb97-1526d690db02",
+  "imageDigest": "sha256:3dad943f5883548541611c50467e6405b21360ddff79735172b671382af62a1a",
+  "serverBuildSha256": "11de5eebf47a3582e9226e7c95eef368e0d674d75c5cabbc72cae3dcca4c9474",
+  "node": "v26.10.0",
+  "runtimeFiles": {
+    "package.json": "27a7b608e65f6c22e7f782f8ebb53fcbc71dbf0a35b3ab1bfb9941b1500f76b0",
+    "shopify/app/package.json": "8eb09d232bab0a03417be40cd072ceba9c45b9cfbe22cd6ae0e82a46e2b0cf87",
+    "shopify/operator-audit.js": "ce82fefd1fbb6ebc932689ffe31c70e98a544cff6c4c01bda96b6859cd05eb1a",
+    "shopify/recovery-journal.js": "9b58dcecad7a75aa57c8c70806a7021e7b7f6a9d7c2d2445af691b188cf761c6",
+    "shopify/privacy.js": "bbe63eb572d47df3a09c02843bc54ba69e62b49aaab5595e9592fdce6aeba6c0",
+    "shopify/access-audit.js": "40017287f976ab62962970d03006996358dbb4ab7a6e67bf04fc3910b515dda0",
+    "shopify/app/scripts/operator-audit.mjs": "f8374e61e0f0b0917026eb7b6e18bb83121f67625e8027b8d44d75dbdef7541a",
+    "shopify/app/scripts/privacy-status.mjs": "39a67a25631ebe65e705a92c9de611429f965169ed955df0cf6ee3f15fd8c797",
+    "shopify/app/scripts/recovery.mjs": "63eb2bcfab1f7cc4096549e41b9f6614984085b12f0584568baf1baecfb8d8b2",
+    "shopify/app/scripts/recovery-operations.mjs": "4e1858180f65bbd5718c60611bb7c0ebb8015b28ffa590abce639ee62fafb206",
+    "shopify/app/scripts/recovery-store.mjs": "84963ea5dad614a67d30f8d225dd6ddc0a01bcc20920964cd5af2384b45176c7",
+    "shopify/app/scripts/container-start.sh": "1f0f0fd3da5d2b934c455f5e14dc38449bdc5cb16e024e85bd63e1987b61bae7",
+    "shopify/app/prisma/schema.prisma": "2c08bb99e1b8a08ac3edcf417e7a9672b225a68da0768d87029cf5b92190e3ae"
+  },
+  "runtime": {
+    "uid": 1000,
+    "cpuLimit": 0.5,
+    "memoryBytes": 536870912,
+    "humanIdentityInServiceEnvironment": false
+  },
+  "local": {
+    "focusedOperatorTests": 13,
+    "sharedTests": 51,
+    "shopifyVerificationGroups": 18,
+    "containerChecks": 14,
+    "containerImage": "sha256:bd6afe5aa8cb23f2b14b903aff5fdb497a44e4d47ff4b9cd1724f1fdf96bab1d",
+    "containerVerificationSha256": "74dd889834c044a8fc058a6193e3c4f37011942436db6df61d587b6b1b8e82c1",
+    "syntheticBurstJobs": 24,
+    "burstPreparedPdfBytesMatched": true,
+    "burstHealthErrors": 0
+  },
+  "ci": [
+    {
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37210119320",
+      "headSha": "f933bb1bcef985fc0c9d4020a79be241d1c94ede",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "upgrade",
+          "conclusion": "success"
+        },
+        {
+          "name": "pagination",
+          "conclusion": "success"
+        },
+        {
+          "name": "shopify-plans-browser",
+          "conclusion": "success"
+        },
+        {
+          "name": "container",
+          "conclusion": "success"
+        },
+        {
+          "name": "renderer-deployment",
+          "conclusion": "success"
+        },
+        {
+          "name": "integration",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37210119354",
+      "headSha": "f933bb1bcef985fc0c9d4020a79be241d1c94ede",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "browser (firefox)",
+          "conclusion": "success"
+        },
+        {
+          "name": "browser (webkit)",
+          "conclusion": "success"
+        },
+        {
+          "name": "browser (chrome)",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "hosted": {
+    "checks": [
+      {
+        "name": "all ten merchant tables are empty before the attended synthetic rehearsal",
+        "passed": true
+      },
+      {
+        "name": "running Node 26 image matches thirteen exported runtime files and staging resource limits",
+        "passed": true
+      },
+      {
+        "name": "manual diagnostics reject missing operator identity while the app runs without it",
+        "passed": true
+      },
+      {
+        "name": "real aggregate privacy CLI completes its independent audit receipt",
+        "passed": true
+      },
+      {
+        "name": "real encrypted backup and isolated restore complete with empty merchant tables and recorded receipts",
+        "passed": true
+      },
+      {
+        "name": "hosted HTTPS readiness and independent backup freshness pass",
+        "passed": true
+      },
+      {
+        "name": "privileged SSH inspection itself has a completed outer operator receipt and its owned quarantine is removed",
+        "passed": true
+      },
+      {
+        "name": "separate CLI review authenticates all human completions and distinct startup/background service records",
+        "passed": true
+      },
+      {
+        "name": "ten independently stored operator objects are encrypted and read back without exposing customer data",
+        "passed": true
+      }
+    ],
+    "merchantTableCounts": {
+      "session": 0,
+      "brand": 0,
+      "documentTemplate": 0,
+      "automationSettings": 0,
+      "automationJob": 0,
+      "usagePeriod": 0,
+      "usageOrder": 0,
+      "privacyRequest": 0,
+      "privacyRequestOrder": 0,
+      "accessEvent": 0
+    },
+    "completedManualOperations": 5,
+    "serviceRecordCount": 2,
+    "operations": {
+      "recovery.reconcile": 1,
+      "recovery.maintain": 1,
+      "console.railway": 1,
+      "privacy.status": 1,
+      "recovery.backup": 1,
+      "recovery.restore": 1,
+      "audit.review": 1
+    },
+    "quarantineRemoved": true,
+    "backupSha256": "fdc78b200c6b133a11c3cd908ef3a7cab98497a429b921d8c578151c67259124",
+    "restoredSha256": "300f7a835261f4152a18209319b7172b7a5deeb8fe82f80654987947a450e00a"
+  },
+  "independentReadback": {
+    "checkedAt": "2026-10-04T14:57:28.576Z",
+    "computeStopped": true,
+    "independentReadback": true,
+    "authenticatedEncryptionVerified": true,
+    "matchedEncryptedObjects": 10,
+    "authenticatedHostedOperations": 5,
+    "priorRecordCount": 7,
+    "priorIncompleteRecords": 0
+  },
+  "retentionDays": 30,
+  "actorIdentitySource": "Configured operator environment or restricted service process; account authentication remains with the provider.",
+  "limitations": [
+    "Provider-console and exceptional direct database actions need the documented begin/finish procedure; they are not automatically captured.",
+    "A holder of storage and encryption credentials can forge or delete receipts; this is not immutable or independent identity evidence.",
+    "Online retention and alert response still require continuous production operation and assigned operator duty."
+  ],
+  "cleanup": {
+    "checkedAt": "2026-10-04T14:57:19.224704+00:00",
+    "status": "REMOVED",
+    "activeDeployments": 0,
+    "persistentVolumeRetained": true,
+    "privateRecoveryBucketRetained": true
+  },
+  "cost": {
+    "confirmedLaunchChargesUsd": 19,
+    "authorizedTotalUsd": 50,
+    "projectMeteredUsageUsd": 0.008532625662866512,
+    "usageCheckedAt": "2026-10-04T14:57:19.224704+00:00",
+    "meteredUsageIsNotInvoice": true,
+    "newSubscriptionPurchased": false
+  }
+}
