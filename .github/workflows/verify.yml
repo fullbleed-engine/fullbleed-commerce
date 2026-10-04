@@ -82,6 +82,7 @@ jobs:
             package-lock.json
             shopify/app/package-lock.json
       - run: npm ci --ignore-scripts
+      - run: npm run setup:playground
       - run: npm run build
       - run: npm test
       - run: npm run examples
@@ -119,6 +120,7 @@ jobs:
           node-version: 26.10.0
           cache: npm
       - run: npm ci --ignore-scripts
+      - run: npm run setup:playground
       - run: npm run build
       - run: npm run pack
       - run: node tools/check-upgrade.mjs --hpos
@@ -154,6 +156,7 @@ jobs:
           node-version: 26.10.0
           cache: npm
       - run: npm ci --ignore-scripts
+      - run: npm run setup:playground
       - run: npm run build
       - run: npm run pack
       - run: node tools/check-renderer-deployment.mjs

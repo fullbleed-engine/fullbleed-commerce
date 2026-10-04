@@ -47,6 +47,7 @@ jobs:
           cache: pip
           cache-dependency-path: tools/browser-requirements.txt
       - run: npm ci --ignore-scripts
+      - run: npm run setup:playground
       - run: npm run build
       - run: npm run pack
       - run: python -m pip install -r tools/browser-requirements.txt

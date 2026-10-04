@@ -48,6 +48,7 @@ jobs:
           node-version: 26.10.0
           cache: npm
       - run: npm ci --ignore-scripts
+      - run: npm run setup:playground
       - run: npm run build
       - run: npm run pack
       - name: Extract the exact free plugin archive

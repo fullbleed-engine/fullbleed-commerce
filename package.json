@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "node tools/build.mjs",
+    "setup:playground": "npm rebuild fs-ext-extra-prebuilt --ignore-scripts=false",
     "test": "node --test test/*.test.mjs",
     "examples": "node tools/render-examples.mjs",
     "pack": "node tools/pack.mjs",
@@ -23,6 +24,9 @@
   },
   "overrides": {
     "qs": "6.16.0"
+  },
+  "allowScripts": {
+    "fs-ext-extra-prebuilt": true
   },
   "devDependencies": {
     "@wp-playground/cli": "3.1.56",
