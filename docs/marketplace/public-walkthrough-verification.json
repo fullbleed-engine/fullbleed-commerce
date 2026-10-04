@@ -1,0 +1,69 @@
+{
+  "checkedAt": "2026-10-04T06:10:50.251717+00:00",
+  "page": "https://docs.fullbleed.dev/commerce/shopify/",
+  "pageStatus": 200,
+  "requestAuthentication": "None",
+  "docsMergeCommit": "8a6cefb53fa23e1d18798fae3fe7df61853bee27",
+  "publicationWorkflow": "https://github.com/fullbleed-engine/docs/actions/runs/37181716283",
+  "artifacts": [
+    {
+      "url": "https://docs.fullbleed.dev/assets/commerce/fullbleed-commerce-walkthrough.mp4",
+      "status": 200,
+      "contentType": "video/mp4",
+      "bytes": 4776097,
+      "sha256": "1d8bc4d62a175a1a88ceaf4f613194c54d6bd0b6ce5984c90fdd841fb98ae759",
+      "matchesVerifiedFile": true,
+      "acceptRanges": "bytes"
+    },
+    {
+      "url": "https://docs.fullbleed.dev/assets/commerce/shopify-automations.png",
+      "status": 200,
+      "contentType": "image/png",
+      "bytes": 142947,
+      "sha256": "adf97b48870f263851f9ff89547c31db94f18ffd029ae5625da535eebb819f8a",
+      "matchesVerifiedFile": true,
+      "acceptRanges": "bytes"
+    },
+    {
+      "url": "https://docs.fullbleed.dev/assets/commerce/shopify-custom-order-summary.pdf",
+      "status": 200,
+      "contentType": "application/pdf",
+      "bytes": 124154,
+      "sha256": "aeb000c5083537e8e0d32dc1fb040427e7ce0358184a8416e5dc0237facbe97a",
+      "matchesVerifiedFile": true,
+      "acceptRanges": "bytes"
+    },
+    {
+      "url": "https://docs.fullbleed.dev/assets/commerce/shopify-contrast-packing-slip.pdf",
+      "status": 200,
+      "contentType": "application/pdf",
+      "bytes": 111735,
+      "sha256": "253654a480086a67cc07a0e0a451aaf3268711f598ac2eb8d89cd2272cd2ed28",
+      "matchesVerifiedFile": true,
+      "acceptRanges": "bytes"
+    }
+  ],
+  "browser": {
+    "checkedAt": "2026-10-04T06:11:16.062Z",
+    "page": "https://docs.fullbleed.dev/commerce/shopify/",
+    "title": "Shopify PDF automation preview - Fullbleed",
+    "playback": {
+      "duration": 252.416667,
+      "currentTime": 2.194508,
+      "videoWidth": 1600,
+      "videoHeight": 900,
+      "paused": false,
+      "error": null,
+      "source": "https://docs.fullbleed.dev/assets/commerce/fullbleed-commerce-walkthrough.mp4"
+    },
+    "desktop": {
+      "width": 1440,
+      "scrollWidth": 1425
+    },
+    "mobile": {
+      "width": 390,
+      "scrollWidth": 375
+    },
+    "visualInspectionPassed": true
+  }
+}

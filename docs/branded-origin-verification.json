@@ -1,0 +1,570 @@
+{
+  "checkedAt": "2026-10-04T05:54:14.565075+00:00",
+  "scope": "Attended synthetic Shopify store only",
+  "sourceCommit": "aba1b199d3000a2940e6869cfe207a0fe35d5cfc",
+  "shopifyVersion": {
+    "name": "branded-origin-aba1b19",
+    "id": "1153932984321",
+    "origin": "https://commerce.fullbleed.dev",
+    "callback": "https://commerce.fullbleed.dev/auth/callback",
+    "scopes": "read_orders",
+    "cliValidation": {
+      "valid": true,
+      "issues": []
+    }
+  },
+  "deployment": {
+    "id": "2cb07797-39b5-4058-8905-1f32b3f93e2c",
+    "trackedSourcesOnly": true,
+    "runtimeVariablesChanged": [
+      "SHOPIFY_APP_URL"
+    ],
+    "allOtherVariablesPreserved": true
+  },
+  "localValidation": {
+    "checkedAt": "2026-10-04T05:13:26.606Z",
+    "node": "v24.21.0",
+    "checks": [
+      {
+        "name": "schema",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "migrations",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "recovery-fixture",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "route-types",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "typecheck",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "lint",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "build",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "health",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "webhooks",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "webhook-lifecycle",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "flow",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "usage",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "privacy",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "monitor",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "recovery",
+        "exitCode": 0,
+        "passed": true
+      }
+    ],
+    "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
+    "lockSha256": "98c11aefe0018a038a15e0723eaec57874cc8bc10bb8d7197be8ca2c457784c3",
+    "serverBuildSha256": "158690daadc92ee2166dfc065b0bf14da8a31ce689024f1126072a85ec13de6d",
+    "browserTested": false,
+    "liveBillingTested": false
+  },
+  "preflight": {
+    "checkedAt": "2026-10-04T05:20:29.971Z",
+    "nodeEnv": "production",
+    "sessionsBeforeInstall": 0,
+    "billingConfigured": true,
+    "compiledBillingQueryVerified": true,
+    "privateVolumePermissions": true,
+    "cpuMax": "50000 100000",
+    "memoryMax": "536870912",
+    "serverBuildSha256": "fc59230400391f916f8deb1971e54b843ea378cedee2fc77cdb3de94fd098b9f",
+    "monitorStatus": 200,
+    "monitor": {
+      "status": "ok",
+      "checkedAt": "2026-10-04T05:20:29.593Z",
+      "backups": {
+        "status": "fresh",
+        "snapshotAt": "2026-10-04T03:00:20.731Z",
+        "ageSeconds": 8408
+      },
+      "privacy": {
+        "pending": 0,
+        "overdue": 0,
+        "dueWithin48Hours": 0,
+        "keyMismatch": 0
+      }
+    },
+    "health": {
+      "status": 200,
+      "body": {
+        "status": "ok"
+      }
+    },
+    "privacyRedirect": {
+      "status": 302,
+      "location": "https://docs.fullbleed.dev/commerce/privacy/",
+      "referrerPolicy": "no-referrer",
+      "queryNotForwarded": true
+    },
+    "canonicalPrivacyStatus": 200
+  },
+  "browserInstall": {
+    "freshInstallation": true,
+    "runtimeOrigin": "https://commerce.fullbleed.dev",
+    "existingTestTrialAccepted": true,
+    "paidPurchaseTested": false
+  },
+  "customization": {
+    "manualSavedTemplateMatchesFlow": true,
+    "sha256": "aeb000c5083537e8e0d32dc1fb040427e7ce0358184a8416e5dc0237facbe97a",
+    "savedVisualTextSurvivedNavigation": true,
+    "savedCssSurvivedNavigation": true
+  },
+  "flow": {
+    "runId": "01M42P9413TWPS7E2WRKNECZEW:01a0fe46-037a-7441-a300-878f89fc9a50:v2",
+    "trigger": "Manual retry of existing synthetic order #1004",
+    "completedActions": 7,
+    "orderMetafields": {
+      "checkedAt": "2026-10-04T05:31:09.339Z",
+      "apiVersion": "2026-10",
+      "orderId": "gid://shopify/Order/18921151037598",
+      "orderName": "#1004",
+      "checks": [
+        {
+          "name": "synthetic order remains unpaid and unfulfilled",
+          "passed": true
+        },
+        {
+          "name": "order-summary: ready on first attempt",
+          "passed": true
+        },
+        {
+          "name": "order-summary: stable private URL addresses prepared job",
+          "passed": true
+        },
+        {
+          "name": "order-summary: saved expiry matches ledger",
+          "passed": true
+        },
+        {
+          "name": "order-summary: typed fields",
+          "passed": true
+        },
+        {
+          "name": "fullbleed_summary_link: storefront and customer accounts cannot read",
+          "passed": true
+        },
+        {
+          "name": "fullbleed_summary_expiry: storefront and customer accounts cannot read",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: ready on first attempt",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: stable private URL addresses prepared job",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: saved expiry matches ledger",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: typed fields",
+          "passed": true
+        },
+        {
+          "name": "fullbleed_packing_link: storefront and customer accounts cannot read",
+          "passed": true
+        },
+        {
+          "name": "fullbleed_packing_expiry: storefront and customer accounts cannot read",
+          "passed": true
+        },
+        {
+          "name": "summary uses the saved custom template and packing uses the built-in design",
+          "passed": true
+        }
+      ],
+      "fields": [
+        {
+          "namespace": "custom",
+          "key": "fullbleed_summary_link",
+          "type": "url",
+          "access": {
+            "storefront": "NONE",
+            "customerAccount": "NONE"
+          },
+          "valueSha256": "bd7993e31246a56a68cd5af4d09e7b8e4b97bbf91ac595069e2e34c033938e13"
+        },
+        {
+          "namespace": "custom",
+          "key": "fullbleed_summary_expiry",
+          "type": "date_time",
+          "access": {
+            "storefront": "NONE",
+            "customerAccount": "NONE"
+          },
+          "valueSha256": "5ec1a2074eb92135bf9440b89be26a6610a58b1f8956640f9043454909aa46bf"
+        },
+        {
+          "namespace": "custom",
+          "key": "fullbleed_packing_link",
+          "type": "url",
+          "access": {
+            "storefront": "NONE",
+            "customerAccount": "NONE"
+          },
+          "valueSha256": "0fecfb84994ac3d19330f8ed0e809574479821ffe16dd73846330dba4e8dbb7a"
+        },
+        {
+          "namespace": "custom",
+          "key": "fullbleed_packing_expiry",
+          "type": "date_time",
+          "access": {
+            "storefront": "NONE",
+            "customerAccount": "NONE"
+          },
+          "valueSha256": "53c8648db317735b8ee7f147ac435c737e03a93569c7e72d82ef9aee87ee5ed3"
+        }
+      ],
+      "jobs": [
+        {
+          "id": "64b43bc1-7bc7-48d5-bd24-578b3fd684fa",
+          "shop": "fullbleed-commerce-test.myshopify.com",
+          "runId": "f398604f98fc4a0a679d1567ae503921f058d014",
+          "orderId": "gid://shopify/Order/18921151037598",
+          "kind": "order-summary",
+          "status": "ready",
+          "attempts": 1,
+          "downloads": 0,
+          "pdfSha256": "aeb000c5083537e8e0d32dc1fb040427e7ce0358184a8416e5dc0237facbe97a",
+          "expiresAt": "2026-10-05T05:30:42.694Z",
+          "createdAt": "2026-10-04T05:30:40.567Z",
+          "templateRevision": "998c3930-e1cd-4bb5-9060-f32b5c3778ea"
+        },
+        {
+          "id": "8b2366dd-f913-44b7-a3cc-0e7c7c9429f0",
+          "shop": "fullbleed-commerce-test.myshopify.com",
+          "runId": "f82ca1c76d05fe2563ade2092b6cdb24d84dd92c",
+          "orderId": "gid://shopify/Order/18921151037598",
+          "kind": "packing-slip",
+          "status": "ready",
+          "attempts": 1,
+          "downloads": 0,
+          "pdfSha256": "253654a480086a67cc07a0e0a451aaf3268711f598ac2eb8d89cd2272cd2ed28",
+          "expiresAt": "2026-10-05T05:30:52.598Z",
+          "createdAt": "2026-10-04T05:30:48.860Z",
+          "templateRevision": ""
+        }
+      ]
+    },
+    "browserDownloads": {
+      "checkedAt": "2026-10-04T05:31:20.443375+00:00",
+      "browser": "Chrome 154.0.8037.93 through CLI Playwright",
+      "linkSource": "Actual order metafields written by native Shopify Flow actions",
+      "orderId": "gid://shopify/Order/18921151037598",
+      "orderName": "#1004",
+      "checks": [
+        {
+          "name": "order-summary: browser strips credential from location",
+          "passed": true
+        },
+        {
+          "name": "order-summary: private landing response",
+          "passed": true
+        },
+        {
+          "name": "order-summary: native browser download completed",
+          "passed": true
+        },
+        {
+          "name": "order-summary: PDF response is private",
+          "passed": true
+        },
+        {
+          "name": "order-summary: download matches prepared PDF SHA-256",
+          "passed": true
+        },
+        {
+          "name": "order-summary: synthetic order items complete",
+          "passed": true
+        },
+        {
+          "name": "order-summary: appropriate address shown",
+          "passed": true
+        },
+        {
+          "name": "order-summary: one page",
+          "passed": true
+        },
+        {
+          "name": "order-summary: summary total preserved or packing prices omitted",
+          "passed": true
+        },
+        {
+          "name": "order-summary: all text lies inside page",
+          "passed": true
+        },
+        {
+          "name": "order-summary: download page fits mobile viewport",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: browser strips credential from location",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: private landing response",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: native browser download completed",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: PDF response is private",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: download matches prepared PDF SHA-256",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: synthetic order items complete",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: appropriate address shown",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: one page",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: summary total preserved or packing prices omitted",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: all text lies inside page",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: download page fits mobile viewport",
+          "passed": true
+        },
+        {
+          "name": "no JavaScript errors on download pages",
+          "passed": true
+        },
+        {
+          "name": "exactly one preparation per document",
+          "passed": true
+        }
+      ],
+      "documents": [
+        {
+          "kind": "order-summary",
+          "jobId": "64b43bc1-7bc7-48d5-bd24-578b3fd684fa",
+          "pdfSha256": "aeb000c5083537e8e0d32dc1fb040427e7ce0358184a8416e5dc0237facbe97a",
+          "linkSha256": "bd7993e31246a56a68cd5af4d09e7b8e4b97bbf91ac595069e2e34c033938e13",
+          "bytes": 124154,
+          "pages": 1,
+          "filename": "order-summary-1004.pdf",
+          "preparedAt": "2026-10-04T05:30:40.567Z",
+          "expiresAt": "2026-10-05T05:30:42.694Z",
+          "preparationAttempts": 1,
+          "templateRevision": "998c3930-e1cd-4bb5-9060-f32b5c3778ea"
+        },
+        {
+          "kind": "packing-slip",
+          "jobId": "8b2366dd-f913-44b7-a3cc-0e7c7c9429f0",
+          "pdfSha256": "253654a480086a67cc07a0e0a451aaf3268711f598ac2eb8d89cd2272cd2ed28",
+          "linkSha256": "0fecfb84994ac3d19330f8ed0e809574479821ffe16dd73846330dba4e8dbb7a",
+          "bytes": 111735,
+          "pages": 1,
+          "filename": "packing-slip-1004.pdf",
+          "preparedAt": "2026-10-04T05:30:48.860Z",
+          "expiresAt": "2026-10-05T05:30:52.598Z",
+          "preparationAttempts": 1,
+          "templateRevision": ""
+        }
+      ],
+      "pageErrors": []
+    }
+  },
+  "pause": {
+    "checkedAt": "2026-10-04T05:34:42.737255+00:00",
+    "browser": "Chrome 154.0.8037.93 through CLI Playwright",
+    "linkSource": "Actual order metafields written by native Shopify Flow actions",
+    "orderId": "gid://shopify/Order/18921151037598",
+    "orderName": "#1004",
+    "checks": [
+      {
+        "name": "order-summary: browser strips credential from location",
+        "passed": true
+      },
+      {
+        "name": "order-summary: private landing response",
+        "passed": true
+      },
+      {
+        "name": "order-summary: saved order link is unusable after pause",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: browser strips credential from location",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: private landing response",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: saved order link is unusable after pause",
+        "passed": true
+      },
+      {
+        "name": "no JavaScript errors on download pages",
+        "passed": true
+      },
+      {
+        "name": "exactly one preparation per document",
+        "passed": true
+      }
+    ],
+    "documents": [],
+    "pageErrors": []
+  },
+  "uninstall": {
+    "data": {
+      "checkedAt": "2026-10-04T05:40:46.694Z",
+      "counts": {
+        "session": 0,
+        "brand": 0,
+        "documentTemplate": 0,
+        "automationSettings": 0,
+        "automationJob": 0,
+        "privacyRequest": 0,
+        "privacyRequestOrder": 0,
+        "usagePeriod": 0,
+        "usageOrder": 0
+      },
+      "erasure": {
+        "id": "b3b58e88-6114-4256-a900-5fddc9e4c064",
+        "recordedAt": "2026-10-04T05:40:31.052Z",
+        "type": "erase-shop",
+        "encryptedJournalReadbackVerified": true,
+        "transactionReceiptPresent": true
+      },
+      "monitorStatus": 200,
+      "monitor": {
+        "status": "ok",
+        "checkedAt": "2026-10-04T05:40:46.637Z",
+        "backups": {
+          "status": "fresh",
+          "snapshotAt": "2026-10-04T03:00:20.731Z",
+          "ageSeconds": 9625
+        },
+        "privacy": {
+          "pending": 0,
+          "overdue": 0,
+          "dueWithin48Hours": 0,
+          "keyMismatch": 0
+        }
+      }
+    },
+    "delivery": [
+      {
+        "timestamp": "2026-10-04T05:40:31.483996237Z",
+        "requestId": "zuu3XeT1THizDpkonPRhug",
+        "method": "POST",
+        "path": "/webhooks/app/uninstalled",
+        "httpStatus": 204,
+        "totalDuration": 559,
+        "responseDetails": ""
+      }
+    ],
+    "privateLinkStatus": {
+      "checkedAt": "2026-10-04T05:41:01.336440+00:00",
+      "checks": [
+        {
+          "kind": "order-summary",
+          "status": 404
+        },
+        {
+          "kind": "packing-slip",
+          "status": 404
+        }
+      ]
+    }
+  },
+  "cleanup": {
+    "workflowOff": true,
+    "computeStopped": true,
+    "activeDeployments": 0,
+    "volumeRetained": true,
+    "encryptedRecoveryBucketRetained": true,
+    "lastDeploymentStatus": "REMOVED",
+    "meteredProjectUsageDollars": 0.007029546208164405
+  },
+  "limitations": [
+    "No marketplace submission or approval.",
+    "No paid merchant purchase, production capacity, or ongoing operating allocation verified.",
+    "Initial PR pagination CI job exited 139; same-commit push and job retry passed. Cause not established."
+  ],
+  "initialSourceCi": {
+    "commit": "aba1b199d3000a2940e6869cfe207a0fe35d5cfc",
+    "pushRun": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37179155865",
+    "pullRequestRun": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37179186421",
+    "checksPassingAfterRetry": 12,
+    "initialPaginationJob": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37179186421/job/111368079718",
+    "initialPaginationExitCode": 139,
+    "paginationRetryAttempt": 2,
+    "rootCauseEstablished": false,
+    "investigation": "https://github.com/fullbleed-engine/fullbleed-node/issues/7"
+  },
+  "publicWalkthrough": "https://docs.fullbleed.dev/commerce/shopify/",
+  "marketplaceMediaRecord": "marketplace/asset-verification.json"
+}

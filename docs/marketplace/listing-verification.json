@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-04T04:43:09.758Z",
+  "checkedAt": "2026-10-04T06:13:05.935Z",
   "url": "https://apps.shopify.com/services/partner-app-submissions/91ba2420b9c9d87e00dab059b51eb005/en",
   "draftSaved": true,
   "submitted": false,
@@ -35,25 +35,29 @@
     {
       "name": "appSubmissionContactEmail",
       "value": "keenan@fullbleed.dev"
+    },
+    {
+      "name": "desktopScreenshots.0.imageAltText",
+      "value": "Track ready document links and pause Flow automation"
+    },
+    {
+      "name": "desktopScreenshots.1.imageAltText",
+      "value": "Customize order templates with the visual block editor"
+    },
+    {
+      "name": "desktopScreenshots.2.imageAltText",
+      "value": "Edit and save your own HTML and print CSS"
+    },
+    {
+      "name": "screencastUrl",
+      "value": "https://docs.fullbleed.dev/assets/commerce/fullbleed-commerce-walkthrough.mp4"
+    },
+    {
+      "name": "testingInstructions",
+      "value": "Development preview. Staging is stopped between attended tests. Do not submit for review until continuous hosting, protected-data review and the remaining production checks are complete. The configured app origin is https://commerce.fullbleed.dev.\n\n1. Install Fullbleed Commerce. No separate account is needed. Use Shopify test billing only on a development store.\n2. In Documents, choose a synthetic recent order and create an order summary or packing slip. Open Download.\n3. In Template studio, change text or styles visually, or edit HTML / CSS. Preview and save. In Brand settings, configure seller lines, paper, design and accent. Reprint to verify the saved template.\n4. Enable Flow in Automations. In Shopify Flow, use Order created followed by Create order summary link and Create packing slip link. Pass each action's downloadUrl and expiresAt to private order fields or an intended staff destination. The app itself sends no customer email.\n5. Run the workflow on a synthetic order. Check Completed, both Fullbleed activity entries, the two saved expiries and both PDF downloads. Pause automation and verify those links stop working.\n6. In Plan and usage, test Studio/Scale changes and reprint the same order. Both document types and reprints share one unique-order unit per billing period. No automatic overage charges.\n7. Uninstall to test data erasure.\n\nThe captioned screencast shows actual installation, saved visual/CSS customization, an existing development-store trial, a manual retry of an already configured Flow workflow, document activity and pause. It does not show a real merchant payment or a new order-created trigger. Public walkthrough and synthetic PDFs: https://docs.fullbleed.dev/commerce/shopify/.\n\nCurrent limits: English UI; recent unedited, uncancelled and unrefunded orders; at most 250 items; no fiscal invoicing, shipment-specific fulfillment documents or customer email delivery."
     }
   ],
-  "imageSelected": true,
-  "categoryDetails": "App category details\n\nList your app’s functionality. This helps merchants further discover and compare similar apps in the same category.\n\nThis will be used on your listing page and other surfaces on the Shopify App Store.\n\n\n\nDO\nAdd a minimum of 1 tag, maximum of 25 per field\n\n\nPrimary category details\nOrders and shipping › Orders › Invoices and receipts\nDocument types\nPacking slips\nNot applicable for this app\nCustomization\nBranding\nColor and font\nFields\nLogos\nTemplates\nNot applicable for this app\nFile management\nPDF generation\nPrint and export\nNot applicable for this app\n",
   "images": [
-    {
-      "alt": "",
-      "path": "https://cdn.shopify.com/shopifycloud/shopify_app_store/bundles/assets/partners-CiqGlNIo.svg",
-      "loaded": true,
-      "width": 300,
-      "height": 50
-    },
-    {
-      "alt": "",
-      "path": "https://cdn.shopify.com/shopifycloud/shopify_app_store/bundles/assets/partners-CiqGlNIo.svg",
-      "loaded": true,
-      "width": 300,
-      "height": 50
-    },
     {
       "alt": "",
       "path": "https://storage.googleapis.com/shopify-app-store-partner-uploads/uploads/c99cda50-73a1-4e9b-a76b-09854714a0bf/00107278-5a8e-4cae-9b94-a3c4f86a8a42.png",
@@ -67,18 +71,84 @@
       "loaded": true,
       "width": 1600,
       "height": 900
-    }
-  ],
-  "alerts": [
-    "This listing has 2 issues to fixReview these elements and fix all issues:App store listing content: ScreenshotsApp testing information: Screencast URL",
-    "At least 3 valid desktop screenshots are required"
-  ],
-  "validationErrors": [
+    },
     {
-      "name": "screencastUrl",
-      "id": ":r6i:"
+      "alt": "",
+      "path": "https://storage.googleapis.com/shopify-app-store-partner-uploads/uploads/37d92f05-c8aa-4513-bee7-05d95624449a/d9f8c3e2-7048-45c5-811e-92d94d2e04d0.png",
+      "loaded": true,
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "alt": "",
+      "path": "https://storage.googleapis.com/shopify-app-store-partner-uploads/uploads/a9e80341-5dc8-49bd-ab64-2d7928df7ba8/bb6f2693-95bd-462e-b313-9c57ab94029c.png",
+      "loaded": true,
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "alt": "",
+      "path": "https://storage.googleapis.com/shopify-app-store-partner-uploads/uploads/6a23c72e-8453-4fb9-9d07-db45077b57ae/9cfc78e6-a430-4240-aff2-8c31d8dd9112.png",
+      "loaded": true,
+      "width": 1600,
+      "height": 900
     }
   ],
+  "alerts": [],
+  "validationErrors": [],
+  "unsavedChanges": 0,
+  "parentSubmission": {
+    "checkedAt": "2026-10-04T06:14:17.853Z",
+    "url": "https://partners.shopify.com/5227588/apps/430863056897/distribution/app-store",
+    "text": "Click to go back\nApp Store review\nAttention\nDraft\n\nComplete preliminary steps to prepare your submission\n\nSubmit for review\nPreliminary steps\nQueries supported API versions\nFixed requirement issues with configuration\nAdded an emergency contact for your account\nCreated listing (English)\nEdit\nListing checked for common issues\nComplete your request to access protected customer data\n\nYou started working on your request, but it's still incomplete or has errors. Finish it up, or address the errors.\n\nMy app won't use customer data\nComplete\nRun an automated check for common errors\nAutomated checks for common errors\n\nChecks expire after 30 days, so we recommend doing this last.\n\nImmediately authenticates after install\nImmediately redirects to app UI after authentication\nProvides mandatory compliance webhooks\nVerifies webhooks with HMAC signatures\nUses a valid TLS certificate\nRun\nSelect your app's capabilities to show personalized review requirements\n\nSome apps may have special requirements based on how they'll help merchants.\n\nSelect\nEmbedded app checks\nRun AI self review and confirm all App Store Requirements are met\n\nUse your AI assistant to run through the app review checks and get feedback before you submit. This can reduce review time and increase your chances of approval.\nInstall the Shopify AI Toolkit if you haven't already, then run this command:\n\nShopify AI Toolkit command\nMark as done\nI've reviewed all the App Store Requirements",
+    "submitDisabled": true
+  },
+  "preview": {
+    "checkedAt": "2026-10-04T06:15:09.208Z",
+    "url": "https://apps.shopify.com/91ba2420b9c9d87e00dab059b51eb005/preview/en",
+    "headings": [
+      "Fullbleed Commerce",
+      "Featured images gallery",
+      "Automate branded order PDFs with Flow. Customize templates visually or with HTML and CSS.",
+      "Pricing",
+      "$12 / month",
+      "$29 / month",
+      "Reviews",
+      "Support",
+      "Resources",
+      "Developer",
+      "Data access",
+      "View customer data:",
+      "View staff and contributor data:",
+      "View store data:",
+      "App categories",
+      "Top categories",
+      "Resources",
+      "Shopify"
+    ],
+    "privacyLinks": [
+      "https://docs.fullbleed.dev/commerce/privacy/",
+      "https://docs.fullbleed.dev/commerce/privacy/",
+      "https://www.shopify.com/legal/privacy"
+    ],
+    "screenshots": [
+      {
+        "alt": "Track ready document links and pause Flow automation",
+        "loaded": true
+      },
+      {
+        "alt": "Customize order templates with the visual block editor",
+        "loaded": true
+      },
+      {
+        "alt": "Edit and save your own HTML and print CSS",
+        "loaded": true
+      }
+    ],
+    "publicListingPublished": false,
+    "visualInspectionPassed": true,
+    "distinctAppScreenshots": 3
+  },
   "apiContactEmail": "keenan@fullbleed.dev",
   "categoryTags": {
     "documentTypes": [
@@ -96,9 +166,10 @@
       "Print and export"
     ]
   },
+  "categoryTagsCheckedAt": "2026-10-04T04:43:09.758Z",
   "limitations": [
-    "Unsubmitted development preview. These form checks are not a marketplace review or launch approval.",
-    "At least three desktop screenshots and a screencast remain missing.",
-    "Branded hostname has DNS and TLS but application-origin migration and installed-app regression checks remain pending."
+    "Saved, unsubmitted development preview. Listing form validation is not marketplace approval.",
+    "Protected customer-data request, automated platform checks, capabilities and self-review remain incomplete.",
+    "Staging is stopped between attended synthetic-store checks; paid purchase and continuous production operation are not verified."
   ]
 }

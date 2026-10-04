@@ -76,6 +76,7 @@ bucket charges. No new hosting subscription was purchased.
 
 Before paid launch, verify paid-cycle renewal/cancellation and store freezes,
 measure sustained capacity and costs, complete ongoing privacy/backup operation
-and independent key recovery, finish the branded URL and listing/customer-data
-review, and recruit consenting merchant pilots. This check establishes none of
-those remaining outcomes.
+and independent key recovery, finish listing/customer-data review, and recruit
+consenting merchant pilots. The later [branded-origin check](branded-origin.md)
+completed the URL migration and installed-app regression checks. These checks
+do not establish the remaining launch outcomes.
