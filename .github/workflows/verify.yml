@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - uses: actions/setup-node@v6
         with:
-          node-version: 24.21.0
+          node-version: 26.10.0
       - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
@@ -52,7 +52,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - uses: actions/setup-node@v6
         with:
-          node-version: 24.21.0
+          node-version: 26.10.0
           cache: npm
       - uses: actions/setup-python@v6
         with:
@@ -76,7 +76,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - uses: actions/setup-node@v6
         with:
-          node-version: 24.21.0
+          node-version: 26.10.0
           cache: npm
           cache-dependency-path: |
             package-lock.json
@@ -116,7 +116,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - uses: actions/setup-node@v6
         with:
-          node-version: 24.21.0
+          node-version: 26.10.0
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run build
@@ -136,7 +136,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - uses: actions/setup-node@v6
         with:
-          node-version: 24.21.0
+          node-version: 26.10.0
       - run: docker build -f shopify/app/Dockerfile -t fullbleed-commerce:check .
       - run: node tools/check-container.mjs
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
@@ -151,7 +151,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - uses: actions/setup-node@v6
         with:
-          node-version: 24.21.0
+          node-version: 26.10.0
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run build

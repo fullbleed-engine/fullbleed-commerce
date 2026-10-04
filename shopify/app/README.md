@@ -9,7 +9,7 @@ designs are GPL-2.0-or-later; see the root [license map](../../LICENSE).
 
 ## Install and verify
 
-Use Node.js 24.18+ (verified with 24.21.0). From the repository root:
+Use Node.js 26.10.0, matching the container and CI. From the repository root:
 
 ```sh
 npm ci --ignore-scripts

@@ -1,6 +1,9 @@
 # Shopify staging deployment
 
 Build the repository-root Docker context with `shopify/app/Dockerfile`.
+The image pins Node.js 26.10.0. Node 24.21.0 has an intermittent native rendering
+failure; the [runtime investigation](../docs/native-diagnostics.md) retains that
+evidence and the upstream V8 lead. Keep the selected runtime aligned with CI.
 `.railway/railway.ts` selects that image, one US West replica, a required `/data`
 volume, a 0.5 CPU / 512 MiB ceiling, and `/health` readiness. These are initial
 staging limits, not a verified production capacity or monthly spending cap.

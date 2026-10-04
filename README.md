@@ -149,7 +149,9 @@ For a private inquiry, [contact Fullbleed](https://www.fullbleed.dev/contact).
 
 ## Development
 
-The development toolchain requires Node.js 24.18+ because of WordPress Playground.
+The development toolchain and Shopify container use Node.js 26.10.0. Node 24.21.0
+has an intermittent native rendering failure under investigation; see
+[runtime evidence](docs/native-diagnostics.md).
 The rendering integration itself uses the published Fullbleed Node 0.1.2 package,
 containing engine 2.5.6, pinned to its npm version and lockfile integrity.
 

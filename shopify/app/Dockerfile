@@ -1,6 +1,6 @@
 # Build from the repository root:
 # docker build -f shopify/app/Dockerfile -t fullbleed-commerce .
-FROM node:24.21.0-bookworm-slim AS base
+FROM node:26.10.0-bookworm-slim AS base
 RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /commerce
