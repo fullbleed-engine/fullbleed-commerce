@@ -82,6 +82,7 @@ async function readyJob(svc = service) {
 const linkToken = async job => new URL((await service.status(job).json()).return_value.downloadUrl).hash.slice(1);
 
 test.beforeEach(async () => {
+  await db.accessEvent.deleteMany();
   await db.automationSettings.deleteMany(); await db.session.deleteMany(); await db.brand.deleteMany(); await db.documentTemplate.deleteMany(); await db.usagePeriod.deleteMany();
   await db.session.createMany({ data: [primary, other].map(shop => ({ id: `offline_${shop}`, shop, state: '', isOnline: false, accessToken: 'synthetic-token', scope: 'read_orders' })) });
   time = Date.now(); inputOrder = structuredClone(baseOrder); renderCalls = 0; orderReads = 0; unavailable = false; slowRender = null; paid = true; catalogPriceActive = true;
@@ -300,6 +301,8 @@ test('real request handler verifies Flow HMAC, retained-price access, preparatio
     await new Promise(resolve => setTimeout(resolve, 20));
   }
   assert.equal(job.status, 'ready', JSON.stringify({ status: job.status, error: job.lastError }));
+  const preparedAccess = await db.accessEvent.findFirstOrThrow({ where: { jobId: job.id, operation: 'flow.prepare' } });
+  assert.equal(preparedAccess.actorType, 'flow'); assert.equal(preparedAccess.actorId, body.action_run_id); assert.equal(preparedAccess.outcome, 'completed');
   const replay = await signedRequest('/api/flow/documents', body);
   assert.equal(replay.status, 200);
   const output = (await replay.json()).return_value;
@@ -310,6 +313,9 @@ test('real request handler verifies Flow HMAC, retained-price access, preparatio
   const denied = await handler(new Request(url, { method: 'POST' })); assert.equal(denied.status, 404);
   const pdf = await handler(new Request(url, { method: 'POST', headers: { Authorization: `Bearer ${token}` } }));
   assert.equal(pdf.status, 200); assert.equal(sha(Buffer.from(await pdf.arrayBuffer())), output.sha256);
+  const linkAccess = await db.accessEvent.findFirstOrThrow({ where: { jobId: job.id, operation: 'document.download' } });
+  assert.equal(linkAccess.actorType, 'document_link'); assert.equal(linkAccess.actorId, job.id); assert.equal(linkAccess.outcome, 'completed');
+  assert.doesNotMatch(JSON.stringify(await db.accessEvent.findMany()), new RegExp(`${token}|Synthetic Recipient|Example Street|synthetic-token`));
   paid = false;
   assert.equal((await handler(new Request(url, { method: 'POST', headers: { Authorization: `Bearer ${token}` } }))).status, 503);
   paid = true;
@@ -335,6 +341,9 @@ test('authenticated manual and template endpoints share order usage and upgrade 
   assert.equal(packing.status, 200);
   const preview = await adminRequest('/app/template', { intent: 'preview', order: 'gid://shopify/Order/1', kind: 'order-summary', template: { schema: 'fullbleed.commerce-template.v1', html: '<h1>{{order.number}}</h1><p>{{document.title}}</p>', css: 'h1 { color: #244a40; }' } });
   assert.equal(preview.status, 200, await preview.clone().text().then(s => s.slice(0, 150)));
+  const staffEvents = await db.accessEvent.findMany({ where: { shop: primary } });
+  assert.equal(staffEvents.length, 3); assert.ok(staffEvents.every(event => event.actorType === 'staff' && event.actorId === '1' && event.outcome === 'completed'));
+  assert.equal(staffEvents.filter(event => event.operation === 'template.preview').length, 1);
   const row = await db.usagePeriod.findFirst();
   assert.equal(row.used, 1);
   await db.usagePeriod.update({ where: { id: row.id }, data: { used: 250 } });

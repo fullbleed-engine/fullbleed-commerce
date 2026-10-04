@@ -7,8 +7,9 @@ webhook response means the snapshot is durable; it does not mean the customer
 has received a response. The merchant downloads the JSON, responds through the
 store's privacy process, and explicitly marks the request handled.
 
-The snapshot contains the requested order references, retained automation job
-and order-usage metadata at receipt, the request ID, and the supplied customer ID/email. It does
+The snapshot contains the requested order references, retained automation job,
+order-usage and order-specific access metadata at receipt, the request ID, and
+the supplied customer ID/email. Access metadata omits staff identifiers. It does
 not fetch more order data from Shopify or store PDFs, addresses, card details,
 tokens, worker leases or download links. A request with no matching history
 still produces a report explaining its scope. Already-expired history cannot be
@@ -43,7 +44,7 @@ for marketing or sent emails.
    email from a webhook. This support procedure needs staging verification.
 
 Payloads are limited to 1 MiB and 10,000 requested order IDs; snapshots to 50,000
-job rows and 16 MiB of JSON. Identifiers preserve full decimal precision, including
+rows per metadata collection and 16 MiB of JSON. Identifiers preserve full decimal precision, including
 numeric JSON values beyond JavaScript's safe integer range. Work runs in a
 bounded transaction, with SQL parameter batching; failures do not acknowledge a
 partial snapshot. Oversized or repeatedly failing requests require operator
@@ -67,7 +68,13 @@ five-second Shopify webhook budget under the production database/load.
   flagged overdue. Retention cleanup never silently treats an overdue request
   as fulfilled. Operators must resolve it promptly.
 - Uninstall and shop redaction remove the store's requests, associations,
-  sessions, preferences, templates, job history and order usage in one transaction.
+  sessions, preferences, templates, job history, order usage and access history
+  in one transaction.
+- [Access history](ACCESS.md) expires after 30 days. Customer redaction deletes
+  matching order and associated privacy-export access references; completion
+  removes references to that export. Generic collection-read entries contain no
+  customer reference and expire through normal cleanup. Backup restoration
+  reapplies these deletions before the restored database can be used.
 - Order-usage references are retained through the current billing period and
   30 days afterward. Customer redaction deletes matching references and pending
   reservations, but preserves the period's aggregate successful-order count.

@@ -59,7 +59,7 @@ export async function boundedFlowRequest(request) {
  * lease, retry state and unique action-run constraint, across process restarts.
  * loadDocument must recheck installation and entitlement before reading orders.
  */
-export function createFlowService({ db, loadDocument = /** @returns {Promise<any>} */ async () => { throw new Error('A document loader is required.'); }, withDocument = (job, signal, work) => loadDocument(job, signal).then(work), render, limit, secret, appUrl, now = () => new Date() }) {
+export function createFlowService({ db, loadDocument = /** @returns {Promise<any>} */ async () => { throw new Error('A document loader is required.'); }, withDocument = (job, signal, work, _purpose) => loadDocument(job, signal).then(work), render, limit, secret, appUrl, now = () => new Date() }) {
   if (typeof secret !== 'string' || secret.length < 24) throw new Error('A document signing secret is required.');
   const origin = new URL(appUrl);
   if (origin.protocol !== 'https:' || origin.username || origin.password) throw new Error('A trusted HTTPS app URL is required.');
@@ -129,7 +129,7 @@ export function createFlowService({ db, loadDocument = /** @returns {Promise<any
               fingerprint: fingerprint(document), templateRevision: document.revision,
               pdfSha256: hash(result.pdf), expiresAt: new Date(now().valueOf() + job.ttlHours * 3600000),
             };
-          });
+          }, 'flow.prepare');
           // withDocument commits the order allowance before returning. Keep the
           // job leased and unavailable until that commit succeeds; otherwise
           // Flow could receive a link while accounting is pending or failed.
@@ -188,7 +188,7 @@ export function createFlowService({ db, loadDocument = /** @returns {Promise<any
           const saved = await db.automationJob.updateMany({ where: { id, status: 'ready', expiresAt: { gt: now() } }, data: { downloads: { increment: 1 }, lastDownloadedAt: now() } });
           if (!saved.count) return reject('This download link expired or was revoked.', 410);
           return new Response(new Uint8Array(result.pdf), { headers: { ...privateHeaders, 'Content-Type': 'application/pdf', 'Content-Disposition': `attachment; filename="${result.filename}"`, 'X-Fullbleed-SHA256': job.pdfSha256 } });
-        });
+        }, 'document.download');
       } catch (error) {
         if (error instanceof Response && error.status === 429) throw error;
         if (isUsageLimit(error)) return reject('The store’s document allowance is used. Please contact the store.', 409);

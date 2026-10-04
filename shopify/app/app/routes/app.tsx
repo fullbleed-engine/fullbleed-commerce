@@ -25,6 +25,7 @@ export default function App() {
         <a href="/app/automations">Automations</a>
         <a href="/app/plans">Plan and usage</a>
         <a href="/app/privacy">Privacy requests</a>
+        <a href="/app/access">Access history</a>
       </NavMenu>
       <Outlet />
     </AppProvider>

@@ -157,3 +157,23 @@ model RecoveryReceipt {
 
   @@index([recordedAt])
 }
+
+// Bounded metadata only. No request bodies, tokens, documents, addresses or errors.
+model AccessEvent {
+  id             String    @id @default(uuid())
+  shop           String
+  actorType      String
+  actorId        String
+  operation      String
+  orderId        String?
+  requestId      String?
+  jobId          String?
+  outcome        String    @default("started")
+  startedAt      DateTime  @default(now())
+  finishedAt     DateTime?
+
+  @@index([shop, startedAt, id])
+  @@index([shop, orderId])
+  @@index([shop, requestId])
+  @@index([startedAt])
+}

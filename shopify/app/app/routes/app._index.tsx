@@ -4,6 +4,7 @@ import type { HeadersFunction, LoaderFunctionArgs } from 'react-router';
 import { useLoaderData } from 'react-router';
 import { boundary } from '@shopify/shopify-app-react-router/server';
 import { brandForShop, commerceAccess } from '../commerce.server';
+import { staffAccess } from '../access.server';
 
 export const ordersQuery = `#graphql
 query FullbleedRecentOrders {
@@ -13,14 +14,17 @@ query FullbleedRecentOrders {
 }`;
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const { admin, session, shop, development } = await commerceAccess(request);
-  const response = await admin.graphql(ordersQuery).catch(() => {
-    throw new Response('Order access is unavailable. Contact Fullbleed support to check this store’s app permissions.', { status: 503 });
+  const context = await commerceAccess(request);
+  const { admin, session, shop, development } = context;
+  return staffAccess(context, 'orders.list', async () => {
+    const response = await admin.graphql(ordersQuery).catch(() => {
+      throw new Response('Order access is unavailable. Contact Fullbleed support to check this store’s app permissions.', { status: 503 });
+    });
+    const result = await response.json();
+    if (!result.data?.orders) throw new Response('Orders are unavailable. Check the app permissions.', { status: 503 });
+    const brand = await brandForShop(session.shop, shop.name);
+    return { orders: result.data.orders.nodes as { id: string; name: string; displayFinancialStatus: string }[], design: brand.design, development };
   });
-  const result = await response.json();
-  if (!result.data?.orders) throw new Response('Orders are unavailable. Check the app permissions.', { status: 503 });
-  const brand = await brandForShop(session.shop, shop.name);
-  return { orders: result.data.orders.nodes as { id: string; name: string; displayFinancialStatus: string }[], design: brand.design, development };
 }
 
 export default function Documents() {

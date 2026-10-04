@@ -23,6 +23,7 @@ const { createRequestHandler } = require('react-router');
 const db = new PrismaClient();
 const { createPrivacyService, parsePrivacyPayload } = await import('../shopify/privacy.js');
 const shop = 'synthetic-privacy.myshopify.com';
+await db.accessEvent.deleteMany();
 await db.privacyRequest.deleteMany(); await db.session.deleteMany(); await db.automationSettings.deleteMany(); await db.recoveryReceipt.deleteMany();
 await db.session.create({ data: { id: `offline_${shop}`, shop, state: '', isOnline: false, accessToken: 'synthetic-token', scope: 'read_orders' } });
 await db.automationSettings.create({ data: { shop } });

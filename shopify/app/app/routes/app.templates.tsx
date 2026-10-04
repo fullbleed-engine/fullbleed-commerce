@@ -8,6 +8,7 @@ import { brandForShop, commerceAccess, documentOptions } from '../commerce.serve
 import { createTemplateStore } from '../../../templates.js';
 import { starterTemplate } from '../../../../src/documents.js';
 import { ordersQuery } from './app._index';
+import { staffAccess } from '../access.server';
 import 'grapesjs/dist/css/grapes.min.css';
 import '../../../../src/template-editor.css';
 
@@ -16,13 +17,16 @@ const store = createTemplateStore(db);
 const noStore = { 'Cache-Control': 'no-store, private, max-age=0', 'X-Content-Type-Options': 'nosniff' };
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const { admin, session, shop } = await commerceAccess(request);
-  const brand = await brandForShop(session.shop, shop.name);
-  const result = await (await admin.graphql(ordersQuery)).json();
-  if (!result.data?.orders) throw new Response('Orders are unavailable. Check app permissions.', { status: 503 });
-  const options = documentOptions(brand);
-  const templates = Object.fromEntries(await Promise.all(['order-summary', 'packing-slip'].map(async kind => [kind, { ...await store.get(session.shop, kind), defaults: starterTemplate({ ...options, kind }) }])));
-  return { templates, orders: result.data.orders.nodes as { id: string; name: string }[] };
+  const context = await commerceAccess(request);
+  const { admin, session, shop } = context;
+  return staffAccess(context, 'templates.list', async () => {
+    const brand = await brandForShop(session.shop, shop.name);
+    const result = await (await admin.graphql(ordersQuery)).json();
+    if (!result.data?.orders) throw new Response('Orders are unavailable. Check app permissions.', { status: 503 });
+    const options = documentOptions(brand);
+    const templates = Object.fromEntries(await Promise.all(['order-summary', 'packing-slip'].map(async kind => [kind, { ...await store.get(session.shop, kind), defaults: starterTemplate({ ...options, kind }) }])));
+    return { templates, orders: result.data.orders.nodes as { id: string; name: string }[] };
+  });
 }
 
 

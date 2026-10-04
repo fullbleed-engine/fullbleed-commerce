@@ -3,6 +3,7 @@ import db from './db.server';
 import { pruneAutomationJobs } from '../../flow.js';
 import { prunePrivacyRequests } from '../../privacy.js';
 import { pruneUsage } from '../../usage.js';
+import { pruneAccessEvents } from '../../access-audit.js';
 import { recoveryJournal } from './recovery.server';
 import { pruneRecoveryStorage } from '../scripts/recovery-operations.mjs';
 import { backupsEnabled } from '../scripts/backup-maintenance.mjs';
@@ -24,7 +25,7 @@ if (!global.fullbleedAutomationCleanup) {
     if (running) return;
     running = true;
     try {
-      await Promise.all([pruneAutomationJobs(db), prunePrivacyRequests(db), pruneUsage(db)]);
+      await Promise.all([pruneAutomationJobs(db), prunePrivacyRequests(db), pruneUsage(db), pruneAccessEvents(db)]);
       if (backupsEnabled()) {
         await execute(process.execPath, ['scripts/recovery.mjs', 'maintain'], {
           timeout: 10 * 60000, killSignal: 'SIGKILL', maxBuffer: 64 * 1024, windowsHide: true,

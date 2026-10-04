@@ -8,21 +8,25 @@ import db from '../db.server';
 import { completePrivacyRequest, privacyHeaders } from '../../../privacy.js';
 import { readSettingsForm } from '../../../settings-form.js';
 import { recordRecovery } from '../recovery.server';
+import { staffAccess } from '../access.server';
 
 export async function loader({ request }: LoaderFunctionArgs) {
   // Privacy access must never depend on a paid subscription.
-  const { session } = await authenticate.admin(request);
-  const cursor = new URL(request.url).searchParams.get('after');
-  const where = { shop: session.shop, status: 'ready' };
-  if (cursor && (!/^[0-9a-f-]{36}$/.test(cursor) || !await db.privacyRequest.findFirst({ where: { ...where, id: cursor }, select: { id: true } }))) throw new Response('Refresh the request list.', { status: 400, headers: privacyHeaders });
-  const select = { id: true, requestId: true, receivedAt: true, dueAt: true, lastExportAt: true, exports: true, status: true, finishedAt: true };
-  const [rows, recent, pending, overdue] = await Promise.all([
-    db.privacyRequest.findMany({ where, select, orderBy: [{ receivedAt: 'asc' }, { id: 'asc' }], take: 51, ...(cursor ? { cursor: { id: cursor }, skip: 1 } : {}) }),
-    db.privacyRequest.findMany({ where: { shop: session.shop, status: { in: ['completed', 'redacted'] } }, select, orderBy: { finishedAt: 'desc' }, take: 20 }),
-    db.privacyRequest.count({ where }),
-    db.privacyRequest.count({ where: { ...where, dueAt: { lte: new Date() } } }),
-  ]);
-  return { requests: rows.slice(0, 50), next: rows.length > 50 ? rows[49].id : null, recent, pending, overdue };
+  const context = await authenticate.admin(request);
+  const { session } = context;
+  return staffAccess(context, 'privacy.list', async () => {
+    const cursor = new URL(request.url).searchParams.get('after');
+    const where = { shop: session.shop, status: 'ready' };
+    if (cursor && (!/^[0-9a-f-]{36}$/.test(cursor) || !await db.privacyRequest.findFirst({ where: { ...where, id: cursor }, select: { id: true } }))) throw new Response('Refresh the request list.', { status: 400, headers: privacyHeaders });
+    const select = { id: true, requestId: true, receivedAt: true, dueAt: true, lastExportAt: true, exports: true, status: true, finishedAt: true };
+    const [rows, recent, pending, overdue] = await Promise.all([
+      db.privacyRequest.findMany({ where, select, orderBy: [{ receivedAt: 'asc' }, { id: 'asc' }], take: 51, ...(cursor ? { cursor: { id: cursor }, skip: 1 } : {}) }),
+      db.privacyRequest.findMany({ where: { shop: session.shop, status: { in: ['completed', 'redacted'] } }, select, orderBy: { finishedAt: 'desc' }, take: 20 }),
+      db.privacyRequest.count({ where }),
+      db.privacyRequest.count({ where: { ...where, dueAt: { lte: new Date() } } }),
+    ]);
+    return { requests: rows.slice(0, 50), next: rows.length > 50 ? rows[49].id : null, recent, pending, overdue };
+  });
 }
 
 export async function action({ request }: ActionFunctionArgs) {

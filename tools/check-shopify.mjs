@@ -35,6 +35,7 @@ const jobs = [
   ['flow', '--test', '--test-reporter=tap', 'test/flow.test.mjs'],
   ['usage', '--test', '--test-reporter=tap', 'test/usage.test.mjs'],
   ['privacy', '--test', '--test-reporter=tap', 'test/privacy.test.mjs'],
+  ['access-audit', '--test', '--test-reporter=tap', 'test/access-audit.test.mjs'],
   ['monitor', '--test', '--test-reporter=tap', 'test/monitor.test.mjs'],
   ['recovery', '--test', '--test-reporter=tap', 'test/recovery.test.mjs'],
 ];
@@ -48,6 +49,6 @@ for (const [name, ...args] of jobs) {
   if (run.status !== 0) { console.error((run.stdout || '') + (run.stderr || '')); break; }
 }
 const sha256 = file => createHash('sha256').update(readFileSync(resolve(app, file))).digest('hex');
-const record = { checkedAt: new Date().toISOString(), node: process.version, checks, template: 'Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da', lockSha256: sha256('package-lock.json'), serverBuildSha256: sha256('build/server/index.js'), browserTested: false, liveBillingTested: false };
+const record = { checkedAt: new Date().toISOString(), node: process.version, checks, template: 'Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da', lockSha256: sha256('package-lock.json'), serverBuildSha256: existsSync(resolve(app, 'build/server/index.js')) ? sha256('build/server/index.js') : null, browserTested: false, liveBillingTested: false };
 writeFileSync(resolve(output, 'verification.json'), JSON.stringify(record, null, 2) + '\n');
 if (checks.length !== jobs.length + initialChecks || checks.some(check => !check.passed)) process.exitCode = 1;

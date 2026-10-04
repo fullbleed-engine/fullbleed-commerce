@@ -90,6 +90,22 @@ with sync_playwright() as pw:
     response = context.request.post(f"{fixture['origin']}/app/plans", headers={'Authorization': 'Bearer ' + token()}, max_redirects=0)
     body = response.text()
     check('plan changes use Shopify pricing destination', 'admin.shopify.com/store/synthetic-plans/charges/fullbleed-commerce/pricing_plans' in body or any('admin.shopify.com/store/synthetic-plans/charges/fullbleed-commerce/pricing_plans' in v for v in response.headers.values()))
+    page.set_viewport_size({'width': 1280, 'height': 1000})
+    response = page.goto(f"{fixture['origin']}/app/access", wait_until='networkidle')
+    check('access history authenticates through SDK', response.status == 200)
+    expect(page.get_by_role('heading', name='Who accessed document data')).to_be_visible()
+    expect(page.get_by_text('Shopify staff · 1').first).to_be_visible()
+    check('history includes completed PDFs and denied quota request', 'Order PDF request' in page.inner_text('body') and 'Completed' in page.inner_text('body') and 'Denied' in page.inner_text('body'))
+    check('history excludes customer content and credentials', all(value not in page.inner_text('body') for value in ['Example Street', 'synthetic-token', 'Bearer ', '%PDF-']))
+    for width, height, size in [(1280, 1000, 'desktop'), (390, 844, 'mobile')]:
+        page.set_viewport_size({'width': width, 'height': height})
+        check(f'{size}: access history fits', page.evaluate('document.documentElement.scrollWidth <= innerWidth'))
+        filename = f'shopify-plans-access-{size}.png'
+        page.screenshot(path=str(OUT / filename), full_page=True)
+        entry_files.append(filename)
+    page.get_by_role('link', name='Refresh history').click()
+    expect(page.get_by_text('Access history opened').first).to_be_visible()
+    check('history records its own authenticated reads', True)
     check('no browser runtime errors', not errors)
     version = browser.version
     browser.close()
