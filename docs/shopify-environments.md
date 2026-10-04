@@ -23,7 +23,7 @@ and the existing two Flow extension handles and UIDs. Shopify documents these
 UIDs as app-scoped; keeping them in source preserves each extension's mapping
 across app instances. Do not regenerate the public app's extension identities.
 
-## Verified October 4, 2026
+## Initial separation verified October 4, 2026
 
 - Shopify CLI validated the base, development, staging and production configs
   with zero issues.
@@ -51,6 +51,13 @@ The [verification record](shopify-environment-verification.json) identifies the
 retained evidence archive. Public distribution is selected for the development
 app; its App Store listing has not been submitted.
 
+The subsequent [development activation check](development-activation.md) verified
+fresh installation, private $0 checkout, saved custom templates and a real
+seven-action Flow run under the separate test identity. The current development
+release is `development-flow-20261004`, version `1154436071425`. Staging now has
+its own Partner API credential and test plan. After the check, uninstall emptied
+all eleven merchant-data tables and both hosted services were verified stopped.
+
 The public app is
 [430863056897](https://dev.shopify.com/dashboard/238701392/apps/430863056897);
 the development app is
@@ -64,19 +71,17 @@ staging service. Production has no domain or deploy source. Move and verify that
 route deliberately when its backend is ready; setting `SHOPIFY_APP_URL` alone
 does not route traffic or provision TLS.
 
-For staging, configure the development app's required customer-data access
-and private test pricing. Reconcile the old synthetic installation
-and stale sessions, then install the development app freshly. Do not reuse an
-offline session issued to the public app. Verify agreement acceptance, template
-editing, PDF downloads, private-plan checkout and real Flow triggers under this
-new identity. Existing saved Flow nodes must be replaced with the development
-app's actions and tested through their downstream destination.
+Staging's customer-data selections, private test pricing and automatic workflow
+are verified in the [activation record](development-activation-verification.json).
+For the next attended check, install the development app freshly. Do not reuse
+an offline session issued to the public app. Keep the workflow off and compute
+stopped between attended checks.
 
 Production still needs the provider/merchant agreement, first deployment,
 runtime and database-binding verification, continuous retention and monitoring,
 missed-check detection and a bounded ongoing budget before merchant admission.
 The historical [hosted workflow evidence](hosted-workflow.md) belongs to the
-previous shared identity; it is not proof of this new installation.
+previous shared identity. Use the new activation record for this installation.
 
 The infrastructure definition preserves each service's assigned secrets. Obtain
 app credentials from that app's own Shopify configuration and use the host's
