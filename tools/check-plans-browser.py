@@ -2,6 +2,7 @@
 """Plan usage and real PDF downloads through authenticated production routes."""
 import base64, hashlib, hmac, json, time
 from pathlib import Path
+from urllib.parse import urlencode
 from playwright.sync_api import sync_playwright, expect
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,6 +53,21 @@ with sync_playwright() as pw:
     page = context.new_page()
     errors = []
     page.on('pageerror', lambda e: errors.append(str(e)))
+    pricing_url = 'https://admin.shopify.com/store/synthetic-plans/charges/fullbleed-commerce/pricing_plans'
+    context.route(pricing_url, lambda route: route.fulfill(content_type='text/html', body='<h1>Synthetic Shopify pricing</h1>'))
+    check('unsubscribed fixture starts without agreement', context.request.post(f"{fixture['origin']}/__fixture/unsubscribed").status == 204)
+    embedded = urlencode({'embedded': '1', 'shop': fixture['shop'], 'host': base64.b64encode(b'admin.shopify.com/store/synthetic-plans').decode()})
+    page.goto(f"{fixture['origin']}/app?{embedded}", wait_until='networkidle')
+    expect(page.locator('s-page')).to_have_attribute('heading', 'Merchant agreement')
+    page.get_by_role('checkbox', name='I am authorized to act for this store', exact=False).check()
+    page.get_by_role('button', name='Accept and continue').click()
+    page.wait_for_url(pricing_url, timeout=20000)
+    expect(page.get_by_role('heading', name='Synthetic Shopify pricing')).to_be_visible()
+    check('fresh embedded acceptance reaches Shopify pricing without a manual reload', True)
+    filename = 'shopify-plans-agreement-checkout.png'
+    page.screenshot(path=str(OUT / filename), full_page=True)
+    entry_files.append(filename)
+    check('subscribed fixture starts a separate agreement check', context.request.post(f"{fixture['origin']}/__fixture/subscribed").status == 204)
     page.goto(f"{fixture['origin']}/app/plans", wait_until='networkidle')
     expect(page.locator('s-page')).to_have_attribute('heading', 'Merchant agreement')
     expect(page.get_by_role('heading', name='Your store\u2019s document service', exact=True)).to_be_visible()

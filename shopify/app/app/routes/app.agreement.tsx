@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 import type { ActionFunctionArgs, HeadersFunction, LoaderFunctionArgs } from 'react-router';
-import { Form, data, useActionData, useLoaderData, useNavigation } from 'react-router';
+import { Form, data, redirectDocument, useActionData, useLoaderData, useNavigation } from 'react-router';
 import { boundary } from '@shopify/shopify-app-react-router/server';
 import { authenticate } from '../shopify.server';
 import { agreementService } from '../agreement.server';
@@ -19,7 +19,10 @@ export async function action({ request }: ActionFunctionArgs) {
     if (error instanceof Response && error.status === 400) return data({ error: await error.text() }, { status: 400, headers: agreementHeaders });
     throw error;
   }
-  return context.redirect('/app');
+  // Checkout may leave the embedded app. Load the destination as a document so
+  // Shopify's redirect HTML is executed, rather than treated as route data.
+  const destination = context.redirect('/app');
+  return redirectDocument(destination.headers.get('Location')!, { status: destination.status, headers: destination.headers });
 }
 
 export default function Agreement() {
