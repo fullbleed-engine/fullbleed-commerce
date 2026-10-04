@@ -32,7 +32,7 @@ export default function PlanAndUsage() {
     {data.pending.length > 0 && <s-banner tone="info">Scheduled plan: {data.pending.join(', ')}. Your current allowance stays in effect until Shopify applies the change.</s-banner>}
     <s-section heading={`${data.name} · ${data.usage.limit.toLocaleString('en-US')} orders`}>
       <s-stack direction="block" gap="base">
-        <s-heading>{data.usage.used.toLocaleString('en-US')} orders used</s-heading>
+        <s-heading>{data.usage.used.toLocaleString('en-US')} {data.usage.used === 1 ? 'order' : 'orders'} used</s-heading>
         <s-paragraph>{data.usage.remaining.toLocaleString('en-US')} available{data.usage.preparing ? ` · ${data.usage.preparing} being prepared` : ''}.</s-paragraph>
         <s-paragraph>{data.trial ? 'Trial allowance ends' : 'Current billing period ends'} {end} UTC.</s-paragraph>
         {!data.usage.remaining && <s-banner tone="warning">Your allowance is in use. You can still reprint orders already counted in this period. Change plans or wait for your next billing period to process new orders.</s-banner>}

@@ -1,38 +1,38 @@
 {
-  "recordedAt": "2026-10-04T02:58:04.565733+00:00",
+  "recordedAt": "2026-10-04T03:08:44.428332+00:00",
   "scope": "Synthetic APIs and stores; no real merchant payment or adoption claim.",
   "appTests": {
     "health": {
       "passed": 2,
-      "sha256": "a62104e91c8c8092d1941cfca7827f39137d82a592b9f8f654cf8b03f1115c2c"
+      "sha256": "26f23c5fe2b8ba4857a3b0fd8a51e35cbece5fafbf7aa3c96127cce60bf7d58e"
     },
     "webhooks": {
       "passed": 4,
-      "sha256": "4ea07dcdc0bb9c249d591ff393f457c216b355985e41912f4ecae7b2da893fce"
+      "sha256": "f9343bb5163f444360cf7399485856fc1b15f31fb15f7a2480ea02f4f79154cc"
     },
     "webhook-lifecycle": {
       "passed": 12,
-      "sha256": "d9eb55aae095d7effbc8d332ceab91c18560710b0d41151d39cbc5476f64a541"
+      "sha256": "297d866a71854024edcc07f00d2351a97779046e1737bef8dc4d65c3ee113d4e"
     },
     "flow": {
       "passed": 13,
-      "sha256": "6fd397c52ff4ad598b6d72b09071b888d306b90c362ff517ee8712689ae047b5"
+      "sha256": "2568b98f521ecf7504ade62429220fec3a58b9aba72802c6ba5e1b52af1769bf"
     },
     "usage": {
       "passed": 9,
-      "sha256": "b4ac5244f91ee65e4658dbcc865770b70c5ef1a4ad3941555a4309a5e0ffb918"
+      "sha256": "d2303b7ba3e4e1299401c8430b67c030ea2a7f47e4c0bc8cfa1fccebd6e00758"
     },
     "privacy": {
       "passed": 16,
-      "sha256": "89afeabf8abd9712fb59af82122dd2cbc83e7eb4ce36d91dc93aa0facffdfbf4"
+      "sha256": "3c6d0f1ab5f806fa25af94208e252639604eda9e75814d399ed473f8e1858010"
     },
     "monitor": {
       "passed": 8,
-      "sha256": "a6fbff01442ae5acdd650fa767e0ebb10edeacd7b799ab56afc7e43a995eef50"
+      "sha256": "e81c11bf4635e7839940b1220b4fcef6d745b914bdcbcc9a3b35f2b529d90d87"
     },
     "recovery": {
       "passed": 14,
-      "sha256": "8b279131a027ea7adf7653e1c9625ccec76de72d6875cbc88c39ee64dfd52fdb"
+      "sha256": "136421736d7e9dca102210e58f4b2c9126c6d55aeb33fbc9bae14b1f64de3417"
     }
   },
   "appTestCount": 78,
@@ -40,7 +40,7 @@
     "passed": 47
   },
   "build": {
-    "checkedAt": "2026-10-04T02:57:03.077Z",
+    "checkedAt": "2026-10-04T03:07:48.638Z",
     "node": "v24.21.0",
     "checks": [
       {
@@ -121,18 +121,18 @@
     ],
     "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
     "lockSha256": "98c11aefe0018a038a15e0723eaec57874cc8bc10bb8d7197be8ca2c457784c3",
-    "serverBuildSha256": "5524c546af8f54a881a0750c1f439f39e310559cce6381c6dfa471a8051e6dbd",
+    "serverBuildSha256": "050d1d3f1ee25ca526cb13fa6b60a43b760be03f9d16bb3ba36773ac7daf0be9",
     "browserTested": false,
     "liveBillingTested": false
   },
   "browser": {
-    "checkedAt": "2026-10-04T02:57:30Z",
+    "checkedAt": "2026-10-04T03:08:44Z",
     "browser": "154.0.8037.93",
     "syntheticOnly": true,
     "shopifyApiAndAdminShellStubbed": true,
     "realSdkAuthentication": true,
     "realPdfRendering": true,
-    "serverBuildSha256": "5524c546af8f54a881a0750c1f439f39e310559cce6381c6dfa471a8051e6dbd",
+    "serverBuildSha256": "050d1d3f1ee25ca526cb13fa6b60a43b760be03f9d16bb3ba36773ac7daf0be9",
     "checks": [
       {
         "name": "plan page authenticates through SDK",
@@ -174,11 +174,11 @@
     "evidence": [
       {
         "file": "output/browser/shopify-plans-desktop.png",
-        "sha256": "2dff43de8ea342e9d3d2187c250889885710d114c86f6b1a7c7cdd181484f237"
+        "sha256": "af9e8cc02eadc3da91c54fe21fa61494ec58017c064627e7d6666f5f5da8b477"
       },
       {
         "file": "output/browser/shopify-plans-mobile.png",
-        "sha256": "449281a3632430396e6ac8d3762b96fcdd13e3c37cce5ec27a53561d799269ca"
+        "sha256": "b055c55fe856a20aecf8dfb30b53ff25670fef484f4ca05e39981a91848ad5e6"
       },
       {
         "file": "output/browser/shopify-plans-order-summary.pdf",
@@ -191,7 +191,7 @@
     "shopify/usage.js": "c25efead459ab0f9ff9d285d6550f4d06b2e3a078a3880c12c4b3e3823b51995",
     "shopify/flow.js": "5074e8f49bc72b0c13072e488a62ac30815fc93b15ca4eea8b6c2c0af34e19f7",
     "shopify/privacy.js": "0822e89040929270f32769b17e79598fca3b37279c0c6d0937c1304027f31072",
-    "shopify/app/app/routes/app.plans.tsx": "d11f338a2ec48a30295cec7003b0f6e154127022d22b34528ce81826d6b6bc0a",
+    "shopify/app/app/routes/app.plans.tsx": "df1830d0d01c64011e1850c762cd4d094281d0a2ddda16189ed363c343ed3b3d",
     "shopify/app/prisma/schema.prisma": "0c925493e2cccf47d5369ca8ff5374b58674fdbeca50fbc81531a10afdc42d16"
   },
   "productionDependencyAudit": {

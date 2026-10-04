@@ -312,7 +312,7 @@ test('authenticated manual and template endpoints share order usage and upgrade 
   assert.equal(deniedPreview.status, 409); assert.equal(deniedPreview.headers.get('X-Fullbleed-Error'), 'usage_limit');
   assert.equal((await adminRequest('/app/pdf?order=gid://shopify/Order/1')).status, 200);
   const page = await adminRequest('/app/plans');
-  assert.equal(page.status, 200); assert.match(await page.text(), /250(?:<!-- -->)? orders used/);
+  assert.equal(page.status, 200); assert.match((await page.text()).replace(/<!--.*?-->/g, ''), /250 orders used/);
   paidHandle = 'scale';
   const upgraded = await adminRequest('/app/plans');
   const html = await upgraded.text();
