@@ -34,8 +34,12 @@ jobs:
           python-version: '3.11'
       - run: npm ci --ignore-scripts
       - run: python -m pip install pypdf==6.1.1
-      - if: matrix.debugger == 'gdb'
-        run: gdb --version
+      - name: Install GDB on the disposable runner
+        if: matrix.debugger == 'gdb'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends gdb
+          gdb --version
       - name: Verify failure capture with controlled child processes
         if: matrix.debugger == 'gdb'
         run: python tools/check-native-diagnostic-capture.py
