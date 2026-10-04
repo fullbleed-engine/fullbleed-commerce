@@ -112,11 +112,16 @@ its scope and pattern before classifying it.
 3. Establish what was accessed, which stores may be affected, how long the issue
    existed and whether access continues. Record what is known and what remains
    uncertain. Use the controlled access procedure for necessary inspection.
-4. Notify Shopify through `security@shopify.com` for suspected compromise and
-   determine the required merchant and regulatory notices promptly. Record the
-   applicable contractual/legal deadlines, recipients, decisions and follow-up
-   in the private incident record. Do not wait for a complete investigation to
-   contain active exposure or provide the initial Shopify notice.
+4. For an actual or suspected compromise of merchant data, notify Shopify
+   immediately and no later than 24 hours after awareness, as required by
+   [API terms section 6.2.10](https://www.shopify.com/legal/api-terms). Report it
+   through [Shopify Partner Support](https://help.shopify.com/questions/partners)
+   and contact `security@shopify.com` using Shopify's security guidance. Record
+   the UTC awareness time, reporting deadline, recipients and submission evidence.
+   Determine merchant and regulatory notices and their applicable deadlines
+   separately. Keep decisions and follow-up in the private incident record.
+   Do not wait for a complete investigation to contain active exposure or send
+   the initial Shopify notice; preserve the report and provide progress updates.
 5. Correct the cause, rotate affected credentials and restore only through the
    verified quarantine workflow. Check privacy erasures, revoked links, account
    access, readiness, monitoring and document generation before resuming. Resume
