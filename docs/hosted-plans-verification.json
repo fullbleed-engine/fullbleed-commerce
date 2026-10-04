@@ -1,0 +1,941 @@
+{
+  "checkedAt": "2026-10-04T03:41:01.362454+00:00",
+  "scope": "Own synthetic Shopify development store, production app runtime, free effective charges. No real merchant payment, adoption or marketplace approval.",
+  "sourceCommit": "5f0fa0a0f19435ec09bb556e38b4aad771484077",
+  "pullRequest": "https://github.com/fullbleed-engine/fullbleed-commerce/pull/17",
+  "deployment": {
+    "id": "ab85afd8-9ceb-46e4-955d-c78afba7c9f2",
+    "sourceCommit": "5f0fa0a0f19435ec09bb556e38b4aad771484077",
+    "archiveSha256": "81082a696a5ca313a88577900a09fad8d6aaf8925ed322dd0dbb2de25e1db562",
+    "imageDigest": "sha256:37041ab472737fa8632beed4f87acb0fcd86efc33debefc0fd49019d3f441ff8",
+    "successObservedBeforeStop": true,
+    "resourceLimits": {
+      "cpu": 0.5,
+      "memoryBytes": 536870912
+    },
+    "iacChanges": 0,
+    "trackedSourcesOnly": true,
+    "runtimeVariablesVerified": true
+  },
+  "runtime": {
+    "nodeEnv": "production",
+    "developmentBillingBypass": false,
+    "allowedHandles": [
+      "studio",
+      "scale",
+      "shopify-test"
+    ],
+    "store": "fullbleed-commerce-test.myshopify.com",
+    "scope": "read_orders",
+    "publicListingSubmitted": false
+  },
+  "plans": {
+    "checkedAt": "2026-10-04T02:34:31.413Z",
+    "appId": "430863056897",
+    "plans": [
+      {
+        "handle": "studio",
+        "name": "Studio",
+        "priceUsd": "12",
+        "trialDays": "7",
+        "redirect": "/app/plans",
+        "billing": "MONTHLY_RECURRING",
+        "usageMeters": 0
+      },
+      {
+        "handle": "scale",
+        "name": "Scale",
+        "priceUsd": "29",
+        "trialDays": "7",
+        "redirect": "/app/plans",
+        "billing": "MONTHLY_RECURRING",
+        "usageMeters": 0
+      }
+    ],
+    "merchantPaymentTested": false
+  },
+  "planLifecycle": {
+    "approvalObservedInShopify": true,
+    "effectiveChargeUsd": 0,
+    "shopifyDisplayedFreeTestCharge": true,
+    "sequence": [
+      "Studio",
+      "Scale",
+      "Studio"
+    ],
+    "subscriptions": {
+      "studio-trial": {
+        "shop": {
+          "id": "gid://shopify/Shop/79783100574",
+          "myshopifyDomain": "fullbleed-commerce-test.myshopify.com"
+        },
+        "billingPeriod": "EVERY_30_DAYS",
+        "cancelAtEndOfCycle": false,
+        "trialEndsAt": "2026-10-11T02:48:23Z",
+        "currentBillingCycle": null,
+        "items": [
+          {
+            "handle": "studio"
+          }
+        ],
+        "pendingUpdate": null
+      },
+      "scale-trial": {
+        "shop": {
+          "id": "gid://shopify/Shop/79783100574",
+          "myshopifyDomain": "fullbleed-commerce-test.myshopify.com"
+        },
+        "billingPeriod": "EVERY_30_DAYS",
+        "cancelAtEndOfCycle": false,
+        "trialEndsAt": "2026-10-11T02:52:31Z",
+        "currentBillingCycle": null,
+        "items": [
+          {
+            "handle": "scale"
+          }
+        ],
+        "pendingUpdate": null
+      },
+      "studio-after-downgrade": {
+        "shop": {
+          "id": "gid://shopify/Shop/79783100574",
+          "myshopifyDomain": "fullbleed-commerce-test.myshopify.com"
+        },
+        "billingPeriod": "EVERY_30_DAYS",
+        "cancelAtEndOfCycle": false,
+        "trialEndsAt": "2026-10-11T03:02:58Z",
+        "currentBillingCycle": null,
+        "items": [
+          {
+            "handle": "studio"
+          }
+        ],
+        "pendingUpdate": null
+      }
+    },
+    "usageStates": {
+      "studio-used": {
+        "checkedAt": "2026-10-04T02:50:32.692Z",
+        "counts": {
+          "sessions": 1,
+          "periods": 1,
+          "orders": 1,
+          "jobs": 0
+        },
+        "periods": [
+          {
+            "id": "0c9fa4a5-bbbd-425f-9955-698216123ee0",
+            "key": "trial:2026-10-11T02:48:23.000Z",
+            "startsAt": null,
+            "endsAt": "2026-10-11T02:48:23.000Z",
+            "used": 1,
+            "orders": [
+              {
+                "orderId": "gid://shopify/Order/18921151037598",
+                "completedAt": "2026-10-04T02:50:29.490Z",
+                "reservedUntil": null
+              }
+            ]
+          }
+        ]
+      },
+      "scale-after-fix": {
+        "checkedAt": "2026-10-04T03:02:03.289Z",
+        "counts": {
+          "sessions": 1,
+          "periods": 1,
+          "orders": 1,
+          "jobs": 0
+        },
+        "periods": [
+          {
+            "id": "0c9fa4a5-bbbd-425f-9955-698216123ee0",
+            "key": "trial:2026-10-11T02:48:23.000Z",
+            "startsAt": null,
+            "endsAt": "2026-10-11T02:52:31.000Z",
+            "used": 1,
+            "orders": [
+              {
+                "orderId": "gid://shopify/Order/18921151037598",
+                "completedAt": "2026-10-04T02:50:29.490Z",
+                "reservedUntil": null
+              }
+            ]
+          }
+        ]
+      },
+      "studio-after-downgrade": {
+        "checkedAt": "2026-10-04T03:03:49.587Z",
+        "counts": {
+          "sessions": 1,
+          "periods": 1,
+          "orders": 1,
+          "jobs": 0
+        },
+        "periods": [
+          {
+            "id": "0c9fa4a5-bbbd-425f-9955-698216123ee0",
+            "key": "trial:2026-10-11T02:48:23.000Z",
+            "startsAt": null,
+            "endsAt": "2026-10-11T03:02:58.000Z",
+            "used": 1,
+            "orders": [
+              {
+                "orderId": "gid://shopify/Order/18921151037598",
+                "completedAt": "2026-10-04T02:50:29.490Z",
+                "reservedUntil": null
+              }
+            ]
+          }
+        ]
+      },
+      "studio-after-reprints": {
+        "checkedAt": "2026-10-04T03:04:44.309Z",
+        "counts": {
+          "sessions": 1,
+          "periods": 1,
+          "orders": 1,
+          "jobs": 0
+        },
+        "periods": [
+          {
+            "id": "0c9fa4a5-bbbd-425f-9955-698216123ee0",
+            "key": "trial:2026-10-11T02:48:23.000Z",
+            "startsAt": null,
+            "endsAt": "2026-10-11T03:02:58.000Z",
+            "used": 1,
+            "orders": [
+              {
+                "orderId": "gid://shopify/Order/18921151037598",
+                "completedAt": "2026-10-04T02:50:29.490Z",
+                "reservedUntil": null
+              }
+            ]
+          }
+        ]
+      },
+      "replacement-before-final-flow": {
+        "checkedAt": "2026-10-04T03:28:41.179Z",
+        "counts": {
+          "sessions": 1,
+          "periods": 1,
+          "orders": 1,
+          "jobs": 2
+        },
+        "periods": [
+          {
+            "id": "0c9fa4a5-bbbd-425f-9955-698216123ee0",
+            "key": "trial:2026-10-11T02:48:23.000Z",
+            "startsAt": null,
+            "endsAt": "2026-10-11T03:02:58.000Z",
+            "used": 1,
+            "orders": [
+              {
+                "orderId": "gid://shopify/Order/18921151037598",
+                "completedAt": "2026-10-04T02:50:29.490Z",
+                "reservedUntil": null
+              }
+            ]
+          }
+        ]
+      },
+      "final-after-flow-downloads": {
+        "checkedAt": "2026-10-04T03:31:00.973Z",
+        "counts": {
+          "sessions": 1,
+          "periods": 1,
+          "orders": 1,
+          "jobs": 4
+        },
+        "periods": [
+          {
+            "id": "0c9fa4a5-bbbd-425f-9955-698216123ee0",
+            "key": "trial:2026-10-11T02:48:23.000Z",
+            "startsAt": null,
+            "endsAt": "2026-10-11T03:02:58.000Z",
+            "used": 1,
+            "orders": [
+              {
+                "orderId": "gid://shopify/Order/18921151037598",
+                "completedAt": "2026-10-04T02:50:29.490Z",
+                "reservedUntil": null
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "sameReceiptAndOneOrderUsedThroughout": true,
+    "trialEndChangesObserved": true,
+    "manualReprintsMatchFlowBytes": true,
+    "subscriptionAfterUninstall": {
+      "shop": {
+        "id": "gid://shopify/Shop/79783100574",
+        "myshopifyDomain": "fullbleed-commerce-test.myshopify.com"
+      },
+      "billingPeriod": "EVERY_30_DAYS",
+      "cancelAtEndOfCycle": true,
+      "trialEndsAt": "2026-10-11T03:02:58Z",
+      "currentBillingCycle": null,
+      "items": [
+        {
+          "handle": "studio"
+        }
+      ],
+      "pendingUpdate": null
+    }
+  },
+  "workflow": {
+    "trigger": "Order created",
+    "manualReplay": true,
+    "order": "#1004",
+    "successfulActions": 7,
+    "diagnosticLogActions": 1,
+    "orderRemainedUnpaidAndUnfulfilled": true,
+    "workflowOffAfterCheck": true,
+    "run": {
+      "checkedAt": "2026-10-04T03:31:14.770Z",
+      "path": "/activity/01M42FC7SFE9GZWSJGC4F3E5H5:01a0fe46-037a-7441-a300-878f89fc9a50:v2",
+      "text": "Skip to content\nStarted at Oct 3, 2026 at 11:30 PMWorkflow: Fullbleed \u2014 synthetic document automation check\nCompleted\n7 completed\nOrder created\nThis workflow starts when a new order is created\nCreate order summary link\nCreate packing slip link\nLog output\nOutput Synthetic verification only; no email or fulfillment. Summary job: {{createOrderSummaryLink.id}}; PDF SHA-256: {{createOrderSummaryLink.sha256}}; expires: {{createOrderSummaryLink.expiresAt}}; private link checksum: {{createOrderSummaryLink.downloadUrl | sha256}} Packing job: {{createPackingSlipLink.id}}; PDF SHA-256: {{createPackingSlipLink.sha256}}; expires: {{createPackingSlipLink.expiresAt}}; private link checksum: {{createPackingSlipLink.downloadUrl | sha256}} to the run log\nUpdate order metafield\nAdd this metafield to the order: custom.fullbleed_summary_link\nUpdate order metafield\nAdd this metafield to the order: custom.fullbleed_summary_expiry\nUpdate order metafield\nAdd this metafield to the order: custom.fullbleed_packing_link\nUpdate order metafield\nAdd this metafield to the order: custom.fullbleed_packing_expiry\nStarted when...\nOrder created\nView order\nSucceededOct 3, 2026 at 11:30 PM\nStep data\nDid this...\nCreate order summary link\nSucceededOct 3, 2026 at 11:30 PM\nStep data\nDid this...\nCreate packing slip link\nSucceededOct 3, 2026 at 11:30 PM\nStep data\nDid this...\nLog output\nSucceededOct 3, 2026 at 11:30 PM\nLogs\nSynthetic verification only; no email or fulfillment.\nSummary job: 07e750f5-7cb8-474b-88e0-252482070333; PDF SHA-256: 4e58f4268873a1522095663d4a5ca900c1380c8f4ec088d698390b5851ba8159; expires: 2026-10-05T03:30:08.170Z; private link checksum: 9a2dfe79372fb73c8e710231d916086971e5bd694be416bdd7298593194a515a\n  Packing job: 7542a721-08f1-43ea-aad1-b840cbfff853; PDF SHA-256: dc533b66c96a2b702be48eb0e9a7a06e2662a5bdc7a5aea2f44a03b5916022f0; expires: 2026-10-05T03:30:21.275Z; private link checksum: 455ce5013568206ca4309573ed621dc021d0094df3477e00d1abe92b7ebc8148\nStep data\nDid this...\nUpdate order metafield\nSucceededOct 3, 2026 at 11:30 PM\nStep data\nDid this...\nUpdate order metafield\nSucceededOct 3, 2026 at 11:30 PM\nStep data\nDid this...\nUpdate order metafield\nSucceededOct 3, 2026 at 11:30 PM\nStep data\nDid this...\nUpdate order metafield\nSucceededOct 3, 2026 at 11:30 PM\nStep data",
+      "sevenActionsCompleted": true,
+      "manualReplay": true
+    },
+    "metafields": {
+      "checkedAt": "2026-10-04T03:30:34.932Z",
+      "apiVersion": "2026-10",
+      "orderId": "gid://shopify/Order/18921151037598",
+      "orderName": "#1004",
+      "checks": [
+        {
+          "name": "synthetic order remains unpaid and unfulfilled",
+          "passed": true
+        },
+        {
+          "name": "order-summary: ready on first attempt",
+          "passed": true
+        },
+        {
+          "name": "order-summary: stable private URL addresses prepared job",
+          "passed": true
+        },
+        {
+          "name": "order-summary: saved expiry matches ledger",
+          "passed": true
+        },
+        {
+          "name": "order-summary: typed fields",
+          "passed": true
+        },
+        {
+          "name": "fullbleed_summary_link: storefront and customer accounts cannot read",
+          "passed": true
+        },
+        {
+          "name": "fullbleed_summary_expiry: storefront and customer accounts cannot read",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: ready on first attempt",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: stable private URL addresses prepared job",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: saved expiry matches ledger",
+          "passed": true
+        },
+        {
+          "name": "packing-slip: typed fields",
+          "passed": true
+        },
+        {
+          "name": "fullbleed_packing_link: storefront and customer accounts cannot read",
+          "passed": true
+        },
+        {
+          "name": "fullbleed_packing_expiry: storefront and customer accounts cannot read",
+          "passed": true
+        },
+        {
+          "name": "both documents use the installed built-in template",
+          "passed": true
+        }
+      ],
+      "fields": [
+        {
+          "namespace": "custom",
+          "key": "fullbleed_summary_link",
+          "type": "url",
+          "access": {
+            "storefront": "NONE",
+            "customerAccount": "NONE"
+          },
+          "valueSha256": "9a2dfe79372fb73c8e710231d916086971e5bd694be416bdd7298593194a515a"
+        },
+        {
+          "namespace": "custom",
+          "key": "fullbleed_summary_expiry",
+          "type": "date_time",
+          "access": {
+            "storefront": "NONE",
+            "customerAccount": "NONE"
+          },
+          "valueSha256": "7bb73aaccefd773f595e669ab83f375bad666af5346d890314197aaf0268d253"
+        },
+        {
+          "namespace": "custom",
+          "key": "fullbleed_packing_link",
+          "type": "url",
+          "access": {
+            "storefront": "NONE",
+            "customerAccount": "NONE"
+          },
+          "valueSha256": "455ce5013568206ca4309573ed621dc021d0094df3477e00d1abe92b7ebc8148"
+        },
+        {
+          "namespace": "custom",
+          "key": "fullbleed_packing_expiry",
+          "type": "date_time",
+          "access": {
+            "storefront": "NONE",
+            "customerAccount": "NONE"
+          },
+          "valueSha256": "bee3d9ae99711ca37465875559770dae7b85c7588786dcac67ef0f49222fce21"
+        }
+      ],
+      "jobs": [
+        {
+          "id": "07e750f5-7cb8-474b-88e0-252482070333",
+          "shop": "fullbleed-commerce-test.myshopify.com",
+          "runId": "dfae06711180724b44f891714f3d97a469e16faa",
+          "orderId": "gid://shopify/Order/18921151037598",
+          "kind": "order-summary",
+          "status": "ready",
+          "attempts": 1,
+          "downloads": 0,
+          "pdfSha256": "4e58f4268873a1522095663d4a5ca900c1380c8f4ec088d698390b5851ba8159",
+          "expiresAt": "2026-10-05T03:30:08.170Z",
+          "createdAt": "2026-10-04T03:30:02.906Z",
+          "templateRevision": ""
+        },
+        {
+          "id": "7542a721-08f1-43ea-aad1-b840cbfff853",
+          "shop": "fullbleed-commerce-test.myshopify.com",
+          "runId": "484fc8389d822116a723c24244f00d8a827d6f7a",
+          "orderId": "gid://shopify/Order/18921151037598",
+          "kind": "packing-slip",
+          "status": "ready",
+          "attempts": 1,
+          "downloads": 0,
+          "pdfSha256": "dc533b66c96a2b702be48eb0e9a7a06e2662a5bdc7a5aea2f44a03b5916022f0",
+          "expiresAt": "2026-10-05T03:30:21.275Z",
+          "createdAt": "2026-10-04T03:30:15.350Z",
+          "templateRevision": ""
+        }
+      ]
+    }
+  },
+  "browser": {
+    "checkedAt": "2026-10-04T03:30:31.860212+00:00",
+    "browser": "Chrome 154.0.8037.93 through CLI Playwright",
+    "linkSource": "Actual order metafields written by native Shopify Flow actions",
+    "orderId": "gid://shopify/Order/18921151037598",
+    "orderName": "#1004",
+    "checks": [
+      {
+        "name": "order-summary: browser strips credential from location",
+        "passed": true
+      },
+      {
+        "name": "order-summary: private landing response",
+        "passed": true
+      },
+      {
+        "name": "order-summary: native browser download completed",
+        "passed": true
+      },
+      {
+        "name": "order-summary: PDF response is private",
+        "passed": true
+      },
+      {
+        "name": "order-summary: download matches prepared PDF SHA-256",
+        "passed": true
+      },
+      {
+        "name": "order-summary: synthetic order items complete",
+        "passed": true
+      },
+      {
+        "name": "order-summary: appropriate address shown",
+        "passed": true
+      },
+      {
+        "name": "order-summary: one page",
+        "passed": true
+      },
+      {
+        "name": "order-summary: summary total preserved or packing prices omitted",
+        "passed": true
+      },
+      {
+        "name": "order-summary: all text lies inside page",
+        "passed": true
+      },
+      {
+        "name": "order-summary: download page fits mobile viewport",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: browser strips credential from location",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: private landing response",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: native browser download completed",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: PDF response is private",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: download matches prepared PDF SHA-256",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: synthetic order items complete",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: appropriate address shown",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: one page",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: summary total preserved or packing prices omitted",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: all text lies inside page",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: download page fits mobile viewport",
+        "passed": true
+      },
+      {
+        "name": "no JavaScript errors on download pages",
+        "passed": true
+      },
+      {
+        "name": "exactly one preparation per document",
+        "passed": true
+      }
+    ],
+    "documents": [
+      {
+        "kind": "order-summary",
+        "jobId": "07e750f5-7cb8-474b-88e0-252482070333",
+        "pdfSha256": "4e58f4268873a1522095663d4a5ca900c1380c8f4ec088d698390b5851ba8159",
+        "linkSha256": "9a2dfe79372fb73c8e710231d916086971e5bd694be416bdd7298593194a515a",
+        "bytes": 126793,
+        "pages": 1,
+        "filename": "order-summary-1004.pdf",
+        "preparedAt": "2026-10-04T03:30:02.906Z",
+        "expiresAt": "2026-10-05T03:30:08.170Z",
+        "preparationAttempts": 1,
+        "templateRevision": ""
+      },
+      {
+        "kind": "packing-slip",
+        "jobId": "7542a721-08f1-43ea-aad1-b840cbfff853",
+        "pdfSha256": "dc533b66c96a2b702be48eb0e9a7a06e2662a5bdc7a5aea2f44a03b5916022f0",
+        "linkSha256": "455ce5013568206ca4309573ed621dc021d0094df3477e00d1abe92b7ebc8148",
+        "bytes": 128493,
+        "pages": 1,
+        "filename": "packing-slip-1004.pdf",
+        "preparedAt": "2026-10-04T03:30:15.350Z",
+        "expiresAt": "2026-10-05T03:30:21.275Z",
+        "preparationAttempts": 1,
+        "templateRevision": ""
+      }
+    ],
+    "pageErrors": []
+  },
+  "documents": [
+    {
+      "kind": "order-summary",
+      "jobId": "07e750f5-7cb8-474b-88e0-252482070333",
+      "pdfSha256": "4e58f4268873a1522095663d4a5ca900c1380c8f4ec088d698390b5851ba8159",
+      "linkSha256": "9a2dfe79372fb73c8e710231d916086971e5bd694be416bdd7298593194a515a",
+      "bytes": 126793,
+      "pages": 1,
+      "filename": "order-summary-1004.pdf",
+      "preparedAt": "2026-10-04T03:30:02.906Z",
+      "expiresAt": "2026-10-05T03:30:08.170Z",
+      "preparationAttempts": 1,
+      "templateRevision": "",
+      "pdf": "docs/previews/shopify-hosted-plans-order-summary.pdf",
+      "preview": "docs/previews/shopify-hosted-plans-order-summary.png",
+      "previewSha256": "e5a3da21a008293da326e6c4c6e4a236932b723bebda1c2a42de067e546ee7ce",
+      "visualReview": {
+        "allPagesReviewed": true,
+        "textAndTablesInsidePage": true,
+        "summaryAmountsPreserved": true,
+        "packingPricesOmitted": false
+      }
+    },
+    {
+      "kind": "packing-slip",
+      "jobId": "7542a721-08f1-43ea-aad1-b840cbfff853",
+      "pdfSha256": "dc533b66c96a2b702be48eb0e9a7a06e2662a5bdc7a5aea2f44a03b5916022f0",
+      "linkSha256": "455ce5013568206ca4309573ed621dc021d0094df3477e00d1abe92b7ebc8148",
+      "bytes": 128493,
+      "pages": 1,
+      "filename": "packing-slip-1004.pdf",
+      "preparedAt": "2026-10-04T03:30:15.350Z",
+      "expiresAt": "2026-10-05T03:30:21.275Z",
+      "preparationAttempts": 1,
+      "templateRevision": "",
+      "pdf": "docs/previews/shopify-hosted-plans-packing-slip.pdf",
+      "preview": "docs/previews/shopify-hosted-plans-packing-slip.png",
+      "previewSha256": "45effa6febcc7c6e16aaa04fd0257c052382b9505353ce3a1a378bac3b4b8fbc",
+      "visualReview": {
+        "allPagesReviewed": true,
+        "textAndTablesInsidePage": true,
+        "summaryAmountsPreserved": false,
+        "packingPricesOmitted": true
+      }
+    }
+  ],
+  "pause": {
+    "checkedAt": "2026-10-04T03:31:42.576170+00:00",
+    "browser": "Chrome 154.0.8037.93 through CLI Playwright",
+    "linkSource": "Actual order metafields written by native Shopify Flow actions",
+    "orderId": "gid://shopify/Order/18921151037598",
+    "orderName": "#1004",
+    "checks": [
+      {
+        "name": "order-summary: browser strips credential from location",
+        "passed": true
+      },
+      {
+        "name": "order-summary: private landing response",
+        "passed": true
+      },
+      {
+        "name": "order-summary: saved order link is unusable after pause",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: browser strips credential from location",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: private landing response",
+        "passed": true
+      },
+      {
+        "name": "packing-slip: saved order link is unusable after pause",
+        "passed": true
+      },
+      {
+        "name": "no JavaScript errors on download pages",
+        "passed": true
+      },
+      {
+        "name": "exactly one preparation per document",
+        "passed": true
+      }
+    ],
+    "documents": [],
+    "pageErrors": []
+  },
+  "uninstall": {
+    "actualShopifyHttp": [
+      {
+        "timestamp": "2026-10-04T03:36:58.752148944Z",
+        "requestId": "BuZKLXK4QCSCiKLln6XIxQ",
+        "method": "POST",
+        "path": "/webhooks/app/uninstalled",
+        "httpStatus": 204,
+        "totalDuration": 298,
+        "responseDetails": ""
+      }
+    ],
+    "cleanup": {
+      "checkedAt": "2026-10-04T03:37:29.937Z",
+      "counts": {
+        "session": 0,
+        "brand": 0,
+        "documentTemplate": 0,
+        "automationSettings": 0,
+        "automationJob": 0,
+        "privacyRequest": 0,
+        "privacyRequestOrder": 0,
+        "usagePeriod": 0,
+        "usageOrder": 0
+      },
+      "erasure": {
+        "id": "8f8675ed-bb39-447e-8c69-9da4ba43a453",
+        "recordedAt": "2026-10-04T03:36:58.583Z",
+        "type": "erase-shop",
+        "encryptedJournalReadbackVerified": true,
+        "transactionReceiptPresent": true
+      },
+      "monitorStatus": 200,
+      "monitor": {
+        "status": "ok",
+        "checkedAt": "2026-10-04T03:37:29.655Z",
+        "backups": {
+          "status": "fresh",
+          "snapshotAt": "2026-10-04T03:00:20.731Z",
+          "ageSeconds": 2228
+        },
+        "privacy": {
+          "pending": 0,
+          "overdue": 0,
+          "dueWithin48Hours": 0,
+          "keyMismatch": 0
+        }
+      }
+    },
+    "linksAfterErasure": {
+      "checkedAt": "2026-10-04T03:37:25.800374+00:00",
+      "checks": [
+        {
+          "kind": "order-summary",
+          "status": 404
+        },
+        {
+          "kind": "packing-slip",
+          "status": 404
+        }
+      ]
+    }
+  },
+  "regressionsFixed": [
+    {
+      "issue": "Shopify moved trialEndsAt on plan changes; using it as an exact period key displayed a fresh allowance.",
+      "fix": "Keep the ongoing trial receipt set and extend the verified trial end.",
+      "hostedUpgradeAndDowngradeVerified": true
+    },
+    {
+      "issue": "Flow could expose ready state before allowance accounting committed.",
+      "failedCi": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37173222846/job/111350314326",
+      "fix": "Publish ready state only after the accounting wrapper completes; failed finalization retains failure or revocation.",
+      "regressionCases": [
+        "delayed commit",
+        "failed commit",
+        "pause during commit"
+      ],
+      "finalHostedFlowVerified": true
+    }
+  ],
+  "localVerification": "docs/allowance-verification.json",
+  "ci": [
+    {
+      "link": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37174094860/job/111352973663",
+      "name": "integration",
+      "state": "SUCCESS"
+    },
+    {
+      "link": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37174094860/job/111352973708",
+      "name": "shopify-plans-browser",
+      "state": "SUCCESS"
+    },
+    {
+      "link": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37174094860/job/111352973641",
+      "name": "renderer-deployment",
+      "state": "SUCCESS"
+    },
+    {
+      "link": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37174094856/job/111352973599",
+      "name": "browser (chrome)",
+      "state": "SUCCESS"
+    },
+    {
+      "link": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37174094860/job/111352973686",
+      "name": "container",
+      "state": "SUCCESS"
+    },
+    {
+      "link": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37174094860/job/111352973635",
+      "name": "pagination",
+      "state": "SUCCESS"
+    },
+    {
+      "link": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37174094860/job/111352973591",
+      "name": "upgrade",
+      "state": "SUCCESS"
+    },
+    {
+      "link": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37174094856/job/111352973594",
+      "name": "browser (firefox)",
+      "state": "SUCCESS"
+    },
+    {
+      "link": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37174094856/job/111352973501",
+      "name": "browser (webkit)",
+      "state": "SUCCESS"
+    },
+    {
+      "link": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37174092361/job/111352966097",
+      "name": "pagination",
+      "state": "SUCCESS"
+    },
+    {
+      "link": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37174092361/job/111352966147",
+      "name": "upgrade",
+      "state": "SUCCESS"
+    },
+    {
+      "link": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37174092361/job/111352966133",
+      "name": "shopify-plans-browser",
+      "state": "SUCCESS"
+    },
+    {
+      "link": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37174092361/job/111352966094",
+      "name": "integration",
+      "state": "SUCCESS"
+    },
+    {
+      "link": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37174092361/job/111352966007",
+      "name": "container",
+      "state": "SUCCESS"
+    },
+    {
+      "link": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37174092361/job/111352966175",
+      "name": "renderer-deployment",
+      "state": "SUCCESS"
+    }
+  ],
+  "currentState": {
+    "checkedAt": "2026-10-04T03:38:24.302229+00:00",
+    "computeStopped": true,
+    "activeDeployments": 0,
+    "lastDeploymentId": "ab85afd8-9ceb-46e4-955d-c78afba7c9f2",
+    "lastDeploymentStatus": "REMOVED",
+    "persistentVolumeRetained": true,
+    "privateRecoveryBucketRetained": true,
+    "scheduledMonitorEnabled": false,
+    "project": {
+      "deletedAt": null,
+      "id": "ee2c5784-260b-44d7-aff3-ef46714687bc",
+      "name": "fullbleed-commerce-staging"
+    },
+    "billingPeriod": {
+      "end": "2026-10-24T18:42:11+00:00",
+      "start": "2026-09-24T18:42:11+00:00"
+    },
+    "meteredUsageDollars": 0.0061987154937167875,
+    "serviceUsage": [
+      {
+        "backupDollars": 0.0,
+        "cpuDollars": 0.0004121859953703704,
+        "egressDollars": 0.0008024292000000001,
+        "id": "bcd8801b-e89c-4c4c-baf3-b8e1d0fe8b59",
+        "memoryDollars": 0.004460484677530865,
+        "name": "shopify-app",
+        "totalDollars": 0.0061987154937167875,
+        "volumeDollars": 0.0005236156208155517
+      }
+    ],
+    "recoveryBucket": {
+      "environment": "production",
+      "environmentId": "b3892972-504b-493b-8fc4-a6fb26b14d90",
+      "id": "bf913690-c271-4932-8984-2168db8cc96d",
+      "name": "privacy-recovery",
+      "objects": 19,
+      "region": "sjc",
+      "storage": "5.2 MB",
+      "storageBytes": 5164822
+    },
+    "usageCaveat": "Project metering is not an invoice, may lag, and does not itemize bucket charges."
+  },
+  "remainingGates": [
+    "Real paid merchant cycle and renewal/cancellation behavior",
+    "Store freeze behavior",
+    "Sustained workload and cost measurement",
+    "Continuous privacy and backup operations, independent key recovery, secure response delivery",
+    "Branded app URL, listing media and copy, emergency contact and protected-data review",
+    "Shopify App Store submission and approval",
+    "Consenting merchant pilots"
+  ],
+  "artifactHashes": {
+    "output/hosted-plans/configuration.json": "a9102a1336ec473efc8ec19911b54c99b66dd526d49d7f95b19f1b4e855cfe21",
+    "output/hosted-plans/deployment-request.json": "00bb715373e120a1b25a56ff8b49e13b57a449325408e8d9725f7b36924a9bbb",
+    "output/hosted-plans/final-after-flow-downloads-state.json": "aabd0b2c71699e12b34dad080df93434775560485e782e520c8a63cdd78ed1ac",
+    "output/hosted-plans/flow-run.json": "c4191f917e80464e2d14c316be6148a73de6fea8ed38d679adc497fe3e143457",
+    "output/hosted-plans/iac-plan.json": "7ad91658e29a412b1150f091ee373ca2f4a7e70c6de4a4a7821f57b46810e590",
+    "output/hosted-plans/initial-deployment-request.json": "cf3be6782d26ccb61b8aa6c679803a8a7783684598b09907c6f2dc7936390f31",
+    "output/hosted-plans/metafield-verification.json": "9f79a97c818c577a7ad56119a40ceb50dec10c8308ef3685711804b05d1b7b71",
+    "output/hosted-plans/preflight.json": "5b959031c547820ef24f594b4729901ceaa65b8ad5205b9af74e69de1710efa2",
+    "output/hosted-plans/read-metafields-validation.json": "f7f50ff2c8875386deb0d11b0588b3bf27ce22a226454fd74b90e400bfa4b367",
+    "output/hosted-plans/replacement-before-final-flow-state.json": "39f6539579978406f2bf0c1167263aca4d376d93be54f94b2404c02cae5c8ee1",
+    "output/hosted-plans/scale-after-fix-state.json": "2cf4cf372a419e03f383f70764f70273684aa926c705fda0026d835ba41513e8",
+    "output/hosted-plans/scale-after-upgrade-state.json": "da7b27de357d3a11001d1ba37f2fc6b3c2d9cca3c01acbfb789af3d06bce8440",
+    "output/hosted-plans/scale-trial-subscription.json": "1aa370f70be73694c485c8f0753dce3b9a21cc7cc78088145a526542f6686ecc",
+    "output/hosted-plans/stopped-state.json": "0dbcecc0781633961ff9a40804807e57ba66ce192ff6af2748cdb649f4f2e061",
+    "output/hosted-plans/studio-after-downgrade-state.json": "1f25da723e1d010f0c6e894157ba2c024bf9fbc33a5abf84555a725b87f9432f",
+    "output/hosted-plans/studio-after-downgrade-subscription.json": "d3047e1a83eaafe6e3367821b6f0e0460784bd232ea91bc623621e70ccc25ef7",
+    "output/hosted-plans/studio-after-flow-downloads-state.json": "688c8805acb8b69689f049b42311cbe30207e437026c97ce13d05e41aa733c25",
+    "output/hosted-plans/studio-after-flow-state.json": "1fde4411ae874acb1f75f5ca5d10cf860a57344e6a66c10ebe3d61f802d91100",
+    "output/hosted-plans/studio-after-reprints-state.json": "2f21e9b5cb2424f96d0d8999ff027f90e573371f971d08a047b190ab8f581c0d",
+    "output/hosted-plans/studio-trial-subscription.json": "2842a29ea203ecb71b36ec1b640c2a5db0c3dfa1e6137e2f513cc86abad461d9",
+    "output/hosted-plans/studio-used-state.json": "f7ddadfa9b6d78c2a5c18d676b279673570f1aa605b8d22c14a2bb0f97e775e2",
+    "output/hosted-plans/subscription-after-uninstall.json": "1fd2fad5ec31fd3b484096ef83cfe200446167769e624e3a35ad1c3c2e0a2ffc",
+    "output/hosted-plans/trial-fix-deployment-request.json": "31662027e73967ea65d5f4f35ba124bae354cf233f01a971cb8fc614e5fcb3d7",
+    "output/hosted-plans/uninstall-delivery.json": "ebcd576b90970b00cd287d419a257d743887ceabffb393baddecb4d6a734468e",
+    "output/hosted-plans/uninstall-verification.json": "6141230005903a132c95cc35aba86932ee684831bb14eadc1a6bc773eeb89a43",
+    "output/hosted-plans/before-ready-fix/deployment-request.json": "5a1b86e45b9fa90a25e89cb5fb67cd77c851936fe6821963146b5146cc16b85c",
+    "output/hosted-plans/before-ready-fix/metafield-verification.json": "3204435eb7ab86fa6168bdf4e7b711fb1af85dd3d5625b71842949bd88b95273",
+    "output/hosted-plans/before-ready-fix/studio-after-flow-downloads-state.json": "688c8805acb8b69689f049b42311cbe30207e437026c97ce13d05e41aa733c25",
+    "output/hosted-plans/before-ready-fix/studio-after-flow-state.json": "1fde4411ae874acb1f75f5ca5d10cf860a57344e6a66c10ebe3d61f802d91100",
+    "output/hosted-plans/before-ready-fix/browser/shopify-hosted-plans-downloads.json": "926b75c6b6c387b6fafc3c869d6bdb70f2880f93499d2e29c55f42486a096be4",
+    "output/hosted-plans/before-ready-fix/browser/shopify-hosted-plans-order-summary-download.png": "e6d2298f982988cca89655fd565cd4d073465da62816e78c329b209146a0d781",
+    "output/hosted-plans/before-ready-fix/browser/shopify-hosted-plans-order-summary-mobile.png": "d778c65421001a898ff3f1ed862d274012ccf040f5585e5c5a2b1c32ebf75f93",
+    "output/hosted-plans/before-ready-fix/browser/shopify-hosted-plans-order-summary-revoked.png": "56ec90dfb7a88d8f313e83d396671f9b083c0de025ef1424bdd30593aca6121c",
+    "output/hosted-plans/before-ready-fix/browser/shopify-hosted-plans-order-summary.pdf": "4e58f4268873a1522095663d4a5ca900c1380c8f4ec088d698390b5851ba8159",
+    "output/hosted-plans/before-ready-fix/browser/shopify-hosted-plans-order-summary.png": "e5a3da21a008293da326e6c4c6e4a236932b723bebda1c2a42de067e546ee7ce",
+    "output/hosted-plans/before-ready-fix/browser/shopify-hosted-plans-packing-slip-download.png": "e6d2298f982988cca89655fd565cd4d073465da62816e78c329b209146a0d781",
+    "output/hosted-plans/before-ready-fix/browser/shopify-hosted-plans-packing-slip-mobile.png": "d778c65421001a898ff3f1ed862d274012ccf040f5585e5c5a2b1c32ebf75f93",
+    "output/hosted-plans/before-ready-fix/browser/shopify-hosted-plans-packing-slip-revoked.png": "56ec90dfb7a88d8f313e83d396671f9b083c0de025ef1424bdd30593aca6121c",
+    "output/hosted-plans/before-ready-fix/browser/shopify-hosted-plans-packing-slip.pdf": "dc533b66c96a2b702be48eb0e9a7a06e2662a5bdc7a5aea2f44a03b5916022f0",
+    "output/hosted-plans/before-ready-fix/browser/shopify-hosted-plans-packing-slip.png": "45effa6febcc7c6e16aaa04fd0257c052382b9505353ce3a1a378bac3b4b8fbc",
+    "output/hosted-plans/before-ready-fix/browser/shopify-hosted-plans-revoked.json": "d43587bfd37d1ac058e964ff2a360cacdf87e4b98c0e256f6df11c563ef15452",
+    "output/hosted-plans/browser/shopify-hosted-plans-downloads.json": "af4c62578e98a51a3207acfc4da7a23e8e120e0135335449a3d4b52c6c8433da",
+    "output/hosted-plans/browser/shopify-hosted-plans-order-summary-download.png": "e6d2298f982988cca89655fd565cd4d073465da62816e78c329b209146a0d781",
+    "output/hosted-plans/browser/shopify-hosted-plans-order-summary-mobile.png": "d778c65421001a898ff3f1ed862d274012ccf040f5585e5c5a2b1c32ebf75f93",
+    "output/hosted-plans/browser/shopify-hosted-plans-order-summary-revoked.png": "56ec90dfb7a88d8f313e83d396671f9b083c0de025ef1424bdd30593aca6121c",
+    "output/hosted-plans/browser/shopify-hosted-plans-order-summary.pdf": "4e58f4268873a1522095663d4a5ca900c1380c8f4ec088d698390b5851ba8159",
+    "output/hosted-plans/browser/shopify-hosted-plans-order-summary.png": "e5a3da21a008293da326e6c4c6e4a236932b723bebda1c2a42de067e546ee7ce",
+    "output/hosted-plans/browser/shopify-hosted-plans-packing-slip-download.png": "e6d2298f982988cca89655fd565cd4d073465da62816e78c329b209146a0d781",
+    "output/hosted-plans/browser/shopify-hosted-plans-packing-slip-mobile.png": "d778c65421001a898ff3f1ed862d274012ccf040f5585e5c5a2b1c32ebf75f93",
+    "output/hosted-plans/browser/shopify-hosted-plans-packing-slip-revoked.png": "56ec90dfb7a88d8f313e83d396671f9b083c0de025ef1424bdd30593aca6121c",
+    "output/hosted-plans/browser/shopify-hosted-plans-packing-slip.pdf": "dc533b66c96a2b702be48eb0e9a7a06e2662a5bdc7a5aea2f44a03b5916022f0",
+    "output/hosted-plans/browser/shopify-hosted-plans-packing-slip.png": "45effa6febcc7c6e16aaa04fd0257c052382b9505353ce3a1a378bac3b4b8fbc",
+    "output/hosted-plans/browser/shopify-hosted-plans-revoked.json": "bb1477ab6a940749b252d78830c2a03eb1ca2af41f0cb085131717016acfa333",
+    "output/hosted-plans/browser/shopify-hosted-uninstalled.json": "ab14df78d29109ab945d4ed877c937d9a3e1e70db9b05334b4a44fcf5fb8aff7",
+    "output/hosted-plans/browser/manual/downgraded-order-summary.pdf": "4e58f4268873a1522095663d4a5ca900c1380c8f4ec088d698390b5851ba8159",
+    "output/hosted-plans/browser/manual/downgraded-packing-slip.pdf": "dc533b66c96a2b702be48eb0e9a7a06e2662a5bdc7a5aea2f44a03b5916022f0",
+    "output/hosted-plans/browser/manual/flow-final-run-detail.png": "b55af0403e0f106b8fee7dcc6f598389eceb6b5c6c6a26a86e9f3e95022b8ea1",
+    "output/hosted-plans/browser/manual/flow-initial-run-detail.png": "13753c5ce982b346677756c4e2fcba938c4a21c806a535833cca162789b919a4",
+    "output/hosted-plans/browser/manual/flow-seven-actions.png": "f20acfc32f8bb4b39837531932fce1cbf7122b4f1b883be6ba28356fde35da68",
+    "output/hosted-plans/browser/manual/scale-after-upgrade.png": "60d60bb201b1599aa21dd9c513ea01733f68edbcafe69e90c61d4f0076524362",
+    "output/hosted-plans/browser/manual/scale-test-approval.png": "8c7ded501b79d2cc22a77d6bff39d8a920289679d68f8508feaa9ea6ee671867",
+    "output/hosted-plans/browser/manual/scale-upgrade-fixed.png": "2df682974342dd6492145f7029acbc18cf3f642ee75605e8151ab38fd9f170a4",
+    "output/hosted-plans/browser/manual/studio-after-downgrade.png": "760052a4fcff916fed3cc8fd0411a4642f127739b38c100a4bc2154651da5063",
+    "output/hosted-plans/browser/manual/studio-summary.pdf": "4e58f4268873a1522095663d4a5ca900c1380c8f4ec088d698390b5851ba8159",
+    "output/hosted-plans/browser/manual/studio-trial.png": "17037be8780fce1d7d64c1805388553977b55815dbb972862393963d5f2cefe9"
+  }
+}

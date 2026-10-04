@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createSubscriptionCheck, developmentAccess, pricingUrl } from '../shopify/billing.js';
+import { createSubscriptionCheck, createSubscriptionLookup, developmentAccess, pricingUrl } from '../shopify/billing.js';
 import { createRenderLimit } from '../shopify/render-limit.js';
 
 const identity = { shopId: 'gid://shopify/Shop/456', shop: 'cedar-test.myshopify.com' };
@@ -53,6 +53,15 @@ test('development access cannot apply to production, another store, or a non-dev
   const options = { nodeEnv: 'development', allowedStore: identity.shop, shop: identity.shop, partnerDevelopment: true };
   assert.equal(developmentAccess(options), true);
   for (const change of [{ nodeEnv: 'production' }, { nodeEnv: undefined }, { partnerDevelopment: false }, { shop: 'other.myshopify.com' }, { allowedStore: undefined }]) assert.equal(developmentAccess({ ...options, ...change }), false);
+});
+
+test('subscription metadata uses the active plan and separates pending changes', async () => {
+  const currentBillingCycle = { startTime: '2026-10-01T00:00:00Z', endTime: '2026-10-31T00:00:00Z' };
+  const current = { ...active, billingPeriod: 'EVERY_30_DAYS', currentBillingCycle, trialEndsAt: null, cancelAtEndOfCycle: true, pendingUpdate: { items: [{ handle: 'larger' }] } };
+  const lookup = createSubscriptionLookup({ ...config, allowedHandles: ['documents', 'larger'], fetchImpl: async () => reply(current) });
+  assert.deepEqual(await lookup(identity), { handle: 'documents', billingPeriod: 'EVERY_30_DAYS', currentBillingCycle, trialEndsAt: null, cancelAtEndOfCycle: true, pendingHandles: ['larger'] });
+  current.items.push({ handle: 'larger' });
+  await assert.rejects(lookup(identity), e => e.status === 503);
 });
 
 test('concurrent rendering is bounded and slots recover after failure', async () => {

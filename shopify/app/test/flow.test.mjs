@@ -17,7 +17,7 @@ const primary = 'synthetic-primary.myshopify.com';
 const other = 'synthetic-other.myshopify.com';
 const secret = process.env.SHOPIFY_API_SECRET;
 const baseOrder = JSON.parse(readFileSync(new URL('../../../fixtures/order.json', import.meta.url), 'utf8'));
-let time, inputOrder, renderCalls, orderReads, unavailable, slowRender, paid, catalogPriceActive;
+let time, inputOrder, renderCalls, orderReads, unavailable, slowRender, paid, catalogPriceActive, paidHandle;
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const payload = (run = randomUUID(), extra = {}) => ({ shop_id: '1', shopify_domain: primary, action_run_id: run, handle: 'create-order-summary-link', properties: { order_id: 'gid://shopify/Order/1' }, ...extra });
 const parsed = p => parseFlowPayload(p || payload(), primary, 'gid://shopify/Shop/1');
@@ -39,7 +39,8 @@ let service;
 process.env.SHOPIFY_PARTNER_ORG_ID = '1';
 process.env.SHOPIFY_PARTNER_APP_ID = 'gid://shopify/App/1';
 process.env.SHOPIFY_PARTNER_API_ACCESS_TOKEN = 'synthetic-partner-token';
-process.env.SHOPIFY_PLAN_HANDLES = 'automation';
+process.env.SHOPIFY_PLAN_HANDLES = 'studio,scale';
+process.env.SHOPIFY_APP_HANDLE = 'fullbleed-commerce';
 const originalFetch = globalThis.fetch;
 const price = amount => ({ presentmentMoney: { amount, currencyCode: 'USD' } });
 const shopifyOrder = {
@@ -52,7 +53,7 @@ globalThis.fetch = async (resource, init) => {
   const request = new Request(resource, init);
   const url = new URL(request.url);
   const body = await request.json();
-  if (url.origin === 'https://partners.shopify.com') return Response.json({ data: { activeSubscription: paid ? { shop: { id: 'gid://shopify/Shop/1', myshopifyDomain: primary }, items: [{ handle: 'automation', price: { active: catalogPriceActive } }] } : null } });
+  if (url.origin === 'https://partners.shopify.com') return Response.json({ data: { activeSubscription: paid ? { shop: { id: 'gid://shopify/Shop/1', myshopifyDomain: primary }, billingPeriod: 'EVERY_30_DAYS', currentBillingCycle: { startTime: new Date(time - 86400000).toISOString(), endTime: new Date(time + 29 * 86400000).toISOString() }, items: [{ handle: paidHandle, price: { active: catalogPriceActive } }] } : null } });
   assert.equal(url.origin, `https://${primary}`, 'Tests must never reach a real store.');
   assert.equal(request.headers.get('X-Shopify-Access-Token'), 'synthetic-token');
   if (body.query.includes('FullbleedShop')) return Response.json({ data: { shop: { id: 'gid://shopify/Shop/1', name: 'Synthetic Cedar Studio', myshopifyDomain: primary, ianaTimezone: 'America/Chicago', plan: { partnerDevelopment: true } } } });
@@ -81,9 +82,10 @@ async function readyJob(svc = service) {
 const linkToken = async job => new URL((await service.status(job).json()).return_value.downloadUrl).hash.slice(1);
 
 test.beforeEach(async () => {
-  await db.automationSettings.deleteMany(); await db.session.deleteMany(); await db.brand.deleteMany(); await db.documentTemplate.deleteMany();
+  await db.automationSettings.deleteMany(); await db.session.deleteMany(); await db.brand.deleteMany(); await db.documentTemplate.deleteMany(); await db.usagePeriod.deleteMany();
   await db.session.createMany({ data: [primary, other].map(shop => ({ id: `offline_${shop}`, shop, state: '', isOnline: false, accessToken: 'synthetic-token', scope: 'read_orders' })) });
   time = Date.now(); inputOrder = structuredClone(baseOrder); renderCalls = 0; orderReads = 0; unavailable = false; slowRender = null; paid = true; catalogPriceActive = true;
+  paidHandle = 'studio';
   service = serviceFor(db);
 });
 
@@ -205,6 +207,38 @@ test('upstream throttling still counts as an attempted preparation', async () =>
   assert.equal(waiting.nextAttemptAt.valueOf(), time + 15000);
 });
 
+test('Flow exposes ready links only after accounting commits and preserves failure or revocation', async () => {
+  for (const outcome of ['commit', 'reject', 'pause']) {
+    let release, rendered;
+    const gate = new Promise(resolve => { release = resolve; });
+    const afterRender = new Promise(resolve => { rendered = resolve; });
+    const metered = createFlowService({ db, render, secret, appUrl: 'https://fullbleed-test.invalid', limit: createRenderLimit(), now: () => new Date(time),
+      withDocument: async (job, signal, work) => {
+        const result = await work(await loadDocument(job, signal));
+        rendered();
+        await gate;
+        if (outcome === 'reject') throw new Response(null, { status: 409 });
+        return result;
+      },
+    });
+    await metered.setEnabled(primary, true);
+    const job = await metered.accept(parsed());
+    const work = metered.start(job.id);
+    await afterRender;
+    const pending = await db.automationJob.findUniqueOrThrow({ where: { id: job.id } });
+    assert.equal(pending.status, 'running');
+    assert.equal(metered.status(pending).status, 202);
+    assert.equal(pending.pdfSha256, null);
+    if (outcome === 'pause') await metered.setEnabled(primary, false);
+    release();
+    await work;
+    const finished = await db.automationJob.findUniqueOrThrow({ where: { id: job.id } });
+    assert.equal(finished.status, outcome === 'commit' ? 'ready' : outcome === 'reject' ? 'failed' : 'revoked');
+    assert.equal(metered.status(finished).status, outcome === 'commit' ? 200 : outcome === 'reject' ? 422 : 410);
+    if (outcome !== 'commit') assert.equal(finished.pdfSha256, null);
+  }
+});
+
 test('verified downloads use exact bytes, reject forged/expired links and invalidate changed content', async () => {
   const job = await readyJob(); const token = await linkToken(job);
   const reads = orderReads;
@@ -278,7 +312,72 @@ test('real request handler verifies Flow HMAC, retained-price access, preparatio
   assert.equal(pdf.status, 200); assert.equal(sha(Buffer.from(await pdf.arrayBuffer())), output.sha256);
   paid = false;
   assert.equal((await handler(new Request(url, { method: 'POST', headers: { Authorization: `Bearer ${token}` } }))).status, 503);
+  paid = true;
+  await db.brand.create({ data: { shop: primary, sellerName: 'Synthetic Cedar Studio', footer: 'Changed after preparation.' } });
+  assert.equal((await handler(new Request(url, { method: 'POST', headers: { Authorization: `Bearer ${token}` } }))).status, 410);
   assert.equal(await db.automationJob.count(), 1);
+  assert.equal((await db.usagePeriod.findFirst()).used, 1);
+  assert.equal(await db.usageOrder.count(), 1);
+});
+
+async function adminRequest(path, body) {
+  const now = Math.floor(Date.now() / 1000);
+  const header = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');
+  const claims = Buffer.from(JSON.stringify({ iss: `https://${primary}/admin`, dest: `https://${primary}`, aud: process.env.SHOPIFY_API_KEY, sub: '1', exp: now + 60, nbf: now - 1, iat: now, jti: randomUUID(), sid: randomUUID() })).toString('base64url');
+  const token = `${header}.${claims}.${createHmac('sha256', secret).update(`${header}.${claims}`).digest('base64url')}`;
+  return handler(new Request(`https://fullbleed-test.invalid${path}`, { method: body ? 'POST' : 'GET', headers: { Authorization: `Bearer ${token}`, ...(body ? { 'Content-Type': 'application/json' } : {}) }, ...(body ? { body: JSON.stringify(body) } : {}) }));
+}
+
+test('authenticated manual and template endpoints share order usage and upgrade without resetting it', async () => {
+  const manual = await adminRequest('/app/pdf?order=gid://shopify/Order/1');
+  assert.equal(manual.status, 200); assert.match(manual.headers.get('Content-Type'), /application\/pdf/);
+  const packing = await adminRequest('/app/pdf?order=gid://shopify/Order/1&kind=packing-slip');
+  assert.equal(packing.status, 200);
+  const preview = await adminRequest('/app/template', { intent: 'preview', order: 'gid://shopify/Order/1', kind: 'order-summary', template: { schema: 'fullbleed.commerce-template.v1', html: '<h1>{{order.number}}</h1><p>{{document.title}}</p>', css: 'h1 { color: #244a40; }' } });
+  assert.equal(preview.status, 200, await preview.clone().text().then(s => s.slice(0, 150)));
+  const row = await db.usagePeriod.findFirst();
+  assert.equal(row.used, 1);
+  await db.usagePeriod.update({ where: { id: row.id }, data: { used: 250 } });
+  const denied = await adminRequest('/app/pdf?order=gid://shopify/Order/2');
+  assert.equal(denied.status, 409); assert.equal(denied.headers.get('X-Fullbleed-Error'), 'usage_limit');
+  const deniedPreview = await adminRequest('/app/template', { intent: 'preview', order: 'gid://shopify/Order/2', kind: 'order-summary', template: { schema: 'fullbleed.commerce-template.v1', html: '<h1>{{order.number}}</h1>', css: '' } });
+  assert.equal(deniedPreview.status, 409); assert.equal(deniedPreview.headers.get('X-Fullbleed-Error'), 'usage_limit');
+  assert.equal((await adminRequest('/app/pdf?order=gid://shopify/Order/1')).status, 200);
+  const page = await adminRequest('/app/plans');
+  assert.equal(page.status, 200); assert.match((await page.text()).replace(/<!--.*?-->/g, ''), /250 orders used/);
+  paidHandle = 'scale';
+  const upgraded = await adminRequest('/app/plans');
+  const html = await upgraded.text();
+  assert.equal(upgraded.status, 200); assert.match(html, /Scale/); assert.match(html, /750/);
+  assert.equal((await db.usagePeriod.findFirst()).used, 250);
+  assert.equal(await db.usagePeriod.count(), 1);
+});
+
+test('Flow reports a quota action and can prepare after an upgrade without hidden charges', async () => {
+  await service.setEnabled(primary, true);
+  const startsAt = new Date(time - 86400000), endsAt = new Date(time + 29 * 86400000);
+  await db.usagePeriod.create({ data: { shop: primary, key: `cycle:${startsAt.toISOString()}`, startsAt, endsAt, used: 250 } });
+  const body = payload();
+  assert.equal((await signedRequest('/api/flow/documents', body)).status, 202);
+  let job;
+  for (let i = 0; i < 200; i++) {
+    job = await db.automationJob.findFirst({ where: { runId: body.action_run_id } });
+    if (job?.status === 'failed') break;
+    await new Promise(resolve => setTimeout(resolve, 20));
+  }
+  assert.equal(job.lastError, 'usage_limit'); assert.equal(orderReads, 0);
+  const stopped = await signedRequest('/api/flow/documents', body);
+  assert.equal(stopped.status, 422); assert.match(await stopped.text(), /Plan and usage/);
+  paidHandle = 'scale';
+  const next = payload();
+  assert.equal((await signedRequest('/api/flow/documents', next)).status, 202);
+  for (let i = 0; i < 200; i++) {
+    job = await db.automationJob.findFirst({ where: { runId: next.action_run_id } });
+    if (job?.status === 'ready') break;
+    await new Promise(resolve => setTimeout(resolve, 20));
+  }
+  assert.equal(job.status, 'ready');
+  assert.equal((await db.usagePeriod.findFirst()).used, 251);
 });
 
 test('customer redaction removes only matching store order references and invalidates links', async () => {

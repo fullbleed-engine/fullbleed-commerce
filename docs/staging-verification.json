@@ -157,10 +157,10 @@
     "scope": "Sequential synthetic rendering through the deployed Fullbleed module. This is not an end-to-end Shopify billing/Flow test, concurrency benchmark or sustained capacity promise."
   },
   "currentState": {
-    "checkedAt": "2026-10-04T00:48:25.567581+00:00",
+    "checkedAt": "2026-10-04T03:38:24.302229+00:00",
     "computeStopped": true,
     "activeDeployments": 0,
-    "lastDeploymentId": "b670ae32-128a-4ad2-8592-3186eaf48a20",
+    "lastDeploymentId": "ab85afd8-9ceb-46e4-955d-c78afba7c9f2",
     "lastDeploymentStatus": "REMOVED",
     "persistentVolumeRetained": true,
     "privateRecoveryBucketRetained": true,
@@ -174,17 +174,17 @@
       "end": "2026-10-24T18:42:11+00:00",
       "start": "2026-09-24T18:42:11+00:00"
     },
-    "meteredUsageDollars": 0.00459412067667295,
+    "meteredUsageDollars": 0.0061987154937167875,
     "serviceUsage": [
       {
         "backupDollars": 0.0,
-        "cpuDollars": 0.00030084933641975306,
-        "egressDollars": 0.0005867663500000001,
+        "cpuDollars": 0.0004121859953703704,
+        "egressDollars": 0.0008024292000000001,
         "id": "bcd8801b-e89c-4c4c-baf3-b8e1d0fe8b59",
-        "memoryDollars": 0.0032378605037037037,
+        "memoryDollars": 0.004460484677530865,
         "name": "shopify-app",
-        "totalDollars": 0.00459412067667295,
-        "volumeDollars": 0.0004686444865494934
+        "totalDollars": 0.0061987154937167875,
+        "volumeDollars": 0.0005236156208155517
       }
     ],
     "recoveryBucket": {
@@ -192,10 +192,10 @@
       "environmentId": "b3892972-504b-493b-8fc4-a6fb26b14d90",
       "id": "bf913690-c271-4932-8984-2168db8cc96d",
       "name": "privacy-recovery",
-      "objects": 14,
+      "objects": 19,
       "region": "sjc",
-      "storage": "2.6 MB",
-      "storageBytes": 2583412
+      "storage": "5.2 MB",
+      "storageBytes": 5164822
     },
     "usageCaveat": "Project metering is not an invoice, may lag, and does not itemize bucket charges."
   },
@@ -241,5 +241,6 @@
     "backupFreshnessFailureRecoveryVerified": true,
     "backupScheduleEvidence": "docs/backup-schedule-verification.json"
   },
-  "hostedWorkflowEvidence": "docs/hosted-workflow-verification.json"
+  "hostedWorkflowEvidence": "docs/hosted-workflow-verification.json",
+  "hostedPlansEvidence": "docs/hosted-plans-verification.json"
 }

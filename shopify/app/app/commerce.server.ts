@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 import { authenticate } from './shopify.server';
 import db from './db.server';
-import { createSubscriptionCheck, developmentAccess, pricingUrl } from '../../billing.js';
+import { createSubscriptionLookup, developmentAccess, pricingUrl } from '../../billing.js';
 import { createRenderLimit } from '../../render-limit.js';
+import { createUsageMeter, developmentAllowance, usageAllowance } from '../../usage.js';
 import { designs as proDesigns } from '../../../pro/designs.js';
 
 export const shopQuery = `#graphql
@@ -10,7 +11,7 @@ query FullbleedShop {
   shop { id name myshopifyDomain ianaTimezone plan { partnerDevelopment } }
 }`;
 
-const checkSubscription = createSubscriptionCheck({
+const lookupSubscription = createSubscriptionLookup({
   organizationId: process.env.SHOPIFY_PARTNER_ORG_ID,
   appId: process.env.SHOPIFY_PARTNER_APP_ID,
   accessToken: process.env.SHOPIFY_PARTNER_API_ACCESS_TOKEN,
@@ -18,6 +19,7 @@ const checkSubscription = createSubscriptionCheck({
 });
 
 export const withRenderLimit = createRenderLimit();
+export const usageMeter = createUsageMeter({ db });
 
 export async function verifyCommerceShop(admin: Awaited<ReturnType<typeof authenticate.flow>>['admin'], domain: string, signal?: AbortSignal) {
   const response = await admin.graphql(shopQuery, { signal });
@@ -25,10 +27,12 @@ export async function verifyCommerceShop(admin: Awaited<ReturnType<typeof authen
   const shop = result.data?.shop;
   if (!shop || shop.myshopifyDomain !== domain) throw new Response('Could not verify the store.', { status: 503 });
   const development = developmentAccess({ nodeEnv: process.env.NODE_ENV, allowedStore: process.env.FULLBLEED_DEV_STORE, shop: domain, partnerDevelopment: shop.plan.partnerDevelopment });
-  if (!development && !await checkSubscription({ shopId: shop.id, shop: domain, signal })) {
+  const subscription = development ? null : await lookupSubscription({ shopId: shop.id, shop: domain, signal });
+  if (!development && !subscription) {
     throw new Response('An active Fullbleed plan is required.', { status: 402 });
   }
-  return { shop, development };
+  const allowance = development ? developmentAllowance() : usageAllowance(subscription);
+  return { shop, development, subscription, allowance };
 }
 
 export async function commerceAccess(request: Request) {
@@ -40,8 +44,7 @@ export async function commerceAccess(request: Request) {
     if (!process.env.SHOPIFY_APP_HANDLE) throw new Response('Plan selection is not configured. Contact support.', { status: 503 });
     throw context.redirect(pricingUrl(context.session.shop, process.env.SHOPIFY_APP_HANDLE), { target: '_top' });
   }
-  const { shop, development } = access;
-  return { ...context, shop, development };
+  return { ...context, ...access };
 }
 
 export async function brandForShop(shop: string, shopName: string) {

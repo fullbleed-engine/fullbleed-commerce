@@ -8,7 +8,7 @@ has received a response. The merchant downloads the JSON, responds through the
 store's privacy process, and explicitly marks the request handled.
 
 The snapshot contains the requested order references, retained automation job
-metadata at receipt, the request ID, and the supplied customer ID/email. It does
+and order-usage metadata at receipt, the request ID, and the supplied customer ID/email. It does
 not fetch more order data from Shopify or store PDFs, addresses, card details,
 tokens, worker leases or download links. A request with no matching history
 still produces a report explaining its scope. Already-expired history cannot be
@@ -67,7 +67,12 @@ five-second Shopify webhook budget under the production database/load.
   flagged overdue. Retention cleanup never silently treats an overdue request
   as fulfilled. Operators must resolve it promptly.
 - Uninstall and shop redaction remove the store's requests, associations,
-  sessions, preferences, templates and job history in one transaction.
+  sessions, preferences, templates, job history and order usage in one transaction.
+- Order-usage references are retained through the current billing period and
+  30 days afterward. Customer redaction deletes matching references and pending
+  reservations, but preserves the period's aggregate successful-order count.
+  In-flight work cannot recreate deleted usage receipts. Privacy exports include
+  the requested orders' retained usage records and billing dates, without leases.
 - Do not replace an active privacy key blindly. Existing snapshots require
   that key; a planned migration must re-encrypt snapshots and recompute lookup
   hashes before activating a replacement. Restore the original key to recover

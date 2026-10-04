@@ -87,8 +87,9 @@ export default function Documents() {
       <s-paragraph>Three original designs, embedded typography, A4 or US Letter, and your closing note.</s-paragraph>
       <s-link href="/app/templates">Open the visual and HTML/CSS editor</s-link>
       <s-link href="/app/settings">Brand settings</s-link>
+      <s-link href="/app/plans">Plan and order usage</s-link>
       <s-paragraph>Order summaries are not fiscal invoices. This preview does not support edited or refunded orders, more than 250 items, or unsupported characters.</s-paragraph>
-      <s-paragraph>Customer data is used only to generate your download. Fullbleed does not retain the order or PDF.</s-paragraph>
+      <s-paragraph>Fullbleed does not retain order contents or PDFs. It keeps order references for automation and your plan allowance. A successful preview counts the order once in the current billing period.</s-paragraph>
       <s-link href="/privacy" target="_blank">Privacy and support</s-link>
       </s-stack>
     </s-section>

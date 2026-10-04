@@ -4,9 +4,14 @@ import { createReadStream } from 'node:fs';
 import { mkdtemp, mkdir, open, lstat, chmod, unlink, rmdir, readdir } from 'node:fs/promises';
 import { dirname, isAbsolute, join } from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 import { PrismaClient } from '@prisma/client';
 import { applyRecoveryEvent, createPrivacyService, prunePrivacyRequests } from '../../privacy.js';
 import { pruneAutomationJobs } from '../../flow.js';
+import { pruneUsage } from '../../usage.js';
 import { BACKUP_RETENTION_DAYS, RECOVERY_RETENTION_DAYS, recoveryFailure } from '../../recovery-journal.js';
 
 const DAY = 86400000, PART_SIZE = 1024 * 1024, MAX_DATABASE_BYTES = 512 * PART_SIZE;
@@ -123,6 +128,12 @@ export async function restoreDatabaseBackup({ journal, id, outputDirectory, priv
     if (hash.digest('hex') !== manifest.sha256) throw recoveryFailure();
     await handle.sync(); await handle.close(); handle = null;
     inspectDatabase(path);
+    // Backups can predate the deployed schema. Apply checked-in migrations to
+    // this isolated copy before replaying erasures that cover newer tables.
+    const require = createRequire(import.meta.url);
+    await promisify(execFile)(process.execPath, [require.resolve('prisma/build/index.js'), 'migrate', 'deploy', '--schema', fileURLToPath(new URL('../prisma/schema.prisma', import.meta.url))], {
+      env: { ...process.env, DATABASE_URL: databaseUrl(path) }, windowsHide: true, timeout: 60000, maxBuffer: 65536,
+    });
     db = new PrismaClient({ datasources: { db: { url: databaseUrl(path) } } });
     const replay = await journal.replay(db, applyRecoveryEvent);
     await db.$transaction(async tx => {
@@ -130,8 +141,9 @@ export async function restoreDatabaseBackup({ journal, id, outputDirectory, priv
       await tx.session.deleteMany();
       await tx.automationSettings.updateMany({ data: { enabled: false } });
       await tx.automationJob.updateMany({ where: { status: { in: ['pending', 'running', 'retry-wait', 'ready'] } }, data: { status: 'revoked', expiresAt: null, leaseId: null, leaseUntil: null, nextAttemptAt: null } });
+      await tx.usageOrder.deleteMany({ where: { completedAt: null } });
     });
-    await pruneAutomationJobs(db, now()); await prunePrivacyRequests(db, now());
+    await pruneAutomationJobs(db, now()); await prunePrivacyRequests(db, now()); await pruneUsage(db, now());
     const privacyService = createPrivacyService({ db, key: privacyKey, now });
     const privacy = await privacyService.status();
     if (privacy.keyMismatch) throw recoveryFailure();

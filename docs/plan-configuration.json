@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-10-04T02:34:31.413Z",
+  "appId": "430863056897",
+  "plans": [
+    {
+      "handle": "studio",
+      "name": "Studio",
+      "priceUsd": "12",
+      "trialDays": "7",
+      "redirect": "/app/plans",
+      "billing": "MONTHLY_RECURRING",
+      "usageMeters": 0
+    },
+    {
+      "handle": "scale",
+      "name": "Scale",
+      "priceUsd": "29",
+      "trialDays": "7",
+      "redirect": "/app/plans",
+      "billing": "MONTHLY_RECURRING",
+      "usageMeters": 0
+    }
+  ],
+  "merchantPaymentTested": false
+}
