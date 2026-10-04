@@ -58,31 +58,39 @@ export default function Documents() {
     }
   }
   return <s-page heading="Fullbleed documents">
+    <s-button slot="primary-action" variant="primary" href="/app/automations">Automate documents</s-button>
     <s-button slot="secondary-actions" href="/app/templates">Customize templates</s-button>
     {development && <s-banner tone="info">Development-store preview. No subscription is charged in this environment.</s-banner>}
-    <s-section heading="A better finish for every order">
-      <s-paragraph>Create a considered order summary or a practical packing slip using your store branding.</s-paragraph>
+    <s-section heading="Documents that follow your workflow">
+      <s-stack direction="block" gap="base">
+        <s-paragraph>Connect Fullbleed to an order workflow in Shopify Flow. Each run prepares your saved order-summary or packing-slip template and returns a private download link for the next step.</s-paragraph>
+        <s-paragraph>Customize a template, preview it with an order, then choose when your workflow runs and where its links go.</s-paragraph>
+      </s-stack>
+    </s-section>
+    <s-section heading="Preview or download an order">
       <s-stack direction="block" gap="base">
         <s-select label="Recent order" value={order} disabled={busy} onChange={event => { invalidate(); setOrder(event.currentTarget.value); }}>
           {orders.map(item => <s-option key={item.id} value={item.id}>{item.name} · {item.displayFinancialStatus.toLowerCase().replaceAll('_', ' ')}</s-option>)}
         </s-select>
-        {!orders.length && <s-paragraph>No recent orders are available. Add a synthetic order to the development store to test documents.</s-paragraph>}
+        {!orders.length && <s-paragraph>No recent orders are available. You can preview your templates when your first order arrives.</s-paragraph>}
         <s-select label="Document" value={kind} disabled={busy} onChange={event => { invalidate(); setKind(event.currentTarget.value); }}>
           <s-option value="order-summary">Order summary</s-option><s-option value="packing-slip">Packing slip</s-option>
         </s-select>
         <s-paragraph>Current design: {design}. Packing slips include shipping details and quantities without prices.</s-paragraph>
-        <s-button variant="primary" disabled={!order || busy} loading={busy} onClick={generate}>Create PDF</s-button>
+        <s-button variant="secondary" disabled={!order || busy} loading={busy} onClick={generate}>Create PDF</s-button>
         {error && <s-banner tone="critical">{error}</s-banner>}
         {download && <s-banner tone="success"><a href={download.url} download={download.name}>Download {download.name}</a></s-banner>}
       </s-stack>
     </s-section>
     <s-section slot="aside" heading="Designed to travel with the parcel">
+      <s-stack direction="block" gap="base">
       <s-paragraph>Three original designs, embedded typography, A4 or US Letter, and your closing note.</s-paragraph>
       <s-link href="/app/templates">Open the visual and HTML/CSS editor</s-link>
       <s-link href="/app/settings">Brand settings</s-link>
       <s-paragraph>Order summaries are not fiscal invoices. This preview does not support edited or refunded orders, more than 250 items, or unsupported characters.</s-paragraph>
       <s-paragraph>Customer data is used only to generate your download. Fullbleed does not retain the order or PDF.</s-paragraph>
       <s-link href="/privacy" target="_blank">Privacy and support</s-link>
+      </s-stack>
     </s-section>
   </s-page>;
 }

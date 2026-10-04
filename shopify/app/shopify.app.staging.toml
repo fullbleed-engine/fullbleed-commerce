@@ -26,5 +26,4 @@ uri = "/webhooks/privacy"
 compliance_topics = ["customers/data_request", "customers/redact", "shop/redact"]
 
 [build]
-include_config_on_deploy = true
 automatically_update_urls_on_dev = false
