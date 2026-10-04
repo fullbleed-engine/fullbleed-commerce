@@ -30,6 +30,7 @@ const jobs = [
   ['build', 'node_modules/@react-router/dev/bin.js', 'build'],
   ['health', '--test', '--test-reporter=tap', 'test/health.test.mjs'],
   ['webhooks', '--test', '--test-reporter=tap', 'test/webhooks.test.mjs'],
+  ['webhook-lifecycle', '--test', '--test-reporter=tap', 'test/webhook-lifecycle.test.mjs'],
   ['flow', '--test', '--test-reporter=tap', 'test/flow.test.mjs'],
   ['privacy', '--test', '--test-reporter=tap', 'test/privacy.test.mjs'],
   ['monitor', '--test', '--test-reporter=tap', 'test/monitor.test.mjs'],
