@@ -50,8 +50,11 @@ These are related contention observations; the reproduction did not produce
 the identical CI error code.
 
 Existing dataset verification now authenticates recovery storage and reads the
-immutable marker without opening another write transaction. Initial binding
-still checks and creates the marker transactionally. Tests hold a writer open
+immutable marker without opening another write transaction. A second controlled
+check exposed the same lock problem when replay inspected an already-committed
+erasure receipt. Those receipts are now also checked without a writer lock,
+after every journal object has been authenticated. Initial binding and missing
+receipts still recheck and mutate transactionally. Tests hold a writer open
 until verification completes and reject conflicting markers or unavailable
 storage. No timeout was increased and no test retry was added.
 

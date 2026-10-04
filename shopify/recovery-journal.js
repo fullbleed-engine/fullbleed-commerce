@@ -115,6 +115,10 @@ export function createRecoveryJournal({ store, key, dataset, now = () => new Dat
     const records = await entries();
     let applied = 0;
     for (const entry of records) {
+      // A committed receipt is immutable until retention removes its journal
+      // object. Already-applied entries need no writer lock. Missing receipts
+      // are checked again with the erasure inside the transaction below.
+      if (await db.recoveryReceipt.findUnique({ where: { id: entry.id } })) continue;
       await db.$transaction(async tx => {
         if (await tx.recoveryReceipt.findUnique({ where: { id: entry.id } })) return;
         await apply(tx, entry.event, new Date(entry.recordedAt));

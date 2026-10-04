@@ -210,6 +210,17 @@ test('read-only binding verification still rejects extra dataset markers and una
   await assert.rejects(f.journal.bind(f.db));
 });
 
+test('already-applied journal entries can be checked while another client holds a write transaction', async t => {
+  const f = await fixture(t);
+  await f.db.$transaction(tx => erasePrivacyShop(tx, primary, f.journal.record));
+  const second = f.connect(f.path);
+  await f.db.$transaction(async tx => {
+    await tx.brand.update({ where: { shop: other }, data: { sellerName: 'Concurrent synthetic writer' } });
+    assert.deepEqual(await f.journal.replay(second, applyRecoveryEvent), { checked: 1, applied: 0 });
+  }, { timeout: 10000 });
+  assert.equal(await f.db.brand.count({ where: { shop: primary } }), 0);
+});
+
 test('retention removes expired backups and applied recovery events while retaining the dataset binding', async t => {
   let at = Date.now() - 40 * 86400000;
   const f = await fixture(t, () => new Date(at));
