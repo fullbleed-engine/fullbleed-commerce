@@ -157,8 +157,12 @@ using WordPress Playground. Its pinned file-locking dependency needs a local
 build on Node 26 when no matching prebuilt binary is available (Python, make
 and a C++ compiler on Linux). This is development tooling, not a dependency
 added to the Fullbleed engine or the distributed WordPress plugin.
-The rendering integration itself uses the published Fullbleed Node 0.1.2 package,
+The rendering integration itself uses the published Fullbleed Node 0.1.3 package,
 containing engine 2.5.6, pinned to its npm version and lockfile integrity.
+Its render promise settles after the worker exits, so the automation renderer
+and Shopify limits hold their capacity slots through worker cleanup, including
+cancellation and failed renders. The integration tests exercise those paths with
+actual PDF workers. The separate native failure investigation remains open.
 
 ```sh
 npm ci --ignore-scripts
