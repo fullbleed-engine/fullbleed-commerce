@@ -1,0 +1,383 @@
+{
+  "schema": "fullbleed.commerce.development-activation.v1",
+  "checkedAt": "2026-10-04T22:06:11.427742+00:00",
+  "scope": "Attended synthetic development-store verification; not paid merchant operation or App Store approval.",
+  "source": {
+    "candidateCommit": "f98eb868a9e4864cab900e7b759fcf80e647424f",
+    "mergeCommit": "6fbe9238df43a767e4fdafaaeac1fbb01088fcaf",
+    "sameGitTree": true,
+    "pullRequest": "https://github.com/fullbleed-engine/fullbleed-commerce/pull/32",
+    "deployment": {
+      "id": "1b77af8f-6172-49a5-8a32-2ea13cc52c62",
+      "status": "SUCCESS",
+      "createdAt": "2026-10-04T21:16:07Z",
+      "checkedAt": "2026-10-04T21:18:16.661228+00:00",
+      "imageDigest": "sha256:e2696da5b77f18dad73fe6b57fc52d26c3ed35695b0278f45ed94ae5f501de8d"
+    }
+  },
+  "app": {
+    "name": "Fullbleed Commerce Dev",
+    "clientId": "09e47bbd732e1cd77b17b99af2a64feb",
+    "appId": "431437676545",
+    "activeVersion": "development-flow-20261004",
+    "versionId": "1154436071425",
+    "releasedActions": true,
+    "developmentPreviewRunning": false,
+    "protectedFields": [
+      "name",
+      "address"
+    ],
+    "protectedDataReviewSubmitted": false,
+    "listingSubmitted": false
+  },
+  "billing": {
+    "privatePlan": "shopify-test",
+    "priceUsd": 0,
+    "realCheckoutApproved": true,
+    "realPartnerApiSubscriptionVerified": true,
+    "developmentBypass": false,
+    "partnerClientId": "38426",
+    "credentialDifferentFromProduction": true,
+    "permissionBoundary": "Manage apps across the same Partner organization; not an app-scoped permission.",
+    "afterUninstall": {
+      "checkedAt": "2026-10-04T22:00:42.235531+00:00",
+      "appId": "gid://shopify/App/431437676545",
+      "shopId": "gid://shopify/Shop/79783100574",
+      "result": {
+        "activeSubscription": {
+          "shop": {
+            "id": "gid://shopify/Shop/79783100574",
+            "myshopifyDomain": "fullbleed-commerce-test.myshopify.com"
+          },
+          "billingPeriod": "EVERY_30_DAYS",
+          "cancelAtEndOfCycle": true,
+          "trialEndsAt": null,
+          "currentBillingCycle": {
+            "startTime": "2026-10-04T21:21:09Z",
+            "endTime": "2026-11-03T21:21:09Z"
+          },
+          "items": [
+            {
+              "handle": "shopify-test"
+            }
+          ],
+          "pendingUpdate": null
+        }
+      }
+    }
+  },
+  "checkoutFix": {
+    "failure": "Fresh agreement acceptance stalled at visible 200.",
+    "change": "Keep Shopify SDK redirect destination and parameters, with a React Router document reload.",
+    "freshHostedInstallVerified": true,
+    "localShopifyGroups": 19,
+    "localChromeChecks": 32,
+    "premergeChecksPassed": 17,
+    "mainRuns": [
+      {
+        "conclusion": "skipped",
+        "databaseId": 37238146272,
+        "headSha": "6fbe9238df43a767e4fdafaaeac1fbb01088fcaf",
+        "status": "completed",
+        "workflowName": "Monitor Fullbleed staging"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 37237661898,
+        "headSha": "6fbe9238df43a767e4fdafaaeac1fbb01088fcaf",
+        "status": "completed",
+        "workflowName": "Verify preview"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 37237661914,
+        "headSha": "6fbe9238df43a767e4fdafaaeac1fbb01088fcaf",
+        "status": "completed",
+        "workflowName": "Commerce browser workflows"
+      }
+    ],
+    "chromeFirstRunFailureRetained": true,
+    "unchangedChromeRerunPassed": true
+  },
+  "workflow": {
+    "id": "01a0fe46-037a-7441-a300-878f89fc9a50",
+    "runId": "01M44ECB67AXVR2QTGJFB0SM8K",
+    "order": "#1005",
+    "orderId": "18922552033438",
+    "financialStatus": "PENDING",
+    "totalUsd": "31.25",
+    "trigger": "Order created",
+    "completedActions": 7,
+    "firstPreparationAttempt": true,
+    "privateMetafields": {
+      "reviewCount": 0,
+      "fields": [
+        {
+          "key": "fullbleed_summary_link",
+          "fields": [
+            {
+              "label": null,
+              "value": "{{createOrderSummaryLink.downloadUrl}}"
+            }
+          ]
+        },
+        {
+          "key": "fullbleed_summary_expiry",
+          "fields": [
+            {
+              "label": null,
+              "value": "{{createOrderSummaryLink.expiresAt}}"
+            }
+          ]
+        },
+        {
+          "key": "fullbleed_packing_link",
+          "fields": [
+            {
+              "label": null,
+              "value": "{{createPackingSlipLink.downloadUrl}}"
+            }
+          ]
+        },
+        {
+          "key": "fullbleed_packing_expiry",
+          "fields": [
+            {
+              "label": null,
+              "value": "{{createPackingSlipLink.expiresAt}}"
+            }
+          ]
+        }
+      ]
+    },
+    "browserDownloads": {
+      "checkedAt": "2026-10-04T21:53:05.994Z",
+      "summary": {
+        "suggestedName": "order-summary-1005.pdf",
+        "failure": null,
+        "tokenRemoved": true
+      },
+      "packing": {
+        "tab": 58,
+        "suggestedName": "packing-slip-1005.pdf",
+        "failure": null,
+        "tokenRemoved": true
+      },
+      "linkSource": "Actual order #1005 metafields written by Shopify Flow"
+    },
+    "pdfs": [
+      {
+        "file": "automatic-order-summary.pdf",
+        "sha256": "560a4b373a8a32085c3ef4639751b4ba938de7ec7d54f528ff223d26f1a8a4f9",
+        "pages": 1,
+        "text": "CEDAR EDITIONS\nUSD / 2026-10-04\nOB JE C TS F OR E VE RYDAY RITU AL S\nOrder summary\n#1005 PENDING\nPRE PA RE D F OR\nAlex Sample\n42 Example Street\nPortland, Oregon, 97205\nUnited States\nF ROM\nCedar Editions\nIndependent objects and paper goods\nPortland, Oregon\nSynthetic demonstration store\nDescription\nQty\nLine subtotal\nSynthetic Indigo Linen Notebook\nDEMO-NOTEBOOK\n2\nUSD 25.00\nSynthetic Brass Page Marker\nDEMO-MARKER\n1\nUSD 6.25\nSubtotal after discounts\nUSD 31.25\nShipping\nUSD 0.00\nTax\nUSD 0.00\nTotal\nUSD 31.25\nMade to be kept. Packed with care. Demonstration document - synthetic order.\nCedar Editions / #1005\n",
+        "fonts": [
+          "WYZEZM+DMSerifDisplay-Regular",
+          "KLLFNQ+Inter-Regular"
+        ],
+        "visualInspection": "One page, complete addresses and item rows, embedded fonts, no clipped or overlapping text. The packing-slip date was also checked at 4x scale."
+      },
+      {
+        "file": "automatic-packing-slip.pdf",
+        "sha256": "983d249ef20d5dc4afee30cabafac96094ef437eeefca46b6f0c93e672ba8401",
+        "pages": 1,
+        "text": "CEDAR EDITIONS\n2026-10-04\nORDE R C ON TE N TS\nPacking slip\n#1005 PENDING\nSE N D TO\nAlex Sample\n42 Example Street\nPortland, Oregon, 97205\nUnited States\nF ROM\nCedar Editions\nIndependent objects and paper goods\nPortland, Oregon\nSynthetic demonstration store\nItem to pack\nQty\nPacked\nSynthetic Indigo Linen Notebook\nSKU DEMO-NOTEBOOK\n2\nSynthetic Brass Page Marker\nSKU DEMO-MARKER\n1\nPA C KE D W ITH  C ARE\nCheck each item before sealing the parcel.\nPacked by __________________ Date __________________\nMade to be kept. Packed with care. Demonstration document - synthetic order.\nCedar Editions / #1005\n",
+        "fonts": [
+          "EBXSXX+BebasNeue-Regular",
+          "BBOYOP+Inter-Regular"
+        ],
+        "visualInspection": "One page, complete addresses and item rows, embedded fonts, no clipped or overlapping text. The packing-slip date was also checked at 4x scale."
+      }
+    ],
+    "sourceEditorSaveReloadVerified": true
+  },
+  "cleanup": {
+    "workflowOff": true,
+    "automationPaused": true,
+    "revocation": {
+      "checkedAt": "2026-10-04T21:56:38.728Z",
+      "workflowOff": true,
+      "results": [
+        {
+          "kind": "summary",
+          "status": 410,
+          "cacheControl": "no-store, private, max-age=0",
+          "message": "This download link expired or was revoked."
+        },
+        {
+          "kind": "packing",
+          "status": 410,
+          "cacheControl": "no-store, private, max-age=0",
+          "message": "This download link expired or was revoked."
+        }
+      ]
+    },
+    "uninstall": {
+      "checkedAt": "2026-10-04T21:57:36.072Z",
+      "app": "Fullbleed Commerce Dev",
+      "store": "fullbleed-commerce-test",
+      "uninstalledThroughShopifyAdmin": true,
+      "installedRowAbsent": true
+    },
+    "uninstallHttp": {
+      "checkedAt": "2026-10-04T21:58:00.765230+00:00",
+      "requests": [
+        {
+          "timestamp": "2026-10-04T21:57:46.747633732Z",
+          "method": "POST",
+          "path": "/webhooks/app/uninstalled",
+          "httpStatus": 204,
+          "deploymentId": "1b77af8f-6172-49a5-8a32-2ea13cc52c62",
+          "requestId": "YdqzOpPyRQG7uR4x9o6EoQ",
+          "totalDuration": 259
+        }
+      ]
+    },
+    "merchantTableCounts": {
+      "agreementAcceptance": 0,
+      "brand": 0,
+      "documentTemplate": 0,
+      "automationSettings": 0,
+      "automationJob": 0,
+      "session": 0,
+      "usagePeriod": 0,
+      "usageOrder": 0,
+      "privacyRequest": 0,
+      "privacyRequestOrder": 0,
+      "accessEvent": 0
+    },
+    "downloadsAfterUninstall": {
+      "checkedAt": "2026-10-04T21:58:21.895Z",
+      "results": [
+        {
+          "kind": "summary",
+          "status": 404,
+          "cacheControl": "no-store, private, max-age=0",
+          "message": "This download link is not available."
+        },
+        {
+          "kind": "packing",
+          "status": 404,
+          "cacheControl": "no-store, private, max-age=0",
+          "message": "This download link is not available."
+        }
+      ]
+    },
+    "bothServicesStopped": true,
+    "volumesAndRecoveryBucketsRetained": true,
+    "operatorReceipts": {
+      "checkedAt": "2026-10-04T22:02:03.779978+00:00",
+      "authenticatedReadback": true,
+      "receipts": [
+        {
+          "id": "1791145589904-b9339054-660e-44ee-9a19-5d5250770346",
+          "outcome": "completed",
+          "startedAt": "2026-10-04T20:26:29.904Z",
+          "finishedAt": "2026-10-04T21:59:55.973Z",
+          "operation": "console.shopify",
+          "reference": "OPS-20261004-DEVAPP"
+        },
+        {
+          "id": "1791147080466-f79c4fac-42e5-41de-8838-7ab1adaba331",
+          "outcome": "completed",
+          "startedAt": "2026-10-04T20:51:20.466Z",
+          "finishedAt": "2026-10-04T21:59:57.809Z",
+          "operation": "console.railway",
+          "reference": "OPS-20261004-DEVAPP"
+        }
+      ]
+    }
+  },
+  "production": {
+    "checkedAt": "2026-10-04T22:00:42.215517+00:00",
+    "allVariablesUnchanged": true,
+    "versionHistoryUnchanged": true,
+    "activeVersion": {
+      "createdAt": "2026-10-04 05:20:58",
+      "createdBy": "gid://shopify/User/283320107",
+      "versionTag": "branded-origin-aba1b19",
+      "status": "active",
+      "versionId": "gid://shopify/Version/1153932984321",
+      "message": "Use commerce.fullbleed.dev and matching OAuth callback"
+    }
+  },
+  "usage": {
+    "checkedAt": "2026-10-04T22:00:41.478964+00:00",
+    "confirmedChargesUsd": 19,
+    "totalCapUsd": 50,
+    "usage": {
+      "staging": {
+        "billingPeriod": {
+          "end": "2026-10-24T18:42:11+00:00",
+          "start": "2026-09-24T18:42:11+00:00"
+        },
+        "currentUsageDollars": 0.01312813051281069,
+        "period": "current",
+        "project": {
+          "deletedAt": null,
+          "id": "ee2c5784-260b-44d7-aff3-ef46714687bc",
+          "name": "fullbleed-commerce-staging"
+        },
+        "services": [
+          {
+            "backupDollars": 0.0,
+            "cpuDollars": 0.0007282956404320989,
+            "egressDollars": 0.00193919755,
+            "id": "bcd8801b-e89c-4c4c-baf3-b8e1d0fe8b59",
+            "memoryDollars": 0.009544885254320987,
+            "name": "shopify-app",
+            "totalDollars": 0.01312813051281069,
+            "volumeDollars": 0.0009157520680576028
+          }
+        ],
+        "workspace": {
+          "id": "2312e366-a423-4805-a4b6-60c5d5de33c3",
+          "name": "krflol's Projects"
+        }
+      },
+      "production": {
+        "billingPeriod": {
+          "end": "2026-10-24T18:42:11+00:00",
+          "start": "2026-09-24T18:42:11+00:00"
+        },
+        "currentUsageDollars": 8.94976e-07,
+        "period": "current",
+        "project": {
+          "deletedAt": null,
+          "id": "6337f5dc-6602-48a3-acba-0286271471ea",
+          "name": "fullbleed-commerce-production"
+        },
+        "services": [
+          {
+            "backupDollars": 0.0,
+            "cpuDollars": -0.0,
+            "egressDollars": -0.0,
+            "id": "b9f4dc6e-5435-4718-80d4-2c766435b11d",
+            "memoryDollars": -0.0,
+            "name": "shopify-app",
+            "totalDollars": 8.94976e-07,
+            "volumeDollars": 8.94976e-07
+          }
+        ],
+        "workspace": {
+          "id": "2312e366-a423-4805-a4b6-60c5d5de33c3",
+          "name": "krflol's Projects"
+        }
+      }
+    },
+    "invoiceOrConfirmedCharge": false
+  },
+  "evidenceArchive": {
+    "filename": "commerce-development-activation-evidence.zip",
+    "sha256": "eb6d2bcaf8bb3b2c94bbc180e55c2fd372544054e8f37bb84b196f0b0812695f",
+    "bytes": 1097635,
+    "files": 86
+  },
+  "remaining": [
+    "Provider agreement and production domain move",
+    "First production deployment, runtime and recovery binding verification",
+    "Continuous monitoring and retention, missed-check detection, and bounded ongoing budget",
+    "Actual paid-plan changes and freezes, protected-data review and App Store approval",
+    "Merchant pilots, customer email delivery and sustained capacity verification"
+  ]
+}
