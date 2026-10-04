@@ -27,7 +27,7 @@ separate integration gate.
 | --- | --- | --- |
 | WooCommerce Free | Local manual PDFs, full visual and source editor, embedded logos, import/export | Free, no account, quota, watermark or hosted dependency |
 | WooCommerce Pro | Automatic attachments to selected existing transactional emails; customer downloads; batch export; activity, administrator failure alerts and recovery; updates and support | Test $79/year for one store with a self-hosted renderer; managed rendering priced separately after cost measurements |
-| Shopify Commerce | Templates, order documents, native Flow actions, expiring document links, persistent activity and retry/revoke controls | Studio candidate: $12 per 30 days for 250 unique orders; Scale: $29 for 1,000. Reprints and both document types share an order unit. Verify installed plan changes and hosted costs before accepting paying merchants. |
+| Shopify Commerce | Templates, order documents, native Flow actions, expiring document links, persistent activity and retry/revoke controls | Studio candidate: $12 per 30 days for 250 unique orders; Scale: $29 for 1,000. Reprints and both document types share an order unit. Installed trial plan changes are verified; paid-cycle behavior and sustained hosted costs remain launch gates. |
 
 These are hypotheses, not offers. Avoid an unlimited hosted-rendering promise.
 Free customization helps adoption; charge for automation, delivery, operational
@@ -262,7 +262,7 @@ GitHub inbox alert delivery has passed a separate drill. See
 
 Fulfillment batches, automatic missing-attachment recovery, webhook monitoring
 and secure support-delivery setup, production operation and paid lifecycle tests
-remain planned. No customer email or paid plan was enabled. Workflow testing
+remain planned. No customer email or paying merchant was enabled. Workflow testing
 is confined to the synthetic development store. See [the evidence](verification.md)
 for the checks actually run.
 
@@ -298,9 +298,11 @@ Use Shopify App Pricing's hosted plan selection and Partner API entitlement
 checks for the new public app. Live activation, scheduled cancellation,
 reactivation and immediate-cancellation access checks passed with a private $0
 test plan. The installed hosted purchase-to-Flow path also passed with that test
-plan. Studio and Scale plan definitions and order allowances are prepared; their
-installed plan changes, freezes, cost measurement and production operations
-remain release gates. No paid merchant is enabled. See the [billing evidence](../shopify/BILLING.md)
+plan. Studio and Scale definitions are saved, and their installed trial approvals,
+upgrade, downgrade, shared order allowance and Flow downloads are verified in
+the [hosted plan check](hosted-plans.md). Paid-cycle behavior, freezes, sustained
+cost measurement and production operations remain release gates. No paid merchant
+is enabled. See the [billing evidence](../shopify/BILLING.md)
 and [allowance contract](../shopify/ALLOWANCES.md).
 [Shopify's current pricing integration](https://shopify.dev/docs/apps/launch/billing/shopify-app-pricing)
 defines the required platform behavior.

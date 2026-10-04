@@ -76,12 +76,17 @@ Polaris validator currently fails to load its own JSX/Preact types, including
 for a reduced HTML fixture. Repository type checking uses the installed Polaris
 1.1 types; real browser rendering and mobile layout are checked separately.
 
-Before offering these plans to paying merchants, exercise approval, upgrades,
-downgrades and cancellation on the installed development store; measure the
-hosted workload and operating costs described in [CAPACITY.md](CAPACITY.md);
-complete privacy operations and marketplace review. The fixed allowance alone
-does not establish production capacity. Shopify's own development stores test
-the intended plan with zero effective charges, not a real merchant payment.
+The [hosted plan check](../docs/hosted-plans.md) verifies actual Studio approval,
+upgrade to Scale, downgrade to Studio, receipt persistence, reprints and Flow
+downloads on the installed development store. Uninstall scheduled cancellation,
+erased usage records and revoked links. Shopify made those trials free to test.
+The final Flow implementation exposes ready links only after usage commits.
+
+Before offering these plans to paying merchants, verify paid-cycle renewal and
+cancellation and store freezes; measure the hosted workload and operating costs
+described in [CAPACITY.md](CAPACITY.md); complete privacy operations and marketplace
+review. The fixed allowance alone does not establish production capacity. The
+development-store checks are not evidence of a real merchant payment.
 
 Sources checked October 4, 2026: [Shopify App Pricing plans](https://shopify.dev/docs/apps/launch/billing/shopify-app-pricing/plans),
 [subscription setup](https://shopify.dev/docs/apps/launch/billing/shopify-app-pricing/subscription-billing/setup-subscription-charges),

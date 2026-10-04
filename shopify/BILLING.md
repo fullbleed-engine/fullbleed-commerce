@@ -7,7 +7,9 @@ session and Admin API. A return URL's `plan_handle` never grants access.
 
 The [order-allowance implementation](ALLOWANCES.md) adds Studio and Scale
 candidates, durable usage by Shopify billing period, and merchant plan changes.
-Its synthetic checks do not replace the installed-store lifecycle checks below.
+The [October 4 hosted check](../docs/hosted-plans.md) verifies Studio approval,
+upgrade to Scale, downgrade to Studio and shared order usage through real Flow
+downloads. Shopify made those development-store trials free to test.
 
 The October 3, 2026 check used Shopify's built-in `shopify-test` plan at $0/month,
 restricted to `fullbleed-commerce-test.myshopify.com`. Its development-store
@@ -57,11 +59,15 @@ with `cancelAtEndOfCycle: true`; do not interpret uninstall as an immediately
 null subscription. The app's session and automation records are independently
 erased by its authenticated uninstall webhook.
 
-Before accepting paying merchants, verify plan changes and freezes, actual paid
-purchase behavior and sustained privacy/backup operation. Finalize actual
-paid plans, merchant limits, support/privacy/refund terms, listing media and the
-protected-data review. The App Store registration is paid; the listing remains a
-draft and has not been submitted or approved.
+Studio and Scale definitions are now saved, and the installed trial plan changes
+preserve usage. The latest uninstall scheduled Studio cancellation at trial end
+and cleared its session, automation and usage records. Staging remains stopped.
+
+Before accepting paying merchants, verify store freezes, actual paid-cycle
+purchase, renewal and cancellation behavior, sustained capacity and privacy/backup
+operation. Finish support/privacy/refund terms, the branded app URL, listing media
+and the protected-data review. The App Store registration is paid; the listing
+remains a draft and has not been submitted or approved.
 
 Official references checked October 3, 2026:
 [Shopify App Pricing](https://shopify.dev/docs/apps/launch/billing/shopify-app-pricing),
