@@ -1,14 +1,14 @@
-# Synthetic hosted testing. This app identity is separate from the App Store app.
-client_id = "09e47bbd732e1cd77b17b99af2a64feb"
-name = "Fullbleed Commerce Dev"
-application_url = "https://shopify-app-production-346e.up.railway.app"
+# App Store identity reserved for production. Deploy explicitly with --config production.
+client_id = "91ba2420b9c9d87e00dab059b51eb005"
+name = "Fullbleed Commerce"
+application_url = "https://commerce.fullbleed.dev"
 embedded = true
 
 [access_scopes]
 scopes = "read_orders"
 
 [auth]
-redirect_urls = ["https://shopify-app-production-346e.up.railway.app/auth/callback"]
+redirect_urls = ["https://commerce.fullbleed.dev/auth/callback"]
 
 [webhooks]
 api_version = "2026-10"

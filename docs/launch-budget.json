@@ -24,11 +24,11 @@
     "projectId": "ee2c5784-260b-44d7-aff3-ef46714687bc",
     "existingWorkspacePlan": "Hobby",
     "newSubscriptionPurchased": false,
-    "meteredUsageDollars": 0.009724569681062792,
-    "usageCheckedAt": "2026-10-04T18:27:42.228282+00:00",
+    "meteredUsageDollars": 0.009760483321148372,
+    "usageCheckedAt": "2026-10-04T20:04:57.563350+00:00",
     "computeStopped": true,
     "persistentVolumeRetained": true,
-    "notes": "Metered usage before plan credits, not an invoice or confirmed card charge. Usage can lag; bucket charges are not itemized. Staging remains stopped after the agreement and environment-isolation checks. Its private volume and encrypted recovery bucket remain retained and metered. The later checks added encrypted operator receipts but did not open the merchant database or change its backup/erasure listings. recoveryBucketBytes is the older measurement at recoveryBucketBytesCheckedAt. Reconcile both projects against the $50 total launch cap.",
+    "notes": "Metered usage before credits, not an invoice or confirmed card charge. Usage may lag; bucket charges are not itemized. Compute remains stopped after assigning the separate development app credentials and clearing the former public app billing settings. Volume and encrypted recovery bucket remain retained and metered. This transition did not open a database. recoveryBucketBytes remains the older measurement at recoveryBucketBytesCheckedAt. Reconcile both projects against the $50 total launch cap.",
     "privateRecoveryBucketRetained": true,
     "recoveryBucketBytes": 5165016,
     "recoveryBucketBytesCheckedAt": "2026-10-04T05:41:42.068876+00:00"
@@ -39,8 +39,8 @@
     "environmentId": "432435d8-c0d2-4ad5-80ae-0c1444e7e1d1",
     "existingWorkspacePlan": "Hobby",
     "newSubscriptionPurchased": false,
-    "meteredUsageDollars": 5.8879999999999995e-08,
-    "usageCheckedAt": "2026-10-04T18:27:42.228282+00:00",
+    "meteredUsageDollars": 4.396373333333333e-07,
+    "usageCheckedAt": "2026-10-04T20:04:57.563350+00:00",
     "invoiceOrConfirmedCharge": false,
     "activeDeployments": 0,
     "applicationComputeStarted": false,
@@ -48,6 +48,6 @@
     "persistentVolumeRetained": true,
     "volumeLimitMB": 1024,
     "privateRecoveryBucketRetained": true,
-    "notes": "Separate production preparation only. No app source, public domain, Shopify credentials or merchant database has been configured. Newly provisioned storage and private encrypted control records remain metered while the app is offline. No new subscription or confirmed launch charge; existing total launch cap still applies. See environment-isolation-verification.json."
+    "notes": "Separate production preparation only. The public Shopify app credentials and billing settings are assigned, but no deploy source, public domain, application runtime or merchant database has been activated. Storage and encrypted operator/control records remain metered while compute is stopped. No new subscription or confirmed launch charge; the $50 total cap still applies. See shopify-environment-verification.json."
   }
 }

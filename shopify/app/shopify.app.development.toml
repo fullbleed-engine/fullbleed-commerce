@@ -1,4 +1,4 @@
-# Synthetic hosted testing. This app identity is separate from the App Store app.
+# Local synthetic testing; Shopify CLI replaces URLs with its development tunnel.
 client_id = "09e47bbd732e1cd77b17b99af2a64feb"
 name = "Fullbleed Commerce Dev"
 application_url = "https://shopify-app-production-346e.up.railway.app"
@@ -26,4 +26,4 @@ uri = "/webhooks/privacy"
 compliance_topics = ["customers/data_request", "customers/redact", "shop/redact"]
 
 [build]
-automatically_update_urls_on_dev = false
+automatically_update_urls_on_dev = true

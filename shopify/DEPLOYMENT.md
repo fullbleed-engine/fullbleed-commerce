@@ -5,8 +5,11 @@ production project. Both currently use Railway's default environment label
 `production`; use their exact project/environment IDs. The
 [environment isolation record](../docs/environment-isolation.md) covers separate
 volumes, buckets, keys, monitoring secrets and real credential-denial checks.
-Production has no deploy source, public domain or Shopify credentials yet.
-The configuration below continues to describe the attended staging service.
+Production now has the public app's own credentials, but no deploy source,
+public domain or running application. Staging now has the separate development
+app's credentials. The [Shopify environment record](../docs/shopify-environments.md)
+describes the offline transition and the installation, billing and routing work
+required before either service is activated.
 
 Build the repository-root Docker context with `shopify/app/Dockerfile`.
 The image pins Node.js 26.10.0. Node 24.21.0 has an intermittent native rendering
@@ -42,7 +45,7 @@ source files or logs. Set:
   [RECOVERY.md](RECOVERY.md). Initialize the bucket before starting the app.
 - `FULLBLEED_BACKUPS_ENABLED=true` for startup/hourly checks and verified daily
   snapshots. A disabled or missing setting keeps the private monitor unhealthy.
-- `SHOPIFY_APP_URL=https://commerce.fullbleed.dev`, `SCOPES=read_orders`,
+- The `SHOPIFY_APP_URL` matching the selected [app environment](../docs/shopify-environments.md), `SCOPES=read_orders`,
   `NODE_ENV=production`, `PORT=3000`, and
   `DATABASE_URL=file:/data/commerce.sqlite`.
 - `RAILWAY_RUN_UID=0` for Railway's initially root-owned volume. The entrypoint
@@ -60,13 +63,16 @@ Railway pre-deploy command: the persistent volume is unavailable there.
 Do not copy the development SQLite database or its sessions to staging.
 Install the app through Shopify to obtain fresh authorized sessions.
 
-`app/shopify.app.staging.toml` points this registered app at the stable staging
-origin `https://commerce.fullbleed.dev`, callback `/auth/callback` and signed
-webhook routes. Keep this origin identical to `SHOPIFY_APP_URL`; the Flow action
-URLs are relative to it. Provision the custom domain and verify DNS/TLS before
-changing the runtime or releasing the Shopify configuration. Validate and deploy
-it explicitly with `--config staging`. Stop the development preview with
-`app dev clean` when switching to a released version. Existing Flow workflows can retain **Draft**
+`app/shopify.app.staging.toml` now points **Fullbleed Commerce Dev** at the existing
+Railway origin `https://shopify-app-production-346e.up.railway.app`, callback
+`/auth/callback` and signed webhook routes. The `production` config reserves
+`https://commerce.fullbleed.dev` for the public App Store identity. That custom
+domain is still attached to the stopped staging service; its move is unfinished.
+Keep each released origin identical to that service's `SHOPIFY_APP_URL`; Flow
+action URLs are relative to it. Verify DNS/TLS and routing before activation.
+Validate and deploy explicitly with `--config staging` or `--config production`.
+Stop the local development preview with `app dev clean --config development`
+when switching to the development app's released staging version. Existing Flow workflows can retain **Draft**
 action references: replace those nodes with the released Fullbleed actions,
 reconnect their inputs/outputs and apply the workflow changes. A published app
 version alone did not migrate the saved development workflow in our test.
@@ -103,12 +109,14 @@ replacement deployment. Verify an actual Flow order trigger and downstream
 destination with synthetic data before enabling merchant workflows. Complete
 the App Pricing lifecycle separately; a healthy server is not billing evidence.
 
-The [hosted workflow check](../docs/hosted-workflow.md) covers a fresh authorized
+The earlier [hosted workflow check](../docs/hosted-workflow.md) covers a fresh authorized
 installation, private $0 plan checkout, saved custom template, actual order
 trigger, both Flow actions, four private order fields and browser downloads on
 the stable origin with `NODE_ENV=production`. The session, brand, template and
 prepared links survived a replacement deployment. This is synthetic staging
-evidence, not approval to accept paying merchants.
+evidence for the previous shared app identity. Repeat the full workflow after
+the app separation; it does not verify the new development app or approve
+paying-merchant admission.
 
 Railway readiness is checked during deployment, not continuously. The
 [GitHub monitoring workflow](MONITORING.md) checks availability, privacy

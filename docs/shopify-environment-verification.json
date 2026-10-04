@@ -1,0 +1,76 @@
+{
+  "checkedAt": "2026-10-04T20:10:30.187552+00:00",
+  "status": "verified offline app identity separation; activation pending",
+  "sourceBaseCommit": "281e48c6815626284385f1c474a60382f8bcd70a",
+  "apps": {
+    "production": {
+      "clientId": "91ba2420b9c9d87e00dab059b51eb005",
+      "dashboardAppId": "430863056897",
+      "activeVersionId": "1153932984321",
+      "activeVersionTag": "branded-origin-aba1b19",
+      "versionHistoryUnchanged": true
+    },
+    "development": {
+      "clientId": "09e47bbd732e1cd77b17b99af2a64feb",
+      "dashboardAppId": "431437676545",
+      "activeVersionId": "1154371584001",
+      "activeVersionTag": "isolated-development-20261004",
+      "publicDistribution": true,
+      "listingSubmitted": false
+    }
+  },
+  "configurationValidation": {
+    "files": 4,
+    "issues": 0
+  },
+  "localSharedTests": {
+    "passed": 66,
+    "failed": 0
+  },
+  "localShopifyChecks": {
+    "passed": 19,
+    "failed": 0,
+    "node": "v26.10.0",
+    "serverBuildSha256": "3e1d3aa6ef72638175e26e37938f8ce1be2153c2f0bce7b45c232da1699cbd4b"
+  },
+  "installedStoreGuardRefusals": 3,
+  "infrastructurePlans": {
+    "staging": {
+      "changes": 0,
+      "diagnostics": 0
+    },
+    "production": {
+      "changes": 0,
+      "diagnostics": 0
+    }
+  },
+  "hosted": {
+    "distinctClientIds": true,
+    "distinctSecrets": true,
+    "stagingBillingCleared": true,
+    "productionBillingPreserved": true,
+    "unrelatedVariablesUnchanged": true,
+    "activeDeployments": {
+      "staging": 0,
+      "production": 0
+    },
+    "openedMerchantDatabase": false,
+    "publicDomainMoved": false,
+    "productionHasDeploySource": false,
+    "productionAdmission": "closed"
+  },
+  "rollbackCopy": "Windows CurrentUser DPAPI; contains credentials and is not published",
+  "evidence": {
+    "archive": "commerce-shopify-environments-evidence.zip",
+    "sha256": "76b86598b861830edf12530e4747f9d71943177e4b8747088414c96396b0bc08",
+    "bytes": 63155,
+    "filesIncludingManifest": 61,
+    "knownLiveCredentialScanPassed": true
+  },
+  "limitations": [
+    "No fresh installation or Flow execution under the new development app yet.",
+    "Development customer-data access and private test pricing remain to be configured.",
+    "Public domain still routes to stopped staging; production runtime, agreements, monitoring and ongoing budget remain unfinished.",
+    "Earlier browser/hosted workflow evidence belongs to the prior shared app identity."
+  ]
+}

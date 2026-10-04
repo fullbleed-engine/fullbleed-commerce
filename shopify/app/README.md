@@ -37,10 +37,14 @@ cd shopify/app
 npm run dev -- --store fullbleed-commerce-test.myshopify.com
 ```
 
-Set `NODE_ENV=development` for that preview. The committed app configuration
-identifies Fullbleed's development app. Contributors using their own Partner
-organization must first run `npm run config:link` and select their own app and
-development store. Never commit `.env`, `.shopify`, databases or access tokens.
+Set `NODE_ENV=development` for that preview. `npm run dev` explicitly selects
+`shopify.app.development.toml`, which identifies **Fullbleed Commerce Dev**, a
+different registered app from the App Store app. Contributors using their own
+Partner organization must link their own app and pass its configuration name
+explicitly to `shopify app dev --config <name> --store <store>`.
+Never commit `.env`, `.shopify`, databases or access tokens. Do not copy an
+existing app's session database when changing app identities; install the
+selected app to obtain its own authorizations.
 
 For the connected store, the maintained synthetic-order check is:
 
@@ -81,9 +85,12 @@ synthetic credentials. Hosted results and their scope are retained in the
 [deployment records](../../docs/hosted-access.md).
 
 `shopify app deploy` publishes Shopify configuration/extensions; it does not host
-the Node server. Set the production application URL and authentication redirect
-URLs before publishing a production version. The attended hosted preview uses
-`commerce.fullbleed.dev`; use the CLI tunnel only for local development.
+the Node server. `npm run deploy` explicitly selects the development app's hosted
+`staging` configuration. `npm run deploy:production` explicitly selects the
+separate App Store identity. Both hosted backends are currently stopped. Read
+the [app environment record](../../docs/shopify-environments.md) for URLs,
+credential ownership and the remaining installation/routing checks before
+activation. A Shopify config release alone does not complete those checks.
 
 Privileged maintenance follows the [security operations procedure](../SECURITY-OPERATIONS.md).
 Human recovery and privacy-status commands require an operator, purpose and work
@@ -96,7 +103,7 @@ reference in the deployed service environment.
 The two Flow actions use the saved templates and the installed offline session.
 Enable them in the app's **Automations** screen before testing. The development
 preview requires public distribution, or a Plus development store for a custom
-app. Run `shopify app dev` and select the actions marked Draft in Shopify Flow.
+app. Run `npm run dev` and select the development app's actions marked Draft in Shopify Flow.
 The [Flow guide](../FLOW.md) describes outputs, private links, retries and cleanup.
 
 Flow redeliveries recover persisted jobs after a process restart. Keep a durable

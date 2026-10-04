@@ -2,8 +2,10 @@
 
 Fullbleed Commerce now has separate Railway projects for synthetic staging and
 the production service being prepared. Production has no deployment source,
-public domain, Shopify credentials or running application. Its database has not
-been initialized. Creating these resources does not open merchant admission.
+public domain or running application. Its database has not been initialized.
+The later [Shopify environment separation](shopify-environments.md) assigns its
+own app credentials while keeping it offline. Creating these resources does not
+open merchant admission.
 
 The October 4, 2026 [verification record](environment-isolation-verification.json)
 retains the resource identities, checks and evidence archive hash.
@@ -94,9 +96,10 @@ contains one replica. Keep using the full region configuration when reviewing it
 ## Before merchant admission
 
 Complete the provider/transfer arrangements and matching production agreement;
-establish independently recoverable keys; assign separate production and
-development Shopify app configurations and credentials; then verify the first
-production deployment, runtime limits and database binding. Move the public
+verify the first production deployment, runtime limits and database binding.
+[Independent key recovery](independent-key-recovery.md) and separate
+[Shopify configurations and credentials](shopify-environments.md) now have their
+own verification records. Move the public
 origin deliberately after that verification, leaving synthetic testing on its
 own configuration.
 
