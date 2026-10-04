@@ -1,0 +1,221 @@
+{
+  "checkedAt": "2026-10-04T10:34:02.603596+00:00",
+  "baseCommit": "d5ef84a89b1b765aa5bfd1ebf2e33e85e8642e4d",
+  "changedSources": {
+    "shopify/recovery-journal.js": "9b58dcecad7a75aa57c8c70806a7021e7b7f6a9d7c2d2445af691b188cf761c6",
+    "shopify/app/test/recovery.test.mjs": "3f9bc9355c64e06f175198607238bede17859aa1d70ab023a6c606d4f4b779ed"
+  },
+  "reportedCiFailure": {
+    "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37192607148",
+    "job": "integration",
+    "phase": "monitor test before-hook creates a backup while server startup cleanup is active",
+    "errorCode": "P2028",
+    "logSha256": "d098d85fb6e352bf8eea59a6fe6c7b84b55129518f255d016c735c99907c92a0"
+  },
+  "controlledReproduction": {
+    "before": {
+      "node": "v26.10.0",
+      "checkedAt": "2026-10-04T10:20:13.404Z",
+      "scenario": "Already-bound dataset verification while a different Prisma client holds a write transaction",
+      "nontransactionalReadPassed": true,
+      "error": {
+        "name": "PrismaClientKnownRequestError",
+        "code": "P1008",
+        "message": "Socket timeout (the database failed to respond to a query within the configured timeout\u2014 see https://pris.ly/d/sqlite-connector for more details)."
+      }
+    },
+    "after": {
+      "node": "v26.10.0",
+      "checkedAt": "2026-10-04T10:21:07.245Z",
+      "scenario": "Already-bound dataset verification while a different Prisma client holds a write transaction",
+      "nontransactionalReadPassed": true,
+      "bindingPassed": true,
+      "elapsedMs": 18.661200000000036
+    },
+    "limitations": "The deterministic writer-lock reproduction returns P1008, not the original CI P2028. No retry or timeout increase was used to obtain a passing result."
+  },
+  "controlledReplayReproduction": {
+    "before": {
+      "node": "v26.10.0",
+      "checkedAt": "2026-10-04T10:31:06.152Z",
+      "scenario": "Already-bound dataset verification while a different Prisma client holds a write transaction",
+      "nontransactionalReadPassed": true,
+      "bindingPassed": true,
+      "error": {
+        "name": "PrismaClientKnownRequestError",
+        "code": "P1008",
+        "message": "Socket timeout (the database failed to respond to a query within the configured timeout\u2014 see https://pris.ly/d/sqlite-connector for more details)."
+      }
+    },
+    "after": {
+      "node": "v26.10.0",
+      "checkedAt": "2026-10-04T10:31:53.977Z",
+      "scenario": "Already-bound dataset verification while a different Prisma client holds a write transaction",
+      "nontransactionalReadPassed": true,
+      "bindingPassed": true,
+      "replayPassed": true,
+      "elapsedMs": 20.83330000000001
+    },
+    "scenario": "Already-applied journal receipt verification while a different client holds a write transaction"
+  },
+  "localValidation": {
+    "checkedAt": "2026-10-04T10:33:46.250Z",
+    "node": "v26.10.0",
+    "checks": [
+      {
+        "name": "schema",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "migrations",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "recovery-fixture",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "route-types",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "typecheck",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "lint",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "build",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "entry",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "health",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "webhooks",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "webhook-lifecycle",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "flow",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "usage",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "privacy",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "access-audit",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "monitor",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "recovery",
+        "exitCode": 0,
+        "passed": true
+      }
+    ],
+    "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
+    "lockSha256": "8eb83a6cc4cc71fb673a6e13ef507c0910cd914ce61d96010f6829c5b28655d8",
+    "serverBuildSha256": "c47bb2615ee044bab73bdf4e37399da8ffc45519faae015ffad73d5d8748c604",
+    "browserTested": false,
+    "liveBillingTested": false
+  },
+  "shopifyTests": [
+    {
+      "suite": "access-audit",
+      "passed": 12,
+      "sha256": "97c24cb4285de86329359f20dcb9249949781f31484c1c1f0d7d8ec2dce8ad21"
+    },
+    {
+      "suite": "entry",
+      "passed": 5,
+      "sha256": "9c60d4d99cb1c948bc25557892fa8ac886909ab00d84a2ce741e14f03bb83a84"
+    },
+    {
+      "suite": "flow",
+      "passed": 14,
+      "sha256": "36d8853054044f5ca012f6f92e57a0333c57436f45c35e1a10cad385f6c369cd"
+    },
+    {
+      "suite": "health",
+      "passed": 2,
+      "sha256": "be3ae619a97eeeaa5fdb76dd1ebf78b83b34d94c6a89a64a323485a2a8d8983a"
+    },
+    {
+      "suite": "monitor",
+      "passed": 8,
+      "sha256": "f29eb0e9222563d45caa23f7ca7ce877d3341db1cc084193fa681a69e71cd7e1"
+    },
+    {
+      "suite": "privacy",
+      "passed": 16,
+      "sha256": "6a3ca3ecaca51bcef52a0cca5838d4ee569f45e30e30abb3771c6f3194ec0d8e"
+    },
+    {
+      "suite": "recovery",
+      "passed": 17,
+      "sha256": "c21b7eb5475f27947d0fc24604918d3dc050c2b823e7addcd93b3eeaadc73eb3"
+    },
+    {
+      "suite": "usage",
+      "passed": 9,
+      "sha256": "51ffd443dfe6d2974ee99ab561ae8e95d7c99ca16a83ad1b22589d3230bfb491"
+    },
+    {
+      "suite": "webhook-lifecycle",
+      "passed": 12,
+      "sha256": "5ec78d3d8018ef28a1802b119e918cdeba1593c5861e6b64815afc40a409207a"
+    },
+    {
+      "suite": "webhooks",
+      "passed": 4,
+      "sha256": "cf338385c63b9839b99fb401ce1e956f9e1b857f65f2c9a677fd5b01611f651c"
+    }
+  ],
+  "shopifyTestCount": 99,
+  "rootTests": {
+    "passed": 47,
+    "logSha256": "3f4d7bd88e13bc235e826d82f4f2b3924569825021b7835516dc397daa79467d"
+  },
+  "focusedRecoveryTests": {
+    "passed": 17,
+    "logSha256": "aad227127082959911afe765c2457b0514d21fc8a380397271101043718b68e0"
+  },
+  "hostedDeploymentOfThisFix": false,
+  "hostedAccessEvidence": "hosted-access-verification.json",
+  "ciEvidence": "See the pull request checks for the final committed source; local results do not establish Linux CI success."
+}

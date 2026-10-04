@@ -19,6 +19,17 @@ has not been checked.
 
 ## Requirements that need review
 
+### Hosted follow-up on October 4, 2026
+
+The later [hosted access-history verification](hosted-access.md), on source
+`d5ef84a89b1b765aa5bfd1ebf2e33e85e8642e4d`, supplies the missing browser evidence
+for **1.1.1** below: a fresh Chrome context blocked a third-party canary cookie,
+then loaded authenticated history and downloaded a PDF with no app cookies.
+It also verified hosted migration, real Flow downloads, privacy-reference
+erasure, uninstall and isolated backup recovery. The counts above describe the
+original local review; this follow-up is not a new full requirements review or
+Shopify approval. **1.2.2** remains open.
+
 **1.1.1 — Embedded authentication with browser storage restrictions**
 
 Why this needs attention: verify the installed embedded app in a fresh Chrome
@@ -55,8 +66,8 @@ toolkit validator failed in its own JSX/module environment; the actual app
 typecheck, production build and Chrome checks passed.
 
 Shopify API and embedded-admin shell boundaries in local browser checks are
-synthetic. The current entry and access-history changes still need an attended
-hosted rollout. Application history does not establish direct database, provider
+synthetic. The later hosted follow-up above tested entry and access history
+against Shopify. Application history does not establish direct database, provider
 or operator access controls, or complete the customer-data questionnaire.
 
 ## Skipped groups
