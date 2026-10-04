@@ -42,7 +42,7 @@ const originalFetch = globalThis.fetch;
 globalThis.fetch = () => { throw new Error('Privacy requests must not fetch new customer data or paid-plan status.'); };
 
 test.beforeEach(async () => {
-  await db.privacyRequest.deleteMany(); await db.automationSettings.deleteMany(); await db.session.deleteMany();
+  await db.privacyRequest.deleteMany(); await db.automationSettings.deleteMany(); await db.session.deleteMany(); await db.usagePeriod.deleteMany();
   at = Date.now();
   for (const shop of [primary, other]) {
     await db.session.create({ data: { id: `offline_${shop}`, shop, state: '', isOnline: false, accessToken: 'synthetic-token', scope: 'read_orders' } });

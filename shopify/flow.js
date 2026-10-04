@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { createHash, createHmac, randomUUID, timingSafeEqual } from 'node:crypto';
+import { isUsageLimit } from './usage.js';
 
 export const flowKinds = Object.freeze({
   'create-order-summary-link': 'order-summary',
@@ -58,7 +59,7 @@ export async function boundedFlowRequest(request) {
  * lease, retry state and unique action-run constraint, across process restarts.
  * loadDocument must recheck installation and entitlement before reading orders.
  */
-export function createFlowService({ db, loadDocument, render, limit, secret, appUrl, now = () => new Date() }) {
+export function createFlowService({ db, loadDocument = /** @returns {Promise<any>} */ async () => { throw new Error('A document loader is required.'); }, withDocument = (job, signal, work) => loadDocument(job, signal).then(work), render, limit, secret, appUrl, now = () => new Date() }) {
   if (typeof secret !== 'string' || secret.length < 24) throw new Error('A document signing secret is required.');
   const origin = new URL(appUrl);
   if (origin.protocol !== 'https:' || origin.username || origin.password) throw new Error('A trusted HTTPS app URL is required.');
@@ -92,7 +93,7 @@ export function createFlowService({ db, loadDocument, render, limit, secret, app
       } });
     }
     if (['cancelled', 'revoked', 'stale'].includes(job.status)) return reject('This document was revoked or changed. Run a new workflow after checking the order and template.', 410);
-    if (job.status === 'failed') return reject('The document could not be prepared. Check the order and template, then retry from Fullbleed activity.', 422);
+    if (job.status === 'failed') return reject(job.lastError === 'usage_limit' ? 'The plan’s order allowance is used. Change plans in Fullbleed’s Plan and usage page or wait for the next billing period, then retry from automation activity.' : 'The document could not be prepared. Check the order and template, then retry from Fullbleed activity.', 422);
     if (job.nextAttemptAt && job.nextAttemptAt > now()) return flowResponse({ message: 'The document will be retried.' }, 429, { 'Retry-After': String(Math.min(3600, Math.max(5, Math.ceil((job.nextAttemptAt - now()) / 1000)))) });
     return flowResponse({ message: 'Document preparation is in progress.' }, 202);
   }
@@ -121,19 +122,21 @@ export function createFlowService({ db, loadDocument, render, limit, secret, app
           const setting = await db.automationSettings.findUnique({ where: { shop: job.shop } });
           if (!setting?.enabled) throw reject('Automation is paused.', 409);
           const signal = AbortSignal.timeout(60000);
-          const document = await loadDocument(job, signal);
-          const result = await render(document.order, { ...document.options, signal });
-          if (result.pdf.length > 8 * 1024 * 1024 || Buffer.from(result.pdf).subarray(0, 5).toString() !== '%PDF-') throw new TypeError('Invalid document output.');
-          await db.automationJob.updateMany({ where: owned, data: {
-            status: 'ready', fingerprint: fingerprint(document), templateRevision: document.revision,
-            pdfSha256: hash(result.pdf), expiresAt: new Date(now().valueOf() + job.ttlHours * 3600000),
-            leaseId: null, leaseUntil: null, lastError: null,
-          } });
+          await withDocument(job, signal, async document => {
+            const result = await render(document.order, { ...document.options, signal });
+            if (result.pdf.length > 8 * 1024 * 1024 || Buffer.from(result.pdf).subarray(0, 5).toString() !== '%PDF-') throw new TypeError('Invalid document output.');
+            const saved = await db.automationJob.updateMany({ where: owned, data: {
+              status: 'ready', fingerprint: fingerprint(document), templateRevision: document.revision,
+              pdfSha256: hash(result.pdf), expiresAt: new Date(now().valueOf() + job.ttlHours * 3600000),
+              leaseId: null, leaseUntil: null, lastError: null,
+            } });
+            if (!saved.count) throw reject('This document request was revoked or cleared.', 409);
+          });
         } catch (error) {
           const terminal = error instanceof TypeError || (error instanceof Response && error.status >= 400 && error.status < 500 && error.status !== 429);
           await db.automationJob.updateMany({ where: owned, data: {
             status: terminal || job.attempts >= MAX_ATTEMPTS ? 'failed' : 'retry-wait',
-            lastError: terminal ? 'order_or_access' : 'temporarily_unavailable', leaseId: null, leaseUntil: null,
+            lastError: isUsageLimit(error) ? 'usage_limit' : terminal ? 'order_or_access' : 'temporarily_unavailable', leaseId: null, leaseUntil: null,
             nextAttemptAt: terminal ? null : new Date(now().valueOf() + Math.min(3600, 15 * 2 ** (job.attempts - 1)) * 1000),
           } });
         }
@@ -169,19 +172,22 @@ export function createFlowService({ db, loadDocument, render, limit, secret, app
     return limit(job.shop, async () => {
       try {
         const signal = AbortSignal.timeout(60000);
-        const document = await loadDocument(job, signal);
-        if (fingerprint(document) !== job.fingerprint) {
-          await db.automationJob.updateMany({ where: { id, status: 'ready' }, data: { status: 'stale', lastError: 'document_changed' } });
-          return reject('The order or template changed. Ask the store for a new document link.', 410);
-        }
-        const result = await render(document.order, { ...document.options, signal });
-        if (hash(result.pdf) !== job.pdfSha256) return reject('The document version changed. Ask the store for a new link.', 410);
-        // Recheck revocation after rendering, including pause/uninstall races.
-        const saved = await db.automationJob.updateMany({ where: { id, status: 'ready', expiresAt: { gt: now() } }, data: { downloads: { increment: 1 }, lastDownloadedAt: now() } });
-        if (!saved.count) return reject('This download link expired or was revoked.', 410);
-        return new Response(new Uint8Array(result.pdf), { headers: { ...privateHeaders, 'Content-Type': 'application/pdf', 'Content-Disposition': `attachment; filename="${result.filename}"`, 'X-Fullbleed-SHA256': job.pdfSha256 } });
+        return await withDocument(job, signal, async document => {
+          if (fingerprint(document) !== job.fingerprint) {
+            await db.automationJob.updateMany({ where: { id, status: 'ready' }, data: { status: 'stale', lastError: 'document_changed' } });
+            return reject('The order or template changed. Ask the store for a new document link.', 410);
+          }
+          const result = await render(document.order, { ...document.options, signal });
+          if (hash(result.pdf) !== job.pdfSha256) return reject('The document version changed. Ask the store for a new link.', 410);
+          // Recheck revocation after rendering, including pause/uninstall races.
+          const saved = await db.automationJob.updateMany({ where: { id, status: 'ready', expiresAt: { gt: now() } }, data: { downloads: { increment: 1 }, lastDownloadedAt: now() } });
+          if (!saved.count) return reject('This download link expired or was revoked.', 410);
+          return new Response(new Uint8Array(result.pdf), { headers: { ...privateHeaders, 'Content-Type': 'application/pdf', 'Content-Disposition': `attachment; filename="${result.filename}"`, 'X-Fullbleed-SHA256': job.pdfSha256 } });
+        });
       } catch (error) {
         if (error instanceof Response && error.status === 429) throw error;
+        if (isUsageLimit(error)) return reject('The store’s document allowance is used. Please contact the store.', 409);
+        if (error instanceof Response && error.status === 410) return error;
         return reject('This document is currently unavailable. Ask the store to check the order and app access.', error instanceof TypeError ? 410 : 503);
       }
     });

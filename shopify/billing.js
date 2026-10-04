@@ -2,7 +2,12 @@
 export const subscriptionQuery = `query FullbleedSubscription($appId: ID!, $shopId: ID!) {
   activeSubscription(appId: $appId, shopId: $shopId) {
     shop { id myshopifyDomain }
+    billingPeriod
+    cancelAtEndOfCycle
+    trialEndsAt
+    currentBillingCycle { startTime endTime }
     items { handle }
+    pendingUpdate { items { handle } }
   }
 }`;
 
@@ -12,7 +17,7 @@ export function pricingUrl(shop, appHandle) {
 }
 
 /** Credentials are server configuration. All merchant identities come from authenticated Admin API data. */
-export function createSubscriptionCheck({ organizationId, appId, accessToken, allowedHandles, fetchImpl = fetch }) {
+export function createSubscriptionLookup({ organizationId, appId, accessToken, allowedHandles, fetchImpl = fetch }) {
   const configured = /^[1-9]\d*$/.test(organizationId || '') && /^gid:\/\/shopify\/App\/[1-9]\d*$/.test(appId || '') && typeof accessToken === 'string' && accessToken.length > 0 && Array.isArray(allowedHandles) && allowedHandles.length > 0;
   return async function check({ shopId, shop, signal }) {
     if (!configured) throw new Response('Subscription verification is not configured. Contact support.', { status: 503 });
@@ -33,12 +38,23 @@ export function createSubscriptionCheck({ organizationId, appId, accessToken, al
       throw new Response('Could not verify your subscription. Please try again.', { status: 503 });
     }
     const subscription = result.data.activeSubscription;
-    if (subscription === null) return false;
+    if (subscription === null) return null;
     if (subscription?.shop?.id !== shopId || subscription?.shop?.myshopifyDomain !== shop) throw new Response('Subscription shop identity did not match.', { status: 503 });
     // activeSubscription is the live contract. A replaced catalog price may be
     // inactive while an existing merchant remains subscribed at that price.
-    return Array.isArray(subscription.items) && subscription.items.some(item => allowedHandles.includes(item.handle));
+    const handles = [...new Set((Array.isArray(subscription.items) ? subscription.items : []).filter(item => allowedHandles.includes(item.handle)).map(item => item.handle))];
+    if (!handles.length) return null;
+    if (handles.length !== 1) throw new Response('Subscription plan needs review. Contact support.', { status: 503 });
+    return { handle: handles[0], billingPeriod: subscription.billingPeriod, cancelAtEndOfCycle: subscription.cancelAtEndOfCycle === true,
+      currentBillingCycle: subscription.currentBillingCycle, trialEndsAt: subscription.trialEndsAt,
+      pendingHandles: (subscription.pendingUpdate?.items || []).map(item => item.handle),
+    };
   };
+}
+
+export function createSubscriptionCheck(options) {
+  const lookup = createSubscriptionLookup(options);
+  return async identity => Boolean(await lookup(identity));
 }
 
 export function developmentAccess({ nodeEnv, allowedStore, shop, partnerDevelopment }) {

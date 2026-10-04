@@ -89,6 +89,32 @@ model Session {
   refreshTokenExpires DateTime?
 }
 
+model UsagePeriod {
+  id       String       @id @default(uuid())
+  shop     String
+  key      String
+  startsAt DateTime?
+  endsAt   DateTime
+  used     Int          @default(0)
+  orders   UsageOrder[]
+
+  @@unique([shop, key])
+  @@index([endsAt])
+}
+
+model UsageOrder {
+  id            String      @id
+  periodId      String
+  period        UsagePeriod @relation(fields: [periodId], references: [id], onDelete: Cascade)
+  shop          String
+  orderId       String
+  reservedUntil DateTime?
+  completedAt   DateTime?
+
+  @@unique([periodId, orderId])
+  @@index([shop, orderId])
+}
+
 // Identifiers live in the encrypted export and keyed lookup hashes.
 // Completed/redacted requests retain a minimal delivery-deduplication receipt.
 model PrivacyRequest {

@@ -27,7 +27,7 @@ separate integration gate.
 | --- | --- | --- |
 | WooCommerce Free | Local manual PDFs, full visual and source editor, embedded logos, import/export | Free, no account, quota, watermark or hosted dependency |
 | WooCommerce Pro | Automatic attachments to selected existing transactional emails; customer downloads; batch export; activity, administrator failure alerts and recovery; updates and support | Test $79/year for one store with a self-hosted renderer; managed rendering priced separately after cost measurements |
-| Shopify Commerce | Templates, order documents, native Flow actions, expiring document links, persistent activity and retry/revoke controls | Test $12/month for small stores and $29/month for automation-heavy stores; specify included successful renders before publishing a price |
+| Shopify Commerce | Templates, order documents, native Flow actions, expiring document links, persistent activity and retry/revoke controls | Studio candidate: $12 per 30 days for 250 unique orders; Scale: $29 for 1,000. Reprints and both document types share an order unit. Verify installed plan changes and hosted costs before accepting paying merchants. |
 
 These are hypotheses, not offers. Avoid an unlimited hosted-rendering promise.
 Free customization helps adoption; charge for automation, delivery, operational
@@ -297,8 +297,11 @@ for the checks actually run.
 Use Shopify App Pricing's hosted plan selection and Partner API entitlement
 checks for the new public app. Live activation, scheduled cancellation,
 reactivation and immediate-cancellation access checks passed with a private $0
-test plan. Plan changes, freezes and the hosted purchase-to-Flow path remain
-release gates; no paid merchant is enabled. See the [billing evidence](../shopify/BILLING.md).
+test plan. The installed hosted purchase-to-Flow path also passed with that test
+plan. Studio and Scale plan definitions and order allowances are prepared; their
+installed plan changes, freezes, cost measurement and production operations
+remain release gates. No paid merchant is enabled. See the [billing evidence](../shopify/BILLING.md)
+and [allowance contract](../shopify/ALLOWANCES.md).
 [Shopify's current pricing integration](https://shopify.dev/docs/apps/launch/billing/shopify-app-pricing)
 defines the required platform behavior.
 

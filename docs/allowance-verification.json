@@ -1,0 +1,203 @@
+{
+  "recordedAt": "2026-10-04T02:36:58.180462+00:00",
+  "scope": "Synthetic APIs and stores; no real merchant payment or adoption claim.",
+  "appTests": {
+    "health": {
+      "passed": 2,
+      "sha256": "39ec74af35e93c8722291e71fd9047e2318741783d0a791944c02fa883fa343c"
+    },
+    "webhooks": {
+      "passed": 4,
+      "sha256": "d0e28d384bc4a080ed1db2f0bd3405dc596ac22441403e7b646a8fb564e17dff"
+    },
+    "webhook-lifecycle": {
+      "passed": 12,
+      "sha256": "d19d694157f13f5ef7d7afba5065bcf4dff0694b4646dded90757c8cc9517cf5"
+    },
+    "flow": {
+      "passed": 13,
+      "sha256": "d4d026f2def02ca4678fcd788f352da3ba645b2a6da25e8163d0903a35e5337a"
+    },
+    "usage": {
+      "passed": 8,
+      "sha256": "8b7b44dfd2386b7ab9b00f1d3d6d37d872a6fbec904211bd002e666a048a3bdd"
+    },
+    "privacy": {
+      "passed": 16,
+      "sha256": "3562e50352c4c2da81aeec49de8e22f6ed93cda91905afe3e92f228d60357761"
+    },
+    "monitor": {
+      "passed": 8,
+      "sha256": "1960fa671862b6bb63777c4da4f8e8c6f754f227e498f91ba875f0282c8fb5da"
+    },
+    "recovery": {
+      "passed": 14,
+      "sha256": "3db4370352bf34a05c7b580eb8b143a26b084203d9e71d32cb6a234d77bc47c5"
+    }
+  },
+  "appTestCount": 77,
+  "rootTests": {
+    "passed": 47
+  },
+  "build": {
+    "checkedAt": "2026-10-04T02:33:58.281Z",
+    "node": "v24.21.0",
+    "checks": [
+      {
+        "name": "generated-client-matches-schema",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "migrations",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "recovery-fixture",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "route-types",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "typecheck",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "lint",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "build",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "health",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "webhooks",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "webhook-lifecycle",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "flow",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "usage",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "privacy",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "monitor",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "recovery",
+        "exitCode": 0,
+        "passed": true
+      }
+    ],
+    "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
+    "lockSha256": "98c11aefe0018a038a15e0723eaec57874cc8bc10bb8d7197be8ca2c457784c3",
+    "serverBuildSha256": "5bc9193b9ac3e40ffdffdab289d395bd138331c28d9072abc4b6ac662b2a400b",
+    "browserTested": false,
+    "liveBillingTested": false
+  },
+  "browser": {
+    "checkedAt": "2026-10-04T02:35:48Z",
+    "browser": "154.0.8037.93",
+    "syntheticOnly": true,
+    "shopifyApiAndAdminShellStubbed": true,
+    "realSdkAuthentication": true,
+    "realPdfRendering": true,
+    "serverBuildSha256": "5bc9193b9ac3e40ffdffdab289d395bd138331c28d9072abc4b6ac662b2a400b",
+    "checks": [
+      {
+        "name": "plan page authenticates through SDK",
+        "passed": true
+      },
+      {
+        "name": "browser receives complete PDF",
+        "passed": true
+      },
+      {
+        "name": "successful order consumes final allowance unit",
+        "passed": true
+      },
+      {
+        "name": "same-order reprint remains available at limit",
+        "passed": true
+      },
+      {
+        "name": "new order explains limit without a PDF or charge",
+        "passed": true
+      },
+      {
+        "name": "active upgrade preserves usage and increases available orders",
+        "passed": true
+      },
+      {
+        "name": "mobile plan screen fits",
+        "passed": true
+      },
+      {
+        "name": "plan changes use Shopify pricing destination",
+        "passed": true
+      },
+      {
+        "name": "no browser runtime errors",
+        "passed": true
+      }
+    ],
+    "evidence": [
+      {
+        "file": "output/browser/shopify-plans-desktop.png",
+        "sha256": "b70a85c9c1b72faf125efa719e14849f0fe38fe035f31ca6ab80534cdaca51e3"
+      },
+      {
+        "file": "output/browser/shopify-plans-mobile.png",
+        "sha256": "5917e2e10899e4fe7d44f0296cdb3fa839f9417bab7f9f8799e19ce90438ca92"
+      },
+      {
+        "file": "output/browser/shopify-plans-order-summary.pdf",
+        "sha256": "2426c3609b3314b6a6c371439eaa4daac52fef2f5c38ccc6373e835491850e0a"
+      }
+    ]
+  },
+  "sourceHashes": {
+    "shopify/billing.js": "eb1bc22562390938b9acfd35898965d31a01e738df0f9d8b18c44d7eb68feb9c",
+    "shopify/usage.js": "ea535b6b42bc91f0b9627240c925cbe60d038233a19f20a4b30e5df2da7852f1",
+    "shopify/flow.js": "5074e8f49bc72b0c13072e488a62ac30815fc93b15ca4eea8b6c2c0af34e19f7",
+    "shopify/privacy.js": "0822e89040929270f32769b17e79598fca3b37279c0c6d0937c1304027f31072",
+    "shopify/app/app/routes/app.plans.tsx": "d11f338a2ec48a30295cec7003b0f6e154127022d22b34528ce81826d6b6bc0a",
+    "shopify/app/prisma/schema.prisma": "0c925493e2cccf47d5369ca8ff5374b58674fdbeca50fbc81531a10afdc42d16"
+  },
+  "productionDependencyAudit": {
+    "high": 0,
+    "critical": 0
+  },
+  "shopifyPartnerQuerySchema": "2026-07 validated",
+  "polarisValidator": "Unable to load JSX/Preact types for TSX and reduced HTML; installed 1.1 TypeScript and real-browser checks pass."
+}

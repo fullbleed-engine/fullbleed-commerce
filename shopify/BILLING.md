@@ -5,6 +5,10 @@ current `activeSubscription`. The runtime credential has **Manage apps** only.
 Plan handles are server configuration, and shop identity comes from the installed
 session and Admin API. A return URL's `plan_handle` never grants access.
 
+The [order-allowance implementation](ALLOWANCES.md) adds Studio and Scale
+candidates, durable usage by Shopify billing period, and merchant plan changes.
+Its synthetic checks do not replace the installed-store lifecycle checks below.
+
 The October 3, 2026 check used Shopify's built-in `shopify-test` plan at $0/month,
 restricted to `fullbleed-commerce-test.myshopify.com`. Its development-store
 subscription bypass is disabled. The actual production entitlement function ran
