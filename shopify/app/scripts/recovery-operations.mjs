@@ -13,12 +13,43 @@ import { applyRecoveryEvent, createPrivacyService, prunePrivacyRequests } from '
 import { pruneAutomationJobs } from '../../flow.js';
 import { pruneUsage } from '../../usage.js';
 import { pruneAccessEvents } from '../../access-audit.js';
-import { BACKUP_RETENTION_DAYS, RECOVERY_RETENTION_DAYS, recoveryFailure } from '../../recovery-journal.js';
+import { BACKUP_RETENTION_DAYS, RECOVERY_RETENTION_DAYS, BACKUP_REPLAY_BOUNDARY, recoveryFailure } from '../../recovery-journal.js';
 import { createOperatorAudit } from '../../operator-audit.js';
 
 const DAY = 86400000, PART_SIZE = 1024 * 1024, MAX_DATABASE_BYTES = 512 * PART_SIZE;
 const backupIdPattern = /^\d{13}-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
+const retentionPath = 'retention/before-replay.bin';
 const sha256 = value => createHash('sha256').update(value).digest('hex');
+const backupAgeValid = (created, now, allowExpired = false) => Number.isFinite(now.valueOf()) &&
+  Number.isFinite(created) && created <= now.valueOf() + 300000 && (allowExpired || created >= now.valueOf() - BACKUP_RETENTION_DAYS * DAY);
+
+async function retentionActivated(journal, now) {
+  const paths = await journal.store.list('retention/');
+  if (!paths.length) return false;
+  if (paths.length !== 1 || paths[0] !== retentionPath) throw recoveryFailure();
+  let record;
+  try { record = JSON.parse(journal.codec.open(retentionPath, await journal.store.read(retentionPath, 4096))); }
+  catch { throw recoveryFailure(); }
+  if (!record || Object.keys(record).sort().join(',') !== 'activatedAt,dataset,format,replayBoundary' ||
+      record.format !== 'fullbleed-recovery-retention-v1' || record.dataset !== journal.dataset || record.replayBoundary !== BACKUP_REPLAY_BOUNDARY ||
+      !Number.isFinite(Date.parse(record.activatedAt)) || Date.parse(record.activatedAt) > now.valueOf() + 300000) throw recoveryFailure();
+  return true;
+}
+
+async function activateRetention(journal, now) {
+  if (await retentionActivated(journal, now)) return;
+  const record = { format: 'fullbleed-recovery-retention-v1', dataset: journal.dataset, replayBoundary: BACKUP_REPLAY_BOUNDARY, activatedAt: now.toISOString() };
+  try { await journal.store.write(retentionPath, journal.codec.seal(retentionPath, Buffer.from(JSON.stringify(record))), { exclusive: true }); }
+  catch (error) { if (error.code !== 'RECOVERY_OBJECT_EXISTS') throw error; }
+  // Publish and authenticate this permanent marker, without customer references,
+  // before removal. Restoring the database cannot undo this guard.
+  if (!await retentionActivated(journal, now)) throw recoveryFailure();
+}
+
+async function requireRestorable(journal, manifest, now) {
+  if (!backupAgeValid(Date.parse(manifest.createdAt), now()) ||
+      (manifest.replayBoundary !== BACKUP_REPLAY_BOUNDARY && await retentionActivated(journal, now()))) throw recoveryFailure();
+}
 export const databaseUrl = path => `file:${path.replaceAll('\\', '/')}`;
 export function configuredDatabasePath(value) {
   const path = value?.startsWith('file:') ? value.slice(5) : '';
@@ -49,10 +80,12 @@ async function privateJson(path, data) {
 
 export async function createDatabaseBackup({ db, databasePath, journal, now = () => new Date() }) {
   if (!isAbsolute(databasePath)) throw recoveryFailure();
+  // Age begins before reconciliation: a delayed scan must not give a snapshot
+  // a later expiry than an erasure intent that arrived while it was running.
+  const at = now(), id = `${at.valueOf()}-${randomUUID()}`;
   const sourceStat = await lstat(databasePath);
   if (!sourceStat.isFile() || sourceStat.isSymbolicLink() || sourceStat.size > MAX_DATABASE_BYTES) throw recoveryFailure();
   await journal.replay(db, applyRecoveryEvent);
-  const at = now(), id = `${at.valueOf()}-${randomUUID()}`;
   const temporary = await mkdtemp(join(dirname(databasePath), '.fullbleed-backup-'));
   const snapshot = join(temporary, 'snapshot.sqlite');
   const source = new DatabaseSync(databasePath, { readOnly: true, timeout: 1000 });
@@ -81,7 +114,7 @@ export async function createDatabaseBackup({ db, databasePath, journal, now = ()
       if (stored.length !== chunk.length || sha256(stored) !== parts.at(-1).sha256) throw recoveryFailure();
     }
     if (observedBytes !== bytes) throw recoveryFailure();
-    const manifest = { format: 'fullbleed-sqlite-backup-v1', dataset: journal.dataset, id, createdAt: at.toISOString(), verifiedAt: now().toISOString(), bytes, sha256: hash.digest('hex'), parts };
+    const manifest = { format: 'fullbleed-sqlite-backup-v1', dataset: journal.dataset, id, createdAt: at.toISOString(), verifiedAt: now().toISOString(), replayBoundary: BACKUP_REPLAY_BOUNDARY, bytes, sha256: hash.digest('hex'), parts };
     const path = `backups/${id}/manifest.bin`;
     // Publish last. An interrupted upload never becomes a listed usable backup.
     await journal.store.write(path, journal.codec.seal(path, Buffer.from(JSON.stringify(manifest))), { exclusive: true });
@@ -103,7 +136,8 @@ export async function readBackupManifest(journal, id, now = new Date(), allowExp
   catch { throw recoveryFailure(); }
   const created = Date.parse(manifest.createdAt);
   if (manifest.format !== 'fullbleed-sqlite-backup-v1' || manifest.dataset !== journal.dataset || manifest.id !== id ||
-      created !== Number(id.slice(0, 13)) || created > now.valueOf() + 300000 || (!allowExpired && created < now.valueOf() - BACKUP_RETENTION_DAYS * DAY) ||
+      created !== Number(id.slice(0, 13)) || !backupAgeValid(created, now, allowExpired) ||
+      (manifest.replayBoundary !== undefined && manifest.replayBoundary !== BACKUP_REPLAY_BOUNDARY) ||
       (manifest.verifiedAt !== undefined && (!Number.isFinite(Date.parse(manifest.verifiedAt)) || Date.parse(manifest.verifiedAt) < created || Date.parse(manifest.verifiedAt) > now.valueOf() + 300000)) ||
       !Number.isSafeInteger(manifest.bytes) || manifest.bytes <= 0 || manifest.bytes > MAX_DATABASE_BYTES || !/^[a-f0-9]{64}$/.test(manifest.sha256 || '') ||
       !Array.isArray(manifest.parts) || manifest.parts.length !== Math.ceil(manifest.bytes / PART_SIZE) ||
@@ -115,6 +149,7 @@ export async function restoreDatabaseBackup({ journal, id, outputDirectory, priv
   if (!isAbsolute(outputDirectory)) throw recoveryFailure();
   await journal.verify();
   const manifest = await readBackupManifest(journal, id, now());
+  await requireRestorable(journal, manifest, now);
   await mkdir(outputDirectory, { mode: 0o700 }); // No recursive flag or overwrite.
   const path = join(outputDirectory, 'commerce.sqlite');
   let db, handle, successful = false;
@@ -153,11 +188,16 @@ export async function restoreDatabaseBackup({ journal, id, outputDirectory, priv
     await db.$disconnect(); db = null;
     // Remove deleted rows from freelist pages and sidecars before promotion.
     inspectDatabase(path, true);
+    await requireRestorable(journal, manifest, now);
     const report = { format: 'fullbleed-recovery-ready-v1', dataset: journal.dataset, backupId: id,
       restoredAt: now().toISOString(), replay, sourceSha256: manifest.sha256, restoredSha256: await fileHash(path),
       integrityChecked: true, sessionsCleared: true, automationPaused: true, oldActiveLinksRevoked: true,
       outstandingPrivacyRequests: privacy.pending, authenticatedPrivacySnapshots: verifiedExports.checked };
     await privateJson(join(outputDirectory, 'recovery-ready.json'), report);
+    // The restore must still be eligible when all verification and file writes
+    // finish. A concurrent first retention pass can retire a legacy snapshot.
+    await requireRestorable(journal, manifest, now);
+    if (!backupAgeValid(Date.parse(manifest.createdAt), now())) throw recoveryFailure();
     successful = true;
     return report;
   } finally {
@@ -183,10 +223,11 @@ export async function pruneRecoveryStorage({ journal, db, now = new Date() }) {
   }
   let removedObjects = 0;
   for (const path of paths) if (expired.has(path.split('/')[1])) { await journal.store.remove(path); removedObjects++; }
-  let removedEvents = 0;
+  let removedEvents = 0, retentionReady = false;
   for (const entry of await journal.entries()) {
     if (Date.parse(entry.recordedAt) >= now.valueOf() - RECOVERY_RETENTION_DAYS * DAY) continue;
     if (!await db.recoveryReceipt.findUnique({ where: { id: entry.id } })) throw recoveryFailure();
+    if (!retentionReady) { await activateRetention(journal, now); retentionReady = true; }
     await journal.store.remove(entry.path);
     await db.recoveryReceipt.delete({ where: { id: entry.id } });
     removedEvents++;

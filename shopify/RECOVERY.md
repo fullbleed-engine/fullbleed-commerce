@@ -58,8 +58,9 @@ node scripts/recovery.mjs backup
 node scripts/recovery.mjs list
 ```
 
-`DATABASE_URL` must identify an absolute SQLite path. The backup command first
-reconciles any durable erasure whose original database commit failed. SQLite's
+`DATABASE_URL` must identify an absolute SQLite path. A backup's age starts before
+reconciling any durable erasure whose original database commit failed. A delayed
+reconciliation cannot extend its restore window. SQLite's
 online backup API takes a consistent snapshot, including committed WAL content;
 the application can continue using its database. A private temporary directory
 holds the snapshot and is removed when the operation finishes.
@@ -72,12 +73,24 @@ to 512 MiB, and recovery reads to 100,000 journal objects / 64 MiB of encrypted
 journal content. Exceeding a bound fails for operator review rather than silently
 omitting records. Larger installations need measured capacity work.
 
-Backups expire for restoration after seven days. Cleanup removes backup objects,
+Backups expire for restoration after seven days; this is checked again before
+the restore can return its readiness report. Cleanup removes backup objects,
 including interrupted uploads, after eight days. Erasure/completion instructions
-remain for 35 days and are removed only after replay confirms their database
-commit. Completed instruction receipts then expire too; the dataset binding stays.
+also expire after eight days, after replay confirms their database commit.
+Completed instruction receipts then expire too; the dataset binding stays.
 Cleanup runs at startup and hourly while the server is online. Downtime delays
 physical removal, but does not extend the seven-day restore limit.
+
+Before the first instruction expires, cleanup writes and authenticates a permanent
+encrypted retention marker in the independent bucket. It contains the dataset,
+policy and activation time, with no customer or order references. Older backup
+manifests lack proof that their age began before replay. They remain restorable
+while the marker is absent, but cannot be restored after instructions have been
+retired. An already-running legacy restore rechecks this guard before succeeding.
+Maintenance treats those manifests as unverified and replaces them with a fresh
+snapshot. Do not delete the marker or use an older application version to bypass
+this guard. Keep the current recovery implementation when restoring older schemas.
+
 The same maintenance removes encrypted operator receipts after 30 days, including
 abandoned sessions. It authenticates expired records before deletion and reads
 only those records, rather than downloading the full current audit history.
@@ -107,8 +120,9 @@ HTTP monitor also fails for disabled scheduling, no verified backup, missing
 parts, unreadable storage/manifest or a snapshot over 26 hours old. Its normal
 probe authenticates the manifest and checks part presence; it does not download
 and reauthenticate every part on each request. Full authentication runs during
-creation and restore. Older manifests without verification timestamps remain
-restorable but trigger a new verified backup.
+creation and restore. Manifests without verification timestamps or the pre-replay
+age boundary trigger a new verified backup; legacy restore eligibility also
+depends on the independent retention marker described above.
 
 Backups only run while compute is online. The first startup after downtime catches
 up automatically. Staging remains stopped between attended tests to preserve the

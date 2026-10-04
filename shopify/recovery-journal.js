@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { createCipheriv, createDecipheriv, createHmac, randomBytes, randomUUID } from 'node:crypto';
 
-export const RECOVERY_RETENTION_DAYS = 35;
 export const BACKUP_RETENTION_DAYS = 7;
+// Keep erasure instructions through the restore window and its cleanup grace.
+export const RECOVERY_RETENTION_DAYS = BACKUP_RETENTION_DAYS + 1;
+export const BACKUP_REPLAY_BOUNDARY = 'before-replay';
 export const recoveryFailure = () => new Error('Recovery storage is unavailable or invalid. Keep recovery offline and investigate.');
 const shopPattern = /^[a-z0-9][a-z0-9-]*\.myshopify\.com$/;
 const uuid = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
