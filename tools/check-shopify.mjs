@@ -38,6 +38,7 @@ const jobs = [
   ['access-audit', '--test', '--test-reporter=tap', 'test/access-audit.test.mjs'],
   ['monitor', '--test', '--test-reporter=tap', 'test/monitor.test.mjs'],
   ['recovery', '--test', '--test-reporter=tap', 'test/recovery.test.mjs'],
+  ['operator-audit', '--test', '--test-reporter=tap', 'test/operator-audit.test.mjs'],
 ];
 const checks = clientCurrent ? [{ name: 'generated-client-matches-schema', exitCode: 0, passed: true }] : [];
 const initialChecks = checks.length;

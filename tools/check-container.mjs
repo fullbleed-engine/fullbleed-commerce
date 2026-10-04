@@ -11,6 +11,7 @@ const docker = process.env.DOCKER_BIN || 'docker';
 const name = `fullbleed-check-${process.pid}-${Date.now()}`;
 const volume = `${name}-data`;
 const recoveryVolume = `${name}-recovery`;
+const operatorEnv = ['-e', 'FULLBLEED_OPERATOR_ID=synthetic-operator', '-e', 'FULLBLEED_OPERATOR_REFERENCE=OPS-20261004-TEST', '-e', 'FULLBLEED_OPERATOR_PURPOSE=maintenance'];
 const recoveryEnv = ['-e', 'FULLBLEED_BACKUPS_ENABLED=true', '-e', `FULLBLEED_MONITOR_TOKEN=${'cd'.repeat(32)}`, '-e', 'FULLBLEED_RECOVERY_DIRECTORY=/recovery', '-e', `FULLBLEED_RECOVERY_KEY=${'ef'.repeat(32)}`, '-e', `FULLBLEED_RECOVERY_DATASET=${randomUUID()}`];
 const checks = [];
 let containerCreated = false;
@@ -23,6 +24,7 @@ function run(args, options = {}) {
 }
 function passed(name) { checks.push({ name, passed: true }); console.log(`container: ${name}`); }
 function script(source) { return run(['exec', '--user', 'node', name, 'node', '--input-type=module', '-e', source]); }
+function operator(args) { return run(['exec', '--user', 'node', ...operatorEnv, name, 'node', ...args]); }
 async function start() {
   run(['run', '-d', '--name', name, '--user', '0', '--cpus', '0.5', '--memory', '512m',
     '--mount', `type=volume,src=${volume},dst=/data,volume-nocopy`, '-p', '127.0.0.1::3000',
@@ -64,15 +66,15 @@ try {
   run(['volume', 'create', volume]); volumeCreated = true;
   run(['volume', 'create', recoveryVolume]); recoveryVolumeCreated = true;
   run(['run', '--rm', '--user', '0', '--entrypoint', 'sh', '--mount',
-    `type=volume,src=${recoveryVolume},dst=/recovery,volume-nocopy`, ...recoveryEnv, image,
+    `type=volume,src=${recoveryVolume},dst=/recovery,volume-nocopy`, ...recoveryEnv, ...operatorEnv, image,
     '-c', 'chown 1000:1000 /recovery && chmod 700 /recovery && exec gosu node node scripts/recovery.mjs init']);
   assert.equal(run(['run', '--rm', '--user', '0', '--entrypoint', 'stat', '--mount',
     `type=volume,src=${volume},dst=/data,volume-nocopy`, image, '-c', '%u', '/data']), '0');
   let origin = await start();
   passed('fresh root-owned volume migrates and passes HTTP readiness under resource limits');
-  const automatic = JSON.parse(run(['exec', '--user', 'node', name, 'node', 'scripts/recovery.mjs', 'list'])).result;
+  const automatic = JSON.parse(operator(['scripts/recovery.mjs', 'list'])).result;
   assert.equal(automatic.length, 1);
-  assert.equal(JSON.parse(run(['exec', '--user', 'node', name, 'node', 'scripts/recovery.mjs', 'status'])).result.status, 'fresh');
+  assert.equal(JSON.parse(operator(['scripts/recovery.mjs', 'status'])).result.status, 'fresh');
   passed('startup worker creates a verified encrypted backup without an operator backup command');
   script(String.raw`
     import assert from 'node:assert/strict';
@@ -126,7 +128,7 @@ try {
   run(['stop', '--time', '10', name]);
   run(['rm', name]); containerCreated = false;
   origin = await start();
-  assert.deepEqual(JSON.parse(run(['exec', '--user', 'node', name, 'node', 'scripts/recovery.mjs', 'list'])).result, automatic);
+  assert.deepEqual(JSON.parse(operator(['scripts/recovery.mjs', 'list'])).result, automatic);
   passed('replacement process observes the stored backup clock without creating a duplicate');
   script(`
     import assert from 'node:assert/strict';
@@ -150,14 +152,14 @@ try {
     await createPrivacyService({ db, key: process.env.FULLBLEED_PRIVACY_KEY }).accept(input);
     await db.$disconnect();
   `);
-  const saved = JSON.parse(run(['exec', '--user', 'node', name, 'node', 'scripts/recovery.mjs', 'backup'])).result;
+  const saved = JSON.parse(operator(['scripts/recovery.mjs', 'backup'])).result;
   const eraseBody = JSON.stringify({ shop_domain: 'synthetic-container.myshopify.com', shop_id: 1, customer: { email: 'synthetic-container@example.invalid' }, orders_to_redact: [] });
   response = await fetch(`${origin}/webhooks/privacy`, { method: 'POST', headers: {
     'Content-Type': 'application/json', 'X-Shopify-Topic': 'customers/redact', 'X-Shopify-Shop-Domain': 'synthetic-container.myshopify.com',
     'X-Shopify-API-Version': '2026-10', 'X-Shopify-Webhook-Id': randomUUID(), 'X-Shopify-Hmac-Sha256': createHmac('sha256', 'synthetic-container-test-secret').update(eraseBody).digest('base64'),
   }, body: eraseBody });
   assert.equal(response.status, 204);
-  const restored = JSON.parse(run(['exec', '--user', 'node', name, 'node', 'scripts/recovery.mjs', 'restore', '--backup', saved.id, '--output', '/data/restored-check'])).result;
+  const restored = JSON.parse(operator(['scripts/recovery.mjs', 'restore', '--backup', saved.id, '--output', '/data/restored-check'])).result;
   assert.equal(restored.replay.applied, 1);
   assert.equal(restored.sourceSha256, saved.sha256);
   script(`
@@ -177,9 +179,25 @@ try {
     await source.$disconnect();
   `);
   passed('encrypted backup restores offline and replays later signed customer erasure');
-  const monitor = JSON.parse(run(['exec', '--user', 'node', name, 'node', 'scripts/privacy-status.mjs']));
+  const deniedOperator = spawnSync(docker, ['exec', '--user', 'node', name, 'node', 'scripts/privacy-status.mjs'], { encoding: 'utf8', windowsHide: true, timeout: 15000 });
+  assert.equal(deniedOperator.status, 2); assert.equal(deniedOperator.stdout, '');
+  passed('human diagnostics refuse missing operator context while scheduled service work remains enabled');
+  const monitor = JSON.parse(operator(['scripts/privacy-status.mjs']));
   assert.equal(monitor.pending, 0);
   passed('privacy operator command runs in the production image');
+  const auditRead = spawnSync(docker, ['exec', '--user', 'node', ...operatorEnv, name, 'node', 'scripts/operator-audit.mjs', 'review'], { encoding: 'utf8', windowsHide: true, timeout: 30000 });
+  assert.ok([0, 1].includes(auditRead.status), auditRead.stderr);
+  const operatorRecords = JSON.parse(auditRead.stdout);
+  for (const operation of ['recovery.init', 'recovery.backup', 'recovery.restore', 'privacy.status']) {
+    assert.ok(operatorRecords.result.entries.some(entry => entry.finished?.operation === operation && entry.finished.operator === 'synthetic-operator' && entry.finished.identitySource === 'operator-environment'));
+  }
+  for (const operation of ['recovery.reconcile', 'recovery.maintain']) {
+    assert.ok(operatorRecords.result.entries.some(entry => entry.started.operation === operation && entry.started.operator === 'fullbleed-maintenance' && entry.started.identitySource === 'service-process'));
+  }
+  assert.doesNotMatch(auditRead.stdout, /synthetic-container\.myshopify\.com|synthetic-container@example|accessToken|\/data\//);
+  mkdirSync('output/container', { recursive: true });
+  writeFileSync('output/container/operator-audit.json', JSON.stringify(operatorRecords, null, 2) + '\n');
+  passed('independent encrypted audit distinguishes human operations from startup and scheduled service work');
   // The workload harness is copied only into this disposable test container.
   // It exercises the source renderer/service against an isolated database,
   // while the actual production HTTP server shares the same resource ceiling.

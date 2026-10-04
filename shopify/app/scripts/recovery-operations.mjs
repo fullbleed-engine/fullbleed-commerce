@@ -14,6 +14,7 @@ import { pruneAutomationJobs } from '../../flow.js';
 import { pruneUsage } from '../../usage.js';
 import { pruneAccessEvents } from '../../access-audit.js';
 import { BACKUP_RETENTION_DAYS, RECOVERY_RETENTION_DAYS, recoveryFailure } from '../../recovery-journal.js';
+import { createOperatorAudit } from '../../operator-audit.js';
 
 const DAY = 86400000, PART_SIZE = 1024 * 1024, MAX_DATABASE_BYTES = 512 * PART_SIZE;
 const backupIdPattern = /^\d{13}-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
@@ -191,7 +192,8 @@ export async function pruneRecoveryStorage({ journal, db, now = new Date() }) {
     removedEvents++;
   }
   await db.recoveryReceipt.deleteMany({ where: { id: { not: { startsWith: 'dataset:' } }, recordedAt: { lt: new Date(now.valueOf() - RECOVERY_RETENTION_DAYS * DAY) } } });
-  return { removedBackupObjects: removedObjects, removedEvents };
+  const operator = await createOperatorAudit({ journal, now: () => now }).prune();
+  return { removedBackupObjects: removedObjects, removedEvents, removedOperatorRecords: operator.removed };
 }
 
 // A hard-killed worker cannot execute finally. Remove only old private snapshot

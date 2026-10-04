@@ -12,7 +12,8 @@ export async function recoveryFixtureEnvironment(root, label) {
   const directory = mkdtempSync(resolve(target, `${label}-recovery-`));
   const key = 'ef'.repeat(32), dataset = randomUUID();
   await createRecoveryJournal({ store: await fileRecoveryStore(directory), key, dataset }).initialize();
-  return { FULLBLEED_BACKUPS_ENABLED: 'false', FULLBLEED_RECOVERY_DIRECTORY: directory, FULLBLEED_RECOVERY_KEY: key,
+  return { FULLBLEED_OPERATOR_ID: 'synthetic-operator', FULLBLEED_OPERATOR_REFERENCE: 'OPS-20261004-TEST', FULLBLEED_OPERATOR_PURPOSE: 'maintenance',
+    FULLBLEED_BACKUPS_ENABLED: 'false', FULLBLEED_RECOVERY_DIRECTORY: directory, FULLBLEED_RECOVERY_KEY: key,
     FULLBLEED_RECOVERY_DATASET: dataset, FULLBLEED_RECOVERY_ENDPOINT: '',
     FULLBLEED_RECOVERY_ACCESS_KEY_ID: '', FULLBLEED_RECOVERY_SECRET_ACCESS_KEY: '', RAILWAY_ENVIRONMENT_ID: '' };
 }

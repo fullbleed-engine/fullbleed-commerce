@@ -27,7 +27,7 @@ if (!global.fullbleedAutomationCleanup) {
     try {
       await Promise.all([pruneAutomationJobs(db), prunePrivacyRequests(db), pruneUsage(db), pruneAccessEvents(db)]);
       if (backupsEnabled()) {
-        await execute(process.execPath, ['scripts/recovery.mjs', 'maintain'], {
+        await execute(process.execPath, ['scripts/recovery.mjs', 'maintain', '--service'], {
           timeout: 10 * 60000, killSignal: 'SIGKILL', maxBuffer: 64 * 1024, windowsHide: true,
         });
       } else {

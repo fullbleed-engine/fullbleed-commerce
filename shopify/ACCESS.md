@@ -101,9 +101,9 @@ Evidence is summarized in [the verification record](../docs/access-audit-verific
 
 ## Launch limits
 
-These checks use synthetic stores. The updated audit schema still requires an
-attended hosted rollout and recovery check before operating for merchants.
-The public notice must describe staff IDs and this retention before deployment.
+These checks use synthetic stores. The later [hosted access check](../docs/hosted-access.md)
+verified the schema, staff history, privacy deletion, uninstall and recovery on
+the installed development app. The public notice describes staff IDs and retention.
 
 This database history is not immutable or independently witnessed. It does not
 record direct database reads, provider-console access, downloaded files or
@@ -111,6 +111,12 @@ operator access to backups. Infrastructure/operator controls, account access
 reviews, key recovery, incident response and alert delivery remain separate
 launch requirements. Do not answer Shopify's customer-data questionnaire as
 complete based only on this feature or these tests.
+
+The separate [operator procedure](SECURITY-OPERATIONS.md) defines maintenance
+receipts, provider-console sessions, account controls and incident response.
+Those encrypted receipts live in independent recovery storage and contain no
+store/customer/order references. They complement application history rather
+than changing its scope or appearing in a merchant's history screen.
 
 References checked October 4, 2026:
 [protected customer data](https://shopify.dev/docs/apps/launch/protected-customer-data),

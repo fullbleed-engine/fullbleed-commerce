@@ -75,14 +75,21 @@ Run **one instance** with this SQLite configuration and process-local concurrenc
 limit. Multiple instances need shared durable storage and a shared render limit.
 Set `NODE_ENV=production`; the development exception is disabled in that mode.
 Configure HTTPS, request-size/time limits, session backup/recovery, and Partner
-API rate handling on the selected host. Production hosting has not been chosen
-or purchased. The CI container job tests startup with synthetic credentials;
-passing it does not verify a hosting provider or live billing.
+API rate handling on the selected host. Attended staging uses Railway; production
+merchant admission remains closed. The CI container job tests startup with
+synthetic credentials. Hosted results and their scope are retained in the
+[deployment records](../../docs/hosted-access.md).
 
 `shopify app deploy` publishes Shopify configuration/extensions; it does not host
 the Node server. Set the production application URL and authentication redirect
-URLs before publishing a production version. Keep the current tunnel available
-for the maintainer's preview until then.
+URLs before publishing a production version. The attended hosted preview uses
+`commerce.fullbleed.dev`; use the CLI tunnel only for local development.
+
+Privileged maintenance follows the [security operations procedure](../SECURITY-OPERATIONS.md).
+Human recovery and privacy-status commands require an operator, purpose and work
+reference. They persist encrypted receipts before database access. Startup and
+hourly recovery have a separate service identity; neither requires a human task
+reference in the deployed service environment.
 
 ## Flow automation
 
