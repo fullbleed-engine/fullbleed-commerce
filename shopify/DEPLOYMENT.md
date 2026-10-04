@@ -1,5 +1,13 @@
 # Shopify staging deployment
 
+The synthetic staging project is separate from the newly provisioned, offline
+production project. Both currently use Railway's default environment label
+`production`; use their exact project/environment IDs. The
+[environment isolation record](../docs/environment-isolation.md) covers separate
+volumes, buckets, keys, monitoring secrets and real credential-denial checks.
+Production has no deploy source, public domain or Shopify credentials yet.
+The configuration below continues to describe the attended staging service.
+
 Build the repository-root Docker context with `shopify/app/Dockerfile`.
 The image pins Node.js 26.10.0. Node 24.21.0 has an intermittent native rendering
 failure; the [runtime investigation](../docs/native-diagnostics.md) retains that

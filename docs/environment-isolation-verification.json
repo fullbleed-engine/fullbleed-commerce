@@ -1,0 +1,314 @@
+{
+  "checkedAt": "2026-10-04T18:32:14.900699+00:00",
+  "scope": "Provisioned offline production resources and real storage isolation; not an admitted merchant service, production runtime rehearsal or marketplace approval.",
+  "applicationBaselineCommit": "d218358f08a9efd978b2f3caa840f3e9ed16c658",
+  "applicationSourceChanged": false,
+  "environments": {
+    "production": {
+      "project": "6337f5dc-6602-48a3-acba-0286271471ea",
+      "environment": "432435d8-c0d2-4ad5-80ae-0c1444e7e1d1",
+      "service": "b9f4dc6e-5435-4718-80d4-2c766435b11d",
+      "activeDeployments": 0,
+      "volumeId": "39bbe134-25b8-487d-8aba-c61ccb62ac06",
+      "volumeInstanceId": "5902dafb-ca07-4673-9912-bab8b296fc46",
+      "volumeState": "READY",
+      "volumeLimitMB": 1024,
+      "volumeUsedMB": 1.130496,
+      "configuration": {
+        "serviceInstance": {
+          "dockerfilePath": "shopify/app/Dockerfile",
+          "domains": {
+            "customDomains": [],
+            "serviceDomains": []
+          },
+          "numReplicas": null,
+          "restartPolicyMaxRetries": 3,
+          "restartPolicyType": "ON_FAILURE",
+          "sleepApplication": false
+        },
+        "serviceInstanceAutoDeployStatus": {
+          "canEnable": false,
+          "enabled": false,
+          "reason": "NO_REPO"
+        }
+      },
+      "explicitRegionConfiguration": {
+        "us-west2": {
+          "numReplicas": 1
+        }
+      },
+      "configuredLimits": {
+        "containers": {
+          "cpu": 0.5,
+          "memoryBytes": 536870912
+        }
+      },
+      "runtimeLimitsVerifiedInProduction": false,
+      "usage": {
+        "billingPeriod": {
+          "end": "2026-10-24T18:42:11+00:00",
+          "start": "2026-09-24T18:42:11+00:00"
+        },
+        "currentUsageDollars": 5.8879999999999995e-08,
+        "period": "current",
+        "project": {
+          "deletedAt": null,
+          "id": "6337f5dc-6602-48a3-acba-0286271471ea",
+          "name": "fullbleed-commerce-production"
+        },
+        "services": [
+          {
+            "backupDollars": 0.0,
+            "cpuDollars": -0.0,
+            "egressDollars": -0.0,
+            "id": "b9f4dc6e-5435-4718-80d4-2c766435b11d",
+            "memoryDollars": -0.0,
+            "name": "shopify-app",
+            "totalDollars": 5.8879999999999995e-08,
+            "volumeDollars": 5.8879999999999995e-08
+          }
+        ],
+        "workspace": {
+          "id": "2312e366-a423-4805-a4b6-60c5d5de33c3",
+          "name": "krflol's Projects"
+        }
+      }
+    },
+    "staging": {
+      "project": "ee2c5784-260b-44d7-aff3-ef46714687bc",
+      "environment": "b3892972-504b-493b-8fc4-a6fb26b14d90",
+      "service": "bcd8801b-e89c-4c4c-baf3-b8e1d0fe8b59",
+      "activeDeployments": 0,
+      "volumeId": "523389a0-59a4-47f0-b73c-a99823fca15f",
+      "volumeInstanceId": "96d018de-89b2-4226-9a5e-f3807a36fc70",
+      "volumeState": "READY",
+      "volumeLimitMB": 5000,
+      "volumeUsedMB": 103.686144,
+      "configuration": {
+        "serviceInstance": {
+          "dockerfilePath": "shopify/app/Dockerfile",
+          "domains": {
+            "customDomains": [
+              {
+                "domain": "commerce.fullbleed.dev"
+              }
+            ],
+            "serviceDomains": [
+              {
+                "domain": "shopify-app-production-346e.up.railway.app"
+              }
+            ]
+          },
+          "numReplicas": 1,
+          "restartPolicyMaxRetries": 3,
+          "restartPolicyType": "ON_FAILURE",
+          "sleepApplication": false
+        },
+        "serviceInstanceAutoDeployStatus": {
+          "canEnable": false,
+          "enabled": false,
+          "reason": "NO_INSTALLATION"
+        }
+      },
+      "explicitRegionConfiguration": {
+        "us-west2": {
+          "numReplicas": 1
+        }
+      },
+      "configuredLimits": {
+        "containers": {
+          "cpu": 0.5,
+          "memoryBytes": 536870912
+        }
+      },
+      "runtimeLimitsVerifiedInProduction": false,
+      "usage": {
+        "billingPeriod": {
+          "end": "2026-10-24T18:42:11+00:00",
+          "start": "2026-09-24T18:42:11+00:00"
+        },
+        "currentUsageDollars": 0.009724569681062792,
+        "period": "current",
+        "project": {
+          "deletedAt": null,
+          "id": "ee2c5784-260b-44d7-aff3-ef46714687bc",
+          "name": "fullbleed-commerce-staging"
+        },
+        "services": [
+          {
+            "backupDollars": 0.0,
+            "cpuDollars": 0.000662014135802469,
+            "egressDollars": 0.0018631059500000002,
+            "id": "bcd8801b-e89c-4c4c-baf3-b8e1d0fe8b59",
+            "memoryDollars": 0.006362861779753087,
+            "name": "shopify-app",
+            "totalDollars": 0.009724569681062792,
+            "volumeDollars": 0.0008365878155072355
+          }
+        ],
+        "workspace": {
+          "id": "2312e366-a423-4805-a4b6-60c5d5de33c3",
+          "name": "krflol's Projects"
+        }
+      }
+    }
+  },
+  "finalInfrastructurePlans": {
+    "productionChanges": 0,
+    "stagingChanges": 0,
+    "diagnostics": 0
+  },
+  "distinctVolumeIds": true,
+  "secretIsolation": {
+    "checkedAt": "2026-10-04T18:16:45.460970+00:00",
+    "project": "6337f5dc-6602-48a3-acba-0286271471ea",
+    "environment": "432435d8-c0d2-4ad5-80ae-0c1444e7e1d1",
+    "service": "b9f4dc6e-5435-4718-80d4-2c766435b11d",
+    "variablesConfigured": [
+      "FULLBLEED_MONITOR_TOKEN",
+      "FULLBLEED_PRIVACY_KEY",
+      "FULLBLEED_RECOVERY_ACCESS_KEY_ID",
+      "FULLBLEED_RECOVERY_BUCKET",
+      "FULLBLEED_RECOVERY_DATASET",
+      "FULLBLEED_RECOVERY_ENDPOINT",
+      "FULLBLEED_RECOVERY_KEY",
+      "FULLBLEED_RECOVERY_REGION",
+      "FULLBLEED_RECOVERY_SECRET_ACCESS_KEY"
+    ],
+    "distinctFromStaging": [
+      "FULLBLEED_PRIVACY_KEY",
+      "FULLBLEED_MONITOR_TOKEN",
+      "FULLBLEED_RECOVERY_KEY",
+      "FULLBLEED_RECOVERY_DATASET",
+      "FULLBLEED_RECOVERY_BUCKET",
+      "FULLBLEED_RECOVERY_ACCESS_KEY_ID",
+      "FULLBLEED_RECOVERY_SECRET_ACCESS_KEY"
+    ],
+    "randomDataKeysDistinctFromEachOther": true,
+    "liveReadbackMatched": true,
+    "bucketUrlStyle": "virtual-host",
+    "activeDeployments": 0,
+    "shopifyCredentialsCopied": false,
+    "publicAppUrlConfigured": false,
+    "localKeyCopy": "Windows CurrentUser DPAPI; host-bound, not independent key recovery"
+  },
+  "bucketIsolation": {
+    "checkedAt": "2026-10-04T18:20:35.849Z",
+    "node": "v26.10.0",
+    "checks": [
+      {
+        "name": "Each environment authenticates its own real private bucket with the application recovery adapter",
+        "passed": true
+      },
+      {
+        "name": "Staging credentials receive HTTP 403 when listing the production bucket",
+        "passed": true
+      },
+      {
+        "name": "Production credentials receive HTTP 403 when listing the staging bucket",
+        "passed": true
+      },
+      {
+        "name": "The production marker rejects the staging recovery key and staging dataset binding",
+        "passed": true
+      },
+      {
+        "name": "No staging backup, erasure history or merchant database was copied to production recovery storage",
+        "passed": true
+      },
+      {
+        "name": "The staging marker and backup/erasure object listings remain unchanged",
+        "passed": true
+      },
+      {
+        "name": "Production initialization and isolation checks have authenticated encrypted completion receipts",
+        "passed": true
+      }
+    ],
+    "audit": {
+      "reference": "OPS-20261004-ENVIRONMENTS",
+      "productionInitialization": "1791138030461-f55b611d-6dcd-4c0b-bf3e-90fdfd17e0e6",
+      "productionIsolation": "1791138032116-404fc96c-8966-44d0-8835-c1561151fff8",
+      "stagingIsolation": "1791138031752-463c7070-726d-429b-b878-b78a4feae114"
+    },
+    "stagingUnchanged": {
+      "marker": "fefefa999cfc992ee3e53663e92cc62b81fc044098dc2e140583bde17e4a7790",
+      "backups": "63cba19d87ed9a97a35aacee4ec05ff0e38069d56ddc8234269eca6330ae4ada",
+      "erasures": "29f67707a865a3d0a26186e43111d08d54e1609a11da18d2ea2f4536a0c02b62"
+    },
+    "productionMarkerSha256": "18815fad92b3890e5579ed41037ac8ec1d9c3a47a41495ccc877348cf936c4d8",
+    "openedMerchantDatabase": false,
+    "runtimeAdapterUsed": true,
+    "newObjects": "Production dataset marker and encrypted operator receipts; staging operator receipts only"
+  },
+  "githubProductionEnvironment": {
+    "checkedAt": "2026-10-04T18:23:37.516539+00:00",
+    "environment": "commerce-production",
+    "environmentId": 23432766941,
+    "branchPolicy": {
+      "protected_branches": false,
+      "custom_branch_policies": true
+    },
+    "allowedBranches": [
+      "main"
+    ],
+    "allowedTags": [],
+    "secretMetadata": [
+      {
+        "name": "FULLBLEED_MONITOR_TOKEN",
+        "updatedAt": "2026-10-04T18:23:43Z"
+      }
+    ],
+    "secretWriteAcknowledged": true,
+    "railwayOrShopifyAccountCredentialStored": false,
+    "endpointConfigured": false,
+    "scheduledMonitoringEnabled": false,
+    "runtimeMonitoringVerified": false
+  },
+  "localValidation": {
+    "existingSharedTestsPassed": 51,
+    "focusedInfrastructureTestsPassed": 2,
+    "generatedPluginAssetsUnchanged": {
+      "admin.js": {
+        "bytes": 521047,
+        "sha256": "30a1c5fa7fbca6638c531ee7db90c6d5012f3ff2b88e19742a2bd91e020e3fd3"
+      },
+      "editor.js": {
+        "bytes": 2337747,
+        "sha256": "096c5dd8781d88d1b8a261d192339a88a2603ba31231b38845658ebe08d3d732"
+      },
+      "editor.css": {
+        "bytes": 64864,
+        "sha256": "5f74864064d4e4f11e9dab9f26ddf896fd93d3f72be33c7ce732c56941561415"
+      },
+      "worker.js": {
+        "bytes": 51742,
+        "sha256": "73a3f65c8262bb13a2ad1e2cf35f7e77a1cb25fe9f84450a04785cf3f472ae33"
+      },
+      "engine.wasm": {
+        "bytes": 5053312,
+        "sha256": "20bc142538c5acf826b162531ed57541d410b033e3666a827934b89ef2fc84cb"
+      }
+    },
+    "rootDependencyAuditFindings": 0,
+    "node": "26.10.0",
+    "railwayCli": "5.63.1",
+    "railwaySdk": "3.12.0"
+  },
+  "evidence": {
+    "archive": "commerce-environment-isolation-evidence.zip",
+    "sha256": "7e0d5376649f2dfb8501837fa7eedf6509cf40cce55a29d2dc61ff263e634303",
+    "bytes": 71890,
+    "files": 27,
+    "allManifestHashesAndZipCrcVerified": true,
+    "secretValuesExcluded": true
+  },
+  "remainingProductionWork": [
+    "Provider/transfer arrangements and matching production merchant agreement",
+    "Independent key recovery; the local DPAPI copy is tied to this Windows account",
+    "Separate Shopify production/development app credentials and intentional public-origin routing",
+    "First production runtime, database binding, recovery and capacity verification",
+    "Continuous retention, monitoring, missed-check detection, operator duty and bounded ongoing cost",
+    "Shopify review and merchant admission"
+  ]
+}
