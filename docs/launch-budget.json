@@ -24,13 +24,30 @@
     "projectId": "ee2c5784-260b-44d7-aff3-ef46714687bc",
     "existingWorkspacePlan": "Hobby",
     "newSubscriptionPurchased": false,
-    "meteredUsageDollars": 0.009703821139081577,
-    "usageCheckedAt": "2026-10-04T17:32:10.775201+00:00",
+    "meteredUsageDollars": 0.009724569681062792,
+    "usageCheckedAt": "2026-10-04T18:27:42.228282+00:00",
     "computeStopped": true,
     "persistentVolumeRetained": true,
-    "notes": "Metered usage before plan credits, not an invoice or confirmed card charge. Usage can lag; bucket charges are not itemized. Compute is stopped after the attended merchant-agreement installation, PDF, uninstall and recovery rehearsal. All eleven merchant-data tables are empty, the temporary restore copy is removed, and the test Flow remains disabled. The private service volume and encrypted recovery bucket remain retained and metered. recoveryBucketBytes is the older measurement at recoveryBucketBytesCheckedAt. Reconcile actual launch charges against the $50 total cap.",
+    "notes": "Metered usage before plan credits, not an invoice or confirmed card charge. Usage can lag; bucket charges are not itemized. Staging remains stopped after the agreement and environment-isolation checks. Its private volume and encrypted recovery bucket remain retained and metered. The later checks added encrypted operator receipts but did not open the merchant database or change its backup/erasure listings. recoveryBucketBytes is the older measurement at recoveryBucketBytesCheckedAt. Reconcile both projects against the $50 total launch cap.",
     "privateRecoveryBucketRetained": true,
     "recoveryBucketBytes": 5165016,
     "recoveryBucketBytesCheckedAt": "2026-10-04T05:41:42.068876+00:00"
+  },
+  "production": {
+    "provider": "Railway",
+    "projectId": "6337f5dc-6602-48a3-acba-0286271471ea",
+    "environmentId": "432435d8-c0d2-4ad5-80ae-0c1444e7e1d1",
+    "existingWorkspacePlan": "Hobby",
+    "newSubscriptionPurchased": false,
+    "meteredUsageDollars": 5.8879999999999995e-08,
+    "usageCheckedAt": "2026-10-04T18:27:42.228282+00:00",
+    "invoiceOrConfirmedCharge": false,
+    "activeDeployments": 0,
+    "applicationComputeStarted": false,
+    "publicDomains": 0,
+    "persistentVolumeRetained": true,
+    "volumeLimitMB": 1024,
+    "privateRecoveryBucketRetained": true,
+    "notes": "Separate production preparation only. No app source, public domain, Shopify credentials or merchant database has been configured. Newly provisioned storage and private encrypted control records remain metered while the app is offline. No new subscription or confirmed launch charge; existing total launch cap still applies. See environment-isolation-verification.json."
   }
 }
