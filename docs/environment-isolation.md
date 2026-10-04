@@ -39,7 +39,8 @@ name and bucket credentials differ from staging. Live secret readback matched
 the generated values without putting them in source files or diagnostic output.
 The keys also differ from each other. An encrypted copy uses Windows CurrentUser
 DPAPI; that copy is tied to the operator's Windows account and is **not** evidence
-of independent key recovery.
+of independent key recovery. The separate [key recovery workflow](independent-key-recovery.md)
+documents the independent store, access boundary and required live rehearsal.
 
 The unchanged application recovery adapter initialized and authenticated the
 production bucket. Real S3 requests using staging credentials against production

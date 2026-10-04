@@ -34,6 +34,13 @@ each access change or incident. Keep customer fields and secrets out of console
 arguments and diagnostic errors. Follow the existing [recovery procedure](RECOVERY.md)
 for key changes; replacing a key merely to clear an error destroys recoverability.
 
+The separate [production key recovery procedure](../docs/independent-key-recovery.md)
+uses individually named GitHub environment secrets and a project-scoped Railway
+token. Treat repository administrators and writers as part of that privileged
+access boundary. Only the manual, trusted-main workflow may receive those secrets;
+ordinary CI and pull requests must not. Customer database recovery stays on the
+controlled hosting environment, never on a GitHub runner.
+
 ## Record privileged operations
 
 Manual recovery and privacy-status commands require this context in the command

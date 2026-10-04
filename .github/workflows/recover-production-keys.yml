@@ -1,0 +1,52 @@
+name: Recover production keys
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Verify escrow or restore only missing host values (service must be offline)
+        type: choice
+        options:
+          - verify
+          - restore-missing
+        default: verify
+        required: true
+      reference:
+        description: Private OPS-YYYYMMDD-NNN or INC-YYYYMMDD-NNN reference; no customer data
+        type: string
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: fullbleed-production-key-recovery
+  cancel-in-progress: false
+jobs:
+  recovery:
+    if: github.repository == 'fullbleed-engine/fullbleed-commerce' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: commerce-production-recovery
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 26.10.0
+      - name: Install locked recovery adapter before exposing secrets
+        run: npm ci --ignore-scripts --no-audit --no-fund
+        working-directory: shopify/app
+      - name: Authenticate key copy and check offline host
+        run: node tools/recover-production-keys.mjs
+        env:
+          FULLBLEED_KEY_RECOVERY_MODE: ${{ inputs.mode }}
+          FULLBLEED_OPERATOR_REFERENCE: ${{ inputs.reference }}
+          RAILWAY_RECOVERY_TOKEN: ${{ secrets.RAILWAY_RECOVERY_TOKEN }}
+          FULLBLEED_MONITOR_TOKEN: ${{ secrets.FULLBLEED_MONITOR_TOKEN }}
+          FULLBLEED_PRIVACY_KEY: ${{ secrets.FULLBLEED_PRIVACY_KEY }}
+          FULLBLEED_RECOVERY_ACCESS_KEY_ID: ${{ secrets.FULLBLEED_RECOVERY_ACCESS_KEY_ID }}
+          FULLBLEED_RECOVERY_BUCKET: ${{ secrets.FULLBLEED_RECOVERY_BUCKET }}
+          FULLBLEED_RECOVERY_DATASET: ${{ secrets.FULLBLEED_RECOVERY_DATASET }}
+          FULLBLEED_RECOVERY_ENDPOINT: ${{ secrets.FULLBLEED_RECOVERY_ENDPOINT }}
+          FULLBLEED_RECOVERY_KEY: ${{ secrets.FULLBLEED_RECOVERY_KEY }}
+          FULLBLEED_RECOVERY_REGION: ${{ secrets.FULLBLEED_RECOVERY_REGION }}
+          FULLBLEED_RECOVERY_SECRET_ACCESS_KEY: ${{ secrets.FULLBLEED_RECOVERY_SECRET_ACCESS_KEY }}
