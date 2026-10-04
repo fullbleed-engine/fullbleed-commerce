@@ -1,0 +1,197 @@
+{
+  "checkedAt": "2026-10-04T10:26:52.245771+00:00",
+  "baseCommit": "d5ef84a89b1b765aa5bfd1ebf2e33e85e8642e4d",
+  "changedSources": {
+    "shopify/recovery-journal.js": "3f4f5d1430dbdcdfb80044be550d8dbbf7329e0042610bd16a0c0bd3ba809974",
+    "shopify/app/test/recovery.test.mjs": "c4208933d3103085d8e452b0fb7239cdbbed02a474102912acb78d69f9336a59"
+  },
+  "reportedCiFailure": {
+    "url": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37192607148",
+    "job": "integration",
+    "phase": "monitor test before-hook creates a backup while server startup cleanup is active",
+    "errorCode": "P2028",
+    "logSha256": "d098d85fb6e352bf8eea59a6fe6c7b84b55129518f255d016c735c99907c92a0"
+  },
+  "controlledReproduction": {
+    "before": {
+      "node": "v26.10.0",
+      "checkedAt": "2026-10-04T10:20:13.404Z",
+      "scenario": "Already-bound dataset verification while a different Prisma client holds a write transaction",
+      "nontransactionalReadPassed": true,
+      "error": {
+        "name": "PrismaClientKnownRequestError",
+        "code": "P1008",
+        "message": "Socket timeout (the database failed to respond to a query within the configured timeout\u2014 see https://pris.ly/d/sqlite-connector for more details)."
+      }
+    },
+    "after": {
+      "node": "v26.10.0",
+      "checkedAt": "2026-10-04T10:21:07.245Z",
+      "scenario": "Already-bound dataset verification while a different Prisma client holds a write transaction",
+      "nontransactionalReadPassed": true,
+      "bindingPassed": true,
+      "elapsedMs": 18.661200000000036
+    },
+    "limitations": "The deterministic writer-lock reproduction returns P1008, not the original CI P2028. No retry or timeout increase was used to obtain a passing result."
+  },
+  "localValidation": {
+    "checkedAt": "2026-10-04T10:25:05.182Z",
+    "node": "v26.10.0",
+    "checks": [
+      {
+        "name": "schema",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "migrations",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "recovery-fixture",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "route-types",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "typecheck",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "lint",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "build",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "entry",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "health",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "webhooks",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "webhook-lifecycle",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "flow",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "usage",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "privacy",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "access-audit",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "monitor",
+        "exitCode": 0,
+        "passed": true
+      },
+      {
+        "name": "recovery",
+        "exitCode": 0,
+        "passed": true
+      }
+    ],
+    "template": "Shopify/shopify-app-template-react-router@93348fe7dbd8e1a33eea69e2bbba1990d136b0da",
+    "lockSha256": "8eb83a6cc4cc71fb673a6e13ef507c0910cd914ce61d96010f6829c5b28655d8",
+    "serverBuildSha256": "6947668bed710242f86a75b00e3f40dd9ebd47b1764b162abc7cc017dcd542ed",
+    "browserTested": false,
+    "liveBillingTested": false
+  },
+  "shopifyTests": [
+    {
+      "suite": "access-audit",
+      "passed": 12,
+      "sha256": "80795ee5741442b04e2155e373e0e5194388966fd90a03c68bf2958ace1dd50e"
+    },
+    {
+      "suite": "entry",
+      "passed": 5,
+      "sha256": "fbf3d96551164b09c8566357ff4e0d734b733875b55ce65de0df27d139780847"
+    },
+    {
+      "suite": "flow",
+      "passed": 14,
+      "sha256": "9f31bf64ef102974856d9576c44bf19f413076ae9ab36f58bdb97eb421f4569a"
+    },
+    {
+      "suite": "health",
+      "passed": 2,
+      "sha256": "ee877fc8ac2928875c9571e8dc7cf64e47d35df02f0dd67147159f21ef5ef7c8"
+    },
+    {
+      "suite": "monitor",
+      "passed": 8,
+      "sha256": "4c73fb3b0ae7117c0d53af06c568e77b1aa28bdb0468025e682fd94fa201b0ba"
+    },
+    {
+      "suite": "privacy",
+      "passed": 16,
+      "sha256": "28725ba4cd593d90e899646d527a6952f9ec4226cfcc7e6b1fd559ea976ba78a"
+    },
+    {
+      "suite": "recovery",
+      "passed": 16,
+      "sha256": "0cf1f175186195047b035c4df816bc097e5bf22c03153e5b394bfc0b3e796ad9"
+    },
+    {
+      "suite": "usage",
+      "passed": 9,
+      "sha256": "fb81e5654c22fe931cfe5f2ee726f05ed4de20a18eb70e8c08f49b2d0bd9d705"
+    },
+    {
+      "suite": "webhook-lifecycle",
+      "passed": 12,
+      "sha256": "2029a51ed12d1dfdb25aae071a0aa362af3267b873a9d0d31faa20764f30b705"
+    },
+    {
+      "suite": "webhooks",
+      "passed": 4,
+      "sha256": "23bfd92725acb3c23a07d8a48ce6c9f389f7c4280e321d4b1c4dbff38951de37"
+    }
+  ],
+  "shopifyTestCount": 98,
+  "rootTests": {
+    "passed": 47,
+    "logSha256": "3f4d7bd88e13bc235e826d82f4f2b3924569825021b7835516dc397daa79467d"
+  },
+  "focusedRecoveryTests": {
+    "passed": 16,
+    "logSha256": "575cfa7ac31f7d79a70fc3ac33509c2dfbc07bfc9336cfc652ed68dcb41ac0c4"
+  },
+  "hostedDeploymentOfThisFix": false,
+  "hostedAccessEvidence": "hosted-access-verification.json",
+  "ciEvidence": "See the pull request checks for the final committed source; local results do not establish Linux CI success."
+}

@@ -1,0 +1,354 @@
+{
+  "checkedAt": "2026-10-04T10:23:57.422905+00:00",
+  "scope": "Attended hosted synthetic-store verification of the merged access-history candidate. No paid merchant or App Store approval claim. The later recovery-binding fix has separate local and CI evidence.",
+  "sourceCommit": "d5ef84a89b1b765aa5bfd1ebf2e33e85e8642e4d",
+  "deploymentId": "a7a31009-60cf-491a-99c5-bb608ad87fdc",
+  "imageDigest": "sha256:bfce4980c8891b1716e846616113789d800d0652627f1e1cb90fc468aa381922",
+  "serverBuildSha256": "c744fba89a2240f88fdc531d4da7a6c8e3ae228d16f4330801db476533729b46",
+  "node": "v26.10.0",
+  "publishedEnginePackage": "0.1.2",
+  "host": "https://commerce.fullbleed.dev",
+  "shop": "fullbleed-commerce-test.myshopify.com",
+  "migration": {
+    "name": "20261004083000_access_events",
+    "applied": true,
+    "emptySyntheticDatabaseAtStart": true
+  },
+  "runtime": {
+    "uid": 1000,
+    "cpuLimit": 0.5,
+    "memoryBytes": 536870912,
+    "scopes": [
+      "read_orders"
+    ],
+    "automaticBackupFreshAtStart": true
+  },
+  "staffAccess": {
+    "actorIdentitySource": "Shopify-verified staff session subject; raw identifiers retained only in private evidence",
+    "documentRenderRecorded": true,
+    "historyRecordsItsOwnReads": true,
+    "desktopAndMobileVisuallyInspected": true
+  },
+  "flow": {
+    "runId": "01M435FJWDB4E4B76R5MCKCZ2V:01a0fe46-037a-7441-a300-878f89fc9a50:v2",
+    "trigger": "manual retry of an existing synthetic order workflow",
+    "completedActions": 7,
+    "jobs": [
+      {
+        "id": "5ad58644-7041-4506-a571-e47dd0e96afa",
+        "runId": "4ef730049e2a8e76af20e5ca2aaaec38276711e9",
+        "kind": "order-summary",
+        "status": "ready",
+        "attempts": 1,
+        "pdfSha256": "4e58f4268873a1522095663d4a5ca900c1380c8f4ec088d698390b5851ba8159",
+        "downloads": 0
+      },
+      {
+        "id": "418550a5-fd22-4938-8663-e068de7d46e3",
+        "runId": "9a2e2d705404f71712e399fe6f672e5c58a1bc85",
+        "kind": "packing-slip",
+        "status": "ready",
+        "attempts": 1,
+        "pdfSha256": "dc533b66c96a2b702be48eb0e9a7a06e2662a5bdc7a5aea2f44a03b5916022f0",
+        "downloads": 0
+      }
+    ],
+    "downloads": [
+      {
+        "id": "418550a5-fd22-4938-8663-e068de7d46e3",
+        "kind": "packing-slip",
+        "landingStatus": 200,
+        "status": 200,
+        "contentType": "application/pdf",
+        "cache": "no-store, private, max-age=0",
+        "linkSha256": "bec15480cb610f9d7cf8d6635b540eea56d4a79dcd24553b2fbbf35142bd7fd0",
+        "tokenRemoved": true,
+        "downloadName": "packing-slip-1004.pdf",
+        "downloadError": null
+      },
+      {
+        "id": "5ad58644-7041-4506-a571-e47dd0e96afa",
+        "kind": "order-summary",
+        "landingStatus": 200,
+        "status": 200,
+        "contentType": "application/pdf",
+        "cache": "no-store, private, max-age=0",
+        "linkSha256": "ebb6bbf5f224b742a6476ba257591ed7db686e01e6fb5cd47cfd8543c8cc5573",
+        "tokenRemoved": true,
+        "downloadName": "order-summary-1004.pdf",
+        "downloadError": null
+      }
+    ],
+    "workflowDisabled": true,
+    "summaryMatchesManualAndRestrictedCookieDownload": true,
+    "pdfs": [
+      {
+        "file": "flow-order-summary.pdf",
+        "sha256": "4e58f4268873a1522095663d4a5ca900c1380c8f4ec088d698390b5851ba8159",
+        "pages": 1
+      },
+      {
+        "file": "flow-packing-slip.pdf",
+        "sha256": "dc533b66c96a2b702be48eb0e9a7a06e2662a5bdc7a5aea2f44a03b5916022f0",
+        "pages": 1
+      }
+    ],
+    "visuallyInspected": true
+  },
+  "thirdPartyCookies": {
+    "checkedAt": "2026-10-04T10:07:58.951Z",
+    "browser": "154.0.8037.93",
+    "restrictionEnabled": true,
+    "firstPartyVisible": true,
+    "thirdPartyVisible": false,
+    "blockedReasons": [
+      "UserPreferences"
+    ],
+    "access": {
+      "status": 200,
+      "cache": "no-store, private, max-age=0",
+      "historyContainsFlow": true
+    },
+    "pdf": {
+      "status": 200,
+      "contentType": "application/pdf",
+      "downloadError": null
+    },
+    "appCookies": 0
+  },
+  "privacy": {
+    "delivery": "Operator-signed synthetic privacy fixtures; not Shopify-origin privacy delivery",
+    "captureAuthenticatedAndEncrypted": true,
+    "captureAccessActor": "shopify_privacy",
+    "exportDownloadStatus": 200,
+    "exportedOrderAccessEvents": 6,
+    "exportedActorTypes": [
+      "document_link",
+      "flow",
+      "staff"
+    ],
+    "staffIdentifiersOmittedFromCustomerExport": true,
+    "staffExportAccessRecorded": true,
+    "completion": {
+      "checkedAt": "2026-10-04T10:10:41.863Z",
+      "deploymentId": "a7a31009-60cf-491a-99c5-bb608ad87fdc",
+      "syntheticOnly": true,
+      "requestId": "cae36aee-1d9b-4740-b647-77669ea0c2c5",
+      "status": "completed",
+      "exportAndIdentifiersErased": true,
+      "exportAccessReferenceErased": true,
+      "durableCompletionRecorded": true
+    },
+    "customerRedaction": {
+      "checkedAt": "2026-10-04T10:11:20.141Z",
+      "deploymentId": "a7a31009-60cf-491a-99c5-bb608ad87fdc",
+      "syntheticOnly": true,
+      "webhookStatus": 204,
+      "orderAccessErased": true,
+      "jobsErased": true,
+      "usageOrderErased": true,
+      "collectionHistoryRetained": true,
+      "durableErasureRecorded": true,
+      "delivery": "operator-signed synthetic fixture; not a Shopify-origin privacy delivery"
+    }
+  },
+  "revocation": {
+    "pauseStatuses": [
+      410,
+      410
+    ],
+    "uninstallStatuses": [
+      404,
+      404
+    ]
+  },
+  "uninstall": {
+    "delivery": "Actual Shopify admin uninstall and platform webhook",
+    "webhook": {
+      "checkedAt": "2026-10-04T10:18:05.682471+00:00",
+      "records": [
+        {
+          "timestamp": "2026-10-04T10:16:38.117113410Z",
+          "method": "POST",
+          "path": "/webhooks/app/uninstalled",
+          "httpStatus": 204,
+          "totalDuration": 630,
+          "deploymentId": "a7a31009-60cf-491a-99c5-bb608ad87fdc",
+          "requestId": "H4Nfr9fMQC65Gfbi-_9nXA"
+        }
+      ],
+      "uninstall204": true
+    },
+    "allTenMerchantDataTablesEmpty": true,
+    "counts": {
+      "session": 0,
+      "brand": 0,
+      "documentTemplate": 0,
+      "automationSettings": 0,
+      "automationJob": 0,
+      "usagePeriod": 0,
+      "usageOrder": 0,
+      "privacyRequest": 0,
+      "privacyRequestOrder": 0,
+      "accessEvent": 0
+    },
+    "durableShopErasureRecorded": true
+  },
+  "backupRecovery": {
+    "sourceBackup": {
+      "id": "1791108579626-cd040bad-8b9c-4bf3-9955-11c9035bad6d",
+      "createdAt": "2026-10-04T10:09:39.626Z",
+      "verifiedAt": "2026-10-04T10:09:40.449Z",
+      "bytes": 2580480,
+      "parts": 3,
+      "sha256": "2d3b5537ab288d99e11b67778518890395becad353de5fa42c1375dc75a4d0e8",
+      "retentionDays": 7
+    },
+    "erasureIntentsReplayed": 3,
+    "allTenMerchantDataTablesEmpty": true,
+    "sessionsCleared": true,
+    "automationPaused": true,
+    "oldActiveLinksRevoked": true,
+    "integrityChecked": true,
+    "liveDatabaseUnchanged": true,
+    "quarantineRemoved": true
+  },
+  "cleanup": {
+    "workflowOff": true,
+    "appUninstalled": true,
+    "activeDeployments": 0,
+    "deploymentStatus": "REMOVED",
+    "privateVolumeRetained": true,
+    "privateRecoveryBucketRetained": true,
+    "meteredUsageDollars": 0.008201205387274918,
+    "meteringCheckedAt": "2026-10-04T10:19:05.641646+00:00",
+    "confirmedChargesDollars": 19,
+    "authorizedTotalDollars": 50
+  },
+  "evidence": [
+    {
+      "file": "output/hosted-access/initial.json",
+      "sha256": "6785dfb7654a1090a9dad032d5fc3d89d8060a0b5df737217536b53636268059"
+    },
+    {
+      "file": "output/hosted-access/flow-preparation.json",
+      "sha256": "bec362157c1d241338b263d619ca5165e3e7ff5e2a9759fb76484ca90c36838f"
+    },
+    {
+      "file": "output/hosted-access/flow-run-ui.json",
+      "sha256": "2cb66f5d8f116257f48cc6ee4f84f638d30be9b09ba82a3cf5c03f3bd0fb8f80"
+    },
+    {
+      "file": "output/hosted-access/flow-downloads.json",
+      "sha256": "d299bf40989f1dea2b340aad13acd33469e01e8b3eee3ebcf7a06d4671aa5d55"
+    },
+    {
+      "file": "output/hosted-access/flow-pdf-inspection.json",
+      "sha256": "925e0e95b9064209ac348771b37e5b2d3a792abdc1d5b8cf2464b9538331f355"
+    },
+    {
+      "file": "output/hosted-access/after-flow-downloads.json",
+      "sha256": "e1f443ef9f82777578971f68aa72d9d11a1eae29ad2fbb2e60ae57bd64613444"
+    },
+    {
+      "file": "output/hosted-access/flow-disabled.json",
+      "sha256": "fec27050dd263c8e0558597db079fbeadaa5d4af0efeb34e9bd229859112e19d"
+    },
+    {
+      "file": "output/hosted-access/automation-paused.json",
+      "sha256": "8da4157f8a871d24f558c2c8c592d8f1b11570a7b73619d235788a178e128b34"
+    },
+    {
+      "file": "output/hosted-access/third-party-cookie-verification.json",
+      "sha256": "1cdd7293b1a4d50edc2c75a1c3ceb8f0bea0d7859a37abe8fa9a6fc8ca09c3cd"
+    },
+    {
+      "file": "output/hosted-access/privacy-capture.json",
+      "sha256": "2ccb558d867459721bb00e2a30da222c64522a315bd374b8ba7b1f5612345d21"
+    },
+    {
+      "file": "output/hosted-access/privacy-exported.json",
+      "sha256": "8e534f8d30f6da1689649928b1e3071537634964239e3fe0b8134e9ff11c70a5"
+    },
+    {
+      "file": "output/hosted-access/privacy-export-browser.json",
+      "sha256": "70ede1556617c02e5fd4583f6193bfd13b2637f5fd75702c5c467465090ff667"
+    },
+    {
+      "file": "output/hosted-access/privacy-completed.json",
+      "sha256": "d735c6f23f85a5c67de00fc2dfdf6f4984218c5cca3745a2713b109d61a43b9e"
+    },
+    {
+      "file": "output/hosted-access/privacy-completed-browser.json",
+      "sha256": "7b5fc26e7bfba4310ee54291fd9c0edaad176c0c28dcfe7dc17e038ba9ec28b2"
+    },
+    {
+      "file": "output/hosted-access/privacy-redact.json",
+      "sha256": "e6a5c03ac801aa2575a29d98e9ec65b67a02e4584be2bca6b0a3d43f378051aa"
+    },
+    {
+      "file": "output/hosted-access/uninstall-browser.json",
+      "sha256": "bb21875d422c4a4bf8e0d35c7b7d1d11b831785f13290745f7ff4e63ee18fa16"
+    },
+    {
+      "file": "output/hosted-access/privacy-uninstalled.json",
+      "sha256": "4bb9162f2c3819e2c19c975241a4e54cd08029dee9cb14c6990e0119f8ddb26d"
+    },
+    {
+      "file": "output/hosted-access/uninstall-links.json",
+      "sha256": "d4e065c5ce2ef7710b91f072ebf7c7a6c50e984e72044563838730435c02423a"
+    },
+    {
+      "file": "output/hosted-access/privacy-restore.json",
+      "sha256": "c4b7704f25c3c9b7a204608df7ccea4234da56431abbddc784a6ac53a8103755"
+    },
+    {
+      "file": "output/hosted-access/webhook-http.json",
+      "sha256": "4f3085122d613082984e97b5dfecab0f8ee554726b155feba5ced88a90db9c3c"
+    },
+    {
+      "file": "output/hosted-access/stop-request.json",
+      "sha256": "2e8810fd5bfc31a2db12ae843a920bd8d86362001ec9d01cf76cb9a327e2782e"
+    },
+    {
+      "file": "output/hosted-access/stopped.json",
+      "sha256": "05d3f7d514e9ce38ed1d825aa859b042a6316a240028d382690c98a2fd6c5849"
+    },
+    {
+      "file": "output/hosted-access/manual-order-summary.pdf",
+      "sha256": "4e58f4268873a1522095663d4a5ca900c1380c8f4ec088d698390b5851ba8159"
+    },
+    {
+      "file": "output/hosted-access/flow-order-summary.pdf",
+      "sha256": "4e58f4268873a1522095663d4a5ca900c1380c8f4ec088d698390b5851ba8159"
+    },
+    {
+      "file": "output/hosted-access/flow-packing-slip.pdf",
+      "sha256": "dc533b66c96a2b702be48eb0e9a7a06e2662a5bdc7a5aea2f44a03b5916022f0"
+    },
+    {
+      "file": "output/hosted-access/strict-cookies-order-summary.pdf",
+      "sha256": "4e58f4268873a1522095663d4a5ca900c1380c8f4ec088d698390b5851ba8159"
+    },
+    {
+      "file": "output/hosted-access/access-desktop.png",
+      "sha256": "c9d0e69edacf97cd533f33d28fafe16e69a09a13b0354c32984a49f8a56d535d"
+    },
+    {
+      "file": "output/hosted-access/access-mobile.png",
+      "sha256": "358d86826e53505c31d126c0cab1ab618d7f92664f63ec91634abfde43185c56"
+    },
+    {
+      "file": "output/hosted-access/access-third-party-cookies-blocked.png",
+      "sha256": "cf95ea926d2873e90e9370d21d79291ed2af725f0e9cd561e641701913fb41ed"
+    }
+  ],
+  "limitations": [
+    "Flow was a manual retry of the existing synthetic order workflow, not a new-order trigger in this check.",
+    "Application access history excludes direct database/provider-console/operator actions.",
+    "Collection reads record an operation, not every returned order. A completed entry does not establish delivery or reading.",
+    "The restricted-cookie test covered Chrome 154 with a fresh context, real Shopify authentication, a verified blocked-cookie canary, history and PDF generation. It does not cover every browser.",
+    "The hosted source predates the recovery-binding contention fix; that fix is verified separately.",
+    "Ongoing operational controls, independent key recovery, paid billing lifecycle and merchant pilots remain launch work."
+  ]
+}

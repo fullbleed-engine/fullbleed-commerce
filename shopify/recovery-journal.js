@@ -62,14 +62,22 @@ export function createRecoveryJournal({ store, key, dataset, now = () => new Dat
     catch (error) { if (error.code !== 'RECOVERY_OBJECT_EXISTS') throw error; }
     return verify();
   }
-  async function identity(tx, marker) {
-    const rows = await tx.recoveryReceipt.findMany({ where: { id: { startsWith: 'dataset:' } } });
-    if (rows.length === 1 && rows[0].id === `dataset:${dataset}`) return;
+  async function bound(db) {
+    const rows = await db.recoveryReceipt.findMany({ where: { id: { startsWith: 'dataset:' } }, select: { id: true } });
+    if (rows.length === 1 && rows[0].id === `dataset:${dataset}`) return true;
     if (rows.length) throw recoveryFailure();
+    return false;
+  }
+  async function identity(tx, marker) {
+    if (await bound(tx)) return;
     await tx.recoveryReceipt.create({ data: { id: `dataset:${dataset}`, recordedAt: new Date(marker.createdAt) } });
   }
   async function bind(db) {
     const marker = await verify();
+    // Dataset bindings are immutable. Rechecking one needs no SQLite writer
+    // lock, which would contend with concurrent cleanup or erasure. First bind
+    // still checks again inside the transaction before creating the marker.
+    if (await bound(db)) return;
     await db.$transaction(tx => identity(tx, marker));
   }
   async function record(tx, event) {
