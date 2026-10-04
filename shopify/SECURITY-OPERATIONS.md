@@ -132,4 +132,6 @@ admitting merchants; this document does not promise a response-time SLA.
 
 These procedures follow Shopify's [customer-data requirements](https://shopify.dev/docs/apps/launch/protected-customer-data)
 and [security guidance](https://shopify.dev/docs/apps/build/security/following-security-best-practices).
+The [attended verification](../docs/operator-access.md) records the implemented
+operator controls, hosted recovery rehearsal and independent storage readback.
 They do not represent a third-party audit, certification or Shopify approval.
