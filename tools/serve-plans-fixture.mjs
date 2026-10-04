@@ -24,11 +24,11 @@ await db.usagePeriod.deleteMany(); await db.session.deleteMany(); await db.autom
 await db.session.create({ data: { id: `offline_${shop}`, shop, state: '', isOnline: false, accessToken: 'synthetic-token', scope: 'read_orders' } });
 let trialEndsAt = new Date(Date.now() + 7 * 86400000);
 await db.usagePeriod.create({ data: { shop, key: `trial:${trialEndsAt.toISOString()}`, startsAt: null, endsAt: trialEndsAt, used: 249 } });
-let handle = 'studio';
+let handle = 'studio', subscribed = true;
 const money = amount => ({ presentmentMoney: { amount, currencyCode: 'USD' } });
 globalThis.fetch = async (resource, init) => {
   const request = new Request(resource, init), url = new URL(request.url), body = await request.json();
-  if (url.origin === 'https://partners.shopify.com') return Response.json({ data: { activeSubscription: { shop: { id: 'gid://shopify/Shop/1', myshopifyDomain: shop }, billingPeriod: 'EVERY_30_DAYS', currentBillingCycle: null, items: [{ handle }], cancelAtEndOfCycle: false, trialEndsAt: trialEndsAt.toISOString(), pendingUpdate: null } } });
+  if (url.origin === 'https://partners.shopify.com') return Response.json({ data: { activeSubscription: subscribed ? { shop: { id: 'gid://shopify/Shop/1', myshopifyDomain: shop }, billingPeriod: 'EVERY_30_DAYS', currentBillingCycle: null, items: [{ handle }], cancelAtEndOfCycle: false, trialEndsAt: trialEndsAt.toISOString(), pendingUpdate: null } : null } });
   if (url.origin !== `https://${shop}`) throw new Error('Only synthetic API calls are allowed.');
   if (body.query.includes('FullbleedShop')) return Response.json({ data: { shop: { id: 'gid://shopify/Shop/1', name: 'Cedar Studio', myshopifyDomain: shop, ianaTimezone: 'America/Chicago', plan: { partnerDevelopment: true } } } });
   if (body.query.includes('FullbleedRecentOrders')) return Response.json({ data: { orders: { nodes: [1, 2].map(id => ({ id: `gid://shopify/Order/${id}`, name: `#100${id}`, displayFinancialStatus: 'PAID' })) } } });
@@ -43,6 +43,11 @@ const handler = createRequestHandler(await import('../shopify/app/build/server/i
 const server = createServer(async (incoming, outgoing) => {
   try {
     const url = new URL(incoming.url, origin);
+    if (['/__fixture/unsubscribed', '/__fixture/subscribed'].includes(url.pathname) && incoming.method === 'POST') {
+      subscribed = url.pathname === '/__fixture/subscribed';
+      await db.agreementAcceptance.deleteMany({ where: { shop } });
+      outgoing.writeHead(204); outgoing.end(); return;
+    }
     if (url.pathname === '/__fixture/scale' && incoming.method === 'POST') { handle = 'scale'; trialEndsAt = new Date(trialEndsAt.valueOf() + 4 * 60000); outgoing.writeHead(204); outgoing.end(); return; }
     if (url.pathname.startsWith('/assets/')) {
       const file = resolve(assets, `.${decodeURIComponent(url.pathname)}`);

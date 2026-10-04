@@ -83,6 +83,22 @@ test('real SDK acceptance uses the verified token subject and retains only bound
   assert.doesNotMatch(JSON.stringify(row), /synthetic-token|address|email|orderId|ipAddress/);
 });
 
+test('acceptance reloads the embedded document before an unsubscribed store leaves for checkout', async () => {
+  const host = Buffer.from('admin.shopify.com/store/synthetic-agreement').toString('base64');
+  const query = new URLSearchParams({ embedded: '1', shop, host });
+  const response = await request(`/app/agreement?${query}`, { values: fields() });
+  assert.equal(response.status, 302);
+  assert.equal(response.headers.get('X-Remix-Reload-Document'), 'true');
+  const destination = new URL(response.headers.get('Location'));
+  assert.equal(destination.origin, 'https://fullbleed-test.invalid');
+  assert.equal(destination.pathname, '/app');
+  assert.equal(destination.searchParams.get('embedded'), '1');
+  assert.equal(destination.searchParams.get('shop'), shop);
+  assert.equal(destination.searchParams.get('host'), host);
+  assert.equal((await service.status(shop)).accepted, true);
+  assert.equal(remoteReads, 0, 'Acceptance must not require a successful billing lookup.');
+});
+
 test('missing confirmation, stale versions, wrong digests, extra fields and duplicate fields cannot record agreement', async () => {
   for (const values of [{ ...fields(), accepted: '' }, { ...fields(), version: 'old' }, { ...fields(), documentSha256: '0'.repeat(64) }, { ...fields(), shop: other }, { ...fields(), actorId: '99' }]) {
     const response = await request('/app/agreement', { values });
