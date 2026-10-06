@@ -69,8 +69,13 @@ with sync_playwright() as pw:
         canvas = page.frame_locator('[data-visual] iframe.gjs-frame')
         canvas.locator('h1').wait_for(state='visible')
         frame = page.locator('[data-visual] iframe.gjs-frame').element_handle().content_frame()
-        frame.wait_for_function("document.fonts.status === 'loaded'")
+        frame.wait_for_function('Array.from(document.fonts).filter(font => font.status === "loaded").length >= 4')
+        fonts = frame.evaluate('Array.from(document.fonts, font => ({family: font.family, weight: font.weight, style: font.style, status: font.status}))')
+        check('visual editor loads the actual bundled font faces', len(fonts) == 4 and all(font['status'] == 'loaded' for font in fonts) and {font['family'] for font in fonts} == {'Inter', 'DM Serif Display', 'Bebas Neue'})
         check('visual editor renders the saved template', (saved_title or '{{document.title}}') in canvas.locator('h1').inner_text())
+        canvas.locator('h1').click()
+        controls = page.locator('.gjs-sm-property__font-size').evaluate('e => { const input = e.querySelector("input"); const style = getComputedStyle(input); return {valueWidth: input.getBoundingClientRect().width - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight), unitWidth: e.querySelector("select").getBoundingClientRect().width}; }')
+        check('typography values and units fit their controls', controls['valueWidth'] >= 60 and controls['unitWidth'] >= 30)
         check('editor uses WordPress dependencies without replacing shared globals', page.evaluate("""() => {
             const before = window.fullbleedCoreBefore;
             return before.backbone === window.Backbone && before.dollar === window.Backbone.$
@@ -139,7 +144,7 @@ with sync_playwright() as pw:
         page.screenshot(path=str(out / f'{label}-mobile.png'), full_page=True)
         check('no browser JavaScript errors', not errors)
         documents = [{'file': p.as_posix(), 'sha256': sha256(p.read_bytes()).hexdigest(), 'pages': len(PdfReader(p).pages)} for p in [pdf, custom, applied]]
-        record = {'checkedAt': datetime.now(timezone.utc).isoformat(), **browser_metadata(browser), 'store': base, 'pro': pro, 'upgradeTemplate': saved_title, 'checks': checks, 'pdfSha256': sha256(custom.read_bytes()).hexdigest(), 'documents': documents, 'pageErrors': errors}
+        record = {'checkedAt': datetime.now(timezone.utc).isoformat(), **browser_metadata(browser), 'store': base, 'pro': pro, 'upgradeTemplate': saved_title, 'checks': checks, 'pdfSha256': sha256(custom.read_bytes()).hexdigest(), 'documents': documents, 'pageErrors': errors, 'canvasFonts': fonts, 'styleControls': controls}
         if pro:
             record['batch'] = {'file': archive.as_posix(), 'sha256': sha256(archive.read_bytes()).hexdigest()}
         (out / f'{label}-verification.json').write_text(json.dumps(record, indent=2), encoding='utf-8')

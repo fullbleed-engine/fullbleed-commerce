@@ -4,7 +4,7 @@ Tags: pdf, woocommerce, packing slips, order documents
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.1.3
+Stable tag: 0.1.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,11 @@ The plugin uses WooCommerce order APIs, not direct post or database queries. See
 The ZIP includes a source/ directory with src/admin.js, src/browser-worker.js, tools/build.mjs and package-lock.json. From that source directory, run npm ci --ignore-scripts and npm run build with Node.js 26.10.0 or newer. See source/README.txt for copying the rebuilt assets. Fullbleed's engine source is https://github.com/fullbleed-engine/fullbleed-official and its Node integration is https://github.com/fullbleed-engine/fullbleed-node. Build metadata and license notices ship under assets/generated/.
 
 == Changelog ==
+
+= 0.1.4 =
+* Load the visual editor's bundled fonts correctly in WordPress Playground, including variable Inter weights and italic DM Serif Display.
+* Keep typography values and unit menus readable in the style panel.
+* PDF rendering, saved template content and the bundled Fullbleed 2.5.8 engine are unchanged.
 
 = 0.1.3 =
 * Update the bundled renderer to Fullbleed 2.5.8, including compact embedded fonts and corrected family selection. Saved template HTML/CSS is retained; PDF bytes can change with the engine update.
