@@ -4,12 +4,20 @@ import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { appendFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { version, engineVersion } from 'fullbleed';
+import { version, engineVersion, renderPdf } from 'fullbleed';
 import { renderOrder } from '../src/node.js';
-import { starterTemplate } from '../src/documents.js';
+import { starterTemplate, buildDocument } from '../src/documents.js';
 import { designs } from '../pro/designs.js';
 
 const out = process.argv[2] || 'output/pagination';
+// GDB must observe the process that owns the WASM worker. This opt-in path is
+// only for the synthetic diagnostic harness; Commerce always isolates renders.
+const diagnosticWorker = process.argv.includes('--diagnostic-worker');
+const render = diagnosticWorker ? async (order, options = {}) => {
+  const { previewDpi = 0, ...documentOptions } = options;
+  const document = buildDocument(order, documentOptions);
+  return renderPdf({ html: document.html, css: document.css, maxPages: 30, timeoutMs: 30000, previewDpi, isolation: 'worker' });
+} : renderOrder;
 await mkdir(out, { recursive: true });
 // Keep a bounded, synchronous journal: a native crash cannot flush JS buffers.
 // This runner only accepts checked-in synthetic fixtures, never merchant orders.
@@ -23,7 +31,7 @@ const record = (phase, file, details = {}) => appendFileSync(progress, JSON.stri
 await writeFile(`${out}/runtime.json`, JSON.stringify({
   schema: 'fullbleed.commerce-pagination-runtime.v1', checkedAt: new Date().toISOString(),
   platform: process.platform, arch: process.arch, versions: process.versions,
-  packageVersion: version, engineVersion,
+  packageVersion: version, engineVersion, isolation: diagnosticWorker ? 'worker' : 'process',
   packageLockSha256: digest(await readFile('package-lock.json')),
   engineManifest: JSON.parse(await readFile(new URL('../dist/build.json', import.meta.resolve('fullbleed')), 'utf8')),
 }, null, 2) + '\n');
@@ -50,7 +58,7 @@ for (const [name, design] of Object.entries({ studio: undefined, ...designs })) 
         const previewDpi = count === 32 ? 72 : 0;
         const stem = `${name}-${paper}-${mode}-${count}`;
         record('start', `${stem}.pdf`, { design: name, paper, mode, items: count, previewDpi });
-        const result = await renderOrder(order, { ...options, previewDpi });
+        const result = await render(order, { ...options, previewDpi });
         assert.equal(result.missingGlyphs, 0);
         await writeFile(`${out}/${stem}.pdf`, result.pdf);
         if (result.previews.length) await writeFile(`${out}/${stem}-last.png`, result.previews.at(-1));
@@ -62,11 +70,14 @@ for (const [name, design] of Object.entries({ studio: undefined, ...designs })) 
   }
 }
 // An existing merchant template remains authoritative, even when its old
-// pagination differs from the new defaults. This hash predates the fix.
+// pagination differs from the new defaults. Retain the historical hash and a
+// separately reviewed baseline for each engine's PDF/font serialization.
 const saved = JSON.parse(await readFile('fixtures/pagination-saved-template.json', 'utf8'));
 record('start', 'saved-011.pdf', { items: 32, mode: 'saved', previewDpi: 0 });
-const unchanged = await renderOrder(orderFor(32), { template: saved.template });
-const savedTemplate = { file: 'saved-011.pdf', sha256: createHash('sha256').update(unchanged.pdf).digest('hex'), expectedSha256: saved.expectedPdfSha256 };
+const unchanged = await render(orderFor(32), { template: saved.template });
+const expectedSha256 = saved.expectedPdfByEngine[engineVersion];
+assert.ok(expectedSha256, 'Review the saved-template output before adding an engine baseline.');
+const savedTemplate = { file: 'saved-011.pdf', engineVersion, sha256: createHash('sha256').update(unchanged.pdf).digest('hex'), expectedSha256 };
 await writeFile(`${out}/${savedTemplate.file}`, unchanged.pdf);
 assert.equal(savedTemplate.sha256, savedTemplate.expectedSha256, 'Existing saved template PDF changed.');
 record('retained', savedTemplate.file, { pages: unchanged.pages, sha256: savedTemplate.sha256 });

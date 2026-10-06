@@ -8,14 +8,6 @@ on:
         type: choice
         options: ['26.10.0', '24.21.0']
         default: '26.10.0'
-  pull_request:
-    paths:
-      - '.github/workflows/native-stability.yml'
-      - 'tools/capture-native.gdb'
-      - 'tools/check-native-stability.py'
-      - 'tools/check-native-diagnostic-capture.py'
-      - 'tools/render-pagination.mjs'
-      - 'package-lock.json'
 
 permissions:
   contents: read

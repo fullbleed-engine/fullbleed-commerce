@@ -17,6 +17,13 @@ the retained automated checks exercise Linux amd64. The renderer is capped at
 512 MiB and half a CPU, with another 128 MiB for the HTTPS proxy. Leave capacity
 for Docker and the host operating system, in addition to these limits.
 
+Each PDF uses a fresh Node child process. The parent waits for its exit before
+releasing the store's slot, including after failure, cancellation or the render
+deadline. Keep child-process creation available and account for startup and
+memory within the container's existing limit. This contains a renderer-process
+failure; it does not establish production capacity or fix the open native-crash
+investigation. The container workload must pass after renderer upgrades.
+
 Choose a hostname such as `pdf.your-store.example`. Its public DNS must point to
 this host, and ports 80 and 443 must reach it. Caddy uses those ports to obtain
 and renew a public certificate. A reverse proxy already using these ports needs

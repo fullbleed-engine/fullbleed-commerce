@@ -5,6 +5,26 @@ remains unresolved. The published `fullbleed@0.1.2` package and its Fullbleed 2.
 engine are unchanged. A successful repetition does not establish a crash fix or
 production capacity.
 
+## Current server containment
+
+Commerce source uses `fullbleed@0.2.0` / engine 2.5.8 with `isolation: 'process'`
+for every server render. Each call starts a Node child that owns its WASM worker.
+The HTTP server keeps the admission slot until that child exits and IPC closes,
+including after cancellation or native-process failure. A failure returns through
+the existing document-error path; no render retry is hidden inside this wrapper.
+The free WordPress renderer still runs locally in a browser worker.
+
+The lifecycle suite deliberately kills real children and checks cleanup and the
+next request. The standalone HTTP test also verifies a 502 response, healthy
+server, and subsequent PDF after the killed child. These controlled failures
+check containment; they do not explain or reproduce the original SIGSEGV.
+
+The diagnostic workflow is now manually dispatched. Ordinary release CI still
+checks one complete pagination matrix, actual child-failure recovery, browser
+downloads and the container workload. Repeating five normal and five debugger
+sweeps on every lockfile change did not establish the intermittent crash's cause.
+Run another diagnostic only for a new failure or a specific hypothesis.
+
 ## What the original failure establishes
 
 The [initial pagination job](https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37179186421/job/111368079718)
@@ -62,8 +82,16 @@ Each output directory must be new. The runner refuses to reuse old artifacts,
 stops on the first failure, bounds each child process, compares output hashes
 across repetitions, and invokes the independent PDF reader after each sweep.
 The GitHub **Native rendering diagnostics** workflow runs both modes separately
-on Ubuntu 24.04 and retains artifacts even when a job fails. It can be dispatched
-manually and also runs on relevant pull requests.
+on Ubuntu 24.04 and retains artifacts even when a job fails. Dispatch it manually
+for a specific investigation.
+
+The harness passes `--diagnostic-worker` to the synthetic pagination runner so
+GDB observes the process that owns the WASM worker. It records `isolation: worker`
+in `runtime.json`; ordinary Commerce and pagination verification use `process`.
+The child's launch intentionally excludes application Node flags, so attaching
+GDB only to the production parent would not capture a render child's stack.
+Reproducing the original package also requires its recorded source checkout;
+selecting Node 24.21.0 alone does not restore the old Fullbleed package.
 
 `progress.jsonl` records a synchronous start and retained-result entry for each
 fixture, including item count, preview setting, memory use and elapsed time.
