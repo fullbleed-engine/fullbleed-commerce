@@ -19,7 +19,7 @@ for (const name of ['fullbleed-commerce', 'fullbleed-commerce-pro']) {
   }
   await addTree(`wordpress/${name}`, name);
   if (name === 'fullbleed-commerce') {
-    for (const file of ['src/admin.js', 'src/browser-worker.js', 'src/documents.js', 'src/templates.js', 'src/editor-entry.js', 'src/template-editor.js', 'src/template-editor.css', 'tools/build.mjs', 'tools/wordpress-editor.mjs', 'package.json', 'package-lock.json', 'LICENSES/MIT-WASI.txt', 'LICENSES/MIT-Fullbleed.txt', 'LICENSES/MIT-CodeMirror-formatting.txt', 'LICENSES/MIT-Spectrum.txt', 'LICENSES/MIT-Cash.txt']) {
+    for (const file of ['src/admin.js', 'src/browser-worker.js', 'src/documents.js', 'src/templates.js', 'src/editor-entry.js', 'src/template-editor.js', 'src/template-editor.css', 'tools/build.mjs', 'tools/wordpress-editor.mjs', 'package.json', 'package-lock.json', 'LICENSES/MIT-WASI.txt', 'LICENSES/MIT-Fullbleed.txt', 'LICENSES/MIT-CodeMirror-formatting.txt', 'LICENSES/MIT-Spectrum.txt', 'LICENSES/MIT-Cash.txt', 'LICENSES/Font-Awesome-4.7.0.txt']) {
       let content = await readFile(file);
       if (file === 'package.json') {
         const pkg = JSON.parse(content);

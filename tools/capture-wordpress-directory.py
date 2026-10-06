@@ -21,6 +21,7 @@ parser.add_argument('--version', default=json.loads((Path(__file__).resolve().pa
 parser.add_argument('--output', type=Path, default=Path('output/wordpress-directory'))
 parser.add_argument('--candidate-editor', type=Path, help='Test a local editor bundle in this owned disposable store; never publish these captures as released UI.')
 parser.add_argument('--require-fonts', action='store_true', help='Fail if the visual editor does not load every bundled font.')
+parser.add_argument('--require-local-icons', action='store_true', help='Require the bundled icon assets and block the former CDN fallback.')
 args = parser.parse_args()
 parsed = urlsplit(args.url)
 assert parsed.scheme == 'https' and parsed.hostname == 'playground.wordpress.net'
@@ -39,6 +40,13 @@ def check(name, value):
 with sync_playwright() as pw:
     browser = pw.chromium.launch(channel='chrome', headless=True)
     context = browser.new_context(viewport={'width': 1600, 'height': 1500}, accept_downloads=True)
+    icon_responses, blocked_icons = [], []
+    context.on('response', lambda response: icon_responses.append({'url': response.url, 'status': response.status}) if '/fonts/editor-icons.' in response.url else None)
+    if args.require_local_icons:
+        def block_remote_icons(route):
+            blocked_icons.append(route.request.url)
+            route.abort()
+        context.route('https://cdnjs.cloudflare.com/**', block_remote_icons)
     page = context.new_page()
     page.set_default_timeout(45000)
     page.on('pageerror', lambda error: errors.append(str(error)))
@@ -76,6 +84,16 @@ with sync_playwright() as pw:
         frame.locator('[data-edit-template]').click()
         canvas = frame.frame_locator('[data-visual] iframe.gjs-frame')
         canvas.locator('h1').wait_for(state='visible')
+        icons = None
+        if args.require_local_icons:
+            frame.wait_for_function('Boolean(document.querySelector(\'link[href$="/fonts/editor-icons.css"]\')?.sheet)')
+            icons = frame.evaluate('''async () => {
+                const href = document.querySelector('link[href$="/fonts/editor-icons.css"]').href;
+                const faces = await document.fonts.load('14px FontAwesome', '\\uf040');
+                return {href, sameOrigin: new URL(href).origin === location.origin,
+                    loaded: faces.length === 1 && faces[0].status === 'loaded'};
+            }''')
+            check('Editor icons load from local plugin assets without the CDN', icons['sameOrigin'] and icons['loaded'] and not blocked_icons and len(icon_responses) == 2 and all(r['status'] == 200 for r in icon_responses))
         if args.candidate_editor:
             frame.add_script_tag(path=str(args.candidate_editor / 'editor.js'))
             frame.add_style_tag(path=str(args.candidate_editor / 'editor.css'))
@@ -101,7 +119,7 @@ with sync_playwright() as pw:
         check('No browser JavaScript exceptions', not errors)
         assets = [{ 'file': p.name, 'bytes': p.stat().st_size, 'sha256': sha256(p.read_bytes()).hexdigest() } for p in sorted(args.output.iterdir()) if p.suffix in ('.png', '.pdf') and 'failure' not in p.name]
         candidate = {name: sha256((args.candidate_editor / name).read_bytes()).hexdigest() for name in ['editor.js', 'editor.css']} if args.candidate_editor else None
-        record = {'checkedAt': datetime.now(timezone.utc).isoformat(), 'url': args.url, 'browser': browser.version, 'pluginVersion': args.version, 'syntheticOnly': True, 'checks': checks, 'assets': assets, 'pageErrors': errors, 'canvasFonts': canvas_fonts, 'styleControls': controls, 'candidateEditor': candidate, 'captureMethod': 'Native Playwright element screenshots. Candidate injection, if any, is recorded separately; captures with candidateEditor are not released-plugin evidence.'}
+        record = {'checkedAt': datetime.now(timezone.utc).isoformat(), 'url': args.url, 'browser': browser.version, 'pluginVersion': args.version, 'syntheticOnly': True, 'checks': checks, 'assets': assets, 'pageErrors': errors, 'canvasFonts': canvas_fonts, 'styleControls': controls, 'iconAssets': icons, 'iconResponses': icon_responses, 'blockedIconRequests': blocked_icons, 'candidateEditor': candidate, 'captureMethod': 'Native Playwright element screenshots. Candidate injection, if any, is recorded separately; captures with candidateEditor are not released-plugin evidence.'}
         (args.output / 'capture-verification.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
     except Exception:
         page.screenshot(path=str(args.output / 'failure.png'), full_page=True)

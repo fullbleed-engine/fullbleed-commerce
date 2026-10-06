@@ -28,6 +28,7 @@ test('visual editor, source editing and PDF preview share the saved template wit
   async function click(selector) { host.querySelector(selector).click(); for (let i = 0; i < 8; i++) await Promise.resolve(); }
   try {
     assert.equal(host.querySelector('[data-visual]').hidden, false);
+    assert.equal(window.document.querySelector('link[href*="cdnjs.cloudflare.com"]'), null, 'A missing font base must not fall back to remote icons.');
     const initial = instance.getTemplate();
     assert.ok(initial.css.includes(defaults.css));
     assert.ok(initial.html.includes('data-fb-repeat="items"'));

@@ -1,6 +1,8 @@
 <?php
 // Synthetic local development data only. Never run against a merchant site.
 require '/wordpress/wp-load.php';
+// Keep WordPress's admin avatar service out of the plugin network checks.
+update_option('show_avatars', 0);
 update_option( 'blogname', 'Cedar & Form' );
 update_option( 'woocommerce_store_address', '18 Maker Lane' );
 update_option( 'woocommerce_store_city', 'Portland' );
