@@ -11,7 +11,7 @@ The free WordPress plugin continues to work independently of this service.
 
 ## Prepare the host
 
-Use a Linux Docker host with Docker Compose v2 and Node 24.18 or later for the
+Use a Linux Docker host with Docker Compose v2 and Node 26.10.0 or later for the
 one-time credential helper. The container builds support amd64 and arm64;
 the retained automated checks exercise Linux amd64. The renderer is capped at
 512 MiB and half a CPU, with another 128 MiB for the HTTPS proxy. Leave capacity
@@ -37,7 +37,7 @@ cd fullbleed-commerce
 git rev-parse HEAD
 ```
 
-Build dependencies, the Node base image and the proxy executable are pinned.
+Build dependencies, the Node 26.10.0 base image and the proxy executable are pinned.
 The proxy currently uses the checksum-verified Caddy 2.11.7 release binary on
 the official image base, because 2.11.7 fixes a proxy regression in 2.11.6.
 Review upstream updates and rerun the deployment checks before updating pins.
