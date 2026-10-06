@@ -14,6 +14,11 @@ after admission still consume an attempt and use exponential backoff.
 
 ## Verified workload
 
+The measurements below are historical, from the worker-based renderer. Current
+source uses one child process per render. Keep the same admission limits and
+rerun the container workload for that source; do not use the historical timing
+or memory figures as measurements of process isolation.
+
 The October 3, 2026 Linux container run used the production image under the
 staging ceilings: **0.5 CPU and 512 MiB RAM**. The real HTTP server stayed online
 while a separate probe exercised the actual Flow service, admission limiter,

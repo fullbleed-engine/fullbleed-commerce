@@ -1,8 +1,30 @@
 # Preview verification
 
-The current WordPress release is **0.1.2**, published October 3, 2026.
+The WordPress **0.1.3** preview pairs with the unchanged **Pro 0.1.2** add-on.
 All checks use synthetic order data. This is an evaluation preview, not
 marketplace approval or a live paid service.
+
+## 0.1.3 renderer update
+
+The 0.1.3 source updates the free plugin to engine 2.5.8 and the server renderer
+to Fullbleed Node 0.2.0 with process isolation. Pro 0.1.2 is unchanged. The
+[local process verification](process-rendering-verification.json) retains source
+hashes, 68 shared tests, 19 Shopify build/test checks and the full 1,260-check
+pagination result. Six lifecycle tests observe actual child exit and IPC closure;
+the standalone HTTP test kills a render child, checks a safe 502 response and
+healthy parent, then downloads the next PDF successfully.
+
+Compared with the retained Node 0.1.3 / engine 2.5.6 baseline, 187 synthetic PDFs
+keep the same page count and extracted text on each page. Their combined bytes
+fall from 23,831,201 to 15,568,826. All six short PDF previews match byte for byte;
+all four frozen saved-template pages have identical pixels in an independent
+PDF reader. This is fixture-specific evidence, not a general size or parity claim.
+The saved template now has separate reviewed hashes for the two engine versions;
+its original hash and HTML/CSS are retained.
+
+The original native crash remains unresolved. Process containment does not prove
+the cause is fixed or qualify a production workload. Final release evidence must
+also retain the exact ZIPs, Linux/browser checks and container results.
 
 ## 0.1.2 closing-note pagination
 

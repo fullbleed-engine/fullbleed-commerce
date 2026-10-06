@@ -51,15 +51,23 @@ test('renderer bounds concurrency and attempts and releases failed work', async 
   assert.equal((await render(request({ ...input, options: {} }))).status, 422);
 });
 
-test('standalone HTTP service enforces authentication and returns verified PDF bytes', async () => {
+test('standalone HTTP service survives a killed renderer and returns the next verified PDF', { timeout: 20000 }, async () => {
   const directory = await mkdtemp(join(tmpdir(), 'fullbleed-renderer-test-'));
   const config = join(directory, 'clients.json'); await writeFile(config, JSON.stringify(clients), { mode: 0o600 });
-  const child = spawn(process.execPath, ['automation/server.mjs'], { env: { ...process.env, FULLBLEED_RENDER_CLIENTS_FILE: config, PORT: '0', BIND_HOST: '127.0.0.1' }, stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true });
+  const child = spawn(process.execPath, ['--import', new URL('fixtures/kill-first-render.mjs', import.meta.url).href, 'automation/server.mjs'], { env: { ...process.env, FULLBLEED_RENDER_CLIENTS_FILE: config, PORT: '0', BIND_HOST: '127.0.0.1' }, stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true });
+  let errors = '';
+  child.stderr.on('data', data => { errors += data; });
   try {
-    const ready = await Promise.race([once(child.stdout, 'data'), once(child, 'exit').then(() => { throw new Error('Renderer exited before ready.'); })]);
+    const ready = await Promise.race([once(child.stdout, 'data'), once(child, 'exit').then(() => { throw new Error('Renderer exited before ready: ' + errors); })]);
     const { port } = JSON.parse(ready[0].toString());
     const url = `http://127.0.0.1:${port}/v1/render`;
     assert.equal((await fetch(url, { method: 'POST', body: '{}' })).status, 401);
+    const failed = await fetch(url, { method: 'POST', headers: Object.fromEntries(request(input).headers), body: JSON.stringify(input) });
+    assert.equal(failed.status, 502);
+    assert.deepEqual(await failed.json(), { code: 'render_failed', message: 'The document could not be rendered. Check the preview and retry.' });
+    assert.match(failed.headers.get('Cache-Control'), /no-store/);
+    assert.equal((await fetch(`http://127.0.0.1:${port}/health`)).status, 200);
+    assert.equal(child.exitCode, null, 'The HTTP server must survive the render child failure.');
     const response = await fetch(url, { method: 'POST', headers: Object.fromEntries(request(input).headers), body: JSON.stringify(input) });
     assert.equal(response.status, 200);
     const bytes = Buffer.from(await response.arrayBuffer());

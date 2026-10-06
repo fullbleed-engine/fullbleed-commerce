@@ -82,7 +82,7 @@ def main():
         pdfs = folder / 'pdfs'
         command = [node, '--report-on-fatalerror', '--report-uncaught-exception',
                    '--report-exclude-env', '--report-exclude-network',
-                   '--report-directory=' + str(folder), 'tools/render-pagination.mjs', str(pdfs)]
+                   '--report-directory=' + str(folder), 'tools/render-pagination.mjs', str(pdfs), '--diagnostic-worker']
         if debugger:
             command = [debugger, '--batch', '--return-child-result', '-x',
                        str(root / 'tools/capture-native.gdb'), '--args', *command]

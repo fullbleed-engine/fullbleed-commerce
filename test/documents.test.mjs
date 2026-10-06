@@ -43,7 +43,7 @@ test('published Node package renders real deterministic PDFs and recovers after 
   const second = await renderOrder(fixture);
   assert.equal(first.pages, 1);
   assert.equal(first.missingGlyphs, 0);
-  assert.equal(first.engineVersion, '2.5.6');
+  assert.equal(first.engineVersion, '2.5.8');
   assert.equal(first.pdf.subarray(0, 5).toString(), '%PDF-');
   assert.deepEqual(first.pdf, second.pdf);
   assert.equal(first.previews[0].subarray(1, 4).toString(), 'PNG');

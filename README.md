@@ -31,13 +31,13 @@ template to keep it. The [walkthrough](https://docs.fullbleed.dev/guides/woocomm
 includes an actual sample PDF and explains the automated workflows.
 
 Download the free plugin from the
-[WooCommerce preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.2).
+[WooCommerce preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.3).
 Use a staging store. Install WooCommerce, then upload
-`fullbleed-commerce-0.1.2.zip` in WordPress Plugins. Open
+`fullbleed-commerce-0.1.3.zip` in WordPress Plugins. Open
 **WooCommerce → Fullbleed documents**, enter a numeric order ID, and generate a
 PDF. An order edit screen also has a **Create Fullbleed PDF** link.
 
-To evaluate Pro, upload the separate Pro ZIP after the base plugin. Select orders
+To evaluate Pro, upload the unchanged `fullbleed-commerce-pro-0.1.2.zip` after the base plugin. Select orders
 on the Orders screen and choose **Create Fullbleed PDFs**, or enter comma-separated
 IDs in the document form. Pro's workflow and design code ship separately from the
 free plugin. There is no license lock in the free package.
@@ -61,6 +61,13 @@ settings are retained. An enabled automation remains enabled after an upgrade;
 check its connection and one synthetic order before returning to normal use.
 The [release verification](docs/verification.md) records the upgrade checks and
 which configurations were exercised. The preview still has no automatic updater.
+
+Version 0.1.3 updates the engine to 2.5.8, including compact embedded fonts and
+corrected font-family selection. Saved HTML/CSS remains intact, but regenerated
+PDF bytes can change. Review your saved designs on staging after upgrading.
+The private WooCommerce renderer and Shopify server now use a separate process
+for each PDF. A failed render child can return a document failure without ending
+the HTTP server; the original native-crash investigation remains open.
 
 Version 0.1.2 keeps summary totals and the closing note together in built-in
 designs and newly created starter templates. Existing saved designs retain their
@@ -157,8 +164,12 @@ using WordPress Playground. Its pinned file-locking dependency needs a local
 build on Node 26 when no matching prebuilt binary is available (Python, make
 and a C++ compiler on Linux). This is development tooling, not a dependency
 added to the Fullbleed engine or the distributed WordPress plugin.
-The rendering integration itself uses the published Fullbleed Node 0.1.3 package,
-containing engine 2.5.6, pinned to its npm version and lockfile integrity.
+The rendering integration uses the published Fullbleed Node 0.2.0 package,
+containing engine 2.5.8, pinned to its npm version and lockfile integrity.
+Server rendering requires a normal Node host that permits child processes.
+The existing admission limits cover child lifetime, including cancellation and
+failure cleanup. Each request pays for a new process and WASM startup; this is
+fault containment, not a security sandbox or a production capacity guarantee.
 Its render promise settles after the worker exits, so the automation renderer
 and Shopify limits hold their capacity slots through worker cleanup, including
 cancellation and failed renders. The integration tests exercise those paths with

@@ -1,0 +1,1964 @@
+{
+  "schema": "fullbleed.commerce-process-verification.v1",
+  "checkedAt": "2026-10-06T01:53:45.407687+00:00",
+  "scope": "Local Windows Node 26.10.0, synthetic fixtures. Release CI, WordPress packaging and browser results are retained separately with the release. No hosted application was deployed.",
+  "nodePackage": "0.2.0",
+  "engine": "2.5.8",
+  "isolation": "process",
+  "sharedTestsPassed": 68,
+  "lifecycleTests": 6,
+  "standaloneHttpKilledChildRecovery": true,
+  "shopifyLocalChecks": 19,
+  "paginationDocuments": 180,
+  "paginationReaderChecks": 1260,
+  "baselineCi": "https://github.com/fullbleed-engine/fullbleed-commerce/actions/runs/37205206208",
+  "comparison": {
+    "checkedAt": "2026-10-06T01:45:24.278620+00:00",
+    "baselineNode": "0.1.3",
+    "baselineEngine": "2.5.6",
+    "candidateNode": "0.2.0",
+    "candidateEngine": "2.5.8",
+    "documents": [
+      {
+        "file": "pagination/contrast-A4-built-in-1.pdf",
+        "oldSha256": "911d270138f82c7c6246c8a1f105d1a783a584abdd7d71c4c966a0ad8df426ce",
+        "newSha256": "a5bc035f791f1c55501d31a8f7b59158660815dc2f2e0c0121b14dbc7bf9c518",
+        "oldBytes": 121151,
+        "newBytes": 76814,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-built-in-15.pdf",
+        "oldSha256": "cc3a174bd7987b6fb0ce121ee7fa311ea2173bcda6333f26a0b2ae22f86d7fba",
+        "newSha256": "25b19da82dbdbb025bea6c9bd2032ac291dd3a5bb62bbb307fe80c8798df05c9",
+        "oldBytes": 123417,
+        "newBytes": 79080,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-built-in-16.pdf",
+        "oldSha256": "63ef7c0076626ba7cf7bb31c00208d3d13816632d0b003787d325eae06f92492",
+        "newSha256": "54a866236a7bac7dada83681752c0b84839bf5748d1ca75be3a869dadbc3bd94",
+        "oldBytes": 123465,
+        "newBytes": 79128,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-built-in-17.pdf",
+        "oldSha256": "179271187360a9040f52665d5b24a953189b62f343c6fb8f81f74cfd9b98586a",
+        "newSha256": "ac999117b164dae93b2ec72bb91a1a60dfeaea897f6cd7da00d734089f40fe00",
+        "oldBytes": 123517,
+        "newBytes": 79180,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-built-in-23.pdf",
+        "oldSha256": "e930fcfcf725456d44bfb12ad6439459980683787578e64406b27395874b9534",
+        "newSha256": "7e8683e04f83b6d7690cd1e65b79d32e49959857e5f39e51944ad2b5f5314c47",
+        "oldBytes": 125119,
+        "newBytes": 80782,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-built-in-24.pdf",
+        "oldSha256": "1921b80fd20b15acb16d46bb928c6a84cd1da43e0db0e3d7b15d5f41cd280127",
+        "newSha256": "b423ec2a01ea393f8df7dda41a5c4ee1f2fa1b708064a081fc1108444a2d51e0",
+        "oldBytes": 125177,
+        "newBytes": 80840,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-built-in-25.pdf",
+        "oldSha256": "98679d61c134df1de33d073f9751f4624ce9a4027c519da2ca66a04521d4e6ec",
+        "newSha256": "a289acf943a7cd45e6dedd5fc1aeaeaf7dba49824b45db483e106084302f6e9c",
+        "oldBytes": 125236,
+        "newBytes": 80899,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-built-in-31.pdf",
+        "oldSha256": "4032d9ec3eae9231d5609f3018bda9bc9b406410be8e93e9a57f2a5563915bbc",
+        "newSha256": "aa1bc6c6b355e660cd80299eb9abf5ddbed75abca69911bbbd0b060e7ef8f16c",
+        "oldBytes": 126133,
+        "newBytes": 81796,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-built-in-32.pdf",
+        "oldSha256": "0f522f444cfbf088b4d5a69167eb350562f290d0195256b0051d4a60ca85ad52",
+        "newSha256": "9f01fbba8e662ac0af7bc062abf3e3a605d2143a7c4716321a772ae4ecc93f9f",
+        "oldBytes": 126186,
+        "newBytes": 81849,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-built-in-33.pdf",
+        "oldSha256": "0d87759b8ca4e0ccbfad57bffb45b7f95e32487b6a8fa53ce66acca138f863e0",
+        "newSha256": "5f0da51785d1665ad8ac1103199b988aced9b8cffef3186416b758face967c8d",
+        "oldBytes": 126225,
+        "newBytes": 81888,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-built-in-48.pdf",
+        "oldSha256": "7e75297597eae97a3e532793ef0b298b2f3ef707704fae446848bf6aaa3381ff",
+        "newSha256": "99225aa78d9438fcbdc541e4a7e8a3ed94ca17b9760d2e98120c287c670dac9b",
+        "oldBytes": 129041,
+        "newBytes": 84704,
+        "pages": 5,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-built-in-60.pdf",
+        "oldSha256": "00a0c5dd7267f7d5a42c577a3a23dc3aeffb189b3c06fdc75002f468b503cb92",
+        "newSha256": "e50ce32944bae7b4c2ba13057c632a799a98807a2b67cf0655ee91b2c51d4a39",
+        "oldBytes": 130896,
+        "newBytes": 86559,
+        "pages": 6,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-built-in-7.pdf",
+        "oldSha256": "8c28a052d7ecb79fa562cfa35f72af840ce1d1c441f980047895adef2857a75c",
+        "newSha256": "f531fb00b3e041bc840ad0d68d9083e1c1db4b075ab93b6e84801b7a77d166b1",
+        "oldBytes": 122243,
+        "newBytes": 77906,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-built-in-8.pdf",
+        "oldSha256": "08d4f8da418ba56af439139983db607c28ba08bd90ea8ed6aa6d1f935325cda8",
+        "newSha256": "8e0569be22aad4a4e4be2126d73073e1db23ccf23390d330116a6728751f7b6e",
+        "oldBytes": 122274,
+        "newBytes": 77937,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-built-in-9.pdf",
+        "oldSha256": "4aaa523e91762ae649635c18d7cdd83d5e2d4b944df86948e31e42d2fd3f7628",
+        "newSha256": "446b0032c3527dd4a44013056c8ac790e72ab10030a5663b10f108f58cbdd532",
+        "oldBytes": 122323,
+        "newBytes": 77986,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-starter-1.pdf",
+        "oldSha256": "b559cae9d09d684876c0e835afb6ab412489109e1af2139cf1284cf23edd54fa",
+        "newSha256": "f1a4d7021fdda5c03234f626eb007081bea2942e8fb78edec43ff5235788de7d",
+        "oldBytes": 121144,
+        "newBytes": 76807,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-starter-15.pdf",
+        "oldSha256": "cdcd23befbe5911e48cf6eaf5d6e6ca034e7b5088a33084cf030f012408b3b77",
+        "newSha256": "5977723aed16f76e8614de8ff09290e5a961828f882ffb91c775bfe4c52a3bfc",
+        "oldBytes": 123398,
+        "newBytes": 79061,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-starter-16.pdf",
+        "oldSha256": "7bd73b3d6d906e9d33f2722ea36751b4fd742f476acb497d22c28ac89a7e1e05",
+        "newSha256": "19101457392c4b0ed59485e4b2c6c7cb4203f7231a5bd356e07770dc658cf167",
+        "oldBytes": 123446,
+        "newBytes": 79109,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-starter-17.pdf",
+        "oldSha256": "dfee389519d79d8e0839d1bb338259f726f2e24413638e4eb9fe5d7d52cea900",
+        "newSha256": "a794b346f7416f6f9f3e86a6934c6e7c66ee65868c0480418c99195f1ab751af",
+        "oldBytes": 123498,
+        "newBytes": 79161,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-starter-23.pdf",
+        "oldSha256": "ef7b6705dffda9aed9b1bb54f4f7503f31cd7f4dd946bc7c5a8b5f6b595c7e10",
+        "newSha256": "d98543f7b957b7bd61dca50f45ecfdad3ef16ccce2b9e52a562c35c5fc3145eb",
+        "oldBytes": 125090,
+        "newBytes": 80753,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-starter-24.pdf",
+        "oldSha256": "9800bccc2d9a758753ed61e60a322f3162ea468a8c385a8113c601829a928055",
+        "newSha256": "6a384879e0231eba5c134f78e3685610cfbd34eddce09bf79d6f6566077b0848",
+        "oldBytes": 125149,
+        "newBytes": 80812,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-starter-25.pdf",
+        "oldSha256": "9548bcbebbb00935202a0cf2b6168fb2832a815d1ae2e1e44aef38d5f1d115e7",
+        "newSha256": "05fb1de38b96ade94c119d75f59af825598f1bd022929b84add3dfe72e105400",
+        "oldBytes": 125208,
+        "newBytes": 80871,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-starter-31.pdf",
+        "oldSha256": "a26aac239cc5f85fc17dd1b6bf241ccea7e97e60de7bf6dd4574036c0f1c6959",
+        "newSha256": "d8cae041f8261688470774d2945c10b55d663888e7a6d9e352b136cd230f5721",
+        "oldBytes": 126106,
+        "newBytes": 81769,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-starter-32.pdf",
+        "oldSha256": "c8b8357aa664228a9c0498189daaec01e7e525f24cdcefee3c8765a5bf17bb52",
+        "newSha256": "a76cd924c8dfe520eb7b4b2fb978a9c2b39ba9cbf93c0f6148cadbf60c76f80d",
+        "oldBytes": 126159,
+        "newBytes": 81822,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-starter-33.pdf",
+        "oldSha256": "79167db7e405ad168c6fcb6070e0497e106e817024d3a8c0ab26c9291b8a157b",
+        "newSha256": "30a1f4ee8d2ea03b17e146c1ddc13188b8843cb2562ee335445510ef0071fd33",
+        "oldBytes": 126199,
+        "newBytes": 81862,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-starter-48.pdf",
+        "oldSha256": "65d51162adb730f5aeafc6c4d3c350fe64d21a4ee337726c9bdb3035692c4d84",
+        "newSha256": "52124767a92db0347fd090602fbb1789066266b03ed1ada9d89e031dc31c021d",
+        "oldBytes": 128996,
+        "newBytes": 84659,
+        "pages": 5,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-starter-60.pdf",
+        "oldSha256": "b813b2cabb8b1d67191a278db578c76e6ea1237fd44b8c97e861794166b9c5fe",
+        "newSha256": "1a168be54970cbfa29fb078dda3e74a1a872d4ef6e90f336fe9e51d41d40b381",
+        "oldBytes": 130845,
+        "newBytes": 86508,
+        "pages": 6,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-starter-7.pdf",
+        "oldSha256": "14cf502e23d6a1acd23752496d641ee7d164533c7c1a5ac2f91bf3c25b774039",
+        "newSha256": "38dd6b6908d1a44777318716ae42ca8e6856447b500773f1b86e4969a044a58d",
+        "oldBytes": 122234,
+        "newBytes": 77897,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-starter-8.pdf",
+        "oldSha256": "5d71a32f9139080bd7ba348d5f2d2ccf8f6de3c0cd5dd5e5e0fc211ec666afd4",
+        "newSha256": "ea1b2019acc3224554cfef0707131fa57e710702741791d12be104032fc5e0fd",
+        "oldBytes": 122263,
+        "newBytes": 77926,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-A4-starter-9.pdf",
+        "oldSha256": "565d1384b6e74f262e31ddef33b491b55e31c28a58e73df3445ecf15b79045ab",
+        "newSha256": "1d929bc12c21527442adaf191c6365b7d00a05ad2c00afb853f7fbbab56c9aa0",
+        "oldBytes": 122312,
+        "newBytes": 77975,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-built-in-1.pdf",
+        "oldSha256": "152c6672b00e287b0213dd2ba1bc34e67e0dc10bd20dfa55a227060482bf4d7d",
+        "newSha256": "c51ec62ab04a699c7970f36f5438bcb91cd4a93bac152841ecf9ca3fd1afd1cf",
+        "oldBytes": 121118,
+        "newBytes": 76781,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-built-in-15.pdf",
+        "oldSha256": "6cb150cd3d25f9ef843654232eb62251e74d5792309dfcd7e8746a2b7bd51c2f",
+        "newSha256": "e9073a1f638e835a0e2f8c66101e9781fc444f6da7dd51ee07b1a1974ac7c00c",
+        "oldBytes": 123384,
+        "newBytes": 79047,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-built-in-16.pdf",
+        "oldSha256": "eb892d0693704b6bb1af9d47080ae42829cb0ccca3f8ca83fc8e221310944812",
+        "newSha256": "afbe4a912d0120eb40e58ea58ba0906a69dbf67211ab2722a900c269b1aa4f49",
+        "oldBytes": 124003,
+        "newBytes": 79666,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-built-in-17.pdf",
+        "oldSha256": "7c5e5ca281794d4f653c1709680e09ee811678de5c7d16b5d11d76300716e43a",
+        "newSha256": "a12a13984486282e2873a42b389d1d844b1ef3f810c1d655644d1bd5f16693ed",
+        "oldBytes": 124055,
+        "newBytes": 79718,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-built-in-23.pdf",
+        "oldSha256": "ead5fe3433761bcf8ede4027e868b5667d6c44374487896646242dfb8c8c79a4",
+        "newSha256": "d1f98460a95de0a4f9fd9f5990bfd182ff29e0bbcf69c15f2bc73d098bd18522",
+        "oldBytes": 125098,
+        "newBytes": 80761,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-built-in-24.pdf",
+        "oldSha256": "468c573491b428f229068a5a5c5d3dce8699157dad7d5857131d96940e0ff3e9",
+        "newSha256": "e7ae403a9d500dadf0a0e493cb8c20829acaf2f86ff1f9c39dd6ceeb4042cba4",
+        "oldBytes": 125163,
+        "newBytes": 80826,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-built-in-25.pdf",
+        "oldSha256": "65ecf03bae09f3e952ddc99b1911204ed0f6b7d661670b653192e31f5a3928cb",
+        "newSha256": "66663c6f4285838d2dc17c689da1aa8e8039b42af7286b6485eaca3be214751b",
+        "oldBytes": 125210,
+        "newBytes": 80873,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-built-in-31.pdf",
+        "oldSha256": "bc50cdb656a21a0a012db5bf69cbdbcb0f26cae020a74a4eeb743822ece3dfd0",
+        "newSha256": "413855c31f602696558c8df3889425afd3a8df9375564215e21825ac0ca1dc10",
+        "oldBytes": 126741,
+        "newBytes": 82404,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-built-in-32.pdf",
+        "oldSha256": "014b49d100917d923f3bcfdd0cb9ed4736d2c560a35baa94270ff9e3843cc55f",
+        "newSha256": "1e0e0064df8dc6f9ab776fcbae39b8995709091d8a9bbb0a68367d8a47022ab1",
+        "oldBytes": 126867,
+        "newBytes": 82530,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-built-in-33.pdf",
+        "oldSha256": "945dcfb7e54e745638526bcda4a69b10b50baa08c5bcf7d63f5361a875d6c86d",
+        "newSha256": "7169762bd842736992e3617b4f9000356f444b7870110ee866dbec5c469fa77d",
+        "oldBytes": 126924,
+        "newBytes": 82587,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-built-in-48.pdf",
+        "oldSha256": "a03c947aade14d7e9ca8e05e8f267f477f4c7d63e7fce7f9f8d8ed0a2166f132",
+        "newSha256": "01fe84048d1fbd58dde9a9406f21d33c82f76baab543e8d271673dc8cb007fbd",
+        "oldBytes": 129019,
+        "newBytes": 84682,
+        "pages": 5,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-built-in-60.pdf",
+        "oldSha256": "6200aa5eb72adbb77c83dd14992f9afd36d24028c0f524fa22bb524d637f306c",
+        "newSha256": "05aaad2733d82f4c164b98a7b79ab57ae664fa5696fb30519403a9399af914c5",
+        "oldBytes": 130952,
+        "newBytes": 86615,
+        "pages": 6,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-built-in-7.pdf",
+        "oldSha256": "87e34fad941261e860c3b79e7a68f3852a63d75679f4c4c54470e886d5f35623",
+        "newSha256": "775818646da1dfcadb131bcd1c56e476e9df925d693dc2b8720d5c32ecd1c17d",
+        "oldBytes": 122190,
+        "newBytes": 77853,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-built-in-8.pdf",
+        "oldSha256": "5888c013873e7090a0f86ca4cf82aa579eb2c45126f2ca6db1737e5c9102afb1",
+        "newSha256": "5a4616d438f70e5beaa53c3547f8c4d76ad2cbccb002e182e2d06cdcf97f113d",
+        "oldBytes": 122231,
+        "newBytes": 77894,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-built-in-9.pdf",
+        "oldSha256": "7eab712b89a4349330f489f9b3ed4c0a4131d71fcd812d602756c014e8241646",
+        "newSha256": "b8354376434b1eea3194011ece72a51930794e2ee0872fdbbba4dbc53f9dc94b",
+        "oldBytes": 122288,
+        "newBytes": 77951,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-starter-1.pdf",
+        "oldSha256": "9e533d6467178687600846db5817f8f195b7aadc7200fbcb85c49924382069fa",
+        "newSha256": "6deebb15f6176a1e4643f031a8ecad32a9efec11c48e81e45b6a9e919cfb6907",
+        "oldBytes": 121106,
+        "newBytes": 76769,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-starter-15.pdf",
+        "oldSha256": "cdbc754bab8d14ffe7f8b47e4ee3b6a9840cdfb7da775dcb05c26dbc45515211",
+        "newSha256": "8cf598dc46bc5fabb7c07bd059337fbd5d6d5ff28f3aab467c9df89d2361b2a0",
+        "oldBytes": 123358,
+        "newBytes": 79021,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-starter-16.pdf",
+        "oldSha256": "09c935cceccc533811af3ad39a66e3bc2fec4041fd62fbd58081b83f72377329",
+        "newSha256": "cc957961a86be49e7769fb791e91308f46fcceafc91add0b2cd0d4d7438385bf",
+        "oldBytes": 123979,
+        "newBytes": 79642,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-starter-17.pdf",
+        "oldSha256": "3b3f206f8bccbec1c397177ae880c5a42b4e78b75f5ef0d967f50e2cf3e53992",
+        "newSha256": "72105c98834ff7e2692eec63baea282f07b17f28e1788c3ced8571ff0dd88c41",
+        "oldBytes": 124032,
+        "newBytes": 79695,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-starter-23.pdf",
+        "oldSha256": "9f14e1efcac3822c5524c87a8eba0a44823336ecb3694ed3537df7f2c4a943e3",
+        "newSha256": "8a1538b9307a7108d9ec736b1ee0fbbcec3b7e5807bb854436f4bb77fa83f596",
+        "oldBytes": 125061,
+        "newBytes": 80724,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-starter-24.pdf",
+        "oldSha256": "d22de3783fd3a12c9c25621dece10d1cee822eb551018f1261df1e243c2210e2",
+        "newSha256": "f0350273609c0d972b156e0592b26d02ea65433fea77cd71cff3ba59bab8a9cc",
+        "oldBytes": 125126,
+        "newBytes": 80789,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-starter-25.pdf",
+        "oldSha256": "22c32ec7e403ab964e89e9332360086a729a9b5fd638fb8f819abd66c35a96a2",
+        "newSha256": "c94dab18db8b48ea7b155be83fc724950e88ef3d197a973482b7759e0d0262d4",
+        "oldBytes": 125174,
+        "newBytes": 80837,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-starter-31.pdf",
+        "oldSha256": "74fedf7f08176f6e61f46163786b5898f2ae90f753645cebf1f1eafc291fa422",
+        "newSha256": "ba0c765ea02fadcb4821300092d0d073d72ae6507f8262e199897cbc7ba3714d",
+        "oldBytes": 126698,
+        "newBytes": 82361,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-starter-32.pdf",
+        "oldSha256": "ef3f588c5b92d1fc63f52cd531467fcc62097871f4ac07067052745ff10ad0e9",
+        "newSha256": "ad312caf8168649c83c7e61d3e2792ea181003cd3c9b14476cc1310f26db6894",
+        "oldBytes": 126821,
+        "newBytes": 82484,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-starter-33.pdf",
+        "oldSha256": "4c70c862e4f120affdbe2ac13f5c45ad8ef37f700d02d0533ec4493a58de37ad",
+        "newSha256": "6b2a83d398ddd08c0e3eeb5811b7a28349b6ea1f08204dbbe28beaba6ed2966a",
+        "oldBytes": 126877,
+        "newBytes": 82540,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-starter-48.pdf",
+        "oldSha256": "df538503f0441050cc42eccd8e89be6214e20fae785c7d84b884628dc7551c18",
+        "newSha256": "882e5557574d9766fec95af6101bca5e7c5dd6d92285bdd5b3e411ca3bcaa44f",
+        "oldBytes": 128960,
+        "newBytes": 84623,
+        "pages": 5,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-starter-60.pdf",
+        "oldSha256": "83f901261deff16125ea08a85cf9c73675764f81d793e09e484de44f5d77ab65",
+        "newSha256": "d3cbf45f4c28a28696f30ccca0b223538cd8339bfcd191b81d0e9638a044aba5",
+        "oldBytes": 130887,
+        "newBytes": 86550,
+        "pages": 6,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-starter-7.pdf",
+        "oldSha256": "6063bc11e23d9a2c6d09cd7e2db630ef0b1fa5339b77f330d7061eaaa4d23b98",
+        "newSha256": "0be5252573c0555f3595d92b4f79d223c4bf770739ab0b87c4be6e2d79c7a853",
+        "oldBytes": 122178,
+        "newBytes": 77841,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-starter-8.pdf",
+        "oldSha256": "e15275dd95ff08d35078ece8d3cd8e32445f43266a84717b7cd3c1acf76707b8",
+        "newSha256": "b1bb6ae30337d353e2b220ddcdf603fe76c0539fff6de3fbe9cda63f1b79a7dd",
+        "oldBytes": 122219,
+        "newBytes": 77882,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/contrast-Letter-starter-9.pdf",
+        "oldSha256": "c704a7b89b204edb992fa7300bf463a3d083367bc2f2c16d11db7eb1e8bfdb3c",
+        "newSha256": "0f0d95566532342fdc32b8e467b0c055fd548657f6e920a0bcec96ce8758ed19",
+        "oldBytes": 122275,
+        "newBytes": 77938,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-built-in-1.pdf",
+        "oldSha256": "6929b9a5162ac764c2ef0d2a39b37a1368214d2bfc3175be3883d545ccf7f083",
+        "newSha256": "a387cf32e597550c1463571a6e9baebd39c803456f8d9e87003508e690e96848",
+        "oldBytes": 116121,
+        "newBytes": 72973,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-built-in-15.pdf",
+        "oldSha256": "f4884605c1f41d016e6d18d432b925f6ce453e4cbd0e80ce62d06fc1758c4892",
+        "newSha256": "1ab29ac50c89144b7057b1a8e2eb55319b8f95777b2e700a7972dd5f505b488d",
+        "oldBytes": 118391,
+        "newBytes": 75243,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-built-in-16.pdf",
+        "oldSha256": "824f8ffecce005933140cdd357cfe58cbaa949d4377c2513e9e4664a05ad5b90",
+        "newSha256": "f8bec28eed9a0bcb40c9d77e114a548f1e94aed085dde96626f1a4b657cbf484",
+        "oldBytes": 118443,
+        "newBytes": 75295,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-built-in-17.pdf",
+        "oldSha256": "e053a6bad45b0bcb4c151cbe90cab0eb4781e81485fd512c00ea834dd370c1a1",
+        "newSha256": "0774896c99ffaf329f9b6821318ad90c25acfea977c98abc3a81bb421e47d37d",
+        "oldBytes": 118509,
+        "newBytes": 75361,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-built-in-23.pdf",
+        "oldSha256": "3e6780b3f7d25af494111ea6899a1b446b03cc9cf5f25c54e898aaa354789007",
+        "newSha256": "7440e8673edb1e29d8b12d7c819a084e40654fd62318e2ba6a58b67455bf0043",
+        "oldBytes": 120117,
+        "newBytes": 76969,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-built-in-24.pdf",
+        "oldSha256": "7fc94af5f4152c6487911c00ecd834189e97f5a97e9a61931c35c09ccf9f805a",
+        "newSha256": "9228ad5d4a90dfa4fede0ca820e5e542375471b4b226c2b6bd3948c1c51e16f1",
+        "oldBytes": 120173,
+        "newBytes": 77025,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-built-in-25.pdf",
+        "oldSha256": "67c110b6ec4531918d2765afac1dac25d3dc2af58d7c95938436722a5d4228ef",
+        "newSha256": "2a901a16c02ccc63143eef0b5ffed58c48e093630fc10d474376eecf2681a1bd",
+        "oldBytes": 120233,
+        "newBytes": 77085,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-built-in-31.pdf",
+        "oldSha256": "d7b38d65766ba6776afc5381ae0a6a21aaac47a2c9469d032f79cc7097e66e52",
+        "newSha256": "bfe84f5020c3cfbdcd811eac69c4ba0a9c66bf988e36d789c83e69e39955d524",
+        "oldBytes": 120546,
+        "newBytes": 77398,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-built-in-32.pdf",
+        "oldSha256": "7f35a23048df89699584016b0997404238ba2ae9bd97de0ea32333f7df7d5238",
+        "newSha256": "ad57b3ce3dc177dcbec34468eec4a5bf3126317f5c8e83e9e8d325612f6676d6",
+        "oldBytes": 121166,
+        "newBytes": 78018,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-built-in-33.pdf",
+        "oldSha256": "908bdff8cdda6a49e5949e4230994d954cd500117053fb6b60b185f76f82a041",
+        "newSha256": "5ec4cd1fa5517a298260f9bac474f84893a2e73dfe08372445bf3fb4559c5f24",
+        "oldBytes": 121216,
+        "newBytes": 78068,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-built-in-48.pdf",
+        "oldSha256": "af9db605dfc6859b71efec4ebac764a8aba45e05cdc2767b3012395d791157fa",
+        "newSha256": "57d5897a09224df7d2e2df06e531f16592974f66f332b64aa1aa1ad16c8fd04c",
+        "oldBytes": 123996,
+        "newBytes": 80848,
+        "pages": 5,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-built-in-60.pdf",
+        "oldSha256": "30d31688035975ce75253ec4d887a30bed9b6fa1cddc9a671444a74604dd32c6",
+        "newSha256": "b724d11175b4acd8f95b70c287ef3026ac6e3839757016deb4c32404408a61ee",
+        "oldBytes": 125258,
+        "newBytes": 82110,
+        "pages": 6,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-built-in-7.pdf",
+        "oldSha256": "7c1d22255db56130b0a76f76899f4922711f5d27c30514ce01d7fbd6be35d2d6",
+        "newSha256": "85e0d00a55fb5378a22cf37c7ff45c38240c47ddaf4166c8fabefe173eab3f6a",
+        "oldBytes": 117194,
+        "newBytes": 74046,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-built-in-8.pdf",
+        "oldSha256": "7e91dbb95f569720dbab5c858d04049e290b1e6f790a52d2c4f3ef7f0a8021ed",
+        "newSha256": "035d9a6f1daa7b0bc8cdaf994e26db8b42be0b9f70f205d32582c7931b896da7",
+        "oldBytes": 117247,
+        "newBytes": 74099,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-built-in-9.pdf",
+        "oldSha256": "5d1ab8c9c51a2c6b2a9e44dad5bf36a33b69ff7fd5ff41a10c2af9015f7c3511",
+        "newSha256": "6b1fac0048a9bb95d3faac4a29021a98943600fa26a2445e0ecc04e4bcc32994",
+        "oldBytes": 117245,
+        "newBytes": 74097,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-starter-1.pdf",
+        "oldSha256": "7b1ea0d67d000bc26109286f25e4c183c56e665815595c3c3e3e4b76d013d1b6",
+        "newSha256": "a076f1f7c409bec8c5ad5ce5ac69f495011beb5e2d7b614dd78d8ba9ad2522b8",
+        "oldBytes": 116112,
+        "newBytes": 72964,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-starter-15.pdf",
+        "oldSha256": "4a75909a119ae341cf8214cc9eea71dfdaba86e8429ff2b251e6f80a315368f2",
+        "newSha256": "9a720178f636c98e8aba8da128c854921e1dd0b552523e1b0e6646aaccbc30eb",
+        "oldBytes": 118368,
+        "newBytes": 75220,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-starter-16.pdf",
+        "oldSha256": "47bdbd712da3174e1ece85486c4404276575ec94f99d62a8f9b6a174d48ae3ae",
+        "newSha256": "372aed5452f9757876646922f2e5372b4bf52b06856aaf6aa7feac30006a5831",
+        "oldBytes": 118419,
+        "newBytes": 75271,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-starter-17.pdf",
+        "oldSha256": "70ed1f6fa35b49021d1d6cf93d5a26be49495139fb4abbaff3f75725df4338a0",
+        "newSha256": "3c71e82f2ba5b0f29e5159df77a97fce03d06a6f51994dbee6d2b34ed2ed92c5",
+        "oldBytes": 118485,
+        "newBytes": 75337,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-starter-23.pdf",
+        "oldSha256": "48d1375e2417c8f39ae071c9978bb0803e36857fc0503398902478dcb76e4896",
+        "newSha256": "62bafc5beb24036c08bbfd72cc460488041064ac879ceab44805bf3ea143ac8c",
+        "oldBytes": 120086,
+        "newBytes": 76938,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-starter-24.pdf",
+        "oldSha256": "faeb168a41566f086fdf5ed4e127ca6913408683237d6be0cb80625269df401e",
+        "newSha256": "0fbe472ecb32160e816986734c66b35cd5dfab14893329fa8270033119fe49d0",
+        "oldBytes": 120140,
+        "newBytes": 76992,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-starter-25.pdf",
+        "oldSha256": "2c9346f185a9b3710e3bb3fca2dbc6919a5ce7b1e2f4d851d468fc596731762f",
+        "newSha256": "2a91382338b11fcb3f8c759fc8e906498f14bce42d83758dcf5fb0c693b1398b",
+        "oldBytes": 120202,
+        "newBytes": 77054,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-starter-31.pdf",
+        "oldSha256": "54c5241f6a22de2076c084da9030b98b8799387917f4b2ea97d1b6ffa412c93f",
+        "newSha256": "65a9f53062f5c1666eb5d5eef2df662bb0b62fee53bd2ed56c11f42322f17b9e",
+        "oldBytes": 120513,
+        "newBytes": 77365,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-starter-32.pdf",
+        "oldSha256": "d6fe7033df20388563e5974f0dc94ca659055816b5be63a97b5d2c8fa2782094",
+        "newSha256": "fa0de8d521f38a83eb235159a401b025873b531ca18393a7148cc207abc11495",
+        "oldBytes": 121134,
+        "newBytes": 77986,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-starter-33.pdf",
+        "oldSha256": "a43ab9a340c5e186e1ec01185bcf5889653b63fbfa8a9a842c1f1010198ca5be",
+        "newSha256": "2c5ec9d2ff9ebc40bc926ed699f72f2f84ca38ab5ca463ffec54ddf38c05c633",
+        "oldBytes": 121185,
+        "newBytes": 78037,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-starter-48.pdf",
+        "oldSha256": "ebb34b2097cb68d93c3f0bec67b008dcfcf6e4c2e0f55eafb83636cf5afbf350",
+        "newSha256": "0f340b05fb8da7f26ba7dcc2ebf6aa7fea127bc847339b55036d99d347c2cd42",
+        "oldBytes": 123944,
+        "newBytes": 80796,
+        "pages": 5,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-starter-60.pdf",
+        "oldSha256": "7a881cba521857bce477db0a787450622ee1a436bf784d2dc194f2a65b679d7c",
+        "newSha256": "28c845a170aaffc57f0e1f0aa88fcb080e783bdf3e96c4948a36f376248a65de",
+        "oldBytes": 125207,
+        "newBytes": 82059,
+        "pages": 6,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-starter-7.pdf",
+        "oldSha256": "7d9f0cce01c570935ef5db91af07a3048857b47f185270cf221a67c871939850",
+        "newSha256": "556843bdf36c93193b1c994b7668ddb583c08f7bb26b86258345c9d9b595950d",
+        "oldBytes": 117184,
+        "newBytes": 74036,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-starter-8.pdf",
+        "oldSha256": "b95da7c0334955b920da22e6fc31f0ce76a74ba50397caced0a6ca6d329df4ed",
+        "newSha256": "0ff8eb83c97692dbd87bef10825748f1dcf2a282b3d52c5a7eac830a69b5d979",
+        "oldBytes": 117238,
+        "newBytes": 74090,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-A4-starter-9.pdf",
+        "oldSha256": "a9091a8c38d5cfaf040aaf921d820a9a6168cfbc714e8fb0ab2ec2954b4d6b73",
+        "newSha256": "8ae33a65e7c1d27b06c15af20b811f8a322bc9f1d4e2990840ecd04b6b0a116e",
+        "oldBytes": 117231,
+        "newBytes": 74083,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-built-in-1.pdf",
+        "oldSha256": "a1d91f3a64382cc656d6b247265e1bdd49b504e36b9845be9d7a15a6a8cd4068",
+        "newSha256": "6c7185b5d8ef7513d3de3be465074deb6a7d17dae9314e3ed6343a002ab18361",
+        "oldBytes": 116106,
+        "newBytes": 72958,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-built-in-15.pdf",
+        "oldSha256": "64ed8a2dae0d9ff47a46d0776ba9d77186472ef54781c9ff5f138466a3a15a05",
+        "newSha256": "b6358584b87270ea3a6deadb85047897157d8d3c62a4c136874fadc3263ea817",
+        "oldBytes": 118356,
+        "newBytes": 75208,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-built-in-16.pdf",
+        "oldSha256": "a88692decb97e4dc67d595deaaeaefb268f7fa2f679c7406439849b575aad803",
+        "newSha256": "1ae788cd1fff4f04b36555c43209e275094a1afa6115272c95b2cfc9e38c0cc9",
+        "oldBytes": 118414,
+        "newBytes": 75266,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-built-in-17.pdf",
+        "oldSha256": "208a192797ec178807e57c4d2faa2dfc493a89130674e379dc0cf814522e7d6b",
+        "newSha256": "3e4c3755edc4c41ed4086f758045a96ce3bc5dcdeaee0ed1d948ad6be099d443",
+        "oldBytes": 119023,
+        "newBytes": 75875,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-built-in-23.pdf",
+        "oldSha256": "acdc68779466cd3daa1b652003c429676e27c552a34210cf150dafbe285f6b11",
+        "newSha256": "fc676a2a23b04dea56f8730599862d9518c9c6ff236ab436b9764952e8c275c6",
+        "oldBytes": 120073,
+        "newBytes": 76925,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-built-in-24.pdf",
+        "oldSha256": "789aebf470a9bfc763105eda16ef4913d2984ac75b4b57bef321e8836cefaba2",
+        "newSha256": "913dc17f2386d3992cba1d3f91442d809df60a7561616e4d102a2b7edf639ed7",
+        "oldBytes": 120133,
+        "newBytes": 76985,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-built-in-25.pdf",
+        "oldSha256": "47b51b363eb45929319c1b34912a35657a64655785489706848ef9cc546a18ac",
+        "newSha256": "80e912b13fcb0df4b7594bac26025de85db2f7ef0c52f0eda809510d1cb4de68",
+        "oldBytes": 120193,
+        "newBytes": 77045,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-built-in-31.pdf",
+        "oldSha256": "35e2e441a759d89b9739ec8aad6a5420a5c5014fba426ef393365b9a25c02527",
+        "newSha256": "96ac22a15e139185126615af9dc5a7b622d55524ab044a40dfcb47121d385f8b",
+        "oldBytes": 121051,
+        "newBytes": 77903,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-built-in-32.pdf",
+        "oldSha256": "f981b8d8b67d2547aaa77afce3fb9bd0b496b7c0902061f384acb6c2b7e92e3d",
+        "newSha256": "972544dca9f8ca5c6a6bdcb8fd2b7da8cc6bffaf0ae058593f2bfe5a45230c06",
+        "oldBytes": 121759,
+        "newBytes": 78611,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-built-in-33.pdf",
+        "oldSha256": "1998fe566d78eec5156521b0f6e370065efa92c2e8217f03fdbfcba0eab4b56c",
+        "newSha256": "aa30d34bf08cf6b746068d1c6d2ac8d9cbefb11cd68b91cae3159cb56cf755f6",
+        "oldBytes": 121895,
+        "newBytes": 78747,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-built-in-48.pdf",
+        "oldSha256": "f0563f76e3f9f3d36f1092f576fe695a88f6bdd0072379c48792229447c3d7fd",
+        "newSha256": "35df880f5acfc64994b2e1434cc2c9b799d987f996f32d54beb949ecb0138096",
+        "oldBytes": 123995,
+        "newBytes": 80847,
+        "pages": 5,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-built-in-60.pdf",
+        "oldSha256": "bd9cd720cbe7e2db2b60e2e9f0e0e3cc861c0a042dbe8491c4abd81fa2e47c0c",
+        "newSha256": "5a597c2fda2c9e51d3ca024a35fd15a479887ff9455f907e313c98507ba5f95a",
+        "oldBytes": 125922,
+        "newBytes": 82774,
+        "pages": 6,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-built-in-7.pdf",
+        "oldSha256": "68467703a34188116a6b3db0084bb6f37b4ae6f7bcb887e2937432f0a9cda1d3",
+        "newSha256": "11226317b36ba5ddd75872017cfd3cb4cd5b5cbb364a58df504204c561b3f84c",
+        "oldBytes": 117167,
+        "newBytes": 74019,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-built-in-8.pdf",
+        "oldSha256": "65ca8c010781a17084e41adbfba9585d6117d01238ac0c9954d1430695a0c79e",
+        "newSha256": "eb9bc8f0f87d00aafd838e0ebd6d52b67f398d893f26a76e740e46d36f74caff",
+        "oldBytes": 117159,
+        "newBytes": 74011,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-built-in-9.pdf",
+        "oldSha256": "fd532a240b34344928e65fa9bde2592dd4a8ec1afbbe30970a15e13487eab95b",
+        "newSha256": "48408bd4338ddddc564ccd5d11b614cb2636615f2ad5f0a728778a42f6c505f2",
+        "oldBytes": 117211,
+        "newBytes": 74063,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-starter-1.pdf",
+        "oldSha256": "40e06503ef461c38d9602060c2312492ed77da97da4e36ad23fd74c9468f42d4",
+        "newSha256": "12036df3d595b078b525de2a808ce5806ac2477389466a8d58be990561f7ff0e",
+        "oldBytes": 116096,
+        "newBytes": 72948,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-starter-15.pdf",
+        "oldSha256": "76889adbdc8c8b9325e62b99c01cf342e1a3726a6297b7564b1bbfdc6c344974",
+        "newSha256": "d9209ae5139d1fe820fbd2afcd6a9dfe9f6529518aea3de4462eee2b67b90d13",
+        "oldBytes": 118335,
+        "newBytes": 75187,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-starter-16.pdf",
+        "oldSha256": "6f56df012d3046c3f9bddc7a4bea33a33a43ff48046e00e5ea7afda77022977b",
+        "newSha256": "cc98e3455d26fb8c6b4f5797f36033e0e4c806c8320f6b1f559593298f196a50",
+        "oldBytes": 118394,
+        "newBytes": 75246,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-starter-17.pdf",
+        "oldSha256": "38cd77d1e9ce53b5b95ef5433b825a873bc711c9fbea446b234d970bdea933f2",
+        "newSha256": "991de1e74917f204ae963c4c0bec6ccfaff3ed2cd5e864106898d4a259d47808",
+        "oldBytes": 119005,
+        "newBytes": 75857,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-starter-23.pdf",
+        "oldSha256": "3e43b489e362a74f423f7211b14fd024687c2e2420a2ec1bca6efebc422173c1",
+        "newSha256": "3145cc297266ae602336d1faf589478c93d6955392569c2bf69bbc7ff97c7aaf",
+        "oldBytes": 120048,
+        "newBytes": 76900,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-starter-24.pdf",
+        "oldSha256": "61ece80b4ffc3ee729a386f01fa1cbafb0aad2a76f6f42be6dcea1bf94c47dec",
+        "newSha256": "cfc564d65843a56cce6e512d60f861f00a3d47eb334a311e6f5ab639da8ccf25",
+        "oldBytes": 120107,
+        "newBytes": 76959,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-starter-25.pdf",
+        "oldSha256": "1d8e25104833f49bf1da441b5dd73b1211c0e163c337e06d8f2de254324b99dc",
+        "newSha256": "e56d74198de40a2177953ef238e56b19f8be6ec0a27a8cd5c23508ec2e21a5f5",
+        "oldBytes": 120166,
+        "newBytes": 77018,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-starter-31.pdf",
+        "oldSha256": "9769927cde60ea2391a263d8d61e1c8427b1422a42ea98c4f7c250cd82ca10da",
+        "newSha256": "4e2fa30f7d22ed7a3bbd0da102ba70f42a43fc8f8f292c6829c5d8439ef5c48a",
+        "oldBytes": 121025,
+        "newBytes": 77877,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-starter-32.pdf",
+        "oldSha256": "0be906f9747160f1c5746f98e0c4952f1874812e8357e43b4840ca4df7ae5859",
+        "newSha256": "8836859f41c396d3e31d3e0698b2c1d9ebb514bf5c95a26408014b6285f13ea0",
+        "oldBytes": 121727,
+        "newBytes": 78579,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-starter-33.pdf",
+        "oldSha256": "61b422d2829e79830d7fb63b390358546c9826b9c20b623d5ad51f7d69136e32",
+        "newSha256": "d4ee4a9d424f714b1e5787d39609eed8a0423645b21a50df41d29b4f172ea580",
+        "oldBytes": 121862,
+        "newBytes": 78714,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-starter-48.pdf",
+        "oldSha256": "26d57249fd1906ecaa7207ec690b787a4623e1d12a2dc86385277c6b311cd638",
+        "newSha256": "b8a5ae6124ae6773cc1e9786b8a57df1061cb7780b7df3960adf2088a309945b",
+        "oldBytes": 123954,
+        "newBytes": 80806,
+        "pages": 5,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-starter-60.pdf",
+        "oldSha256": "60e6be30448df9b53933e6faee6ce6e994cef946474e2f0839bb3d2a7ea78308",
+        "newSha256": "fdae57a6848401a58c78161b761149bcf726ad9125fa964fcda8e9c653b7dbdc",
+        "oldBytes": 125874,
+        "newBytes": 82726,
+        "pages": 6,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-starter-7.pdf",
+        "oldSha256": "7d9b210aae141a319c08ed0942ef463ca041fb46c8b0b64dd5180939d0b20e91",
+        "newSha256": "0ddab46f01b5ea701314b570b9650d7fcab84527e441f6dc40c7c376b4181f6b",
+        "oldBytes": 117155,
+        "newBytes": 74007,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-starter-8.pdf",
+        "oldSha256": "381a1340273ebb135b4d123eb3c7550e76473b75c905de3bb4d0212e1ca0c5e9",
+        "newSha256": "adba5af8b983f80adff2d78da0764bf2f7e05b8420bbfc8b26284c08d9640a30",
+        "oldBytes": 117145,
+        "newBytes": 73997,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/quiet-Letter-starter-9.pdf",
+        "oldSha256": "54b02691f705f214e372967ceb2548893f6f1de91d2ad344c3407f9a11d917c0",
+        "newSha256": "f1e9d0ccda090519b6579fabd886dc15768a16ee08465fb330f3b6e18908b71b",
+        "oldBytes": 117199,
+        "newBytes": 74051,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/saved-011.pdf",
+        "oldSha256": "d39662841795a6b87892c61f085bdc21bac5e6e75643642cbfb976692b8b4eb7",
+        "newSha256": "650073a8c2cd19ed62b1a570b16d7b8ba077b7ed67009c50733c958093856685",
+        "oldBytes": 139399,
+        "newBytes": 94343,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-built-in-1.pdf",
+        "oldSha256": "04c5b227568284173f84c5d209cdb8ee5121dae5814bf2cfa9c8d94449a0086e",
+        "newSha256": "3f61df66c5b436455cc18b24bb18dcd80f598ca6fc8c800e07436e7ac2bcce55",
+        "oldBytes": 134477,
+        "newBytes": 89421,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-built-in-15.pdf",
+        "oldSha256": "6da4feff244e57764b7da8dadbbf92fe5a62eab50b6050c155a75475ac11bc22",
+        "newSha256": "fe8b476bca2342efd3ccb40f60e3001928b7b587b4576f3b2144e41c8022c08c",
+        "oldBytes": 136769,
+        "newBytes": 91713,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-built-in-16.pdf",
+        "oldSha256": "588005523e0c60e2c4ead7c857364e38066daf392f2548f47ef06e0fd15c4ba4",
+        "newSha256": "a7b5138be1b57944578967ec99a957b63e3d7e28f0234a6d59c46c8424f46876",
+        "oldBytes": 136818,
+        "newBytes": 91762,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-built-in-17.pdf",
+        "oldSha256": "1e1487510d2f3644a2231c79a5f391bbb33bebc54d0dc503375e2b0b014ca9af",
+        "newSha256": "7d8b0b700c17b188fe5cd1f9e75986419213828f221067f43c57021a7c7436b3",
+        "oldBytes": 136871,
+        "newBytes": 91815,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-built-in-23.pdf",
+        "oldSha256": "a5ba44bb0dc9cc9d6f25f34a89ebf097fe6d15679581088634592ed2bee1fe54",
+        "newSha256": "b5d9d1e56630a3503021c7b1b0f870fc324e3fce8beccc98ec139a35fe1f234f",
+        "oldBytes": 138458,
+        "newBytes": 93402,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-built-in-24.pdf",
+        "oldSha256": "74343b714d119b612e55efa9b30562dc01b330ec4ac709c078cc6e41eaf328ba",
+        "newSha256": "11db5b051fba9eb11114a27d1be1e7d18aaddd0a7972a78ae56bbd412089cffb",
+        "oldBytes": 138515,
+        "newBytes": 93459,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-built-in-25.pdf",
+        "oldSha256": "cb2b12f03bd9ad0ca9f074480047b8ae93ce54858ecf337f157fd0140a4cc1be",
+        "newSha256": "c61516a38b3ee73c5f37426eb68ee6d0784401ae63e23176d3f403831918d0c3",
+        "oldBytes": 138579,
+        "newBytes": 93523,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-built-in-31.pdf",
+        "oldSha256": "6544e432281923a5b3038fb881eb687a64dec7ed666a251b64f698f8fd7c8500",
+        "newSha256": "1ec2c012081227eaecc9f032c48347c9912f73168c1bf26702d18c1bfccf5509",
+        "oldBytes": 138895,
+        "newBytes": 93839,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-built-in-32.pdf",
+        "oldSha256": "c5640483ea09b986eb83fd4ba15d8181630427c9d7a009e55887c5036b212733",
+        "newSha256": "7c69091f1d2534c98a8b14759fc555066c96a2bab82cc58112428801323e3ff7",
+        "oldBytes": 139517,
+        "newBytes": 94461,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-built-in-33.pdf",
+        "oldSha256": "46d00d0f4bea60bafe5123349b9a6526bbaf74c15dd869aafa509c90d3aba295",
+        "newSha256": "2cb089b82ff3b10d511946ddbe73790137af34b73b76789b6ca3775746df96d6",
+        "oldBytes": 139570,
+        "newBytes": 94514,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-built-in-48.pdf",
+        "oldSha256": "587abe7a026e37fa0ceacd93a52a7a1b26b3068eeea727e27e8eb5c1252780d7",
+        "newSha256": "91b43fecfac482b124182eb5bd1383865b7a55365a9731059c74f6bf27d81c51",
+        "oldBytes": 142290,
+        "newBytes": 97234,
+        "pages": 5,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-built-in-60.pdf",
+        "oldSha256": "db65a450105f6b121999c35aa7505c8208758a3b26ca7c048cc4c7ad4268a95d",
+        "newSha256": "7e798484c3af36a23a0e879798fe10e0b101977ecf344a024b835de9e5d4303b",
+        "oldBytes": 143550,
+        "newBytes": 98494,
+        "pages": 6,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-built-in-7.pdf",
+        "oldSha256": "90ba77c3e0edeb2e5749f1bfc6e318d9defe767b0fc0ed7e5cd811493716ab0a",
+        "newSha256": "ac4907d2f0022c16b697b497daee7ea4aefc1c9dcab7b359c05cd7481e08a840",
+        "oldBytes": 135586,
+        "newBytes": 90530,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-built-in-8.pdf",
+        "oldSha256": "7d8fac7a7d953c904c5e08fb14f4009d939389a4a06059ca52552db3896d840b",
+        "newSha256": "d59b0dd2218d9390d42667624c1ba9c5f127fad8f7636ca68816c47b03aa0212",
+        "oldBytes": 135638,
+        "newBytes": 90582,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-built-in-9.pdf",
+        "oldSha256": "b0c7488f2602abbdcabc75effffda9068058d926a65ddc7dda044e808dbdcb73",
+        "newSha256": "089032ae7f9a5082497406a113f099c9dc3b692326508eaa25d13f74e07b7dd0",
+        "oldBytes": 135684,
+        "newBytes": 90628,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-starter-1.pdf",
+        "oldSha256": "27107ac997b79d83d0d1f45d66a2424b168558212a95846c57099d8142f79285",
+        "newSha256": "4a9d8bfa96098b0f4ac8d913c7753f078d5bff7c0df00435284a8335f8380932",
+        "oldBytes": 134466,
+        "newBytes": 89410,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-starter-15.pdf",
+        "oldSha256": "f01cb3f8ce76bc449d3407eaa60968a00d7803f181887dcefde805968e8d2a59",
+        "newSha256": "45f3812ca98e97d282ae2bd553763be1fd9d0a512c470e7137fce2bb273a556f",
+        "oldBytes": 136743,
+        "newBytes": 91687,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-starter-16.pdf",
+        "oldSha256": "0978fa78678e587008a39d393c706ce34cc68c1369595d64d1dce1dab706bcbf",
+        "newSha256": "ce842ecc8f878e044c6fa30d1da2c4c8c478ff547fa0abffcc7a4cebc2b55ac8",
+        "oldBytes": 136792,
+        "newBytes": 91736,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-starter-17.pdf",
+        "oldSha256": "e896e91fffed08150f2364fe1cc41a440a53cca32177aa69e27aea5a405e5505",
+        "newSha256": "b9cdf64f95ca06abdde1daa1cffdedee5f57502b80540ab9199604f915c0bb51",
+        "oldBytes": 136844,
+        "newBytes": 91788,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-starter-23.pdf",
+        "oldSha256": "9f3825b477c1b2d622a4f05ce89519b7378563fbc950b6cf7cac064101310f2e",
+        "newSha256": "5fb4e6bda10d07db220fe591a612e06c21132504b8b67cecee7d8da1e5d98e64",
+        "oldBytes": 138425,
+        "newBytes": 93369,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-starter-24.pdf",
+        "oldSha256": "5c5cf96147d9ce7ceb2a32ca9d44c9742ed913de7c012c0d9c5fdc5612845e5c",
+        "newSha256": "558101394f0839677cba9813023e3ba29b9643d0350f2c5f932274ccc73493c0",
+        "oldBytes": 138481,
+        "newBytes": 93425,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-starter-25.pdf",
+        "oldSha256": "1131b19349b241071467bb38cc5c937856beee6c8775965c03504b87c1927093",
+        "newSha256": "ec5dbb33893d7a2e9b1e45004cdb7c5d5d939c493e3d29547062ec0c28b556ab",
+        "oldBytes": 138544,
+        "newBytes": 93488,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-starter-31.pdf",
+        "oldSha256": "ebfcbad81939d7308d12488bffbd8fc7ea0cacd8fe13e397d3ef7c0e341f285b",
+        "newSha256": "6aebe7c8402e6b9f341f684f4cbb7866674dfa87b7c134a41b0b0f11246c569d",
+        "oldBytes": 138859,
+        "newBytes": 93803,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-starter-32.pdf",
+        "oldSha256": "6b7586272c34fc157d735792891468dd94d3c007ab744aa9d91450f698e20f1f",
+        "newSha256": "48528bb13adbfec991789cbfb05cf89222f71d62d633a034310cdf2d5e8142fe",
+        "oldBytes": 139484,
+        "newBytes": 94428,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-starter-33.pdf",
+        "oldSha256": "be8b9ffcdc581c7760a5c7033fa23bcae510d5f6119df8df46ba4455ccd2f2b7",
+        "newSha256": "290d98cd894732f37daf1324afea3f35bfd3b0ccb8bf4bad9b8e2f97332f8848",
+        "oldBytes": 139538,
+        "newBytes": 94482,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-starter-48.pdf",
+        "oldSha256": "735fe727502b4a8584714b9cbd66d6ecba921b906becc0e65d48023476de56dc",
+        "newSha256": "efb2cb75b77a8cdb42c147682efbc19f540925b61086e037fd17ef20352389bd",
+        "oldBytes": 142242,
+        "newBytes": 97186,
+        "pages": 5,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-starter-60.pdf",
+        "oldSha256": "5c98e6a6b8ad52a0f2bc3866bd5e53daaa297f31d1e0e9865a69f35a39dce2c1",
+        "newSha256": "289083e3ff4a5ab523dbc12e831cccc751605528c0e574eb2186f209025a85fb",
+        "oldBytes": 143504,
+        "newBytes": 98448,
+        "pages": 6,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-starter-7.pdf",
+        "oldSha256": "85bdaba07c8ede8df9bef0429501c973e26bc79cdbe3de3c71c6842b719fe83b",
+        "newSha256": "d5106046fec1285ba7b13f909627186376799ddee6b5e6fbc9302a98fdb88a0c",
+        "oldBytes": 135571,
+        "newBytes": 90515,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-starter-8.pdf",
+        "oldSha256": "e3f864631da2bdef304116ba1abf8c6957c449484418eb3129f37dff5b922e9e",
+        "newSha256": "18d8b7c68fb196b3df7fdea4dc5b2894b5b7fb74c65fe719fad3f4cc337c42c2",
+        "oldBytes": 135623,
+        "newBytes": 90567,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-A4-starter-9.pdf",
+        "oldSha256": "343b55940c1d6c1122117b1351f8edaa71bb48d81c021380c936fad0949a7e1a",
+        "newSha256": "038fd8511731450a49f9c6e337d9103571c689afa1f5ada8f20f2f0d68711699",
+        "oldBytes": 135668,
+        "newBytes": 90612,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-built-in-1.pdf",
+        "oldSha256": "a07dbbd33468b59eeb93ac4835c9ec8fdd5ac9296eab64922b51bcbd602c9814",
+        "newSha256": "432be109c4831a07898eb59e7f0640b4786455856fe41217d6c0a9afbef7b3ac",
+        "oldBytes": 134446,
+        "newBytes": 89390,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-built-in-15.pdf",
+        "oldSha256": "efb487820cd2484dd7018aafd18dd22390e9e1c984bc892f86fdb83f1fef44f6",
+        "newSha256": "70c18847316ac095a9102ed3759e0411f8bfe332158fd103a298b13f84b39e03",
+        "oldBytes": 136696,
+        "newBytes": 91640,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-built-in-16.pdf",
+        "oldSha256": "84ebf5e71043998ced5e56731dd0c35d569a8f69a1aa38096588548b92aa8084",
+        "newSha256": "37f35a85f8252e9a0f2f1a7e4c4a1f01fef918fb193fa89d6be6ec1cd160ce8e",
+        "oldBytes": 136761,
+        "newBytes": 91705,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-built-in-17.pdf",
+        "oldSha256": "824197c880a23a23cfa2e0619b7a52008115b1d520380345864de8c135d83d8d",
+        "newSha256": "fc3048afffbaab59113afe2aea4cc6afd02f5795a3ac8d4bd2cf8e97827766a4",
+        "oldBytes": 137359,
+        "newBytes": 92303,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-built-in-23.pdf",
+        "oldSha256": "9bb02498d4d398a83a5fc1847632471e823f8dfb494f8a019d9d6fc578c65f27",
+        "newSha256": "b7c92bacac760a81c414e9158559b2ab234178e14d6cc662e48fbf46c6723180",
+        "oldBytes": 138394,
+        "newBytes": 93338,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-built-in-24.pdf",
+        "oldSha256": "f89e1bf5ac064beda349e6cd577dc267f20594bd7f48c13a18ff0f4781dd8a64",
+        "newSha256": "a0cc470243732e24fcf90d57c883dfdffa4a1921872cbb7cc76edd0e86aadaf1",
+        "oldBytes": 138460,
+        "newBytes": 93404,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-built-in-25.pdf",
+        "oldSha256": "8034394d406b00129b088d6207239f6a9331f3f20c6098428cad7fb43f7b8cf5",
+        "newSha256": "2b4da118ccd8dd7e90abf94f127686b68da507300d55623d5908c35a7c8d0080",
+        "oldBytes": 138510,
+        "newBytes": 93454,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-built-in-31.pdf",
+        "oldSha256": "145a48cf341c85736e70987614c6cf430b71e6579ab8bba8ce157202b3bb2a13",
+        "newSha256": "8acca9d65ced70682f0dadac0c4fbdcf0b733c491e30d9dfecb33590bad50573",
+        "oldBytes": 139370,
+        "newBytes": 94314,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-built-in-32.pdf",
+        "oldSha256": "4b1081b0ad3e3f4d8d73e08bdf9716a273cb6ff32f89e9298b85283b75f9b30d",
+        "newSha256": "91c36d2b7310f774ddb21b8e1029ff39e355dd4c2ebb8fa0d85988ba3fa182af",
+        "oldBytes": 140069,
+        "newBytes": 95013,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-built-in-33.pdf",
+        "oldSha256": "d67b228d4d7c49cb47b64a1439fb7b23c580d95602837d639cccce3275f63116",
+        "newSha256": "23b59c03922d9de88a95655e6413daac4fd44c801b15fee15b2c8835043151da",
+        "oldBytes": 140191,
+        "newBytes": 95135,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-built-in-48.pdf",
+        "oldSha256": "b4d0e0f0ea423c064e5dbcfacf1ce03bbb014be2f7c16d526a99c0fddb649ef1",
+        "newSha256": "28e33398fc1813f6f792910744510dac0b70816aaaaf30f73084f77f44ffc222",
+        "oldBytes": 142289,
+        "newBytes": 97233,
+        "pages": 5,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-built-in-60.pdf",
+        "oldSha256": "91b3b867c0bed602609f40201c823a77edd05187a4e38975b85214b2c586e50b",
+        "newSha256": "a8e0b5a58bc759b0dcff0611db390109579e4b2264ae8a36433d376e3f44801a",
+        "oldBytes": 144189,
+        "newBytes": 99133,
+        "pages": 6,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-built-in-7.pdf",
+        "oldSha256": "40ff383a89384ce1eb5d1b2b5243ab4b4db2f8d768e9cf35ba2837449ec34996",
+        "newSha256": "78c1fda8d1cc28ea3791f03f9ad86d18b8cd2a609b2a739e1905a17a60506a49",
+        "oldBytes": 135531,
+        "newBytes": 90475,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-built-in-8.pdf",
+        "oldSha256": "4e4de6cd36cd82db5b7b64333304925fba69c2bc0fa0fe09d7f0c308f027affc",
+        "newSha256": "1fc7998a9f672334a46551f2da8b7462df798ca69c583dd980687062deea358b",
+        "oldBytes": 135587,
+        "newBytes": 90531,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-built-in-9.pdf",
+        "oldSha256": "46879abe9e589aaaf0721a321ec886159343828615825c36c37c710ccc5d4d89",
+        "newSha256": "3eccd8d69ce7c583e250057720b7cbe7c08b144b96ee58d6459af74693126263",
+        "oldBytes": 135650,
+        "newBytes": 90594,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-starter-1.pdf",
+        "oldSha256": "7f0c6e3f5ed0274d02a2cbddf6050ae490310480a7c429bcd99a8e40cb008ceb",
+        "newSha256": "90e525137b6b10f9db202eebd5e8c6fe7af7c7b8414094fdd205ca84be15e34f",
+        "oldBytes": 134428,
+        "newBytes": 89372,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-starter-15.pdf",
+        "oldSha256": "4db2a103590a9286c45df360b72284655cafe691a73d745df84d60c91124974b",
+        "newSha256": "0b192dccdccfa59afa9f0422809cbec9e16472f0ccb35497a8753f340fc5cf9c",
+        "oldBytes": 136671,
+        "newBytes": 91615,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-starter-16.pdf",
+        "oldSha256": "8feea9c65836ab0c0ddcd25dc5b881853b2fb4e60a2f54e35102c9e11fc4e3de",
+        "newSha256": "9bb69a4ab272e74c339638899b3f41c3d66642ea8fc1c90fd6c6ca5b0e4bc276",
+        "oldBytes": 136736,
+        "newBytes": 91680,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-starter-17.pdf",
+        "oldSha256": "fc5970e9760f5b05b87e4a032682ac79ef3f2c034b3c77a6997dc6c5eecc7c45",
+        "newSha256": "305f9c97c1fce24c5a5354f137421dc9497030e301b8975b644f4ba5b8083f2f",
+        "oldBytes": 137336,
+        "newBytes": 92280,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-starter-23.pdf",
+        "oldSha256": "696709f6c6a9f7af03b69eb4370ad036964d4d643e6b6b5e25ef695374c14f22",
+        "newSha256": "25465347b31bec51d018cdce740ce49c77ee9c691774174c2c37cabdbca2d95e",
+        "oldBytes": 138364,
+        "newBytes": 93308,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-starter-24.pdf",
+        "oldSha256": "d3c1ed9c72bcc56f096c27367cce6387a7a830f2678502863baf0169d52ce000",
+        "newSha256": "5038a40545d1ed8af00ffdd628077a48b5b48e025520fcb37299e723d48bfc2e",
+        "oldBytes": 138429,
+        "newBytes": 93373,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-starter-25.pdf",
+        "oldSha256": "3e99314629e18840f83f6c77c629c8640c1f3e6229f2bd1b825faf0bd75fbd73",
+        "newSha256": "3f717db89b058c9bb606d99c2cb289ede195924d5f4b16176c32c3255e9b9f85",
+        "oldBytes": 138477,
+        "newBytes": 93421,
+        "pages": 3,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-starter-31.pdf",
+        "oldSha256": "45d917d937345cdf5b63216cc454c20388e8c37f46c2df3c59adf88f7f35c502",
+        "newSha256": "2e9cc00ee7a9ff9e6001b78198bff6c9262d4680af959bf56acb7d2bdaea2e2a",
+        "oldBytes": 139340,
+        "newBytes": 94284,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-starter-32.pdf",
+        "oldSha256": "e24e443367cf647b7aea03032a16bebc62a57bd60768384668d6f8e5dbf79638",
+        "newSha256": "b9f23f48601e42a34a11a9379a5f103bea72a4d104f76d96847fc71eba5d2fe8",
+        "oldBytes": 140030,
+        "newBytes": 94974,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-starter-33.pdf",
+        "oldSha256": "49407a405e1e9e55269db93db7f94159c092b0672a45e159e547f6457d541185",
+        "newSha256": "decb4111de7b1e13c6b52c4db52da90f7ec29026ae0e441dd9cac3a89f1c1f22",
+        "oldBytes": 140155,
+        "newBytes": 95099,
+        "pages": 4,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-starter-48.pdf",
+        "oldSha256": "03abcfa33f091e096f9ecb19ffab403315c3bbac3e14da76a05741c3d7069993",
+        "newSha256": "4ef40b6130d461cd96956d58007979114b446a21fe235e82cc896bf355f07fb8",
+        "oldBytes": 142241,
+        "newBytes": 97185,
+        "pages": 5,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-starter-60.pdf",
+        "oldSha256": "46770628a1877604ec9e264372eba42561502475fbb31901ba14a8550b592877",
+        "newSha256": "66df706fb04757d6332f41022c40aa6b47a7d2ac919b02cd17aee79ae6a6f874",
+        "oldBytes": 144135,
+        "newBytes": 99079,
+        "pages": 6,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-starter-7.pdf",
+        "oldSha256": "a5e474de68b9aa785e244c3a6626212a09ca84732a125854bc041b29ca9a1e23",
+        "newSha256": "5befc68a54a6dadac5f8133703bbf5044013ad1630bb6e0923da38f3de6ec801",
+        "oldBytes": 135516,
+        "newBytes": 90460,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-starter-8.pdf",
+        "oldSha256": "6d223196ca5efaa341d176ac07a30521dc1d514c892075f3a74e7e61bacab00b",
+        "newSha256": "2bb901aed5fce97b5c3c4525694232c44105e6454df0df3f6d459e8e9bb78e28",
+        "oldBytes": 135571,
+        "newBytes": 90515,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "pagination/studio-Letter-starter-9.pdf",
+        "oldSha256": "fbbfe61d9acb595c2bcebaa05d07fb3b002c38f40f03648305965c7732067762",
+        "newSha256": "a047ebc0cbc28cde835055b073f56dfbc94cf48d3a7bd54c0ec5f360adee2bdb",
+        "oldBytes": 135634,
+        "newBytes": 90578,
+        "pages": 2,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "examples/contrast-order-summary.pdf",
+        "oldSha256": "ee980d7ab9d16f94ad560583d5c5be90c8c234fcdabbf2bec578bc88941ae5cf",
+        "newSha256": "ee8e211a419028589fd1edcc7c98e742350e8ae1d02d6978d46cf6e6e83893e9",
+        "oldBytes": 117225,
+        "newBytes": 72916,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "examples/contrast-packing-slip.pdf",
+        "oldSha256": "db5d092e552a66ae622836307dcf57f1a77ae68b475d38f6155e66b2634c22d1",
+        "newSha256": "9185c62eee2aa3037a815eee4d7d711d7169f4d233d2b59057a25f6134e78bf1",
+        "oldBytes": 115915,
+        "newBytes": 71623,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "examples/quiet-order-summary.pdf",
+        "oldSha256": "5825edaf4a8a77d4a08bda425037e5f26696cb267f5b905e7a4875f29679cee9",
+        "newSha256": "d1a855ab51decade6390387b0efa43c05a81e41093f766602e95a14460e31609",
+        "oldBytes": 112192,
+        "newBytes": 69072,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "examples/quiet-packing-slip.pdf",
+        "oldSha256": "8d4289ea79eefddd3eacef1043d734ffd84e5ed465c1140ef8a57556a9e7c068",
+        "newSha256": "de8de2c0b132d70ab03ddc1e60ec2d9f7a0b57e0fcdb8edba539e76ca3ca43bf",
+        "oldBytes": 113357,
+        "newBytes": 70252,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "examples/studio-order-summary.pdf",
+        "oldSha256": "ebf3dbeb8805a75c465269ad773451ae4c09e648358abeb34b5f67ab34a4cfcd",
+        "newSha256": "0d617dd49c52966b1021d85b13d130296a8d408f072362108b915005a1e00ab2",
+        "oldBytes": 130551,
+        "newBytes": 85523,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      },
+      {
+        "file": "examples/studio-packing-slip.pdf",
+        "oldSha256": "b53badb78078460b0a70ccaf9542d73e32e92857f798d67ee8f5f35fe88b4f6c",
+        "newSha256": "f1a7aaeb51c75ca4207814f15b1beab448fb86c66046a313d02b06f734ad5cd7",
+        "oldBytes": 131700,
+        "newBytes": 86695,
+        "pages": 1,
+        "samePages": true,
+        "sameTextPerPage": true
+      }
+    ]
+  },
+  "previewComparison": {
+    "ok": true,
+    "shortPreviews": [
+      {
+        "file": "contrast-order-summary-1.png",
+        "samePngBytes": true,
+        "sha256": "2519daab3dfbdf04bd0837508d014fa107b4cb672551ba2aa12fd7d50ec4bc8a"
+      },
+      {
+        "file": "contrast-packing-slip-1.png",
+        "samePngBytes": true,
+        "sha256": "8f194da8f6823d2eef5f1d16e22fa4d6231337fef2e3953b33ee23bd338a06ee"
+      },
+      {
+        "file": "quiet-order-summary-1.png",
+        "samePngBytes": true,
+        "sha256": "a90699c0c161ea0063dbd1961aeaad2d36f0a7df94e863fb173c9027df9d6c83"
+      },
+      {
+        "file": "quiet-packing-slip-1.png",
+        "samePngBytes": true,
+        "sha256": "5d9f23c8251fc990f2440040596f9d39504e9c93bdfbb61719764087d5e5dd6e"
+      },
+      {
+        "file": "studio-order-summary-1.png",
+        "samePngBytes": true,
+        "sha256": "f260a65552b27bfbfa319add032c5d682674a4a89e34a9a8693fc4b10a1dc491"
+      },
+      {
+        "file": "studio-packing-slip-1.png",
+        "samePngBytes": true,
+        "sha256": "6b0a9709f9f79d0d957c3028a0a5b1c7316906715639abdfb3e5a9d3075ea63d"
+      }
+    ],
+    "savedTemplatePages": [
+      {
+        "page": 1,
+        "samePixels": true
+      },
+      {
+        "page": 2,
+        "samePixels": true
+      },
+      {
+        "page": 3,
+        "samePixels": true
+      },
+      {
+        "page": 4,
+        "samePixels": true
+      }
+    ],
+    "scope": "Six Fullbleed previews match exactly; four saved-template pages rasterized with the same independent PDFium reader have identical pixels. The frozen template retains its historical final-note-only page."
+  },
+  "visualReview": "Six final short previews and frozen-template first/last pages inspected. The frozen old template intentionally retains its original final-note-only page. All four saved-template pages have identical independent-reader pixels.",
+  "sourceSha256": {
+    "package.json": "110091c8bbfa368bafb3b8b100958116aa4913663dce7ed75d54fee3fa93c141",
+    "package-lock.json": "94227dd026f6724ecd115acb1f88f2258ede4495a2a7065a5226e3df21c47233",
+    "src/node.js": "baa17867c090a94f96fe354ea8071fcaaf1ca62e826a1094ce5735c5e23dbb8c",
+    "test/renderer-lifecycle.test.mjs": "d33d269e73fb6aa96622937546ee6e76f22cc79f29426e0437065a68b44948dd",
+    "test/renderer.test.mjs": "a1b37d0fec203e5de00c0c1d232dd5cd88f1ea00beb0e5d1fbf78b6a09f00552",
+    "test/fixtures/kill-first-render.mjs": "7b528201e64f3be10bc9885817da33a45290cf112f19b721573c26ac7b29a945",
+    "tools/render-pagination.mjs": "2b222ce2cb8c5316bf12504f920e9f689016fd63e6628ab3313ccd1f291dd69b",
+    "fixtures/pagination-saved-template.json": "8432ffeaad07e1a3c87ee7a765a8237c23d3710776b21da96ad25877c730e20f"
+  },
+  "limits": [
+    "Controlled child failure proves that path, not a fix or diagnosis of issue #7.",
+    "Historical capacity numbers do not measure the new process path.",
+    "Not marketplace approval, production capacity, paid lifecycle or PDF standards conformance."
+  ]
+}
