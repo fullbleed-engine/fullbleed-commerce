@@ -19,7 +19,7 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / '.wordpress-org'
 DOCS = ROOT / 'docs/wordpress-directory'
-EXPECTED_ZIP = 'f44553afaec47827b92c4bd550d88e79699b3295f03bfef51459d9c4fa9c2520'
+EXPECTED_ZIP = 'e5544fc080223e0700ec53e89d94a847073faa0d5a8a49893a8015410b397fc8'
 EXPECTED_SAMPLE = 'cbb6b0aca94c33965d7615860e1863b18a8033e52999d625fbba23a5a0d46ee1'
 EXPECTED_PREVIEW = '4dfbcb380a7876912e7019b971a44a90cd5d65014c1eb5f71bb7d05babb515d7'
 parser = argparse.ArgumentParser(description=__doc__)
@@ -43,8 +43,9 @@ assert sha256(args.plugin_zip.read_bytes()).hexdigest() == EXPECTED_ZIP
 assert sha256((args.captures / 'sample-order.pdf').read_bytes()).hexdigest() == EXPECTED_SAMPLE
 assert sha256(args.sample_preview.read_bytes()).hexdigest() == EXPECTED_PREVIEW
 capture = json.loads((args.captures / 'capture-verification.json').read_text(encoding='utf-8'))
-assert capture['pluginVersion'] == '0.1.4' and capture['syntheticOnly'] and not capture['pageErrors']
+assert capture['pluginVersion'] == '0.1.5' and capture['syntheticOnly'] and not capture['pageErrors']
 assert not capture.get('candidateEditor'), 'Publish directory images only from the released plugin.'
+assert capture['iconAssets']['loaded'] and capture['iconAssets']['sameOrigin'] and not capture['blockedIconRequests']
 assert len(capture['canvasFonts']['faces']) == 4 and all(font['status'] == 'loaded' for font in capture['canvasFonts']['faces'])
 for asset in capture['assets']:
     assert sha256((args.captures / asset['file']).read_bytes()).hexdigest() == asset['sha256']
@@ -105,6 +106,6 @@ for path in sorted(ASSETS.rglob('*')):
             assert list(item['dimensions']) == [int(v) for v in path.stem.split('-')[-1].split('x')]
         assert item['bytes'] < (4 if path.name.startswith('banner') else 1 if path.name.startswith('icon') else 10) * 1024 * 1024
     assets.append(item)
-manifest = {'checkedAt': datetime.now(timezone.utc).isoformat(), 'status': 'Prepared; WordPress approval and directory publication are not established.', 'pluginVersion': '0.1.4', 'pluginZipSha256': EXPECTED_ZIP, 'samplePdfSha256': EXPECTED_SAMPLE, 'samplePreviewSha256': sha256(args.sample_preview.read_bytes()).hexdigest(), 'browser': browser_version, 'capture': capture, 'assets': assets, 'readmeSha256': sha256((DOCS / 'readme.txt').read_bytes()).hexdigest(), 'blueprintMatchesPublicDemoSource': blueprint.read_bytes() == (ROOT / 'playground/blueprint.json').read_bytes(), 'claims': ['Only free plugin features are shown.', 'Order summary is not represented as a fiscal invoice.', 'Screenshots contain fictional sample-store data.', 'No changes to released plugin ZIP bytes.']}
+manifest = {'checkedAt': datetime.now(timezone.utc).isoformat(), 'status': 'Prepared; WordPress approval and directory publication are not established.', 'pluginVersion': '0.1.5', 'pluginZipSha256': EXPECTED_ZIP, 'samplePdfSha256': EXPECTED_SAMPLE, 'samplePreviewSha256': sha256(args.sample_preview.read_bytes()).hexdigest(), 'browser': browser_version, 'capture': capture, 'assets': assets, 'readmeSha256': sha256((DOCS / 'readme.txt').read_bytes()).hexdigest(), 'blueprintMatchesPublicDemoSource': blueprint.read_bytes() == (ROOT / 'playground/blueprint.json').read_bytes(), 'claims': ['Only free plugin features are shown.', 'Order summary is not represented as a fiscal invoice.', 'Screenshots contain fictional sample-store data.', 'No changes to released plugin ZIP bytes.']}
 (DOCS / 'verification.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
 print(json.dumps({'assets': len(assets), 'browser': browser_version, 'output': str(ASSETS)}, indent=2))

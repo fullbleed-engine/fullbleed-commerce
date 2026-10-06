@@ -1,7 +1,7 @@
 # WordPress directory artwork and preview
 
 This directory and [`.wordpress-org`](../../.wordpress-org/) prepare the free
-Fullbleed Commerce **0.1.4** listing. They do not establish WordPress approval or
+Fullbleed Commerce **0.1.5** listing. They do not establish WordPress approval or
 that the directory assets are live. The published plugin ZIP is not modified by
 this artwork build.
 
@@ -23,7 +23,7 @@ them outside `trunk` and version tags:
 - `screenshot-1.png` through `screenshot-4.png`
 - `blueprints/blueprint.json`
 
-The generated [readme.txt](readme.txt) is the **0.1.4 release readme plus four
+The generated [readme.txt](readme.txt) is the **0.1.5 release readme plus four
 screenshot captions and the optional GitHub Sponsors link**. The funding
 profile is public; anonymous page access and GitHub's `isPublic` field were
 checked on October 6, 2026. Use these metadata additions in the matching approved
@@ -32,7 +32,7 @@ meet the dimensions, filename and size rules in the
 [WordPress asset handbook](https://developer.wordpress.org/plugins/wordpress-org/plugin-assets/).
 
 The Blueprint is an exact copy of the repository's tested public sample-store
-configuration, pinned to the free 0.1.4 ZIP. It installs WooCommerce and fictional
+configuration, pinned to the free 0.1.5 ZIP. It installs WooCommerce and fictional
 orders, opens Fullbleed's document screen, and disables outgoing mail and
 WordPress networking. After uploading it, use the directory's **Test Preview**
 and verify an actual PDF download before setting the preview to public in the
@@ -46,15 +46,15 @@ free ZIP from the matching GitHub release; the artwork builder verifies its
 SHA-256 before using its bundled Inter font.
 
 ```sh
-python tools/capture-wordpress-directory.py --version 0.1.4 --require-fonts
+python tools/capture-wordpress-directory.py --version 0.1.5 --require-fonts --require-local-icons
 python tools/build-wordpress-directory.py \
-  --plugin-zip dist/fullbleed-commerce-0.1.4.zip \
+  --plugin-zip dist/fullbleed-commerce-0.1.5.zip \
   --sample-preview path/to/verified-sample-order.png
 ```
 
 The capture launches and closes its own anonymous browser. It permits only a
 temporary public Playground, checks the free plugin version and actual PDF
-bytes, requires loaded canvas fonts and readable typography controls, and saves
+bytes, requires local icon assets, loaded canvas fonts and readable typography controls, and saves
 native UI screenshots. Candidate-editor injection is available for development;
 the artwork builder explicitly refuses those captures as released UI evidence.
 

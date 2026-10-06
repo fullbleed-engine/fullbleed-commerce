@@ -5,7 +5,7 @@ Tags: pdf, woocommerce, packing slips, order documents
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.1.4
+Stable tag: 0.1.5
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,10 @@ The ZIP includes a source/ directory with src/admin.js, src/browser-worker.js, t
 4. Actual one-page order summary from the free Studio design, with embedded fonts and WooCommerce's original totals. All names, addresses and order data are fictional.
 
 == Changelog ==
+
+= 0.1.5 =
+* Serve visual editor icons from the installed plugin and remove the external stylesheet fallback. Template editing and PDF downloads are verified with off-site requests blocked.
+* Include the icon font license and reproducible build inputs. The PDF engine and saved templates are unchanged.
 
 = 0.1.4 =
 * Load the visual editor's bundled fonts correctly in WordPress Playground, including variable Inter weights and italic DM Serif Display.
