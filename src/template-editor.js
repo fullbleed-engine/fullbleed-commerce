@@ -15,6 +15,12 @@ export function mountTemplateEditor(host, { kind, initial, defaults, fontBase, o
   let previewUrl;
   let destroyed = false;
   let bundledFonts;
+  function localAsset(file) {
+    if (!fontBase) return '';
+    const url = new URL(file, new URL(fontBase, window.location.href));
+    if (url.origin !== window.location.origin) throw new Error('Editor assets must come from this site.');
+    return url.href;
+  }
   function loadBundledFonts() {
     if (!fontBase) return Promise.resolve([]);
     // Fetch in the host document: an editor iframe is not necessarily a
@@ -26,9 +32,7 @@ export function mountTemplateEditor(host, { kind, initial, defaults, fontBase, o
       ['DM Serif Display', 'DMSerifDisplay-Italic.ttf', { style: 'italic' }],
       ['Bebas Neue', 'BebasNeue-Regular.ttf', {}],
     ].map(async ([family, file, descriptors]) => {
-      const url = new URL(file, new URL(fontBase, window.location.href));
-      if (url.origin !== window.location.origin) throw new Error('Editor fonts must come from this site.');
-      const response = await fetch(url);
+      const response = await fetch(localAsset(file));
       if (!response.ok) throw new Error('A bundled editor font could not load.');
       return { family, descriptors, bytes: await response.arrayBuffer() };
     })).catch(error => { bundledFonts = undefined; throw error; });
@@ -80,6 +84,7 @@ export function mountTemplateEditor(host, { kind, initial, defaults, fontBase, o
     editor = grapesjs.init({
       container: query('[data-canvas]'), height: '660px', width: '100%', fromElement: false,
       storageManager: false, telemetry: false, noticeOnUnload: false, jsInHtml: false, nativeDnD: false,
+      cssIcons: localAsset('editor-icons.css'),
       components: template.html, style: '', protectedCss: '', keepUnusedStyles: true,
       parser: { optionsHtml: { allowScripts: false, allowUnsafeAttr: false, allowUnsafeAttrValue: false } },
       panels: { defaults: [] }, blockManager: { appendTo: query('[data-blocks]'), blocks },

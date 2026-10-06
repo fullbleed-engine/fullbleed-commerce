@@ -31,6 +31,17 @@ def check(name, condition):
 with sync_playwright() as pw:
     browser = launch_browser(pw)
     context = browser.new_context(viewport={'width': 1440, 'height': 1100}, accept_downloads=True)
+    external_requests, icon_responses = [], []
+    def local_requests_only(route):
+        request = route.request
+        parsed = urlparse(request.url)
+        if parsed.scheme in ('http', 'https') and (parsed.scheme, parsed.netloc) != (urlparse(base).scheme, urlparse(base).netloc):
+            external_requests.append({'url': request.url, 'type': request.resource_type})
+            route.abort()
+        else:
+            route.continue_()
+    context.route('**/*', local_requests_only)
+    context.on('response', lambda response: icon_responses.append({'url': response.url, 'status': response.status}) if '/fonts/editor-icons.' in response.url else None)
     context.tracing.start(screenshots=True, snapshots=True, sources=True)
     page = context.new_page()
     page.set_default_timeout(45000)
@@ -68,6 +79,21 @@ with sync_playwright() as pw:
         page.locator('[data-visual] iframe.gjs-frame').wait_for(state='visible')
         canvas = page.frame_locator('[data-visual] iframe.gjs-frame')
         canvas.locator('h1').wait_for(state='visible')
+        check('opening the visual editor makes no off-site requests', not external_requests)
+        page.locator('link[href$="/fonts/editor-icons.css"]').wait_for(state='attached')
+        page.wait_for_function('Boolean(document.querySelector(\'link[href$="/fonts/editor-icons.css"]\')?.sheet)')
+        icon = page.evaluate('''async () => {
+            const faces = await document.fonts.load('14px FontAwesome', '\\uf040');
+            const probe = document.createElement('i');
+            probe.className = 'fa fa-pencil';
+            document.body.append(probe);
+            const result = {family: getComputedStyle(probe).fontFamily,
+                glyph: getComputedStyle(probe, '::before').content,
+                loaded: faces.length === 1 && faces[0].status === 'loaded'};
+            probe.remove();
+            return result;
+        }''')
+        check('bundled icon font and glyph styles load from the store', icon['loaded'] and 'FontAwesome' in icon['family'] and icon['glyph'] not in ('none', 'normal', '""') and len(icon_responses) == 2 and all(response['status'] == 200 for response in icon_responses))
         frame = page.locator('[data-visual] iframe.gjs-frame').element_handle().content_frame()
         frame.wait_for_function('Array.from(document.fonts).filter(font => font.status === "loaded").length >= 4')
         fonts = frame.evaluate('Array.from(document.fonts, font => ({family: font.family, weight: font.weight, style: font.style, status: font.status}))')
@@ -143,13 +169,14 @@ with sync_playwright() as pw:
         check('mobile editor fits the viewport', page.evaluate('document.documentElement.scrollWidth <= innerWidth'))
         page.screenshot(path=str(out / f'{label}-mobile.png'), full_page=True)
         check('no browser JavaScript errors', not errors)
+        check('editing and PDF downloads work with all off-site requests blocked', not external_requests)
         documents = [{'file': p.as_posix(), 'sha256': sha256(p.read_bytes()).hexdigest(), 'pages': len(PdfReader(p).pages)} for p in [pdf, custom, applied]]
-        record = {'checkedAt': datetime.now(timezone.utc).isoformat(), **browser_metadata(browser), 'store': base, 'pro': pro, 'upgradeTemplate': saved_title, 'checks': checks, 'pdfSha256': sha256(custom.read_bytes()).hexdigest(), 'documents': documents, 'pageErrors': errors, 'canvasFonts': fonts, 'styleControls': controls}
+        record = {'checkedAt': datetime.now(timezone.utc).isoformat(), **browser_metadata(browser), 'store': base, 'pro': pro, 'upgradeTemplate': saved_title, 'checks': checks, 'pdfSha256': sha256(custom.read_bytes()).hexdigest(), 'documents': documents, 'pageErrors': errors, 'canvasFonts': fonts, 'styleControls': controls, 'externalRequests': external_requests, 'iconResponses': icon_responses, 'icon': icon}
         if pro:
             record['batch'] = {'file': archive.as_posix(), 'sha256': sha256(archive.read_bytes()).hexdigest()}
         (out / f'{label}-verification.json').write_text(json.dumps(record, indent=2), encoding='utf-8')
     except Exception as error:
-        failure = {**browser_metadata(browser), 'error': str(error), 'checks': checks, 'errors': errors, 'errorDetails': error_details, 'consoleErrors': console_errors, 'url': page.url}
+        failure = {**browser_metadata(browser), 'error': str(error), 'checks': checks, 'errors': errors, 'errorDetails': error_details, 'consoleErrors': console_errors, 'url': page.url, 'externalRequests': external_requests, 'iconResponses': icon_responses}
         failure_file = out / f'{label}-failure.json'
         failure_file.write_text(json.dumps(failure, indent=2), encoding='utf-8')
         try:

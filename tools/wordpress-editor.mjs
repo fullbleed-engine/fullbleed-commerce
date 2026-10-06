@@ -17,6 +17,12 @@ export async function wordpressEditorPlugin() {
   // commit 2bdeda85b82b8b9ceae42fd6558cbbcae5ec2d21 (the npm release gitHead).
   sources.set('abstract/index.ts', ['ModuleModel', 'ModuleCollection', 'ModuleView', 'Module'].map(name => `export { default as ${name} } from './${name}';`).join('\n'));
   if (!sources.has('index.ts') || [...sources.values()].some(content => typeof content !== 'string')) throw new Error('GrapesJS source map is incomplete.');
+  // The shared editor supplies local icons. Remove the upstream CDN fallback
+  // from the distributed WordPress bundle as well, so it cannot request it.
+  const configPath = 'editor/config/config.ts';
+  const iconDefault = /cssIcons: 'https:\/\/cdnjs\.cloudflare\.com\/ajax\/libs\/font-awesome\/4\.7\.0\/css\/font-awesome\.min\.css',/g;
+  if ([...sources.get(configPath).matchAll(iconDefault)].length !== 1) throw new Error('Review the upstream editor icon default before building.');
+  sources.set(configPath, sources.get(configPath).replace(iconDefault, "cssIcons: '',"));
   const globals = {
     // The local namespace receives GrapesJS's Cash and UndoManager assignments.
     // Only its View subclass uses Cash. Core Backbone's View closes over the

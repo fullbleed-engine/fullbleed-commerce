@@ -1,6 +1,6 @@
 {
   "name": "@fullbleed/commerce",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "type": "module",
   "engines": {
@@ -18,6 +18,7 @@
     "@bjorn3/browser_wasi_shim": "0.4.2",
     "css-tree": "3.2.1",
     "fflate": "0.8.3",
+    "font-awesome": "4.7.0",
     "fullbleed": "0.2.0",
     "grapesjs": "0.23.6",
     "htmlparser2": "12.0.0"

@@ -20,6 +20,7 @@ await writeFile(`${destination}/editor.css`, await readFile('node_modules/grapes
 const packages = new Set(outputs.flatMap(output => Object.keys(output.metafile.inputs)).filter(file => file.startsWith('node_modules/')).map(file => file.split('/').slice(0, file.split('/')[1].startsWith('@') ? 3 : 2).join('/')));
 packages.add('node_modules/grapesjs'); // Its source-map modules have a virtual esbuild namespace.
 packages.add('node_modules/typescript'); // Retain attribution for emitted downlevel helpers.
+packages.add('node_modules/font-awesome'); // Local CSS and WOFF2 replace the editor's CDN default.
 async function packageNotice(path) {
   const pkg = JSON.parse(await readFile(`${path}/package.json`, 'utf8'));
   const licenseFiles = (await readdir(path)).filter(file => /^(?:licen[sc]e|copying|notice)(?:\.|$)/i.test(file));
@@ -27,6 +28,7 @@ async function packageNotice(path) {
   if (!texts.length && pkg.name === '@bjorn3/browser_wasi_shim') texts.push(await readFile('LICENSES/MIT-WASI.txt', 'utf8'));
   if (!texts.length && pkg.name === 'backbone-undo') texts.push((await readFile(`${path}/README.md`, 'utf8')).split('## License (MIT License)')[1]);
   if (!texts.length && pkg.name === 'codemirror-formatting') texts.push(await readFile('LICENSES/MIT-CodeMirror-formatting.txt', 'utf8'));
+  if (!texts.length && pkg.name === 'font-awesome') texts.push(await readFile('LICENSES/Font-Awesome-4.7.0.txt', 'utf8'));
   if (!texts.length || texts.some(text => !text?.trim())) throw new Error(`Retain license text for ${pkg.name} before distributing the editor.`);
   return `${pkg.name} ${pkg.version} (${pkg.license})\n${texts.join('\n')}`;
 }
@@ -37,9 +39,21 @@ await writeFile(`${destination}/EDITOR-THIRD-PARTY-NOTICES.txt`, notices.join('\
 if (!process.argv.includes('--base-only')) await build({ entryPoints: ['pro/admin.js'], bundle: true, outfile: 'wordpress/fullbleed-commerce-pro/assets/admin.js', format: 'iife', target: 'es2022', minify: false, legalComments: 'inline' });
 await cp('node_modules/fullbleed/dist/engine.wasm', `${destination}/engine.wasm`);
 await cp('node_modules/fullbleed/assets/fonts', `${destination}/fonts`, { recursive: true });
+const iconSource = await readFile('node_modules/font-awesome/css/font-awesome.css', 'utf8');
+assert.equal([...iconSource.matchAll(/@font-face\s*\{[^}]+\}/g)].length, 1, 'Review the icon font CSS before upgrading Font Awesome.');
+const iconCss = iconSource.replace(/@font-face\s*\{[^}]+\}/, "@font-face {\n  font-family: 'FontAwesome';\n  src: url('editor-icons.woff2') format('woff2');\n  font-weight: normal;\n  font-style: normal;\n}");
+assert.deepEqual([...iconCss.matchAll(/url\(['"]?([^)'"\s]+)/g)].map(match => match[1]), ['editor-icons.woff2']);
+assert.ok(!(await readFile(`${destination}/editor.js`, 'utf8')).includes('cdnjs.cloudflare.com'), 'Editor must not contain the remote icon default.');
+async function copyIcons(directory) {
+  await writeFile(`${directory}/editor-icons.css`, iconCss);
+  await cp('node_modules/font-awesome/fonts/fontawesome-webfont.woff2', `${directory}/editor-icons.woff2`);
+  await cp('LICENSES/Font-Awesome-4.7.0.txt', `${directory}/Font-Awesome-LICENSE.txt`);
+}
+await copyIcons(`${destination}/fonts`);
 if (!process.argv.includes('--base-only')) {
   await mkdir('shopify/app/public/fonts', { recursive: true });
   await cp('node_modules/fullbleed/assets/fonts', 'shopify/app/public/fonts', { recursive: true });
+  await copyIcons('shopify/app/public/fonts');
   // Shopify still consumes the upstream standalone GrapesJS distribution.
   const standaloneNotices = await Promise.all(['backbone', 'underscore', 'codemirror'].map(name => packageNotice(`node_modules/${name}`)));
   await writeFile('shopify/app/public/EDITOR-THIRD-PARTY-NOTICES.txt', [...notices, ...standaloneNotices].join('\n\n--------------------\n\n'));
@@ -50,7 +64,7 @@ await cp('LICENSES/MIT-WASI.txt', `${destination}/WASI-LICENSE.txt`);
 await cp('LICENSES/MIT-Fullbleed.txt', `${destination}/FULLBLEED-LICENSE.txt`);
 if (!process.argv.includes('--base-only')) await cp('LICENSES/MIT-fflate.txt', 'wordpress/fullbleed-commerce-pro/assets/FFLATE-LICENSE.txt');
 const report = {};
-for (const file of ['admin.js', 'editor.js', 'editor.css', 'worker.js', 'engine.wasm']) {
+for (const file of ['admin.js', 'editor.js', 'editor.css', 'worker.js', 'engine.wasm', 'fonts/editor-icons.css', 'fonts/editor-icons.woff2', 'fonts/Font-Awesome-LICENSE.txt']) {
   const bytes = await readFile(`${destination}/${file}`);
   report[file] = { bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') };
 }

@@ -1,5 +1,6 @@
 === Fullbleed Commerce ===
 Contributors: kfinkelstein
+Donate link: https://github.com/sponsors/krflol
 Tags: pdf, woocommerce, packing slips, order documents
 Requires at least: 6.5
 Tested up to: 7.1
@@ -40,6 +41,13 @@ The plugin uses WooCommerce order APIs, not direct post or database queries. See
 
 = Where is the source? =
 The ZIP includes a source/ directory with src/admin.js, src/browser-worker.js, tools/build.mjs and package-lock.json. From that source directory, run npm ci --ignore-scripts and npm run build with Node.js 26.10.0 or newer. See source/README.txt for copying the rebuilt assets. Fullbleed's engine source is https://github.com/fullbleed-engine/fullbleed-official and its Node integration is https://github.com/fullbleed-engine/fullbleed-node. Build metadata and license notices ship under assets/generated/.
+
+== Screenshots ==
+
+1. Create an order summary or packing slip from a WooCommerce order. Choose paper size, an accent color and a closing note; download the PDF generated in your browser.
+2. Customize a template in the included visual editor. Select text and blocks, adjust their styling, and save a separate design for each document type.
+3. Paste static HTML and print CSS, insert order fields, and preview the actual PDF before saving. The visual editor and source editor work on the same template.
+4. Actual one-page order summary from the free Studio design, with embedded fonts and WooCommerce's original totals. All names, addresses and order data are fictional.
 
 == Changelog ==
 
