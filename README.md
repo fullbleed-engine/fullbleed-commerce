@@ -31,9 +31,9 @@ template to keep it. The [walkthrough](https://docs.fullbleed.dev/guides/woocomm
 includes an actual sample PDF and explains the automated workflows.
 
 Download the free plugin from the
-[WooCommerce preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.3).
+[WooCommerce preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.4).
 Use a staging store. Install WooCommerce, then upload
-`fullbleed-commerce-0.1.3.zip` in WordPress Plugins. Open
+`fullbleed-commerce-0.1.4.zip` in WordPress Plugins. Open
 **WooCommerce → Fullbleed documents**, enter a numeric order ID, and generate a
 PDF. An order edit screen also has a **Create Fullbleed PDF** link.
 
@@ -61,6 +61,12 @@ settings are retained. An enabled automation remains enabled after an upgrade;
 check its connection and one synthetic order before returning to normal use.
 The [release verification](docs/verification.md) records the upgrade checks and
 which configurations were exercised. The preview still has no automatic updater.
+
+Version 0.1.4 corrects font loading in the visual editor inside WordPress
+Playground and gives typography values and unit menus room in the style panel.
+The engine, PDF rendering and saved template content are unchanged. The
+[editor verification](docs/editor-fonts.md) records the reproduced failure and
+the browser checks.
 
 Version 0.1.3 updates the engine to 2.5.8, including compact embedded fonts and
 corrected font-family selection. Saved HTML/CSS remains intact, but regenerated

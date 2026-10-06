@@ -14,6 +14,26 @@ export function mountTemplateEditor(host, { kind, initial, defaults, fontBase, o
   let baseCss = current.css;
   let previewUrl;
   let destroyed = false;
+  let bundledFonts;
+  function loadBundledFonts() {
+    if (!fontBase) return Promise.resolve([]);
+    // Fetch in the host document: an editor iframe is not necessarily a
+    // service-worker client (notably inside WordPress Playground). Font URLs
+    // requested by that iframe can hit the real server and return 404.
+    bundledFonts ||= Promise.all([
+      ['Inter', 'Inter-Variable.ttf', { weight: '100 900' }],
+      ['DM Serif Display', 'DMSerifDisplay-Regular.ttf', {}],
+      ['DM Serif Display', 'DMSerifDisplay-Italic.ttf', { style: 'italic' }],
+      ['Bebas Neue', 'BebasNeue-Regular.ttf', {}],
+    ].map(async ([family, file, descriptors]) => {
+      const url = new URL(file, new URL(fontBase, window.location.href));
+      if (url.origin !== window.location.origin) throw new Error('Editor fonts must come from this site.');
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('A bundled editor font could not load.');
+      return { family, descriptors, bytes: await response.arrayBuffer() };
+    })).catch(error => { bundledFonts = undefined; throw error; });
+    return bundledFonts;
+  }
   host.classList.add('fb-editor');
   host.innerHTML = `<div class="fb-editor-toolbar"><div class="fb-editor-modes" role="group" aria-label="Editing mode"><button type="button" data-mode="visual">Visual editor</button><button type="button" data-mode="source">HTML / CSS</button></div><div class="fb-editor-actions"><button type="button" data-action="preview">Preview PDF</button><button type="button" class="fb-editor-primary" data-action="save">Save template</button></div></div>
 <p class="fb-editor-status" data-message role="status" aria-live="polite"></p>
@@ -74,11 +94,17 @@ export function mountTemplateEditor(host, { kind, initial, defaults, fontBase, o
       ] },
     });
     editor.getWrapper().set({ stylable: false, droppable: true });
+    const mountedEditor = editor;
     editor.on('canvas:frame:load:head', ({ window: frame }) => {
-      const style = frame.document.createElement('style');
-      // Trusted, same-origin bundled fonts are independent of merchant CSS.
-      if (fontBase) style.textContent = [['Inter', 'Inter-Variable.ttf'], ['DM Serif Display', 'DMSerifDisplay-Regular.ttf'], ['Bebas Neue', 'BebasNeue-Regular.ttf']].map(([family, file]) => `@font-face{font-family:'${family}';src:url('${new URL(file, new URL(fontBase, window.location.href)).href}');}`).join('');
-      frame.document.head.append(style);
+      loadBundledFonts().then(async fonts => {
+        if (destroyed || mountedEditor !== editor) return;
+        const faces = fonts.map(({ family, descriptors, bytes }) => new frame.FontFace(family, bytes, descriptors));
+        await Promise.all(faces.map(face => face.load()));
+        if (destroyed || mountedEditor !== editor) return;
+        for (const face of faces) frame.document.fonts.add(face);
+      }).catch(() => {
+        if (!destroyed && mountedEditor === editor) report('Editor fonts could not load. Reopen the editor to retry; use Preview PDF to check the final document.', true);
+      });
       frame.document.addEventListener('paste', event => {
         event.preventDefault();
         frame.document.execCommand('insertText', false, event.clipboardData?.getData('text/plain') || '');
