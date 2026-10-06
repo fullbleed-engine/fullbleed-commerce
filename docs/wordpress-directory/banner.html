@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Fullbleed Commerce — WordPress directory banner</title>
+<style>
+@font-face { font-family: Inter; src: url('{{font}}'); font-weight: 100 900; }
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 772px; height: 250px; overflow: hidden; }
+body { background: #f6f3eb; color: #164d46; font-family: Inter, sans-serif; }
+.brand { position: absolute; top: 23px; left: 30px; display: flex; align-items: center; gap: 9px; font-size: 12px; font-weight: 750; letter-spacing: .3px; }
+.brand img { width: 27px; height: 27px; border-radius: 5px; }
+h1 { position: absolute; top: 67px; left: 30px; margin: 0; font-size: 39px; line-height: 1.06; font-weight: 780; letter-spacing: -1.7px; }
+.detail { position: absolute; left: 31px; top: 169px; margin: 0; font-size: 12px; line-height: 1.65; font-weight: 500; }
+.rule { position: absolute; left: 31px; bottom: 22px; width: 36px; height: 4px; background: #b75135; }
+.field { position: absolute; right: 0; top: 0; width: 350px; height: 250px; background: #164d46; }
+.back { position: absolute; width: 213px; height: 302px; right: 61px; top: -20px; background: #91b7a7; transform: rotate(-12deg); }
+.paper { position: absolute; right: 28px; top: 17px; width: 230px; height: auto; transform: rotate(7deg); box-shadow: 0 12px 28px #052a2466; }
+.note { position: absolute; right: 275px; bottom: 19px; color: #f6f3eb; font-size: 9px; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 1.1px; }
+</style>
+<div class="field"></div><div class="back"></div>
+<div class="brand"><img src="{{icon}}" alt="">Fullbleed Commerce</div>
+<h1>Your store.<br>Your design.</h1>
+<p class="detail">Order summaries &amp; packing slips.<br>Visual editing. Your HTML &amp; CSS.</p>
+<div class="rule"></div>
+<img class="paper" src="{{sample}}" alt="Actual sample PDF from the free plugin">
+<span class="note">PDFs FOR WOOCOMMERCE</span>
+</html>
