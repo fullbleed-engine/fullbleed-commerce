@@ -31,9 +31,9 @@ template to keep it. The [walkthrough](https://docs.fullbleed.dev/guides/woocomm
 includes an actual sample PDF and explains the automated workflows.
 
 Download the free plugin from the
-[WooCommerce preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.5).
+[WooCommerce preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.6).
 Use a staging store. Install WooCommerce, then upload
-`fullbleed-commerce-0.1.5.zip` in WordPress Plugins. Open
+`fullbleed-commerce-0.1.6.zip` in WordPress Plugins. Open
 **WooCommerce → Fullbleed documents**, enter a numeric order ID, and generate a
 PDF. An order edit screen also has a **Create Fullbleed PDF** link.
 
@@ -61,6 +61,13 @@ settings are retained. An enabled automation remains enabled after an upgrade;
 check its connection and one synthetic order before returning to normal use.
 The [release verification](docs/verification.md) records the upgrade checks and
 which configurations were exercised. The preview still has no automatic updater.
+
+Version 0.1.6 updates browser and server rendering to Fullbleed 2.5.22 through
+Node package 0.4.1. Numbered sections in custom templates now restart their
+step counters correctly. Saved HTML/CSS stays intact; review the PDF preview
+after an engine update because corrected layout can change the output.
+The [engine update record](docs/engine-2522.md) covers the saved-template
+comparison, numbered care instructions and release checks. Pro 0.1.2 is unchanged.
 
 Version 0.1.5 serves the editor's icons from the installed plugin and removes
 the external stylesheet fallback. The [local asset verification](docs/local-editor-assets.md)
@@ -174,8 +181,8 @@ using WordPress Playground. Its pinned file-locking dependency needs a local
 build on Node 26 when no matching prebuilt binary is available (Python, make
 and a C++ compiler on Linux). This is development tooling, not a dependency
 added to the Fullbleed engine or the distributed WordPress plugin.
-The rendering integration uses the published Fullbleed Node 0.2.0 package,
-containing engine 2.5.8, pinned to its npm version and lockfile integrity.
+The rendering integration uses the published Fullbleed Node 0.4.1 package,
+containing engine 2.5.22, pinned to its npm version and lockfile integrity.
 Server rendering requires a normal Node host that permits child processes.
 The existing admission limits cover child lifetime, including cancellation and
 failure cleanup. Each request pays for a new process and WASM startup; this is

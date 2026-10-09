@@ -4,6 +4,7 @@ from hashlib import sha256
 from pathlib import Path
 import json
 import os
+import re
 from urllib.parse import urlparse
 from urllib.request import urlopen
 from zipfile import ZipFile
@@ -130,7 +131,9 @@ with sync_playwright() as pw:
         source = page.locator('[data-html]').input_value()
         check('visual text editing reaches exported HTML', 'YOUR CUSTOM ORDER' in source)
         css = page.locator('[data-css]').input_value()
-        page.locator('[data-css]').fill(css + '\nh1 { color: #9b3d22; font-family: Inter; font-weight: 700; font-size: 34pt; }')
+        care = json.loads(Path('fixtures/numbered-care-instructions.json').read_text(encoding='utf-8'))
+        page.locator('[data-html]').fill(source + '\n' + care['html'])
+        page.locator('[data-css]').fill(css + '\nh1 { color: #9b3d22; font-family: Inter; font-weight: 700; font-size: 34pt; }\n' + care['css'])
         page.locator('[data-action="save"]').click()
         page.wait_for_function("document.querySelector('[data-message]').textContent.startsWith('Saved.')")
         check('custom HTML and CSS save through authenticated editor', True)
@@ -142,6 +145,7 @@ with sync_playwright() as pw:
         text = '\n'.join(p.extract_text() for p in PdfReader(custom).pages)
         check('PDF preview contains visual edits and order data', 'YOUR CUSTOM ORDER' in text and '282.00' in text)
         check('custom bold heading extracts exactly once', ' '.join(text.split()).count('YOUR CUSTOM ORDER') == 1)
+        check('custom numbered instructions increment and reset across chapters', re.findall(r'\[(\d+\.\d+)\]', text) == care['expectedLabels'] and all(text.count(value) == 1 for value in care['expectedText']))
         page.screenshot(path=str(out / f'{label}-editor.png'), full_page=True)
         page.reload()
         page.locator('#fb-orders').fill(order_id)
@@ -152,6 +156,7 @@ with sync_playwright() as pw:
         applied = out / f'{label}-saved.pdf'
         download.value.save_as(applied)
         check('saved template survives reload and applies to ordinary downloads', 'YOUR CUSTOM ORDER' in '\n'.join(p.extract_text() for p in PdfReader(applied).pages))
+        check('saved download matches the editor preview bytes', applied.read_bytes() == custom.read_bytes())
         if pro:
             page.locator('#fb-orders').fill(batch_ids)
             with page.expect_download() as download:

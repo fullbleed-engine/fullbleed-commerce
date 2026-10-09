@@ -9,7 +9,7 @@ import { starterTemplate } from '../src/documents.js';
 import { renderOrder } from '../src/node.js';
 import { pluginMetadata } from './plugin-metadata.mjs';
 
-const oldVersion = '0.1.2';
+const oldVersion = '0.1.5';
 const version = JSON.parse(await readFile('package.json', 'utf8')).version;
 assert.notEqual(version, oldVersion, 'The candidate must have a new version.');
 const hpos = process.argv.includes('--hpos');
@@ -20,15 +20,15 @@ const hash = value => createHash('sha256').update(value).digest('hex');
 const checks = [];
 const check = (name, result) => { assert.ok(result, name); checks.push({ name, passed: true }); console.log(`${name}: passed`); };
 const previous = [
-  { name: 'fullbleed-commerce', sha256: '1f8bd218f20cfe67f25d95274f2f976af74fd839f000fb7aa921e2845f85c5ac' },
-  { name: 'fullbleed-commerce-pro', sha256: 'a626c050651a68fa7e4917b3bb8ac2bb3bdcdb4db9d984fec8e0f2b3a14b20ec' },
+  { name: 'fullbleed-commerce', version: oldVersion, sha256: 'e5544fc080223e0700ec53e89d94a847073faa0d5a8a49893a8015410b397fc8' },
+  { name: 'fullbleed-commerce-pro', version: '0.1.2', sha256: 'a626c050651a68fa7e4917b3bb8ac2bb3bdcdb4db9d984fec8e0f2b3a14b20ec' },
 ];
 const candidates = await Promise.all(previous.map(entry => pluginMetadata(entry.name)));
 const pluginVersions = candidates.map(entry => entry.version);
 await mkdir('target/upgrade-input', { recursive: true });
 await mkdir('output/upgrade', { recursive: true });
 for (const entry of previous) {
-  const filename = `${entry.name}-${oldVersion}.zip`;
+  const filename = `${entry.name}-${entry.version}.zip`;
   const path = `target/upgrade-input/${filename}`;
   let bytes;
   try { bytes = await readFile(path); } catch (error) { if (error.code !== 'ENOENT') throw error; }
@@ -96,7 +96,7 @@ try {
     update_option('fullbleed_automation', ${value(config)}, false);`);
   const before = await state();
   check(`candidate version upgrades the published ${oldVersion} base`, await php(`echo version_compare('${pluginVersions[0]}', '${oldVersion}', '>') ? 'yes' : 'no';`) === 'yes');
-  check(`released ${oldVersion} base and Pro are active in the requested storage mode`, before.versions.every(v => v === oldVersion) && before.active.every(Boolean) && before.hpos === hpos);
+  check(`released ${oldVersion} base and Pro are active in the requested storage mode`, before.versions.every((v, i) => v === previous[i].version) && before.active.every(Boolean) && before.hpos === hpos);
   check(`released ${oldVersion} has its activity schema and retention schedule`, before.activitySchema === '1' && before.activityCleanup);
   check(`released ${oldVersion} starts with failure alerts disabled`, before.failureAlerts === null && !before.failureAlertSchedule);
   const beforePdf = await renderOrder(before.order, { kind: 'order-summary', template: before.templates[0].template });
@@ -129,7 +129,7 @@ try {
     check(`${entry.name} replacement preserves automation configuration`, JSON.stringify(current.automation) === JSON.stringify(before.automation));
     check(`${entry.name} replacement preserves orders and does not send mail`, JSON.stringify(current.order) === JSON.stringify(before.order) && current.mailAttempts === before.mailAttempts);
     check(`${entry.name} replacement keeps both plugins active`, current.active.every(Boolean));
-    assert.deepEqual(current.versions, index === 0 ? [pluginVersions[0], oldVersion] : pluginVersions);
+    assert.deepEqual(current.versions, index === 0 ? [pluginVersions[0], previous[1].version] : pluginVersions);
     check(index === 0 ? 'new base remains compatible with the previous Pro version during upgrade' : 'both installed plugin versions match the release candidate', current.batchLimit === 25);
   }
   const after = await state();

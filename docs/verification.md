@@ -1,8 +1,15 @@
 # Preview verification
 
-The WordPress **0.1.3** preview pairs with the unchanged **Pro 0.1.2** add-on.
+The WordPress **0.1.6** preview pairs with the unchanged **Pro 0.1.2** add-on.
 All checks use synthetic order data. This is an evaluation preview, not
 marketplace approval or a live paid service.
+
+## 0.1.6 engine update
+
+The browser and server renderer use the published Fullbleed Node 0.4.1 package
+and engine 2.5.22. The [update record](engine-2522.md) describes the actual
+Commerce regression fixture, independent PDF checks and saved-template review.
+Earlier records below retain the versions and evidence they originally verified.
 
 ## 0.1.3 renderer update
 
