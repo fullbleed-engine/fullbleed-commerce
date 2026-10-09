@@ -7,7 +7,7 @@ production capacity.
 
 ## Current server containment
 
-Commerce source uses `fullbleed@0.2.0` / engine 2.5.8 with `isolation: 'process'`
+Commerce source uses `fullbleed@0.4.1` / engine 2.5.22 with `isolation: 'process'`
 for every server render. Each call starts a Node child that owns its WASM worker.
 The HTTP server keeps the admission slot until that child exits and IPC closes,
 including after cancellation or native-process failure. A failure returns through

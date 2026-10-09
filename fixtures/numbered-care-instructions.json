@@ -1,0 +1,7 @@
+{
+  "description": "Synthetic merchant-authored care appendix. Sibling counter resets must continue within a chapter and restart for the next chapter.",
+  "html": "<section class=\"fb-care\"><h2>Care for your pieces</h2><p>Prepared by {{seller.name}} for order {{order.number}}.</p><h3 class=\"fb-care-chapter\">Wash</h3><p class=\"fb-care-step\">Wash gently.</p><p class=\"fb-care-step\">Dry flat.</p><h3 class=\"fb-care-chapter\">Store</h3><p class=\"fb-care-step\">Store folded.</p></section>",
+  "css": ".fb-care { break-before: page; counter-reset: care-chapter; font-family: Inter; color: #203a32; } .fb-care h2 { font-family: 'DM Serif Display'; font-size: 26pt; font-weight: 400; } .fb-care-chapter { counter-increment: care-chapter; counter-reset: care-step; margin-top: 20pt; font-size: 14pt; } .fb-care-step { counter-increment: care-step; margin: 8pt 0; } .fb-care-step::before { content: '[' counter(care-chapter) '.' counter(care-step) '] '; color: #9b3d22; font-weight: 700; }",
+  "expectedLabels": ["1.1", "1.2", "2.1"],
+  "expectedText": ["Wash gently.", "Dry flat.", "Store folded."]
+}

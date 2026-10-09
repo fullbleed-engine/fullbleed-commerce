@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Fullbleed Commerce
  * Description: Designed order summaries and packing slips, generated privately in your browser.
- * Version: 0.1.5
+ * Version: 0.1.6
  * Author: Fullbleed
  * Author URI: https://fullbleed.dev
  * Requires at least: 6.5
@@ -17,7 +17,7 @@ namespace Fullbleed\Commerce;
 
 defined( 'ABSPATH' ) || exit;
 
-const VERSION = '0.1.5';
+const VERSION = '0.1.6';
 
 add_action( 'before_woocommerce_init', function () {
     if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {

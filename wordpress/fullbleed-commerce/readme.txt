@@ -4,7 +4,7 @@ Tags: pdf, woocommerce, packing slips, order documents
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.1.5
+Stable tag: 0.1.6
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,11 @@ The plugin uses WooCommerce order APIs, not direct post or database queries. See
 The ZIP includes a source/ directory with src/admin.js, src/browser-worker.js, tools/build.mjs and package-lock.json. From that source directory, run npm ci --ignore-scripts and npm run build with Node.js 26.10.0 or newer. See source/README.txt for copying the rebuilt assets. Fullbleed's engine source is https://github.com/fullbleed-engine/fullbleed-official and its Node integration is https://github.com/fullbleed-engine/fullbleed-node. Build metadata and license notices ship under assets/generated/.
 
 == Changelog ==
+
+= 0.1.6 =
+* Update the bundled Fullbleed engine to 2.5.22. Custom numbered sections now restart their step counters correctly when a new section begins.
+* Retain saved template HTML/CSS and local browser generation. Review your PDF preview after updating because corrected layout can change document appearance.
+* Compatible with the unchanged Fullbleed Commerce Pro 0.1.2 add-on.
 
 = 0.1.5 =
 * Serve visual editor icons from the installed plugin and remove the external stylesheet fallback. Template editing and PDF downloads are verified with off-site requests blocked.
