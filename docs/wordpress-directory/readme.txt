@@ -5,7 +5,7 @@ Tags: pdf, woocommerce, packing slips, order documents
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.1.5
+Stable tag: 0.1.6
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,11 @@ The ZIP includes a source/ directory with src/admin.js, src/browser-worker.js, t
 4. Actual one-page order summary from the free Studio design, with embedded fonts and WooCommerce's original totals. All names, addresses and order data are fictional.
 
 == Changelog ==
+
+= 0.1.6 =
+* Update the bundled Fullbleed engine to 2.5.22. Custom numbered sections now restart their step counters correctly when a new section begins.
+* Retain saved template HTML/CSS and local browser generation. Review your PDF preview after updating because corrected layout can change document appearance.
+* Compatible with the unchanged Fullbleed Commerce Pro 0.1.2 add-on.
 
 = 0.1.5 =
 * Serve visual editor icons from the installed plugin and remove the external stylesheet fallback. Template editing and PDF downloads are verified with off-site requests blocked.

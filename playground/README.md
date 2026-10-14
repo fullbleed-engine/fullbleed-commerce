@@ -18,7 +18,8 @@ take a minute or two.
 Use **Export template** to keep a JSON copy of your design. The sample store is
 temporary and resets when you refresh the browser or close the tab; do not enter
 customer information, payment details or service tokens.
-Outgoing mail, WordPress networking, cron and WooCommerce tracking are disabled.
+Outgoing mail, WordPress networking, cron, WooCommerce tracking and WordPress
+Gravatar images are disabled.
 The browser still downloads the public code needed to start the demo.
 
 This demonstrates the free editor and browser rendering. The Pro add-on's email
@@ -30,10 +31,10 @@ workflows and remaining paid-launch requirements.
 ## Install the preview on your staging store
 
 Download the free plugin ZIP from the
-[preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.0-alpha.3).
+[preview release](https://github.com/fullbleed-engine/fullbleed-commerce/releases/tag/v0.1.6).
 With WooCommerce active, use **Plugins → Add New → Upload Plugin**, activate
 Fullbleed, then open **WooCommerce → Fullbleed documents**. No Node or PDF service
-is needed for the free plugin. Use staging data while evaluating this alpha.
+is needed for the free plugin. Use staging data while evaluating this preview.
 
 ## Reproduce and maintain the demo
 

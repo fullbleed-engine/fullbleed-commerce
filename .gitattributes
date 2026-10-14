@@ -1,2 +1,3 @@
 # Preserve the exact source bytes included in verified plugin archives.
 * -text
+*.pdf binary

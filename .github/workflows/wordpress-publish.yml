@@ -1,0 +1,103 @@
+name: Prepare or publish WordPress directory release
+on:
+  pull_request:
+    paths:
+      - '.wordpress-org/**'
+      - 'docs/wordpress-directory/**'
+      - 'tools/*wordpress*release*.py'
+      - '.github/workflows/wordpress-publish.yml'
+  push:
+    branches: [main]
+    paths:
+      - '.wordpress-org/**'
+      - 'docs/wordpress-directory/**'
+      - 'tools/*wordpress*release*.py'
+      - '.github/workflows/wordpress-publish.yml'
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Commit the verified free release to WordPress.org
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: wordpress-directory-publication
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.11'
+      - run: python -m unittest discover -s test -p '*wordpress_release_test.py'
+      - name: Prepare exact release and listing assets
+        run: python tools/prepare-wordpress-release.py
+      - name: Read verified version
+        id: version
+        run: echo "version=$(python -c 'import json; print(json.load(open("target/wordpress-release/manifest.json"))["version"])')" >> "$GITHUB_OUTPUT"
+      - name: Rehearse SVN upload without credentials or a commit
+        uses: 10up/action-wordpress-plugin-deploy@54bd289b8525fd23a5c365ec369185f2966529c2 # 2.3.0
+        with:
+          dry-run: true
+        env:
+          SVN_USERNAME: dry-run
+          SVN_PASSWORD: dry-run-placeholder
+          SLUG: fullbleed-commerce
+          VERSION: ${{ steps.version.outputs.version }}
+          BUILD_DIR: target/wordpress-release/plugin
+          ASSETS_DIR: target/wordpress-release/assets
+      - name: Verify the actual SVN staging tree
+        run: python tools/prepare-wordpress-release.py --verify --svn-checkout "$HOME/svn-fullbleed-commerce"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: wordpress-directory-release
+          path: target/wordpress-release/
+          retention-days: 14
+  publish:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/main'
+    needs: prepare
+    environment: wordpress
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: wordpress-directory-release
+          path: target/wordpress-release
+      - name: Verify the prepared artifact
+        run: python tools/prepare-wordpress-release.py --verify
+      - name: Check publishing credential
+        env:
+          SVN_PASSWORD: ${{ secrets.WORDPRESS_SVN_PASSWORD }}
+        run: |
+          if [ -z "$SVN_PASSWORD" ]; then
+            echo 'Set WORDPRESS_SVN_PASSWORD to the separate WordPress.org SVN password before publishing.'
+            exit 1
+          fi
+      - name: Read verified version
+        id: version
+        run: echo "version=$(python -c 'import json; print(json.load(open("target/wordpress-release/manifest.json"))["version"])')" >> "$GITHUB_OUTPUT"
+      - name: Publish free plugin and listing assets
+        uses: 10up/action-wordpress-plugin-deploy@54bd289b8525fd23a5c365ec369185f2966529c2 # 2.3.0
+        env:
+          SVN_USERNAME: kfinkelstein
+          SVN_PASSWORD: ${{ secrets.WORDPRESS_SVN_PASSWORD }}
+          SLUG: fullbleed-commerce
+          VERSION: ${{ steps.version.outputs.version }}
+          BUILD_DIR: target/wordpress-release/plugin
+          ASSETS_DIR: target/wordpress-release/assets
+      - name: Independently verify published SVN files
+        run: |
+          svn export --non-interactive https://plugins.svn.wordpress.org/fullbleed-commerce/trunk target/wordpress-published/trunk
+          svn export --non-interactive "https://plugins.svn.wordpress.org/fullbleed-commerce/tags/${{ steps.version.outputs.version }}" "target/wordpress-published/tags/${{ steps.version.outputs.version }}"
+          svn export --non-interactive https://plugins.svn.wordpress.org/fullbleed-commerce/assets target/wordpress-published/assets
+          python tools/prepare-wordpress-release.py --verify --svn-checkout target/wordpress-published
