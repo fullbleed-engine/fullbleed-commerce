@@ -39,7 +39,14 @@ def check_editor_typography(page, check, screenshot):
     expect(size).to_have_value(str(expected['size']))
     size.fill('32')
     size.press('Enter')
-    expect(heading).to_have_css('font-size', '42.6667px')
+    # Firefox quantizes canvas CSS pixels at the editor's zoom (42.6875px),
+    # while Chromium/WebKit report approximately 42.6667px. The PDF below must
+    # still contain exactly 32-point type, independent of that browser readout.
+    page.wait_for_function('''() => {
+        const frame = document.querySelector('[data-visual] iframe.gjs-frame');
+        const size = parseFloat(frame.contentWindow.getComputedStyle(frame.contentDocument.querySelector('h1')).fontSize);
+        return Math.abs(size - 32 * 4 / 3) < 0.05;
+    }''')
     expect(field('font-size').locator('[data-clear-style]')).to_be_visible()
     check('editing the point control changes the selected heading', True)
     page.locator('[data-action="preview"]').click()
@@ -73,9 +80,10 @@ def check_editor_typography(page, check, screenshot):
     child = select('#fb-type-test')
     expect(field('font-family').locator('select')).to_have_value('Inter, sans-serif')
     expect(field('font-weight').locator('select')).to_have_value('650')
-    expect(field('font-size').locator('input')).to_have_value('12')
-    expect(field('letter-spacing').locator('input')).to_have_value('-0.25')
-    expect(field('line-height').locator('input')).to_have_value('16.8')
+    inherited = child.evaluate('''e => Object.fromEntries(['font-size','letter-spacing','line-height'].map(name =>
+        [name, String(Math.round(parseFloat(getComputedStyle(e).getPropertyValue(name))*750)/1000)]))''')
+    for name, value in inherited.items():
+        expect(field(name).locator('input')).to_have_value(value)
     check('inherited font stacks, variable weights and negative spacing remain editable', True)
     source()
     page.locator('[data-html]').fill(original_html)

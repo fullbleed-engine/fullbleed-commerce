@@ -32,7 +32,7 @@
     },
     {
       "path": "tools/editor_typography.py",
-      "sha256": "a5adb7ade5d3312c23a7421b5c005e74292d3dcfa4af4211e3d240eca6382d06"
+      "sha256": "068f08428a4dcdfbc476b83a098fec39cb2cf9c49f27f7c77ab5c78fecb87072"
     },
     {
       "path": "tools/pack.mjs",
@@ -129,5 +129,122 @@
       "sha256": "1ea8c5d6d3e4300024d9c1a255138f5d3054dfbddaa1d16c17be6c6fa9598d34"
     }
   ],
-  "visualReview": "Typography controls, one-page 32-point preview and both pages of the custom order document inspected; no overlap or clipping."
+  "visualReview": "Typography controls, one-page 32-point preview and both pages of the custom order document inspected; no overlap or clipping.",
+  "standaloneBrowsers": [
+    {
+      "browser": "chrome",
+      "version": "155.0.8059.40",
+      "checks": [
+        {
+          "name": "inherited family and point size",
+          "passed": true
+        },
+        {
+          "name": "selection leaves CSS and dirty state alone",
+          "passed": true
+        },
+        {
+          "name": "editing changes canvas typography",
+          "passed": true
+        },
+        {
+          "name": "undo redo and clear restore source",
+          "passed": true
+        },
+        {
+          "name": "three mode switches keep selection working",
+          "passed": true
+        },
+        {
+          "name": "no JavaScript errors",
+          "passed": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "checks": [
+        {
+          "name": "inherited family and point size",
+          "passed": true
+        },
+        {
+          "name": "selection leaves CSS and dirty state alone",
+          "passed": true
+        },
+        {
+          "name": "editing changes canvas typography",
+          "passed": true
+        },
+        {
+          "name": "undo redo and clear restore source",
+          "passed": true
+        },
+        {
+          "name": "three mode switches keep selection working",
+          "passed": true
+        },
+        {
+          "name": "no JavaScript errors",
+          "passed": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.6",
+      "checks": [
+        {
+          "name": "inherited family and point size",
+          "passed": true
+        },
+        {
+          "name": "selection leaves CSS and dirty state alone",
+          "passed": true
+        },
+        {
+          "name": "editing changes canvas typography",
+          "passed": true
+        },
+        {
+          "name": "undo redo and clear restore source",
+          "passed": true
+        },
+        {
+          "name": "three mode switches keep selection working",
+          "passed": true
+        },
+        {
+          "name": "no JavaScript errors",
+          "passed": true
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "browserPixelReadouts": [
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "authoredFontSize": "43pt",
+      "computedBefore": "57.3125px",
+      "controlBefore": "42.984",
+      "authoredEdit": "32pt",
+      "computedAfter": "42.6875px",
+      "controlAfter": "32"
+    },
+    {
+      "browser": "webkit",
+      "version": "26.6",
+      "authoredFontSize": "43pt",
+      "computedBefore": "57.333332px",
+      "controlBefore": "43",
+      "authoredEdit": "32pt",
+      "computedAfter": "42.666668px",
+      "controlAfter": "32"
+    }
+  ]
 }
