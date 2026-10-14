@@ -1,0 +1,250 @@
+{
+  "schema": "fullbleed.editor-typography-verification.v1",
+  "checkedAt": "2026-10-14T23:02:41.810819+00:00",
+  "sourceBase": "275dbc7e3a873cc9fe64ed21b520145417becaa9",
+  "scope": "Source candidate; no plugin release or production deployment. Synthetic local WooCommerce only.",
+  "runtime": {
+    "wordpress": "7.1.3",
+    "woocommerce": "11.2.1",
+    "php": "8.3.33",
+    "hpos": true
+  },
+  "renderer": {
+    "nodePackage": "0.4.1",
+    "engine": "2.5.22"
+  },
+  "sourceFiles": [
+    {
+      "path": "src/template-editor.js",
+      "sha256": "2fa45938a0ed4c2d57d4f58c146e074516aa20dcefd17b96b1c4247d2cd0120b"
+    },
+    {
+      "path": "src/template-editor.css",
+      "sha256": "30a157cfc5105218c01883a39441fc66c765abc545fa3802022d75b99b9dd49b"
+    },
+    {
+      "path": "src/editor-typography.js",
+      "sha256": "7b6248d581152af0a36ffb8a0cb81f576a2faf4c0bf4904199f8fec648e5d3a1"
+    },
+    {
+      "path": "tools/check-browser.py",
+      "sha256": "24c097b989528324201b82a0cbdf7093ab3265533b04ce1f979a1903ccbbf33e"
+    },
+    {
+      "path": "tools/editor_typography.py",
+      "sha256": "068f08428a4dcdfbc476b83a098fec39cb2cf9c49f27f7c77ab5c78fecb87072"
+    },
+    {
+      "path": "tools/pack.mjs",
+      "sha256": "1713db518882c84b88210b318e2309d1ce061b1aa8a2357bdae46dccee4b31ff"
+    }
+  ],
+  "nodeTests": {
+    "passed": 68,
+    "failed": 0
+  },
+  "browserWorkflow": {
+    "passed": 28,
+    "failed": 0,
+    "pageErrors": [],
+    "externalRequests": []
+  },
+  "typography": {
+    "browser": "155.0.8059.40",
+    "browserEngine": "chrome",
+    "browserDistribution": "Google Chrome channel",
+    "playwright": "1.63.0",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "checks": [
+      {
+        "name": "typography controls show the selected canvas font, points, weight and color",
+        "passed": true
+      },
+      {
+        "name": "selecting existing typography does not mark the template unsaved",
+        "passed": true
+      },
+      {
+        "name": "reading typography preserves original CSS without computed overrides",
+        "passed": true
+      },
+      {
+        "name": "editing the point control changes the selected heading",
+        "passed": true
+      },
+      {
+        "name": "the real PDF preview uses the visually selected 32-point type",
+        "passed": true
+      },
+      {
+        "name": "undo, redo and clearing an override restore the canvas typography",
+        "passed": true
+      },
+      {
+        "name": "clearing a font change restores the original CSS family",
+        "passed": true
+      },
+      {
+        "name": "clearing visual typography leaves original print CSS intact",
+        "passed": true
+      },
+      {
+        "name": "inherited font stacks, variable weights and negative spacing remain editable",
+        "passed": true
+      },
+      {
+        "name": "returning to the template refreshes typography without stale values",
+        "passed": true
+      },
+      {
+        "name": "no JavaScript errors",
+        "passed": true
+      }
+    ],
+    "errors": []
+  },
+  "authorization": {
+    "passed": 46,
+    "failed": 0
+  },
+  "pdfs": [
+    {
+      "file": "wordpress-typography.pdf",
+      "bytes": 79981,
+      "sha256": "04646fd491aa35a9d405d8bb94846c6ed151560040b399c87adb074bad7601ff"
+    },
+    {
+      "file": "editor-styles-final-default.pdf",
+      "bytes": 80002,
+      "sha256": "ec300902d69064e1cf6af34d5358de09797a2eebce3d139aeb65813bddeddb75"
+    },
+    {
+      "file": "editor-styles-final-custom.pdf",
+      "bytes": 117186,
+      "sha256": "1ea8c5d6d3e4300024d9c1a255138f5d3054dfbddaa1d16c17be6c6fa9598d34"
+    },
+    {
+      "file": "editor-styles-final-saved.pdf",
+      "bytes": 117186,
+      "sha256": "1ea8c5d6d3e4300024d9c1a255138f5d3054dfbddaa1d16c17be6c6fa9598d34"
+    }
+  ],
+  "visualReview": "Typography controls, one-page 32-point preview and both pages of the custom order document inspected; no overlap or clipping.",
+  "standaloneBrowsers": [
+    {
+      "browser": "chrome",
+      "version": "155.0.8059.40",
+      "checks": [
+        {
+          "name": "inherited family and point size",
+          "passed": true
+        },
+        {
+          "name": "selection leaves CSS and dirty state alone",
+          "passed": true
+        },
+        {
+          "name": "editing changes canvas typography",
+          "passed": true
+        },
+        {
+          "name": "undo redo and clear restore source",
+          "passed": true
+        },
+        {
+          "name": "three mode switches keep selection working",
+          "passed": true
+        },
+        {
+          "name": "no JavaScript errors",
+          "passed": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "checks": [
+        {
+          "name": "inherited family and point size",
+          "passed": true
+        },
+        {
+          "name": "selection leaves CSS and dirty state alone",
+          "passed": true
+        },
+        {
+          "name": "editing changes canvas typography",
+          "passed": true
+        },
+        {
+          "name": "undo redo and clear restore source",
+          "passed": true
+        },
+        {
+          "name": "three mode switches keep selection working",
+          "passed": true
+        },
+        {
+          "name": "no JavaScript errors",
+          "passed": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.6",
+      "checks": [
+        {
+          "name": "inherited family and point size",
+          "passed": true
+        },
+        {
+          "name": "selection leaves CSS and dirty state alone",
+          "passed": true
+        },
+        {
+          "name": "editing changes canvas typography",
+          "passed": true
+        },
+        {
+          "name": "undo redo and clear restore source",
+          "passed": true
+        },
+        {
+          "name": "three mode switches keep selection working",
+          "passed": true
+        },
+        {
+          "name": "no JavaScript errors",
+          "passed": true
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "browserPixelReadouts": [
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "authoredFontSize": "43pt",
+      "computedBefore": "57.3125px",
+      "controlBefore": "42.984",
+      "authoredEdit": "32pt",
+      "computedAfter": "42.6875px",
+      "controlAfter": "32"
+    },
+    {
+      "browser": "webkit",
+      "version": "26.6",
+      "authoredFontSize": "43pt",
+      "computedBefore": "57.333332px",
+      "controlBefore": "43",
+      "authoredEdit": "32pt",
+      "computedAfter": "42.666668px",
+      "controlAfter": "32"
+    }
+  ]
+}

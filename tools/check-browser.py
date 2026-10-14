@@ -11,6 +11,7 @@ from zipfile import ZipFile
 from playwright.sync_api import sync_playwright
 from pypdf import PdfReader
 from browser_runtime import browser_label, browser_metadata, engine, launch_browser, login_to
+from editor_typography import check_editor_typography
 
 base = os.environ.get('FULLBLEED_TEST_URL', 'http://127.0.0.1:9477')
 assert urlparse(base).hostname == '127.0.0.1'
@@ -100,7 +101,7 @@ with sync_playwright() as pw:
         fonts = frame.evaluate('Array.from(document.fonts, font => ({family: font.family, weight: font.weight, style: font.style, status: font.status}))')
         check('visual editor loads the actual bundled font faces', len(fonts) == 4 and all(font['status'] == 'loaded' for font in fonts) and {font['family'] for font in fonts} == {'Inter', 'DM Serif Display', 'Bebas Neue'})
         check('visual editor renders the saved template', (saved_title or '{{document.title}}') in canvas.locator('h1').inner_text())
-        canvas.locator('h1').click()
+        check_editor_typography(page, check, out / f'{label}-typography.png')
         controls = page.locator('.gjs-sm-property__font-size').evaluate('e => { const input = e.querySelector("input"); const style = getComputedStyle(input); return {valueWidth: input.getBoundingClientRect().width - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight), unitWidth: e.querySelector("select").getBoundingClientRect().width}; }')
         check('typography values and units fit their controls', controls['valueWidth'] >= 60 and controls['unitWidth'] >= 30)
         check('editor uses WordPress dependencies without replacing shared globals', page.evaluate("""() => {
