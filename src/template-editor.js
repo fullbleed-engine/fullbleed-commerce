@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 import grapesjs from 'grapesjs';
 import { TEMPLATE_SCHEMA, validateTemplate, templateFields } from './templates.js';
+import { syncCanvasTypography } from './editor-typography.js';
 
 // Both integrations use this editor. Only templates are saved; order data and
 // PDF previews never enter GrapesJS or its storage manager.
@@ -68,9 +69,17 @@ export function mountTemplateEditor(host, { kind, initial, defaults, fontBase, o
     if (mode === 'source') return validateTemplate({ schema: TEMPLATE_SCHEMA, html: html.value, css: css.value }, kind);
     return validateTemplate({ schema: TEMPLATE_SCHEMA, html: editor.getWrapper().components().map(component => component.toHTML()).join(''), css: baseCss + '\n' + editor.getCss({ keepUnusedStyles: true }) }, kind);
   }
+  function destroyVisual() {
+    if (!editor) return;
+    // Stop pointer handlers and pending command updates before their frame and
+    // component models are removed (also applies to closing the whole editor).
+    for (const command of Object.keys(editor.Commands.getActive())) editor.stopCommand(command);
+    editor.destroy();
+  }
   function buildVisual(template) {
-    editor?.destroy();
+    destroyVisual();
     loading = true;
+    query('[data-canvas]').setAttribute('aria-busy', 'true');
     baseCss = template.css;
     const blocks = [
       { id: 'heading', label: 'Heading', content: '<h2>Make it yours.</h2>' },
@@ -93,13 +102,17 @@ export function mountTemplateEditor(host, { kind, initial, defaults, fontBase, o
       deviceManager: { devices: [{ id: 'paper', name: 'Paper', width: '794px' }] },
       canvas: { scripts: [], styles: [], allowExternalDrop: false, frameStyle: `body { margin: 0; padding: 40px; } ${baseCss}` },
       styleManager: { appendTo: query('[data-styles]'), sectors: [
-        { name: 'Typography', open: true, buildProps: ['font-family', 'font-size', 'font-weight', 'color', 'line-height', 'letter-spacing', 'text-align'], properties: [{ property: 'font-family', type: 'select', options: [{ id: 'Inter', label: 'Inter' }, { id: 'DM Serif Display', label: 'DM Serif Display' }, { id: 'Bebas Neue', label: 'Bebas Neue' }] }] },
+        { name: 'Typography', open: true, buildProps: ['font-family', 'font-size', 'font-weight', 'color', 'line-height', 'letter-spacing', 'text-align'], properties: [
+          { property: 'font-family', type: 'select', options: [{ id: 'Inter', label: 'Inter' }, { id: 'DM Serif Display', label: 'DM Serif Display' }, { id: 'Bebas Neue', label: 'Bebas Neue' }] },
+          ...['font-size', 'line-height', 'letter-spacing'].map(property => ({ property, units: ['pt', 'px', '%', 'em', 'rem', 'vh', 'vw'] })),
+        ] },
         { name: 'Space and layout', open: false, buildProps: ['display', 'width', 'height', 'margin', 'padding', 'justify-content', 'align-items', 'gap'] },
         { name: 'Color and borders', open: false, buildProps: ['background-color', 'border', 'border-radius'] },
       ] },
     });
     editor.getWrapper().set({ stylable: false, droppable: true });
     const mountedEditor = editor;
+    editor.on('style:custom', () => { if (!destroyed && mountedEditor === editor) syncCanvasTypography(mountedEditor, host); });
     editor.on('canvas:frame:load:head', ({ window: frame }) => {
       loadBundledFonts().then(async fonts => {
         if (destroyed || mountedEditor !== editor) return;
@@ -117,7 +130,15 @@ export function mountTemplateEditor(host, { kind, initial, defaults, fontBase, o
       frame.document.addEventListener('drop', event => event.preventDefault(), true);
     });
     editor.on('load', () => {
+      if (destroyed || mountedEditor !== editor) return;
+      // Rebind selection to the mounted frame after rebuilding the editor.
+      // The WordPress build can otherwise report an active command while
+      // clicks in the replacement frame no longer select a component.
+      const selectionCommand = editor.getConfig().defaultCommand;
+      editor.stopCommand(selectionCommand);
+      editor.runCommand(selectionCommand);
       loading = false;
+      query('[data-canvas]').setAttribute('aria-busy', 'false');
       const width = query('[data-canvas]').clientWidth;
       if (width > 0) editor.Canvas.setZoom(Math.max(30, Math.min(100, Math.floor((width - 24) / 794 * 100))));
     });
@@ -214,5 +235,5 @@ export function mountTemplateEditor(host, { kind, initial, defaults, fontBase, o
   const beforeUnload = event => { if (dirty) { event.preventDefault(); event.returnValue = ''; } };
   window.addEventListener('beforeunload', beforeUnload);
   setSource(current); setMode('visual'); report(initial ? 'Your saved template is ready to edit.' : 'Start with this design or paste your HTML and CSS.');
-  return { getTemplate, hasUnsavedChanges: () => dirty, destroy() { destroyed = true; clearPreview(); editor?.destroy(); window.removeEventListener('beforeunload', beforeUnload); host.replaceChildren(); } };
+  return { getTemplate, hasUnsavedChanges: () => dirty, destroy() { destroyed = true; clearPreview(); destroyVisual(); window.removeEventListener('beforeunload', beforeUnload); host.replaceChildren(); } };
 }

@@ -11,6 +11,11 @@ panel, double-click text, and use the style panel for fonts, spacing, colors and
 borders. Insert order fields using the field menu. Add a PNG/JPEG logo under
 180 KB; its bytes are embedded in the template.
 
+Typography controls include styles inherited from your CSS. Canvas sizes display
+in points; use the unit selector when you want another unit. Selecting text does
+not add CSS overrides. Clearing a change made in the current visual session
+restores the underlying CSS.
+
 The HTML/CSS view accepts static HTML fragments, full documents and style tags.
 The importer rejects unsupported elements or attributes with an error. It does
 not silently run or remove scripts. Merchant CSS is preserved; visual changes

@@ -15,6 +15,10 @@
 /* Keep the narrow inspector readable without inheriting WordPress or toolbar
    input dimensions. Its unit selector overlays the right side of the value. */
 .fb-visual-layout .gjs-sm-property { width:100%; }
+.fb-visual-layout [data-canvas][aria-busy=true] { pointer-events:none; }
+/* Resolved typography is a display fallback, not a new visual override. */
+.fb-visual-layout [data-fb-canvas-value]>.gjs-sm-label { color:#203a32; }
+.fb-visual-layout [data-fb-canvas-value]>.gjs-sm-label [data-clear-style] { display:none!important; }
 .fb-visual-layout .gjs-field input,.fb-visual-layout .gjs-field select { min-height:0; height:30px; margin:0; border:0; border-radius:0; padding:4px 6px; background:transparent; box-shadow:none; font:12px/22px system-ui,sans-serif; }
 .fb-visual-layout .gjs-field-integer input { padding-right:58px; }
 .fb-visual-layout .gjs-field-units { width:44px; }
