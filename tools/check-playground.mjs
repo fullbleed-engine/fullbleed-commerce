@@ -41,6 +41,7 @@ echo wp_json_encode( array(
     'mailSuppressed' => $mail_result && ! $mailer_used,
     'externalRequestBlocked' => is_wp_error( $external ),
     'cronDisabled' => DISABLE_WP_CRON, 'trackingDisabled' => false === WC_TRACKING_ENABLED,
+    'avatarsDisabled' => ! get_option( 'show_avatars' ),
     'freePluginActive' => is_plugin_active('fullbleed-commerce/fullbleed-commerce.php'),
     'proPluginActive' => is_plugin_active('fullbleed-commerce-pro/fullbleed-commerce-pro.php')
 ) );` });
@@ -54,6 +55,7 @@ echo wp_json_encode( array(
   check('actual WordPress mail call short-circuited before transport', runtime.mailSuppressed);
   check('WordPress external request blocked', runtime.externalRequestBlocked);
   check('cron and WooCommerce tracking disabled', runtime.cronDisabled && runtime.trackingDisabled);
+  check('WordPress avatar requests disabled in the sample store', runtime.avatarsDisabled);
   await mkdir('output/playground', { recursive: true });
   const record = { checkedAt: new Date().toISOString(), source: 'Disposable local execution of public Blueprint with exact local candidate ZIP bytes', base, blueprintSha256: createHash('sha256').update(blueprintBytes).digest('hex'), archive, runtime, checks };
   await writeFile('output/playground/local-verification.json', JSON.stringify(record, null, 2) + '\n');

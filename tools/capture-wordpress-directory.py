@@ -1,4 +1,4 @@
-"""Capture the free plugin in a disposable public sample store.
+"""Capture the free plugin in a disposable public or loopback sample store.
 
 Uses the released browser package; never connects to a merchant store. The
 resulting PNGs are native UI captures, not mockups. The caller owns this browser.
@@ -13,6 +13,7 @@ from urllib.parse import parse_qs, urlsplit
 
 from playwright.sync_api import expect, sync_playwright
 from pypdf import PdfReader
+from browser_runtime import wait_for_fixture_page
 
 
 parser = argparse.ArgumentParser(description=__doc__)
@@ -22,10 +23,26 @@ parser.add_argument('--output', type=Path, default=Path('output/wordpress-direct
 parser.add_argument('--candidate-editor', type=Path, help='Test a local editor bundle in this owned disposable store; never publish these captures as released UI.')
 parser.add_argument('--require-fonts', action='store_true', help='Fail if the visual editor does not load every bundled font.')
 parser.add_argument('--require-local-icons', action='store_true', help='Require the bundled icon assets and block the former CDN fallback.')
+parser.add_argument('--local-verification', type=Path, help='For loopback capture, the runtime record written by check-playground.mjs --serve.')
 args = parser.parse_args()
 parsed = urlsplit(args.url)
-assert parsed.scheme == 'https' and parsed.hostname == 'playground.wordpress.net'
-assert parse_qs(parsed.query).get('storage') == ['temp']
+public = parsed.scheme == 'https' and parsed.hostname == 'playground.wordpress.net'
+runtime = None
+if public:
+    assert parse_qs(parsed.query).get('storage') == ['temp']
+    assert args.local_verification is None
+else:
+    assert parsed.scheme == 'http' and parsed.hostname == '127.0.0.1' and parsed.port
+    assert parsed.path in ('', '/') and not (parsed.query or parsed.fragment or parsed.username or parsed.password)
+    assert args.local_verification, 'Start check-playground.mjs --serve and supply its verification record.'
+    runtime = json.loads(args.local_verification.read_text(encoding='utf-8'))
+    assert runtime['base'] == args.url.rstrip('/') and runtime['archive']['version'] == args.version
+    assert all(c['passed'] for c in runtime['checks']) and len(runtime['checks']) >= 7
+    assert runtime['runtime']['freePluginActive'] and not runtime['runtime']['proPluginActive']
+    assert runtime['runtime']['mailSuppressed'] and runtime['runtime']['externalRequestBlocked']
+    root = Path(__file__).resolve().parents[1]
+    assert sha256((root / 'playground/blueprint.json').read_bytes()).hexdigest() == runtime['blueprintSha256']
+    assert sha256((root / 'dist' / runtime['archive']['filename']).read_bytes()).hexdigest() == runtime['archive']['sha256']
 args.output.mkdir(parents=True, exist_ok=True)
 expect.set_options(timeout=45000)
 checks, errors = [], []
@@ -40,9 +57,18 @@ def check(name, value):
 with sync_playwright() as pw:
     browser = pw.chromium.launch(channel='chrome', headless=True)
     context = browser.new_context(viewport={'width': 1600, 'height': 1500}, accept_downloads=True)
-    icon_responses, blocked_icons = [], []
+    icon_responses, blocked_icons, external_requests = [], [], []
     context.on('response', lambda response: icon_responses.append({'url': response.url, 'status': response.status}) if '/fonts/editor-icons.' in response.url else None)
-    if args.require_local_icons:
+    if not public:
+        def loopback_only(route):
+            target = urlsplit(route.request.url)
+            if target.scheme in ('http', 'https') and (target.scheme, target.netloc) != (parsed.scheme, parsed.netloc):
+                external_requests.append(route.request.url)
+                route.abort()
+            else:
+                route.continue_()
+        context.route('**/*', loopback_only)
+    elif args.require_local_icons:
         def block_remote_icons(route):
             blocked_icons.append(route.request.url)
             route.abort()
@@ -51,7 +77,17 @@ with sync_playwright() as pw:
     page.set_default_timeout(45000)
     page.on('pageerror', lambda error: errors.append(str(error)))
     try:
-        page.goto(args.url, timeout=60000, wait_until='domcontentloaded')
+        if public:
+            page.goto(args.url, timeout=60000, wait_until='domcontentloaded')
+        else:
+            page.goto(args.url.rstrip('/') + '/wp-login.php')
+            wait_for_fixture_page(page)
+            page.locator('#user_login').fill('admin')
+            page.locator('#user_pass').fill('password')
+            page.locator('#wp-submit').click()
+            page.wait_for_url('**/wp-admin/**')
+            page.goto(args.url.rstrip('/') + '/wp-admin/admin.php?page=fullbleed-commerce')
+            wait_for_fixture_page(page)
         frame = None
         deadline = time.monotonic() + 240
         while time.monotonic() < deadline and frame is None:
@@ -65,9 +101,12 @@ with sync_playwright() as pw:
             if frame is None:
                 page.wait_for_timeout(1000)
         check('Disposable sample store opened', frame is not None)
-        page.wait_for_function('Boolean(window.playgroundSites)')
-        storage = page.evaluate('async () => { await window.playgroundSites.isReady(); return window.playgroundSites.list().find(site => site.isActive); }')
-        check('Temporary storage is active', storage['storage'] == 'temporary' and not storage.get('persistence'))
+        if public:
+            page.wait_for_function('Boolean(window.playgroundSites)')
+            storage = page.evaluate('async () => { await window.playgroundSites.isReady(); return window.playgroundSites.list().find(site => site.isActive); }')
+            check('Temporary storage is active', storage['storage'] == 'temporary' and not storage.get('persistence'))
+        else:
+            check('Local demo uses the verified release ZIP with mail and WordPress networking disabled', runtime is not None)
         check('Only the free Studio design is enabled', frame.locator('#fb-theme option').all_text_contents() == ['Studio'])
         check('Free preview version is ' + args.version, frame.locator('[data-fullbleed-demo] a').filter(has_text='Download the preview').get_attribute('href').endswith('/v' + args.version))
         frame.locator('[data-render]').click()
@@ -79,7 +118,11 @@ with sync_playwright() as pw:
         reader = PdfReader(pdf)
         text = '\n'.join(p.extract_text() for p in reader.pages)
         check('Actual PDF contains the fictional order and store total', len(reader.pages) == 1 and all(v in text for v in ['Cedar & Form', 'Alex Morgan', '282.00']))
-        check('PDF matches the verified 0.1.3 sample', sha256(pdf.read_bytes()).hexdigest() == 'cbb6b0aca94c33965d7615860e1863b18a8033e52999d625fbba23a5a0d46ee1')
+        frame.locator('[data-render]').click()
+        frame.locator('[data-preview]').wait_for(state='visible')
+        with page.expect_download() as replay:
+            frame.locator('[data-preview]').click()
+        check('Repeated browser generation produces identical PDF bytes', Path(replay.value.path()).read_bytes() == pdf.read_bytes())
         frame.locator('.fb-layout').screenshot(path=str(args.output / 'screenshot-1.png'))
         frame.locator('[data-edit-template]').click()
         canvas = frame.frame_locator('[data-visual] iframe.gjs-frame')
@@ -117,13 +160,16 @@ with sync_playwright() as pw:
         check('HTML and print CSS are editable', '{{seller.name}}' in frame.locator('[data-html]').input_value() and '@page' in frame.locator('[data-css]').input_value())
         frame.locator('[data-template-editor]').screenshot(path=str(args.output / 'screenshot-3.png'))
         check('No browser JavaScript exceptions', not errors)
+        if not public:
+            check('Document generation and template editing make no off-site requests', not external_requests)
         assets = [{ 'file': p.name, 'bytes': p.stat().st_size, 'sha256': sha256(p.read_bytes()).hexdigest() } for p in sorted(args.output.iterdir()) if p.suffix in ('.png', '.pdf') and 'failure' not in p.name]
         candidate = {name: sha256((args.candidate_editor / name).read_bytes()).hexdigest() for name in ['editor.js', 'editor.css']} if args.candidate_editor else None
         record = {'checkedAt': datetime.now(timezone.utc).isoformat(), 'url': args.url, 'browser': browser.version, 'pluginVersion': args.version, 'syntheticOnly': True, 'checks': checks, 'assets': assets, 'pageErrors': errors, 'canvasFonts': canvas_fonts, 'styleControls': controls, 'iconAssets': icons, 'iconResponses': icon_responses, 'blockedIconRequests': blocked_icons, 'candidateEditor': candidate, 'captureMethod': 'Native Playwright element screenshots. Candidate injection, if any, is recorded separately; captures with candidateEditor are not released-plugin evidence.'}
+        record.update({'environment': 'public temporary Playground' if public else 'local disposable Playground', 'localVerification': runtime, 'externalRequests': external_requests})
         (args.output / 'capture-verification.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
     except Exception:
         page.screenshot(path=str(args.output / 'failure.png'), full_page=True)
-        (args.output / 'failure.json').write_text(json.dumps({'checks': checks, 'errors': errors}, indent=2) + '\n', encoding='utf-8')
+        (args.output / 'failure.json').write_text(json.dumps({'checks': checks, 'errors': errors, 'externalRequests': external_requests}, indent=2) + '\n', encoding='utf-8')
         raise
     finally:
         context.close()

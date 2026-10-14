@@ -19,9 +19,9 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / '.wordpress-org'
 DOCS = ROOT / 'docs/wordpress-directory'
-EXPECTED_ZIP = 'e5544fc080223e0700ec53e89d94a847073faa0d5a8a49893a8015410b397fc8'
-EXPECTED_SAMPLE = 'cbb6b0aca94c33965d7615860e1863b18a8033e52999d625fbba23a5a0d46ee1'
-EXPECTED_PREVIEW = '4dfbcb380a7876912e7019b971a44a90cd5d65014c1eb5f71bb7d05babb515d7'
+EXPECTED_ZIP = 'ca7013294add42156550cb9f000a20486a80889fe3e077f1edce7fd18d94198e'
+EXPECTED_SAMPLE = '017f95805beb45dcdb71a937c865aeac21f488f15e35f446bfb51dbe59659d91'
+EXPECTED_PREVIEW = '70188d599e57760bea93ce4f31e287c60bda8bea8db5e4ef0c84a5ab787dcff1'
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--plugin-zip', type=Path, required=True)
 parser.add_argument('--captures', type=Path, default=ROOT / 'output/wordpress-directory')
@@ -43,10 +43,12 @@ assert sha256(args.plugin_zip.read_bytes()).hexdigest() == EXPECTED_ZIP
 assert sha256((args.captures / 'sample-order.pdf').read_bytes()).hexdigest() == EXPECTED_SAMPLE
 assert sha256(args.sample_preview.read_bytes()).hexdigest() == EXPECTED_PREVIEW
 capture = json.loads((args.captures / 'capture-verification.json').read_text(encoding='utf-8'))
-assert capture['pluginVersion'] == '0.1.5' and capture['syntheticOnly'] and not capture['pageErrors']
+assert capture['pluginVersion'] == '0.1.6' and capture['syntheticOnly'] and not capture['pageErrors']
 assert not capture.get('candidateEditor'), 'Publish directory images only from the released plugin.'
 assert capture['iconAssets']['loaded'] and capture['iconAssets']['sameOrigin'] and not capture['blockedIconRequests']
 assert len(capture['canvasFonts']['faces']) == 4 and all(font['status'] == 'loaded' for font in capture['canvasFonts']['faces'])
+if capture.get('localVerification'):
+    assert capture['localVerification']['archive']['sha256'] == EXPECTED_ZIP and not capture['externalRequests']
 for asset in capture['assets']:
     assert sha256((args.captures / asset['file']).read_bytes()).hexdigest() == asset['sha256']
 with zipfile.ZipFile(args.plugin_zip) as archive:
@@ -58,6 +60,7 @@ ASSETS.mkdir(exist_ok=True)
 for number in range(1, 4):
     shutil.copyfile(args.captures / f'screenshot-{number}.png', ASSETS / f'screenshot-{number}.png')
 shutil.copyfile(args.sample_preview, ASSETS / 'screenshot-4.png')
+shutil.copyfile(args.captures / 'sample-order.pdf', DOCS / 'sample-order.pdf')
 html = (DOCS / 'banner.html').read_text(encoding='utf-8')
 for key, value in {'font': uri('font/ttf', font), 'icon': uri('image/svg+xml', icon), 'sample': uri('image/png', args.sample_preview.read_bytes())}.items():
     html = html.replace('{{' + key + '}}', value)
@@ -106,6 +109,6 @@ for path in sorted(ASSETS.rglob('*')):
             assert list(item['dimensions']) == [int(v) for v in path.stem.split('-')[-1].split('x')]
         assert item['bytes'] < (4 if path.name.startswith('banner') else 1 if path.name.startswith('icon') else 10) * 1024 * 1024
     assets.append(item)
-manifest = {'checkedAt': datetime.now(timezone.utc).isoformat(), 'status': 'Prepared; WordPress approval and directory publication are not established.', 'pluginVersion': '0.1.5', 'pluginZipSha256': EXPECTED_ZIP, 'samplePdfSha256': EXPECTED_SAMPLE, 'samplePreviewSha256': sha256(args.sample_preview.read_bytes()).hexdigest(), 'browser': browser_version, 'capture': capture, 'assets': assets, 'readmeSha256': sha256((DOCS / 'readme.txt').read_bytes()).hexdigest(), 'blueprintMatchesPublicDemoSource': blueprint.read_bytes() == (ROOT / 'playground/blueprint.json').read_bytes(), 'claims': ['Only free plugin features are shown.', 'Order summary is not represented as a fiscal invoice.', 'Screenshots contain fictional sample-store data.', 'No changes to released plugin ZIP bytes.']}
+manifest = {'checkedAt': datetime.now(timezone.utc).isoformat(), 'status': 'Prepared for initial SVN publication. Hosting was approved October 9 after review of 0.1.5; directory publication is pending.', 'pluginVersion': '0.1.6', 'pluginZipSha256': EXPECTED_ZIP, 'samplePdfSha256': EXPECTED_SAMPLE, 'samplePreviewSha256': sha256(args.sample_preview.read_bytes()).hexdigest(), 'browser': browser_version, 'capture': capture, 'assets': assets, 'readmeSha256': sha256((DOCS / 'readme.txt').read_bytes()).hexdigest(), 'blueprintMatchesPublicDemoSource': blueprint.read_bytes() == (ROOT / 'playground/blueprint.json').read_bytes(), 'claims': ['Only free plugin features are shown.', 'Order summary is not represented as a fiscal invoice.', 'Screenshots contain fictional sample-store data.', 'No changes to released plugin ZIP bytes.']}
 (DOCS / 'verification.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
 print(json.dumps({'assets': len(assets), 'browser': browser_version, 'output': str(ASSETS)}, indent=2))

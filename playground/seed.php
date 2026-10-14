@@ -12,6 +12,8 @@ if ( wc_get_orders( array( 'limit' => 1, 'return' => 'ids' ) ) ) {
 }
 
 update_option( 'blogname', 'Cedar & Form' );
+// Keep WordPress admin and sample comments from requesting Gravatar images.
+update_option( 'show_avatars', 0 );
 update_option( 'woocommerce_store_address', '18 Maker Lane' );
 update_option( 'woocommerce_store_city', 'Portland' );
 update_option( 'woocommerce_store_postcode', '97205' );

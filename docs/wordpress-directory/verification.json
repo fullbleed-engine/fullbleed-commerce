@@ -1,35 +1,36 @@
 {
-  "checkedAt": "2026-10-06T21:49:36.939443+00:00",
-  "status": "Prepared; WordPress approval and directory publication are not established.",
-  "pluginVersion": "0.1.5",
-  "pluginZipSha256": "e5544fc080223e0700ec53e89d94a847073faa0d5a8a49893a8015410b397fc8",
-  "samplePdfSha256": "cbb6b0aca94c33965d7615860e1863b18a8033e52999d625fbba23a5a0d46ee1",
-  "samplePreviewSha256": "4dfbcb380a7876912e7019b971a44a90cd5d65014c1eb5f71bb7d05babb515d7",
-  "browser": "154.0.8037.98",
+  "checkedAt": "2026-10-14T22:11:46.196466+00:00",
+  "status": "Prepared for initial SVN publication. Hosting was approved October 9 after review of 0.1.5; directory publication is pending.",
+  "pluginVersion": "0.1.6",
+  "pluginZipSha256": "ca7013294add42156550cb9f000a20486a80889fe3e077f1edce7fd18d94198e",
+  "samplePdfSha256": "017f95805beb45dcdb71a937c865aeac21f488f15e35f446bfb51dbe59659d91",
+  "samplePreviewSha256": "70188d599e57760bea93ce4f31e287c60bda8bea8db5e4ef0c84a5ab787dcff1",
+  "browser": "155.0.8059.40",
   "capture": {
-    "checkedAt": "2026-10-06T21:48:56.234847+00:00",
-    "url": "https://playground.wordpress.net/?storage=temp&blueprint-url=https%3A%2F%2Fraw.githubusercontent.com%2Ffullbleed-engine%2Ffullbleed-commerce%2F93d2c5165a56615f4c14be5098762e8e8aa29fb3%2Fplayground%2Fblueprint.json",
-    "browser": "154.0.8037.98",
-    "pluginVersion": "0.1.5",
+    "checkedAt": "2026-10-14T22:11:21.935888+00:00",
+    "url": "http://127.0.0.1:9488",
+    "browser": "155.0.8059.40",
+    "pluginVersion": "0.1.6",
     "syntheticOnly": true,
     "checks": [
       "Disposable sample store opened",
-      "Temporary storage is active",
+      "Local demo uses the verified release ZIP with mail and WordPress networking disabled",
       "Only the free Studio design is enabled",
-      "Free preview version is 0.1.5",
+      "Free preview version is 0.1.6",
       "Actual PDF contains the fictional order and store total",
-      "PDF matches the verified 0.1.3 sample",
+      "Repeated browser generation produces identical PDF bytes",
       "Editor icons load from local plugin assets without the CDN",
       "Visual canvas loads all four bundled font faces",
       "Typography value and unit controls have usable width",
       "HTML and print CSS are editable",
-      "No browser JavaScript exceptions"
+      "No browser JavaScript exceptions",
+      "Document generation and template editing make no off-site requests"
     ],
     "assets": [
       {
         "file": "sample-order.pdf",
-        "bytes": 79989,
-        "sha256": "cbb6b0aca94c33965d7615860e1863b18a8033e52999d625fbba23a5a0d46ee1"
+        "bytes": 80024,
+        "sha256": "017f95805beb45dcdb71a937c865aeac21f488f15e35f446bfb51dbe59659d91"
       },
       {
         "file": "screenshot-1.png",
@@ -38,13 +39,13 @@
       },
       {
         "file": "screenshot-2.png",
-        "bytes": 96641,
-        "sha256": "c352fae7710d7b8190a1978776dd758b750dbee20b14a68c95b12d2562ccf1bf"
+        "bytes": 101227,
+        "sha256": "539edaee0698423d80d283f3aa6b170a5155625f7f8536803c5241d8b7b38ea3"
       },
       {
         "file": "screenshot-3.png",
-        "bytes": 130143,
-        "sha256": "217cb8138f326bfa6e139e1955a4f073813dc15db1d1a323512f5c0fb4b4aacd"
+        "bytes": 130292,
+        "sha256": "d330b51b446e6f8e7da29320b7419a36af7824e37af746ccc1aa6b9ff714d303"
       }
     ],
     "pageErrors": [],
@@ -74,29 +75,108 @@
       "unitWidth": 44
     },
     "iconAssets": {
-      "href": "https://playground.wordpress.net/scope:determined-old-park/wp-content/plugins/fullbleed-commerce/assets/generated/fonts/editor-icons.css",
+      "href": "http://127.0.0.1:9488/wp-content/plugins/fullbleed-commerce/assets/generated/fonts/editor-icons.css",
       "sameOrigin": true,
       "loaded": true
     },
     "iconResponses": [
       {
-        "url": "https://playground.wordpress.net/scope:determined-old-park/wp-content/plugins/fullbleed-commerce/assets/generated/fonts/editor-icons.css",
+        "url": "http://127.0.0.1:9488/wp-content/plugins/fullbleed-commerce/assets/generated/fonts/editor-icons.css",
         "status": 200
       },
       {
-        "url": "https://playground.wordpress.net/scope:determined-old-park/wp-content/plugins/fullbleed-commerce/assets/generated/fonts/editor-icons.woff2",
+        "url": "http://127.0.0.1:9488/wp-content/plugins/fullbleed-commerce/assets/generated/fonts/editor-icons.woff2",
         "status": 200
       }
     ],
     "blockedIconRequests": [],
     "candidateEditor": null,
-    "captureMethod": "Native Playwright element screenshots. Candidate injection, if any, is recorded separately; captures with candidateEditor are not released-plugin evidence."
+    "captureMethod": "Native Playwright element screenshots. Candidate injection, if any, is recorded separately; captures with candidateEditor are not released-plugin evidence.",
+    "environment": "local disposable Playground",
+    "localVerification": {
+      "checkedAt": "2026-10-14T22:09:26.452Z",
+      "source": "Disposable local execution of public Blueprint with exact local candidate ZIP bytes",
+      "base": "http://127.0.0.1:9488",
+      "blueprintSha256": "ccf2bf803e941e26ee333fc92dae64b5728f4f20cada7a90d2cb92eb7ee8cdc1",
+      "archive": {
+        "plugin": "fullbleed-commerce",
+        "version": "0.1.6",
+        "filename": "fullbleed-commerce-0.1.6.zip",
+        "bytes": 3455299,
+        "sha256": "ca7013294add42156550cb9f000a20486a80889fe3e077f1edce7fd18d94198e",
+        "files": 43
+      },
+      "runtime": {
+        "wordpress": "7.1.3",
+        "woocommerce": "11.1.2",
+        "php": "8.3.33",
+        "orders": [
+          {
+            "id": 12,
+            "items": 2,
+            "status": "pending",
+            "paid": false,
+            "total": "282.00"
+          },
+          {
+            "id": 13,
+            "items": 32,
+            "status": "pending",
+            "paid": false,
+            "total": "4332.00"
+          }
+        ],
+        "hpos": true,
+        "mailSuppressed": true,
+        "externalRequestBlocked": true,
+        "cronDisabled": true,
+        "trackingDisabled": true,
+        "avatarsDisabled": true,
+        "freePluginActive": true,
+        "proPluginActive": false
+      },
+      "checks": [
+        {
+          "name": "exact candidate plugin archive installed",
+          "passed": true
+        },
+        {
+          "name": "two synthetic unpaid orders with short and long item lists",
+          "passed": true
+        },
+        {
+          "name": "sample platform totals retained",
+          "passed": true
+        },
+        {
+          "name": "HPOS order storage enabled",
+          "passed": true
+        },
+        {
+          "name": "actual WordPress mail call short-circuited before transport",
+          "passed": true
+        },
+        {
+          "name": "WordPress external request blocked",
+          "passed": true
+        },
+        {
+          "name": "cron and WooCommerce tracking disabled",
+          "passed": true
+        },
+        {
+          "name": "WordPress avatar requests disabled in the sample store",
+          "passed": true
+        }
+      ]
+    },
+    "externalRequests": []
   },
   "assets": [
     {
       "file": "banner-1544x500.png",
-      "bytes": 134338,
-      "sha256": "1a3613feb1652b9d76d85fbd8cb1b49f8f5f074778f021fd6c5cffed86973747",
+      "bytes": 134368,
+      "sha256": "079d185504329715556e513e6a161e78c8e2e68f2d15be784d5ac00ab2141772",
       "dimensions": [
         1544,
         500
@@ -104,8 +184,8 @@
     },
     {
       "file": "banner-772x250.png",
-      "bytes": 51232,
-      "sha256": "72f4ede553fc6188604014f5492ab9b11ebcd6440d41af93d18c3db57148fc24",
+      "bytes": 51237,
+      "sha256": "7021b0571f9dfea213d7e82446be8762ae06724e3f43253299853f6b3b73f0ac",
       "dimensions": [
         772,
         250
@@ -113,8 +193,8 @@
     },
     {
       "file": "blueprints/blueprint.json",
-      "bytes": 6849,
-      "sha256": "79cca3bd9345b6e2ae112ec689112afd319b4f6f81f9c13b1037124fc623d757"
+      "bytes": 6964,
+      "sha256": "ccf2bf803e941e26ee333fc92dae64b5728f4f20cada7a90d2cb92eb7ee8cdc1"
     },
     {
       "file": "icon-128x128.png",
@@ -150,8 +230,8 @@
     },
     {
       "file": "screenshot-2.png",
-      "bytes": 96641,
-      "sha256": "c352fae7710d7b8190a1978776dd758b750dbee20b14a68c95b12d2562ccf1bf",
+      "bytes": 101227,
+      "sha256": "539edaee0698423d80d283f3aa6b170a5155625f7f8536803c5241d8b7b38ea3",
       "dimensions": [
         1350,
         921
@@ -159,8 +239,8 @@
     },
     {
       "file": "screenshot-3.png",
-      "bytes": 130143,
-      "sha256": "217cb8138f326bfa6e139e1955a4f073813dc15db1d1a323512f5c0fb4b4aacd",
+      "bytes": 130292,
+      "sha256": "d330b51b446e6f8e7da29320b7419a36af7824e37af746ccc1aa6b9ff714d303",
       "dimensions": [
         1350,
         868
@@ -168,15 +248,15 @@
     },
     {
       "file": "screenshot-4.png",
-      "bytes": 73114,
-      "sha256": "4dfbcb380a7876912e7019b971a44a90cd5d65014c1eb5f71bb7d05babb515d7",
+      "bytes": 73126,
+      "sha256": "70188d599e57760bea93ce4f31e287c60bda8bea8db5e4ef0c84a5ab787dcff1",
       "dimensions": [
         794,
         1123
       ]
     }
   ],
-  "readmeSha256": "179cc7c5b2cbcf2da401aa7e91368eddabcebfcfd4777b35f88f57103dc81ed5",
+  "readmeSha256": "eadb9f834f821a46ff8651fe48bbd6eef51d98e0626333d88b8fbba0608b239d",
   "blueprintMatchesPublicDemoSource": true,
   "claims": [
     "Only free plugin features are shown.",

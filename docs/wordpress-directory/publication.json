@@ -1,0 +1,20 @@
+{
+  "plugin": "fullbleed-commerce",
+  "version": "0.1.6",
+  "approval": {
+    "date": "2026-10-09",
+    "reviewedVersion": "0.1.5",
+    "status": "Plugin hosting approved; first SVN publication pending.",
+    "repository": "https://plugins.svn.wordpress.org/fullbleed-commerce/"
+  },
+  "archive": {
+    "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/download/v0.1.6/fullbleed-commerce-0.1.6.zip",
+    "bytes": 3455299,
+    "sha256": "ca7013294add42156550cb9f000a20486a80889fe3e077f1edce7fd18d94198e"
+  },
+  "verification": {
+    "url": "https://github.com/fullbleed-engine/fullbleed-commerce/releases/download/v0.1.6/release-verification.json",
+    "sha256": "3e029f1133d470e7345c5d4065f2659bddae27efb919650572457dfa5ed8dbf2"
+  },
+  "sourceCommit": "d8ea477581e36e13c00698a601e3a3f702319404"
+}
