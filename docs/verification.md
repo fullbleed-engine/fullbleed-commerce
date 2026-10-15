@@ -11,6 +11,32 @@ and engine 2.5.22. The [update record](engine-2522.md) describes the actual
 Commerce regression fixture, independent PDF checks and saved-template review.
 Earlier records below retain the versions and evidence they originally verified.
 
+## Investigating alert-settings browser failures
+
+The alert checker records both administrator and staff sessions. A failure saves
+`wordpress-alerts-failure.json` and a separate `*-failure-trace.zip` for each
+session under `output/browser/`; Firefox and WebKit filenames also include the
+browser name. The JSON records main-frame navigations, error timestamps, the
+session role and how many checks had completed. Trace hashes identify the saved
+files. If one trace cannot be exported, its error is recorded while the original
+test failure and the other session's evidence are preserved.
+
+Download the matching `commerce-browser-*` CI artifact within its 14-day retention
+window. Open a Chrome administrator trace with:
+
+```sh
+python -m playwright show-trace output/browser/wordpress-alerts-admin-failure-trace.zip
+```
+
+The [Playwright trace viewer](https://playwright.dev/python/docs/trace-viewer)
+shows actions, DOM snapshots, network requests and test source. These sessions
+use disposable synthetic stores. Successful checks discard the recordings.
+
+The intermittent Chrome transition error remains tracked in
+[issue 41](https://github.com/fullbleed-engine/fullbleed-commerce/issues/41).
+The zero-page-errors requirement remains unchanged; an unchanged rerun passing
+does not establish that the cause is fixed.
+
 ## 0.1.3 renderer update
 
 The 0.1.3 source updates the free plugin to engine 2.5.8 and the server renderer

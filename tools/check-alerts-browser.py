@@ -11,7 +11,7 @@ destination = base + '/wp-admin/admin.php?page=fullbleed-automation'
 out = Path('output/browser')
 out.mkdir(parents=True, exist_ok=True)
 label = browser_label('wordpress-alerts')
-checks, errors, error_details, console_errors = [], [], [], []
+checks, errors, error_details, console_errors, navigations = [], [], [], [], []
 
 
 def check(name, condition):
@@ -24,13 +24,24 @@ with sync_playwright() as pw:
     browser = launch_browser(pw)
     admin_context = browser.new_context(viewport={'width': 1440, 'height': 1050})
     staff_context = browser.new_context()
+    trace_contexts = [('admin', admin_context), ('staff', staff_context)]
+    for _, context in trace_contexts:
+        context.tracing.start(screenshots=True, snapshots=True, sources=True)
     admin, staff = admin_context.new_page(), staff_context.new_page()
-    for page in [admin, staff]:
+    for role, page in [('admin', admin), ('staff', staff)]:
         page.set_default_timeout(45000)
-        def capture_error(error, source=page):
+        def capture_error(error, source=page, source_role=role):
             errors.append(str(error))
-            error_details.append({'error': str(error), 'stack': error.stack, 'url': source.url})
+            error_details.append({'error': str(error), 'stack': error.stack, 'url': source.url,
+                                  'role': source_role, 'completedChecks': len(checks),
+                                  'at': datetime.now(timezone.utc).isoformat()})
+        def capture_navigation(frame, source=page, source_role=role):
+            if frame == source.main_frame:
+                navigations.append({'role': source_role, 'url': frame.url,
+                                    'completedChecks': len(checks),
+                                    'at': datetime.now(timezone.utc).isoformat()})
         page.on('pageerror', capture_error)
+        page.on('framenavigated', capture_navigation)
         page.on('console', lambda message, source=page: console_errors.append({'text': message.text, 'location': message.location, 'url': source.url}) if message.type == 'error' else None)
     try:
         login_to(admin, base, 'admin', destination)
@@ -71,10 +82,24 @@ with sync_playwright() as pw:
         check('alert settings have no JavaScript errors', not errors)
         evidence = [{'file': path.as_posix(), 'sha256': sha256(path.read_bytes()).hexdigest()} for path in [out / f'{label}-desktop.png', out / f'{label}-mobile.png']]
         (out / f'{label}-verification.json').write_text(json.dumps({'checkedAt': datetime.now(timezone.utc).isoformat(), **browser_metadata(browser), 'store': base, 'checks': checks, 'pageErrors': errors, 'evidence': evidence, 'scope': 'Synthetic administrator settings only. WP-Cron is disabled in this fixture; no email is sent by browser actions.'}, indent=2), encoding='utf-8')
+        for _, context in trace_contexts:
+            context.tracing.stop()
     except Exception as error:
         failure = {**browser_metadata(browser), 'error': str(error), 'checks': checks, 'errors': errors,
-                   'errorDetails': error_details, 'consoleErrors': console_errors, 'url': admin.url, 'staffUrl': staff.url}
+                   'errorDetails': error_details, 'consoleErrors': console_errors, 'navigations': navigations,
+                   'url': admin.url, 'staffUrl': staff.url, 'traces': [], 'traceErrors': []}
         failure_file = out / f'{label}-failure.json'
+        failure_file.write_text(json.dumps(failure, indent=2), encoding='utf-8')
+        # Preserve the assertion and the other context even if one trace cannot
+        # be exported, for example after a browser or page process failure.
+        for role, context in trace_contexts:
+            trace_file = out / f'{label}-{role}-failure-trace.zip'
+            try:
+                context.tracing.stop(path=str(trace_file))
+                failure['traces'].append({'role': role, 'file': trace_file.as_posix(),
+                                          'sha256': sha256(trace_file.read_bytes()).hexdigest()})
+            except Exception as trace_error:
+                failure['traceErrors'].append({'role': role, 'error': str(trace_error)})
         failure_file.write_text(json.dumps(failure, indent=2), encoding='utf-8')
         try:
             admin.screenshot(path=str(out / f'{label}-failure.png'), full_page=True, timeout=5000)
